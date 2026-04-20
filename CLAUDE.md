@@ -27,7 +27,7 @@ seeing results are forbidden.
 | Prior-art check | `./.research/prior-art-check-20260419.md` |
 | Experiment progress log | `./EXPERIMENT_PROGRESS.md` (historical, pre-contract) |
 | TSShapeQA v1 data | `./LTSGEN-ext-a/data/tsshapeqa/` |
-| OpenTSLM-vars1 checkpoint (A100) | `/cluster1/user1/hulining/opentslm_checkpoints/ablation_vars1_mixed/` |
+| OpenTSLM-vars1 checkpoint (A100) | `/cluster1/user1/hulining/opentslm_checkpoints/Qwen3_4B/OpenTSLMFlamingo/ablation_vars1_mixed/stage2_captioning/checkpoints/best_model.pt` |
 | OpenTSLM codebase (A100) | `/cluster/home/user1/hulining/TSModel/OpenTSLM/` |
 
 ## Two-stream publication plan (locked)

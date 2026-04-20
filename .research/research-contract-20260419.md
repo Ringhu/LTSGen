@@ -112,7 +112,7 @@ Triggered = stop, escalate to user, do NOT continue to next ablation.
 - **S5 (Paper scoop)**: Any arXiv preprint appears (by 2026-06-01) that independently couples (counterfactual-pair reward OR CapRL) × (time-series captioner). Escalate to user same day for scope-cut decision.
 - **S6a (Stream 1 deadline)**: If TSShapeQA-v2 build (800 OOD + 300 in-dist) or diagnosis runs across 4 models × 6 transforms are not complete by **2026-05-02** (end-of-day), drop NeurIPS D&B submission, fall back to preprint-first track.
 - **S6b (Stream 2 deadline)**: If H3 pilot has not produced a decisive A/B/C outcome by **2026-06-08**, scope cuts to Outcome-B or Outcome-C routing regardless of projections.
-- **S7 (Judge drift)**: If Qwen2.5-7B-Instruct vs gpt-5.4-mini evaluation on the same held-out test set show > 15pp gap on any method arm's QA score, pause, investigate whether reward model mismatch invalidates training signal.
+- **S7 (Judge drift)**: If Qwen3-8B-Instruct vs gpt-5.4-mini evaluation on the same held-out test set show > 15pp gap on any method arm's QA score, pause, investigate whether reward model mismatch invalidates training signal.
 
 ---
 
@@ -176,9 +176,9 @@ establishes timestamp priority against scoop risk (S5).
 - **Seeds**: 3 per method arm (B, C, D). Report mean ± std.
 - **Training batch size / steps**: CPR GRPO, 4 × A100 GPU2-equiv, ≤ 2 weeks wall-clock, ≤ 96 A100-hours per seed.
 - **Frozen judge — hybrid policy**:
-  - **Training (inner RL loop)**: local `Qwen2.5-7B-Instruct` hosted on 3090 via vLLM. Zero API cost, reproducible, same judge across all arms.
-  - **Evaluation (final reported numbers)**: primary = Qwen2.5-7B-Instruct (same as training, measures method improvement); secondary = `gpt-5.4-mini` via crisinsjtu proxy on 10-20% test subsample, to prove **judge-transfer robustness** (CPR gains not a reward-hacking artifact of the specific judge).
-  - **Ablation #8 (judge swap)**: report {Qwen2.5-7B, gpt-5.4-mini, gpt-5.4} for the central C-arm (CPR) only — 3 values, small subsample each.
+  - **Training (inner RL loop)**: local `Qwen3-8B-Instruct` hosted on 3090 via vLLM. Zero API cost, reproducible, same judge across all arms.
+  - **Evaluation (final reported numbers)**: primary = Qwen3-8B-Instruct (same as training, measures method improvement); secondary = `gpt-5.4-mini` via crisinsjtu proxy on 10-20% test subsample, to prove **judge-transfer robustness** (CPR gains not a reward-hacking artifact of the specific judge).
+  - **Ablation #8 (judge swap)**: report {Qwen3-8B, gpt-5.4-mini, gpt-5.4} for the central C-arm (CPR) only — 3 values, small subsample each.
 
 ---
 
@@ -205,11 +205,18 @@ Signed timestamp: git commit hash (to be inserted on commit).
 
 ---
 
+## 9.1 Pre-experiment Amendment Log
+
+| Date | Change | Reason | Affects success criteria? |
+|---|---|---|---|
+| 2026-04-19 late | Judge model family Qwen2.5-7B-Instruct → Qwen3-8B-Instruct | User instruction; no experiments started yet | No — judge model is implementation detail; H3 thresholds (CFR ≥60%, QA ≥70%) are model-agnostic |
+| 2026-04-19 late | Ckpt path correction: `…/opentslm_checkpoints/ablation_vars1_mixed` → `…/opentslm_checkpoints/Qwen3_4B/OpenTSLMFlamingo/ablation_vars1_mixed/stage2_captioning/checkpoints/best_model.pt` | R001 smoke test revealed EXPERIMENT_PROGRESS.md had shortened incorrect path; real ckpt `val_loss=0.2026` verified | No — factual path fix, criteria unchanged |
+
 ## 10. Resolution of [需你确认] items (as of 2026-04-19)
 
 | Item | User decision |
 |---|---|
 | TSShapeQA-v2 size | 800 OOD + 300 in-dist |
 | Transforms in eval suite | All 6: T_rev, T_var, T_peak, T_amp, T_phase, T_changept |
-| Frozen judge | **Hybrid**: Qwen2.5-7B-Instruct local (training + primary eval); gpt-5.4-mini closed (subsample eval for judge-transfer verification); judge swap ablation for CPR arm only |
+| Frozen judge | **Hybrid**: Qwen3-8B-Instruct local (training + primary eval); gpt-5.4-mini closed (subsample eval for judge-transfer verification); judge swap ablation for CPR arm only |
 | NeurIPS D&B 2026 deadline | 2026-05-06 (17 days from lock) → triggers Stream 1 / Stream 2 split per §6 |

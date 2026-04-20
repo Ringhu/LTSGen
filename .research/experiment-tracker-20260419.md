@@ -19,7 +19,7 @@ Legend: **TODO** · **IP** (in progress) · **DONE** · **BLOCKED** · **CUT**
 | R007 | 04-24 | B1 models | OpenTSLM-Flamingo seed1 caption gen on v2 | existing ckpt | v2 OOD + in-dist | captions jsonl | MUST | TODO | parallel with R006 |
 | R008 | 04-25 | B1 models | Caption gen: seed2 + SoftPrompt (if available) + ChatTS-14B | 3 systems | v2 OOD + in-dist | captions jsonl | MUST | TODO | R006+R007 dep |
 | R009 | 04-26 | GATE | **S6a hard gate**: v2 + 4-model captions ready? | — | — | GO/NO-GO | MUST | TODO | If NO-GO: fallback to §8.1 |
-| R010 | 04-27 | B1 eval | Diagnosis CFR: 4 models × 6 transforms × 800 pairs via Qwen judge | Qwen2.5-7B-Instruct | v2 OOD | CFR table | MUST | TODO | R009=GO dep |
+| R010 | 04-27 | B1 eval | Diagnosis CFR: 4 models × 6 transforms × 800 pairs via Qwen judge | Qwen3-8B-Instruct | v2 OOD | CFR table | MUST | TODO | R009=GO dep |
 | R011 | 04-28 | B1 eval | Judge-transfer subsample: gpt-5.4-mini on 20% | gpt-5.4-mini | v2 OOD subset | CFR gap | MUST | TODO | R010 dep |
 | R012 | 04-29 | B2 eval | H2 ρ: consistency vs held-out shape-QA; 6 evaluees | Qwen + oracle + GPT-4o | v2 OOD + held-out QA | Spearman ρ | MUST | TODO | R010 dep; H2 gate |
 | R013 | 04-30 ~ 05-02 | paper | Stream 1 paper draft §1-§5 | NeurIPS D&B template | — | compilable PDF | MUST | TODO | R012 dep |
@@ -62,7 +62,7 @@ Legend: **TODO** · **IP** (in progress) · **DONE** · **BLOCKED** · **CUT**
 
 | RunID | Block | Purpose | System | GPU-hr | Status | Notes |
 |---|---|---|---|---|---|---|
-| R045 | B6 | C-arm eval with Qwen judge | Qwen2.5-7B | 0 train | TODO | 3-seed mean ± std |
+| R045 | B6 | C-arm eval with Qwen judge | Qwen3-8B | 0 train | TODO | 3-seed mean ± std |
 | R046 | B6 | C-arm eval with gpt-5.4-mini judge | closed API | 0 train | TODO | 200 samples subset |
 | R047 | B6 | C-arm eval with gpt-5.4 judge | closed API | 0 train | TODO | 200 samples subset |
 

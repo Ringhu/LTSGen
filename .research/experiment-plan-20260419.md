@@ -50,7 +50,7 @@
   - Primary: CFR per (model × transform) cell — % of (x, T(x)) pairs where generated caption causes downstream-LLM answer to flip in the GT-correct direction
   - Secondary: caption-diff-rate = % of pairs where caption *text* differs at all (sanity: if this is also low, caption is literally unchanged → not a reward issue)
   - Meta: in-dist CFR for the same 4 models on v2 in-dist split (n = 300)
-- **Judge:** Qwen2.5-7B-Instruct (primary); gpt-5.4-mini on 20% subsample (judge-transfer)
+- **Judge:** Qwen3-8B-Instruct (primary); gpt-5.4-mini on 20% subsample (judge-transfer)
 - **Setup:** batch inference via vLLM; 3090 for judge, A100 GPU2 for OpenTSLM inference; ChatTS-14B on 2×3090 or 1×A100
 - **Success:** CFR ≤ 10% on ≥ 3 of 4 models × ≥ 4 of 6 transforms
 - **Failure interpretation:** Any model achieves CFR ≥ 30% on > 50% of transforms → H1 falsified, our diagnosis was model-specific. Paper pivots to model-specific story (much weaker).
@@ -94,7 +94,7 @@
   - Backbone frozen: Chronos-2 encoder (frozen); Qwen3-4B LLM (frozen except LoRA r=16 on attention layers); Flamingo cross-attn (trainable)
   - Training: GRPO with 8 rollouts/step, 3 counterfactual pairs/batch, lr 1e-5, 5000 steps
   - Wall-clock estimate: ~35 A100-hr per seed
-  - Judge (reward): Qwen2.5-7B-Instruct via vLLM on 3090 (1 GPU dedicated)
+  - Judge (reward): Qwen3-8B-Instruct via vLLM on 3090 (1 GPU dedicated)
 - **Success:** C achieves QA ≥ 0.70 AND CFR ≥ 0.60, AND C − B ≥ 15pp QA or ≥ 30pp CFR
 - **Failure interpretation:** See contract §2.3 routing table. B-partial → preprint with open-problem framing. C-failure → drop method, pure D&B paper.
 - **Table target:** Table 3 (Stream 2 main result)
@@ -175,7 +175,7 @@ User is solo operator. "Owner" column records the actor: CC = Claude Code sessio
 
 | Date | Day | Goal | Deliverable | Owner | Dependency | Stop-gate |
 |---|---|---|---|---|---|---|
-| 04-19 Sun | D0 | Contract locked. Infra smoke test. Spin up vLLM on 3090 with Qwen2.5-7B-Instruct; verify A100 GPU2 access; verify ChatTS-14B HF download to A100. | `infra-ok.txt` note | CC + User | — | — |
+| 04-19 Sun | D0 | Contract locked. Infra smoke test. Spin up vLLM on 3090 with Qwen3-8B-Instruct; verify A100 GPU2 access; verify ChatTS-14B HF download to A100. | `infra-ok.txt` note | CC + User | — | — |
 | 04-20 Mon | D1 | Implement `scripts/generate/transforms.py` with all 6 transforms + deterministic GT-flip rules + unit tests (20 canonical examples per transform, assert GT flips). | `transforms.py` + pytest 100% green | CC | D0 | if unit tests fail → debug on D1, no slip |
 | 04-21 Tue | D2 | Extend `build_tsshapeqa.py` → `build_tsshapeqa_v2.py`. Smoke test: generate n=40 OOD with 3 transforms. Verify pipeline end-to-end. | smoke v2 jsonl | CC | D1 | pipeline hang → escalate |
 | 04-22 Wed | D3 | Full v2 OOD generation: 800 samples × 6 transforms × pair MCQ via gpt-5.4 (~6600 API calls). Parallelize via async. | `v2_ood.jsonl` complete | CC | D2 | API quota → fall back to gpt-5.4-mini |
@@ -183,7 +183,7 @@ User is solo operator. "Owner" column records the actor: CC = Claude Code sessio
 | 04-24 Fri | D5 | Retrain OpenTSLM-Flamingo seed2 (5-8 hr on A100 GPU2). Meanwhile generate captions from seed1 on all v2 (inference only, ~2 hr). | seed2 checkpoint + seed1 captions | Codex (overnight) + CC | D4 | seed2 training diverges → use OpenTSLM-SoftPrompt as seed2 substitute |
 | 04-25 Sat | D6 | Generate captions from seed2, SoftPrompt (if usable), ChatTS-14B on all v2. | 4-model captions jsonl | Codex + CC | D5 | ChatTS too big for 1×A100 → use 2×A100 or shard |
 | 04-26 Sun | D7 | **S6a HARD GATE.** v2 build must be complete + sanity-passed + 4 models' captions generated. If NOT → drop NeurIPS D&B, pivot to preprint-first. If YES → proceed. | GATE decision note | User | D6 | HARD: miss → Stream 1 aborted |
-| 04-27 Mon | D8 | Diagnosis eval (B1): Qwen2.5-7B judge answers MCQ pairs for 4 models × 6 transforms × 800 samples = 19,200 pair evals. Parallelize via vLLM batch inference. | `diagnosis_results.jsonl` | CC + Codex | D7 GATE = YES | judge inference > 24 hr → add 3090 GPUs |
+| 04-27 Mon | D8 | Diagnosis eval (B1): Qwen3-8B judge answers MCQ pairs for 4 models × 6 transforms × 800 samples = 19,200 pair evals. Parallelize via vLLM batch inference. | `diagnosis_results.jsonl` | CC + Codex | D7 GATE = YES | judge inference > 24 hr → add 3090 GPUs |
 | 04-28 Tue | D9 | Judge-transfer subsample: gpt-5.4-mini on 20% of pairs. Aggregate CFR table. | Table 1 data | CC | D8 | — |
 | 04-29 Wed | D10 | Benchmark validity (B2): compute Spearman ρ across 6 evaluees. Shape-sensitive held-out QA generation from Time-MMD held-out. | Table 2 + Fig 1 data | CC | D8 | ρ < 0.3 → H2 falsified; Stream 1 degrades to diagnosis-only |
 | 04-30 Thu | D11 | Paper draft: Intro + Related Work. NeurIPS D&B template setup. | `paper/intro.tex` + `paper/related.tex` | CC | D9, D10 | — |
@@ -252,7 +252,7 @@ Fits in 40 days of Stream 2 with margin, but NO compute-slippage tolerance.
 
 ### 3090 hours
 
-- Qwen2.5-7B judge via vLLM: 1 GPU dedicated full-time during W2-W5 training = 28 × 24 = 672 3090-hours. Plentiful.
+- Qwen3-8B judge via vLLM: 1 GPU dedicated full-time during W2-W5 training = 28 × 24 = 672 3090-hours. Plentiful.
 - Eval inference for Stream 1 D8-D9: 2-3 days × 2 GPUs = ~144 3090-hr.
 
 ### Data / API budget
@@ -353,7 +353,7 @@ User decision required. Options:
 
 ## 10. First 3 Runs to Launch (next 48h)
 
-1. **R001 — Infra smoke test.** Start vLLM + Qwen2.5-7B-Instruct on 3090, verify API endpoint, verify ChatTS-14B downloadable to A100, verify OpenTSLM vars=1 checkpoint loads. ETA: 2 hours. Owner: CC session after this plan locks.
+1. **R001 — Infra smoke test.** Start vLLM + Qwen3-8B-Instruct on 3090, verify API endpoint, verify ChatTS-14B downloadable to A100, verify OpenTSLM vars=1 checkpoint loads. ETA: 2 hours. Owner: CC session after this plan locks.
 2. **R002 — `transforms.py` + unit tests (D1).** 6 transforms × 20 canonical examples; all assert GT flips in the correct direction. ETA: 1 work-day 2026-04-20. Owner: CC.
 3. **R003 — v2 build smoke (D2).** 40 OOD samples × 3 transforms, full pipeline. Verify output jsonl + sanity + no 502 API errors. ETA: half work-day 2026-04-21. Owner: CC.
 
