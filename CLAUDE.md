@@ -20,6 +20,8 @@ seeing results are forbidden.
 | Artifact | Path |
 |---|---|
 | Research contract (active) | `./.research/research-contract-20260419.md` |
+| **Experiment plan (active)** | `./.research/experiment-plan-20260419.md` |
+| **Experiment tracker** | `./.research/experiment-tracker-20260419.md` |
 | Lit review | `./.research/lit-review-20260419.md` |
 | Idea decision | `./.research/idea-decision-20260419.md` |
 | Prior-art check | `./.research/prior-art-check-20260419.md` |
@@ -48,10 +50,16 @@ Stream 1 defaults to preprint-first Stream 2 per §6 of the contract.
 
 ## Current phase
 
-**Phase: experiment-plan → experiment-bridge.**
-Contract locked 2026-04-19. Next skill to invoke: `experiment-plan`
-(turn contract into detailed claim-driven experiment roadmap with run
-order and compute budget).
+**Phase: plan locked → R001 infra smoke test.**
+Contract + experiment-plan + tracker all locked 2026-04-19.
 
-**Do NOT write experimental code until experiment-plan produces a concrete
-schedule tied to each hypothesis's ablation list in contract §3.**
+**Next concrete action: R001** — infrastructure smoke test (~2 hours):
+spin up vLLM + Qwen2.5-7B-Instruct on 3090, verify A100 GPU2 access,
+confirm ChatTS-14B HF download, verify OpenTSLM vars=1 ckpt loads.
+
+**R001 unblocks R002 (transforms.py implementation 2026-04-20), which
+is the single hard dependency of all Stream 1 work.**
+
+Stream 1 S6a gate: **2026-04-26 EOD** — TSShapeQA-v2 build must be
+complete + sanity-passed + 4-model captions generated. Miss = Stream 1
+aborted, pivot to Stream 2 preprint-first.
