@@ -1,15 +1,29 @@
-### Case 20：caption+numbers 弱于 caption / meta
+<details>
+<summary>🧪 Case 20：TSAQA | caption+numbers 弱于 caption / meta</summary>
 
-- 数据集：`TSAQA`
-- Case ID：`tsaqa::0004`
-- 问题类型：`classification`
-- 领域 / 子数据集：`synthetic` / `-`
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TSAQA` |
+| Case ID | `tsaqa::0004` |
+| 问题类型 | `classification` |
+| 领域 / 子数据集 | `synthetic` / `-` |
+| 正确答案 | `B` |
+
 - artifact 说明：TSAQA 此 case 已按 full-eval task 顺序和 local index 回连 phase_a 原始题干/序列；当前本地没有保存 OpenTSLM/ChatTS 原始 caption 对照文本，因此此处展示可用 SFT caption 样本和多条件答案。
-- 数值摘要：n=128, min=-1.4575, max=1.429, mean=-1.5625e-06, std=1, slope=9.9218e-05, argmax=43, argmin=28
+
+数值摘要：n=128, min=-1.4575, max=1.429, mean=-1.5625e-06, std=1, slope=9.9218e-05, argmax=43, argmin=28
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![tsaqa::0004](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/tsaqa_0004.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -40,11 +54,16 @@ This time series comes from a dataset designed to simulate and classify sequence
 **背景信息中文翻译**
 
 该时间序列来自一个数据集，该数据集旨在根据不同的上升和下降运动模式来模拟并分类序列，每个序列都根据四种方向类别之一进行标注，这些类别反映了上升和下降变化的不同组合。
-- 选项：
-无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案：`B`
 
-**生成的 caption 与中文翻译**
+**选项**
+无固定选项；题目要求按指定格式直接生成答案。
+
+**正确答案**：`B`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **可用 caption 样本 原文**
 
@@ -60,7 +79,10 @@ This time series comes from a dataset designed to simulate and classify sequence
   3. 从 0.29 下降到 0.01。
   4. 从点 28 开始，时间序列值从约 0.78 下降到约 -1.48，形成一个幅度约为 0.92 的向下凸起，然后回升到约 0.27，形成向下凸起；从点 64 开始，时间序列值缓慢上升，在点 80 达到峰值，随后在点 80 到点 82 之间快速下降，回到约 -0.78，形成先缓慢上升后快速下降的形态。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -72,7 +94,14 @@ This time series comes from a dataset designed to simulate and classify sequence
 | `chatts_caption_plus` | `A` | 错误 |
 | `tool_agent` | `B` | 正确 |
 
-**Case 分析**
+</details>
+
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：caption+numbers 弱于 caption / meta
 - 关键结论：OpenTSLM caption 单独正确，但 caption+numbers 错，显示混合输入可能让模型重新解释证据，造成集成失败。
+
+</details>
+
+</details>

@@ -1,11 +1,29 @@
-### Case 09：Travel Time 领域事件需要局部位置和含义同时正确
+<details>
+<summary>🗄 Case 09：dataset_a | Travel Time 领域事件需要局部位置和含义同时正确</summary>
 
-- 数据集：`dataset_a`
-- Case ID：`dataset_a::0014`
-- 问题类型：`local,local-inductive,trend,season`
-- Dataset-A 能力标签：`local, local-inductive, trend, season`
-- 数值摘要：n=256, min=-15.886, max=2837.9, mean=170.24, std=225.83, slope=0.45297, argmax=128, argmin=58
-- Dataset-A 标注属性原文：
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `dataset_a` |
+| Case ID | `dataset_a::0014` |
+| 问题类型 | `local,local-inductive,trend,season` |
+| Dataset-A 能力标签 | `local, local-inductive, trend, season` |
+| 正确答案 | `见 QA 折叠块` |
+
+数值摘要：n=256, min=-15.886, max=2837.9, mean=170.24, std=225.83, slope=0.45297, argmax=128, argmin=58
+
+<details>
+<summary>🖼 时序图</summary>
+
+![dataset_a::0014](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0014.png)
+
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
+
+**Dataset-A 标注属性原文**
 
 [
   [
@@ -35,7 +53,7 @@
   }
 ]
 
-- Dataset-A 标注属性中文翻译：
+**Dataset-A 标注属性中文翻译**
 
 [
   [
@@ -65,10 +83,6 @@
   }
 ]
 
-![dataset_a::0014](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0014.png)
-
-**QA 问题**
-
 **题干原文**
 
 You are a time series analysis expert. This time series is "Travel Time" from Real time traffic data with length of 256: &lt;ts&gt;&lt;ts/&gt;, please analyze the time series features and answer the following questions:
@@ -93,23 +107,28 @@ Now, based on the above questions, please strictly follow the output format requ
 2. 严格格式化的答案 2
 3. 严格格式化的答案 3
 4. 严格格式化的答案 4
-- 选项：
+
+**选项**
 无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案原文：
+
+**正确答案原文**
 
 1. upward spike, position around point 129, amplitude 2685.01
 2. upward spike, position around point 129, amplitude 2685.01. A sudden and severe increase in travel time, likely due to a major traffic incident, road closure, or severe congestion
 3. keep steady, the starting point value is around 198.99, and the trend change value from left to right is around 0.00.
 4. periodic fluctuation, each period is around 65.70 points, and the amplitude of the periodic fluctuation is around 323.10.
 
-- 正确答案中文翻译：
+**正确答案中文翻译**
 
 1. 向上尖峰，位置在点 129 附近，幅度为 2685.01
 2. 向上尖峰，位置在点 129 附近，幅度为 2685.01。行程时间突然且严重增加，可能是由于重大交通事故、道路封闭或严重拥堵
 3. 保持稳定，起始点值约为 198.99，从左到右的趋势变化值约为 0.00。
 4. 周期性波动，每个周期约为 65.70 个点，周期性波动的幅度约为 323.10。
 
-**生成的 caption 与中文翻译**
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -133,7 +152,10 @@ ology. The time series shows a steady upward trend with low volatility, characte
 3. 保持稳定，从 198.98 到 148.60
 4. 在点 77 到点 97 之间缓慢上升后快速下降；在点 127 到点 129 之间出现向上尖峰，幅度为 2685.92；在点 183 到点 198 之间出现宽幅向上尖峰，幅度为 582.60
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 条件 | 平均分 | 分项分数 |
 | --- | ---: | --- |
@@ -147,6 +169,11 @@ ology. The time series shows a steady upward trend with low volatility, characte
 | `chatts_caption` | 0.93 | local=1.00，local-inductive=0.83，season=0.91，trend=1.00 |
 | `chatts_caption_plus` | 0.81 | local=1.00，local-inductive=0.83，season=0.91，trend=0.50 |
 | `chatts_wrong_caption` | 0.13 | local=0.00，local-inductive=0.00，season=0.00，trend=0.52 |
+
+</details>
+
+<details>
+<summary>🧾 模型原始输出 / 代表性回答</summary>
 
 **代表性模型回答**
 
@@ -290,8 +317,14 @@ ology. The time series shows a steady upward trend with low volatility, characte
 3. 稳定，起始点数值约为 6.31，从左到右的趋势变化值约为 0.60
 4. 无周期性波动
 
+</details>
 
-**Case 分析**
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：Travel Time 领域事件需要局部位置和含义同时正确
 - 关键结论：该类问题不只是找 spike，还要说明它代表事故、拥堵或路段异常；泛化 caption 即使说有波动，也容易错过具体位置和领域解释。
+
+</details>
+
+</details>

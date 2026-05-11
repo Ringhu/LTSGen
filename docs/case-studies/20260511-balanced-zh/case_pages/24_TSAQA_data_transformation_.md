@@ -1,15 +1,29 @@
-### Case 24：TSAQA data transformation：一阶差分选择题
+<details>
+<summary>🧪 Case 24：TSAQA | TSAQA data transformation：一阶差分选择题</summary>
 
-- 数据集：`TSAQA`
-- Case ID：`tsaqa::0833`
-- 问题类型：`data_transformation`
-- 领域 / 子数据集：`["web", "finance", "transport", "nature"]` / `-`
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TSAQA` |
+| Case ID | `tsaqa::0833` |
+| 问题类型 | `data_transformation` |
+| 领域 / 子数据集 | `["web", "finance", "transport", "nature"]` / `-` |
+| 正确答案 | `D` |
+
 - artifact 说明：TSAQA 此 case 已按 full-eval task 顺序和 local index 回连 phase_a 原始题干/序列；当前本地没有保存 OpenTSLM/ChatTS 原始 caption 对照文本，因此此处展示可用 SFT caption 样本和多条件答案。
-- 数值摘要：n=62, min=-1.8972, max=4.0781, mean=-4.8387e-06, std=1, slope=0.0030177, argmax=40, argmin=18
+
+数值摘要：n=62, min=-1.8972, max=4.0781, mean=-4.8387e-06, std=1, slope=0.0030177, argmax=40, argmin=18
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![tsaqa::0833](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/tsaqa_0833.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -40,11 +54,16 @@ D: [0, -1.7704, -1.4385, 1.9917, -0.9959, 1.3278, -2.1024, 0.7746, -0.6639, 0.99
 **背景信息中文翻译**
 
 ["单篇英文维基百科文章每日页面浏览量计数的时间序列。", "单一货币每日即期汇率测量值（每美元对应的外国货币单位）的时间序列。", "来自湾区单个传感器的每 5 分钟交通流量测量值（车辆计数）的时间序列。", "每日相对太阳黑子数测量值的时间序列，其中每个值表示太阳可见圆面上太阳黑子活动的量化计数。"]
-- 选项：
-无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案：`D`
 
-**生成的 caption 与中文翻译**
+**选项**
+无固定选项；题目要求按指定格式直接生成答案。
+
+**正确答案**：`D`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **可用 caption 样本 原文**
 
@@ -60,7 +79,10 @@ D: [0, -1.7704, -1.4385, 1.9917, -0.9959, 1.3278, -2.1024, 0.7746, -0.6639, 0.99
   3. 从 2.20 到 -1.57 保持稳定。
   4. 未发现局部特征。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -72,7 +94,14 @@ D: [0, -1.7704, -1.4385, 1.9917, -0.9959, 1.3278, -2.1024, 0.7746, -0.6639, 0.99
 | `chatts_caption_plus` | `D` | 正确 |
 | `tool_agent` | `D` | 正确 |
 
-**Case 分析**
+</details>
+
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：TSAQA data transformation：一阶差分选择题
 - 关键结论：该题需要把原始序列映射到一阶差分候选。OpenTSLM caption 错、ChatTS 对，说明自由文本形态描述对可计算变换题并不稳定。
+
+</details>
+
+</details>

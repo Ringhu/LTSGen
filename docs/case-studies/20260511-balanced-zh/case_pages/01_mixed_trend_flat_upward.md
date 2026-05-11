@@ -1,15 +1,29 @@
-### Case 01：mixed trend 被压缩成 flat/upward
+<details>
+<summary>📈 Case 01：TSShapeQA-OOD | mixed trend 被压缩成 flat/upward</summary>
 
-- 数据集：`TSShapeQA-OOD`
-- Case ID：`tsshapeqa::0008::exchange_rate:5:w384:s3456`
-- 问题类型：`TREND`
-- 领域 / 子数据集：`finance` / `exchange_rate`
-- 数值摘要：n=384, min=0.008729, max=0.010699, mean=0.0093172, std=0.00025239, slope=7.1632e-07, argmax=204, argmin=44
-- 标注特征：`{'ambiguous': False, 'label': 'mixed', 'norm_effect': 1.0870287886386036, 'r2': 0.09898349893857857, 'slope': 7.163240480146482e-07}`
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TSShapeQA-OOD` |
+| Case ID | `tsshapeqa::0008::exchange_rate:5:w384:s3456` |
+| 问题类型 | `TREND` |
+| 领域 / 子数据集 | `finance` / `exchange_rate` |
+| 正确答案 | `B` |
+
+数值摘要：n=384, min=0.008729, max=0.010699, mean=0.0093172, std=0.00025239, slope=7.1632e-07, argmax=204, argmin=44
+
+标注特征：`{'ambiguous': False, 'label': 'mixed', 'norm_effect': 1.0870287886386036, 'r2': 0.09898349893857857, 'slope': 7.163240480146482e-07}`
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![tsshapeqa::0008::exchange_rate:5:w384:s3456](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/tsshapeqa_0008_exchange_rate_5_w384_s3456.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -18,7 +32,8 @@ Across the full period, what is the overall direction of this exchange-rate seri
 **题干中文翻译**
 
 在整个时期内，该汇率序列的整体走势方向是什么？
-- 选项：
+
+**选项**
 - A. Steadily decreasing overall
   中文：A. 整体稳步下降
 - B. Mixed, with no consistent direction
@@ -27,9 +42,13 @@ Across the full period, what is the overall direction of this exchange-rate seri
   中文：C. 整体稳步上升
 - D. Roughly flat with minor noise
   中文：D. 大致平稳，仅有轻微噪声
-- 正确答案：`B`
 
-**生成的 caption 与中文翻译**
+**正确答案**：`B`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -55,7 +74,10 @@ The time series shows a flat trend with high volatility and no clear seasonality
 
 该时间序列呈现出平坦趋势，波动性较高，且没有明显季节性。数据在窗口早期出现显著下行，随后在前半段进入上行阶段，接着在后半段再次下降。后半段出现一个显著峰值，达到均值以上约 13.1 个标准差；而前半段观察到一个较小的谷值，约低于均值 1.0 个标准差。该序列分别与变量 6 和变量 3 存在中等程度的正相关和负相关。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -67,6 +89,12 @@ The time series shows a flat trend with high volatility and no clear seasonality
 | `chatts_caption` | `D` | 错误 |
 | `chatts_caption_plus` | `D` | 错误 |
 | `tool_agent` | `B` | 正确 |
+
+</details>
+
+<details>
+<summary>🧾 模型原始输出 / 代表性回答</summary>
+
 
 **模型原始输出（按源 artifact 原样展示）**
 
@@ -84,8 +112,14 @@ Final answer: D
 
 最终答案：D
 
+</details>
 
-**Case 分析**
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：mixed trend 被压缩成 flat/upward
 - 关键结论：真实答案需要识别完整窗口内的 mixed movement；OpenTSLM 把它写成上升和季节性，ChatTS 把它写成平坦，两个 caption 都没有保留可回答 QA 的趋势证据。
+
+</details>
+
+</details>

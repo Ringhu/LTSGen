@@ -1,25 +1,39 @@
-### Case 10：AWS CPU causal case：OpenTSLM 丢失因果条件
+<details>
+<summary>🗄 Case 10：dataset_a | AWS CPU causal case：OpenTSLM 丢失因果条件</summary>
 
-- 数据集：`dataset_a`
-- Case ID：`dataset_a::0073`
-- 问题类型：`causal`
-- Dataset-A 能力标签：`causal`
-- 数值摘要：n=256, min=30.482, max=51.6, mean=44.588, std=2.1897, slope=-0.0019699, argmax=129, argmin=128
-- Dataset-A 标注属性原文：
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `dataset_a` |
+| Case ID | `dataset_a::0073` |
+| 问题类型 | `causal` |
+| Dataset-A 能力标签 | `causal` |
+| 正确答案 | `见 QA 折叠块` |
+
+数值摘要：n=256, min=30.482, max=51.6, mean=44.588, std=2.1897, slope=-0.0019699, argmax=129, argmin=128
+
+<details>
+<summary>🖼 时序图</summary>
+
+![dataset_a::0073](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0073.png)
+
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
+
+**Dataset-A 标注属性原文**
 
 [
   "Routine operations with minor fluctuations. The time series indicates that despite a generally stable trend, there are small fluctuations near point 127, which could suggest standard variation due to routine operational activities rather than unusual events like hardware malfunctions or system updates."
 ]
 
-- Dataset-A 标注属性中文翻译：
+**Dataset-A 标注属性中文翻译**
 
 [
   "常规运行，存在轻微波动。该时间序列显示，尽管总体趋势较为稳定，但在点 127 附近存在小幅波动，这可能表明这是由常规运行活动导致的标准变化，而非硬件故障或系统更新等异常事件。"
 ]
-
-![dataset_a::0073](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0073.png)
-
-**QA 问题**
 
 **题干原文**
 
@@ -32,17 +46,22 @@ Now, based on the above questions, please strictly follow the output format requ
 你是一名时间序列分析专家。该时间序列是来自 AWS API 服务器的“CPU Usage”，长度为 256：&lt;ts&gt;&lt;ts/&gt;，请分析该时间序列特征并回答以下问题：
 1. 给定来自 AWS API 服务器的 CPU Usage 时间序列，时间点 127 附近观察到的行为最可能的解释是什么？从以下选项中选择：硬件故障、伴有轻微波动的常规操作，或重大系统更新。
 现在，请基于上述问题，严格遵循输出格式要求并给出答案。每一行对应一个问题的答案，格式为：1. 严格格式化的答案 1
-- 选项：
+
+**选项**
 无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案原文：
+
+**正确答案原文**
 
 1. Routine operations with minor fluctuations. The time series indicates that despite a generally stable trend, there are small fluctuations near point 127, which could suggest standard variation due to routine operational activities rather than unusual events like hardware malfunctions or system updates.
 
-- 正确答案中文翻译：
+**正确答案中文翻译**
 
 1. 常规运行伴有轻微波动。该时间序列显示，尽管整体趋势总体稳定，但在点 127 附近存在小幅波动，这可能表明是由常规运行活动引起的标准变化，而不是硬件故障或系统更新等异常事件。
 
-**生成的 caption 与中文翻译**
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -66,7 +85,10 @@ The time series shows a flat trend with low volatility and medium strength seaso
 3. 保持稳定，从 44.92 到 44.92。
 4. 在点 128 和点 130 之间发生了一个幅度为 14.21 的向下尖峰，时间序列值从约 44.92 快速下降到约 30.71，然后迅速回升到约 44.92，形成一个向下尖峰。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 条件 | 平均分 | 分项分数 |
 | --- | ---: | --- |
@@ -80,6 +102,11 @@ The time series shows a flat trend with low volatility and medium strength seaso
 | `chatts_caption` | 1.00 | causal=1.00 |
 | `chatts_caption_plus` | 1.00 | causal=1.00 |
 | `chatts_wrong_caption` | 0.00 | causal=0.00 |
+
+</details>
+
+<details>
+<summary>🧾 模型原始输出 / 代表性回答</summary>
 
 **代表性模型回答**
 
@@ -163,8 +190,14 @@ The time series shows a flat trend with low volatility and medium strength seaso
 
 1. 重大系统更新
 
+</details>
 
-**Case 分析**
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：AWS CPU causal case：OpenTSLM 丢失因果条件
 - 关键结论：此类题目要求把形态变化和系统负载/服务事件联系起来；OpenTSLM caption 条件为 0 分而 ChatTS 为 1 分，说明领域因果语义不是自然从形态摘要中涌现。
+
+</details>
+
+</details>

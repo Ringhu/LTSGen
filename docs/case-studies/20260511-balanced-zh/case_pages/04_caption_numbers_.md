@@ -1,15 +1,29 @@
-### Case 04：caption+numbers 整合不稳定
+<details>
+<summary>📈 Case 04：TSShapeQA-OOD | caption+numbers 整合不稳定</summary>
 
-- 数据集：`TSShapeQA-OOD`
-- Case ID：`tsshapeqa::0011::exchange_rate:1:w384:s2496`
-- 问题类型：`VOLATILITY_REGION`
-- 领域 / 子数据集：`finance` / `exchange_rate`
-- 数值摘要：n=384, min=1.3723, max=1.5974, mean=1.4682, std=0.05175, slope=-0.00038125, argmax=20, argmin=330
-- 标注特征：`{'ambiguous': False, 'higher_half': 'first', 'ratio_first_over_second': 1.2128497962927494, 'std_first': 0.02240062292164124, 'std_second': 0.018469412279161965}`
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TSShapeQA-OOD` |
+| Case ID | `tsshapeqa::0011::exchange_rate:1:w384:s2496` |
+| 问题类型 | `VOLATILITY_REGION` |
+| 领域 / 子数据集 | `finance` / `exchange_rate` |
+| 正确答案 | `D` |
+
+数值摘要：n=384, min=1.3723, max=1.5974, mean=1.4682, std=0.05175, slope=-0.00038125, argmax=20, argmin=330
+
+标注特征：`{'ambiguous': False, 'higher_half': 'first', 'ratio_first_over_second': 1.2128497962927494, 'std_first': 0.02240062292164124, 'std_second': 0.018469412279161965}`
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![tsshapeqa::0011::exchange_rate:1:w384:s2496](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/tsshapeqa_0011_exchange_rate_1_w384_s2496.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -18,7 +32,8 @@ Which half of this exchange-rate series shows larger short-term fluctuations ove
 **题干中文翻译**
 
 这个汇率序列的哪一半总体上显示出更大的短期波动？
-- 选项：
+
+**选项**
 - A. Second half
   中文：A. 后半段
 - B. Roughly equal volatility
@@ -27,9 +42,13 @@ Which half of this exchange-rate series shows larger short-term fluctuations ove
   中文：C. 无法从序列中判断
 - D. First half
   中文：D. 前半段
-- 正确答案：`D`
 
-**生成的 caption 与中文翻译**
+**正确答案**：`D`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -55,7 +74,10 @@ The time series shows a flat trend with medium volatility and a medium-strength 
 
 该时间序列表现出平稳趋势、中等波动性以及中等强度的日季节性。数据在窗口早期以显著下降阶段开始，随后在前半段出现上升走势，然后在后半段急剧下降。一个显著峰值出现在后半段，达到高于均值约 3.0 个标准差；而在序列中部附近观察到一个谷值，约低于均值 1.8 个标准差。若干变量与目标序列表现出中等正相关。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -67,6 +89,12 @@ The time series shows a flat trend with medium volatility and a medium-strength 
 | `chatts_caption` | `D` | 正确 |
 | `chatts_caption_plus` | `D` | 正确 |
 | `tool_agent` | `D` | 正确 |
+
+</details>
+
+<details>
+<summary>🧾 模型原始输出 / 代表性回答</summary>
+
 
 **模型原始输出（按源 artifact 原样展示）**
 
@@ -84,8 +112,14 @@ Final answer: A
 
 最终答案：A
 
+</details>
 
-**Case 分析**
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：caption+numbers 整合不稳定
 - 关键结论：numbers 和 caption 单独都能给出正确答案，但 caption+numbers 反而答错，说明下游 QA 不是简单累加证据，而会被自然语言描述重新加权甚至带偏。
+
+</details>
+
+</details>

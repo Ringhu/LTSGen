@@ -1,15 +1,29 @@
-### Case 02：峰值位置被错误 caption 污染
+<details>
+<summary>📈 Case 02：TSShapeQA-OOD | 峰值位置被错误 caption 污染</summary>
 
-- 数据集：`TSShapeQA-OOD`
-- Case ID：`tsshapeqa::0005::timemmd:Energy:Weekly_New_England_(:w512:s0`
-- 问题类型：`EXTREMA_POS`
-- 领域 / 子数据集：`Energy` / `timemmd`
-- 数值摘要：n=512, min=0.993, max=1.791, mean=1.2973, std=0.18544, slope=0.00081632, argmax=425, argmin=308
-- 标注特征：`{'ambiguous': False, 'argmax_idx': 425, 'bucket': 'last', 'rel_position': 0.8317025440313112}`
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TSShapeQA-OOD` |
+| Case ID | `tsshapeqa::0005::timemmd:Energy:Weekly_New_England_(:w512:s0` |
+| 问题类型 | `EXTREMA_POS` |
+| 领域 / 子数据集 | `Energy` / `timemmd` |
+| 正确答案 | `A` |
+
+数值摘要：n=512, min=0.993, max=1.791, mean=1.2973, std=0.18544, slope=0.00081632, argmax=425, argmin=308
+
+标注特征：`{'ambiguous': False, 'argmax_idx': 425, 'bucket': 'last', 'rel_position': 0.8317025440313112}`
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![tsshapeqa::0005::timemmd:Energy:Weekly_New_England_(:w512:s0](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/tsshapeqa_0005_timemmd_Energy_Weekly_New_England__w512_s0.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -18,7 +32,8 @@ In which third of this 512-week gasoline price series does the highest price occ
 **题干中文翻译**
 
 这条 512 周汽油价格序列中的最高价格出现在哪三分之一时段？
-- 选项：
+
+**选项**
 - A. last third
   中文：A. 最后三分之一
 - B. cannot determine from data
@@ -27,9 +42,13 @@ In which third of this 512-week gasoline price series does the highest price occ
   中文：C. 中间三分之一
 - D. first third
   中文：D. 前三分之一
-- 正确答案：`A`
 
-**生成的 caption 与中文翻译**
+**正确答案**：`A`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -55,7 +74,10 @@ The time series shows a flat trend with high volatility and no clear seasonality
 
 该时间序列表现为趋势平稳、波动性高，且没有明显季节性。数据在窗口早期以温和上升开始，随后在前半段出现更强的增长，并在后半段显著上升。峰值出现在窗口后期，达到约高于均值 3.0 个标准差；而谷值出现在早期，约低于均值 1.9 个标准差。该序列与另一个汽油价格变量 PADD 1B 呈强正相关。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -67,6 +89,12 @@ The time series shows a flat trend with high volatility and no clear seasonality
 | `chatts_caption` | `A` | 正确 |
 | `chatts_caption_plus` | `A` | 正确 |
 | `tool_agent` | `A` | 正确 |
+
+</details>
+
+<details>
+<summary>🧾 模型原始输出 / 代表性回答</summary>
+
 
 **模型原始输出（按源 artifact 原样展示）**
 
@@ -84,8 +112,14 @@ Final answer: A
 
 最终答案：A
 
+</details>
 
-**Case 分析**
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：峰值位置被错误 caption 污染
 - 关键结论：真实峰值在最后三分之一；OpenTSLM caption 写成前半段峰值，导致 caption-only 和 caption+numbers 都偏离。ChatTS 保留了最后三分之一这个关键证据。
+
+</details>
+
+</details>

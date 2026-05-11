@@ -1,11 +1,29 @@
-### Case 13：deductive hard case：两个 caption 都失败
+<details>
+<summary>🗄 Case 13：dataset_a | deductive hard case：两个 caption 都失败</summary>
 
-- 数据集：`dataset_a`
-- Case ID：`dataset_a::0105`
-- 问题类型：`deductive,deductive,deductive`
-- Dataset-A 能力标签：`deductive, deductive, deductive`
-- 数值摘要：n=256, min=30.482, max=51.6, mean=44.588, std=2.1897, slope=-0.0019699, argmax=129, argmin=128
-- Dataset-A 标注属性原文：
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `dataset_a` |
+| Case ID | `dataset_a::0105` |
+| 问题类型 | `deductive,deductive,deductive` |
+| Dataset-A 能力标签 | `deductive, deductive, deductive` |
+| 正确答案 | `见 QA 折叠块` |
+
+数值摘要：n=256, min=30.482, max=51.6, mean=44.588, std=2.1897, slope=-0.0019699, argmax=129, argmin=128
+
+<details>
+<summary>🖼 时序图</summary>
+
+![dataset_a::0105](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0105.png)
+
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
+
+**Dataset-A 标注属性原文**
 
 [
   "No, it does not suggest an anomaly. Although there are local fluctuations around point 127 with an amplitude of 15.79, this amplitude does not exceed three times the noise standard deviation (2.372 * 3 = 7.116). Therefore, the observed behavior remains within expected limits based on the noise characteristics.",
@@ -13,17 +31,13 @@
   "No, the data should not be considered suspicious. Despite the high noise level with a standard deviation of 2.372, the CPU usage trend remains constant at 44.7 throughout, with no significant deviations in the average values over extended intervals. This stability aligns with expected normal operation behavior."
 ]
 
-- Dataset-A 标注属性中文翻译：
+**Dataset-A 标注属性中文翻译**
 
 [
   "不，它并不表明存在异常。尽管在点 127 附近存在幅度为 15.79 的局部波动，但该幅度并未超过噪声标准差的三倍（2.372 * 3 = 7.116）。因此，基于噪声特征，观察到的行为仍处于预期范围内。",
   "不，当前行为不应被标记为异常。尽管存在明显噪声，并且有一个特别小的向下尖峰，但该时间序列在 150 个数据点的规定时间段内并未显示出三次超过指定阈值的小幅波动。因此，该行为仍处于预期的运行方差范围内。",
   "不，该数据不应被视为可疑。尽管噪声水平较高，标准差为 2.372，但 CPU 使用率趋势始终保持在 44.7，长期区间内平均值没有显著偏差。这种稳定性符合预期的正常运行行为。"
 ]
-
-![dataset_a::0105](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0105.png)
-
-**QA 问题**
 
 **题干原文**
 
@@ -40,21 +54,26 @@ Now, based on the above questions, please strictly follow the output format requ
 2. 在 CPU 使用率通常稳定的场景中，频繁的小幅波动可能会被忽略，除非它们遵循特定模式，或在 150 个数据点的期间内超过三次小幅波动的组合阈值。考虑所提供的 CPU 使用率时间序列，是否应由于潜在的累积异常模式而将当前行为标记为异常？回答 Yes 或 No，并解释原因。
 3. 考虑到具有高噪声的稳定 CPU 使用率模式表明运行正常，并且如果显著区间内平均值的突然偏离超过噪声标准差的两倍，则被认为可疑，那么基于所提供的噪声水平，当前时间序列数据是否应表明运行行为存在可疑偏离？回答 Yes 或 No，并解释原因。
 现在，请基于上述问题，严格遵循输出格式要求并给出答案。每一行对应一个问题的答案，格式为：1. 严格格式化的答案 1
-- 选项：
+
+**选项**
 无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案原文：
+
+**正确答案原文**
 
 1. No, it does not suggest an anomaly. Although there are local fluctuations around point 127 with an amplitude of 15.79, this amplitude does not exceed three times the noise standard deviation (2.372 * 3 = 7.116). Therefore, the observed behavior remains within expected limits based on the noise characteristics.
 2. No, the current behavior should not be flagged as unusual. Although there is noticeable noise with a particularly small downward spike, the time series does not show three small fluctuations exceeding the specified threshold within the defined period of 150 data points. Hence, the behavior remains within expected operational variance.
 3. No, the data should not be considered suspicious. Despite the high noise level with a standard deviation of 2.372, the CPU usage trend remains constant at 44.7 throughout, with no significant deviations in the average values over extended intervals. This stability aligns with expected normal operation behavior.
 
-- 正确答案中文翻译：
+**正确答案中文翻译**
 
 1. 否，它并不表明存在异常。尽管在点 127 附近存在幅度为 15.79 的局部波动，但该幅度未超过噪声标准差的三倍（2.372 * 3 = 7.116）。因此，根据噪声特征，观察到的行为仍处于预期范围内。
 2. 否，当前行为不应被标记为异常。尽管存在明显噪声，并伴有一个特别小的向下尖峰，但该时间序列在定义的 150 个数据点期间内，并未显示出三次超过指定阈值的小幅波动。因此，该行为仍处于预期的运行方差范围内。
 3. 否，该数据不应被视为可疑。尽管噪声水平较高，标准差为 2.372，但 CPU 使用率趋势始终保持在 44.7，且在较长区间内的平均值没有显著偏差。这种稳定性符合预期的正常运行行为。
 
-**生成的 caption 与中文翻译**
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -78,7 +97,10 @@ The time series shows a flat trend with low volatility and medium strength seaso
 3. 从 44.92 到 44.92 保持稳定。
 4. 在点 128 和点 130 之间出现了一个幅度为 14.21 的向下尖峰，时间序列值从约 44.92 快速下降到约 30.71，然后迅速回升到约 44.92，形成一个向下尖峰。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 条件 | 平均分 | 分项分数 |
 | --- | ---: | --- |
@@ -92,6 +114,11 @@ The time series shows a flat trend with low volatility and medium strength seaso
 | `chatts_caption` | 0.00 | deductive=0.00 |
 | `chatts_caption_plus` | 0.00 | deductive=0.00 |
 | `chatts_wrong_caption` | 0.00 | deductive=0.00 |
+
+</details>
+
+<details>
+<summary>🧾 模型原始输出 / 代表性回答</summary>
 
 **代表性模型回答**
 
@@ -223,8 +250,14 @@ The time series shows a flat trend with low volatility and medium strength seaso
 2. 否 — 尽管存在一个明显的尖峰，但描述并未表明在 150 个点范围内存在反复的小幅波动或累积模式；它看起来是单个孤立事件，而不是一系列小异常。
 3. 是 — CPU 使用率总体稳定，突然出现的尖峰表示相对于平均行为的显著偏离，超过了低噪声水平下的预期范围，因此看起来可疑。
 
+</details>
 
-**Case 分析**
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：deductive hard case：两个 caption 都失败
 - 关键结论：这类 case 说明失败不只来自某一个 caption 模型，也来自下游任务对规则推理和领域条件的依赖，单纯 caption 监督无法解决。
+
+</details>
+
+</details>

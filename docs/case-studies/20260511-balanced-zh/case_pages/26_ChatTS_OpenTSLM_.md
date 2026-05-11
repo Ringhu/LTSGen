@@ -1,13 +1,26 @@
-### Case 26：ChatTS 错、OpenTSLM 对的反例
+<details>
+<summary>🧭 Case 26：TimeSeriesExam | ChatTS 错、OpenTSLM 对的反例</summary>
 
-- 数据集：`TimeSeriesExam`
-- Case ID：`timeseriesexam::tse_0010`
-- 问题类型：`Anolmaly Detection`
-- 数值摘要：n=128, min=-11.128, max=13.743, mean=3.8142, std=3.8011, slope=0.070196, argmax=103, argmin=0
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TimeSeriesExam` |
+| Case ID | `timeseriesexam::tse_0010` |
+| 问题类型 | `Anolmaly Detection` |
+| 正确答案 | `Yes, it's pattern is distorted by random spikes` |
+
+数值摘要：n=128, min=-11.128, max=13.743, mean=3.8142, std=3.8011, slope=0.070196, argmax=103, argmin=0
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![timeseriesexam::tse_0010](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/timeseriesexam_tse_0010.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -16,16 +29,21 @@ Is the given time series likely to have an anomaly?
 **题干中文翻译**
 
 给定的时间序列是否可能存在异常？
-- 选项：
+
+**选项**
 - A: No
   中文：否
 - B: Yes, it's pattern is distorted by random spikes
   中文：是的，它的模式被随机尖峰扭曲了。
 - C: Yes, it's pattern is flipped at certain point in time
   中文：是的，它的模式在某个时间点发生了翻转。
-- 正确答案：`Yes, it's pattern is distorted by random spikes`
 
-**生成的 caption 与中文翻译**
+**正确答案**：`Yes, it's pattern is distorted by random spikes`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -43,7 +61,10 @@ The overall trend is increasing. The global maximum, 11.65, occurs at point 127,
 
 整体趋势是上升的。全局最大值 11.65 出现在点 127，位于 128 点窗口的后三分之一。由噪声标准差（约 3.0）表征的短期波动，在窗口前半部分比后半部分更明显，而后半部分的趋势趋于稳定。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -53,7 +74,14 @@ The overall trend is increasing. The global maximum, 11.65, occurs at point 127,
 | `chatts_caption` | `A` | 错误 |
 | `wrong_caption` | `B` | 正确 |
 
-**Case 分析**
+</details>
+
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：ChatTS 错、OpenTSLM 对的反例
 - 关键结论：并非所有失败都来自 OpenTSLM；该 anomaly case 中 OpenTSLM 正确而 ChatTS 错，说明不同 caption 模型的偏差方向不同。
+
+</details>
+
+</details>

@@ -1,11 +1,29 @@
-### Case 11：Twitter mention causal case：事件含义依赖领域背景
+<details>
+<summary>🗄 Case 11：dataset_a | Twitter mention causal case：事件含义依赖领域背景</summary>
 
-- 数据集：`dataset_a`
-- Case ID：`dataset_a::0083`
-- 问题类型：`causal,causal,causal,causal`
-- Dataset-A 能力标签：`causal, causal, causal, causal`
-- 数值摘要：n=256, min=0, max=1673, mean=70.09, std=105.16, slope=-0.039424, argmax=128, argmin=230
-- Dataset-A 标注属性原文：
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `dataset_a` |
+| Case ID | `dataset_a::0083` |
+| 问题类型 | `causal,causal,causal,causal` |
+| Dataset-A 能力标签 | `causal, causal, causal, causal` |
+| 正确答案 | `见 QA 折叠块` |
+
+数值摘要：n=256, min=0, max=1673, mean=70.09, std=105.16, slope=-0.039424, argmax=128, argmin=230
+
+<details>
+<summary>🖼 时序图</summary>
+
+![dataset_a::0083](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0083.png)
+
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
+
+**Dataset-A 标注属性原文**
 
 [
   "Unexpected news release. The time series indicates a generally stable level with a sudden upward spike near point 128, followed by an increase. This pattern suggests a reaction to a specific event, such as unexpected news, that would likely trigger a sudden surge in mentions.",
@@ -14,7 +32,7 @@
   "High volatility with no clear trend. Between time points 50 and 90, the overall behavior doesn't suggest a consistent upward or downward shift but rather significant noise, indicating substantial fluctuation with no distinct pattern."
 ]
 
-- Dataset-A 标注属性中文翻译：
+**Dataset-A 标注属性中文翻译**
 
 [
   "意外新闻发布。该时间序列显示总体水平较为稳定，在接近点 128 处突然向上飙升，随后出现增加。这种模式表明可能是对某一特定事件的反应，例如意外新闻，这很可能会引发提及量的突然激增。",
@@ -22,10 +40,6 @@
   "讨论水平稳定。在时间点 100 到 120 之间，提及次数保持稳定，随后在接近点 128 处出现向上飙升。这表明该时期内行为一致，没有任何显著增加或减少。",
   "高波动且无明确趋势。在时间点 50 到 90 之间，整体行为并不显示出一致的上升或下降变化，而是呈现显著噪声，表明存在大幅波动且没有明显模式。"
 ]
-
-![dataset_a::0083](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0083.png)
-
-**QA 问题**
 
 **题干原文**
 
@@ -44,23 +58,28 @@ Now, based on the above questions, please strictly follow the output format requ
 3. 观察 AMZN 提及次数的时间序列，在时间点 100 到 120 之间可能发生了什么？从以下选项中选择：讨论水平稳定、提及次数减少，或 AMZN 相关讨论显著上升。
 4. 基于 AMZN 的提及次数，时间点 50 到 90 之间的整体行为可能是什么？从以下选项中选择：持续上升趋势、显著下降变化，或高波动且无明确趋势。
 现在，请基于上述问题，严格遵循输出格式要求并提供答案。每一行对应一个问题的答案，格式为：1. 严格格式化的答案 1
-- 选项：
+
+**选项**
 无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案原文：
+
+**正确答案原文**
 
 1. Unexpected news release. The time series indicates a generally stable level with a sudden upward spike near point 128, followed by an increase. This pattern suggests a reaction to a specific event, such as unexpected news, that would likely trigger a sudden surge in mentions.
 2. Increased interest in AMZN stock. The observed pattern shows a significant upward spike followed by an increase, suggesting that similar future spikes could correlate with heightened public interest, potentially driving more attention and interest towards AMZN stock.
 3. Stable discussion levels. Between time points 100 and 120, the number of mentions remains steady before experiencing an upward spike near point 128. This indicates consistent behavior during this period without any notable increases or decreases.
 4. High volatility with no clear trend. Between time points 50 and 90, the overall behavior doesn't suggest a consistent upward or downward shift but rather significant noise, indicating substantial fluctuation with no distinct pattern.
 
-- 正确答案中文翻译：
+**正确答案中文翻译**
 
 1. 意外新闻发布。该时间序列显示出总体稳定的水平，在点 128 附近突然向上尖峰，随后增加。这种模式表明可能是对某一特定事件的反应，例如意外新闻，这很可能会引发提及量的突然激增。
 2. 对 AMZN 股票的兴趣增加。观察到的模式显示出一次显著的向上尖峰，随后增加，表明未来类似的尖峰可能与公众兴趣上升相关，并可能促使更多关注和兴趣转向 AMZN 股票。
 3. 讨论水平稳定。在时间点 100 到 120 之间，提及数量保持稳定，随后在点 128 附近出现向上尖峰。这表明该时期内行为一致，没有任何明显的增加或减少。
 4. 高波动性且无明确趋势。在时间点 50 到 90 之间，整体行为并不显示出一致的上升或下降变化，而是表现为显著噪声，表明存在大幅波动且没有明显模式。
 
-**生成的 caption 与中文翻译**
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -78,7 +97,10 @@ The time series shows a steady upward trend with low volatility, characterized b
 
 1. 噪声较大，标准差约为 13.74。2. 未观察到周期性波动，显示无周期性波动。3. 从 21.38 下降到 44.59。4. 在点 127 和点 130，出现了 2 次连续的向上尖峰，幅度范围为 1082.89 到 1622.15，时间序列值从约 49.86 反复急剧上升到约 1132.75 和 1672.01，然后迅速回落到约 49.86，形成连续的向上尖峰。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 条件 | 平均分 | 分项分数 |
 | --- | ---: | --- |
@@ -92,6 +114,11 @@ The time series shows a steady upward trend with low volatility, characterized b
 | `chatts_caption` | 1.00 | causal=1.00 |
 | `chatts_caption_plus` | 1.00 | causal=1.00 |
 | `chatts_wrong_caption` | 0.75 | causal=0.75 |
+
+</details>
+
+<details>
+<summary>🧾 模型原始输出 / 代表性回答</summary>
 
 **代表性模型回答**
 
@@ -235,8 +262,14 @@ The time series shows a steady upward trend with low volatility, characterized b
 3. 讨论水平稳定
 4. 高波动性且无明确趋势
 
+</details>
 
-**Case 分析**
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：Twitter mention causal case：事件含义依赖领域背景
 - 关键结论：社交媒体 mentions 的 spike 需要解释为新闻、公告或市场事件。OpenTSLM 只部分命中，ChatTS 更稳定，显示 caption 风格会影响领域归因。
+
+</details>
+
+</details>

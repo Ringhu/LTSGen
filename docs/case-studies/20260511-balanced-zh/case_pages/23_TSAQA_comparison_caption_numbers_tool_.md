@@ -1,15 +1,29 @@
-### Case 23：TSAQA comparison：两个 caption 都错，numbers/tool 对
+<details>
+<summary>🧪 Case 23：TSAQA | TSAQA comparison：两个 caption 都错，numbers/tool 对</summary>
 
-- 数据集：`TSAQA`
-- Case ID：`tsaqa::0677`
-- 问题类型：`comparison`
-- 领域 / 子数据集：`["web", "web"]` / `-`
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TSAQA` |
+| Case ID | `tsaqa::0677` |
+| 问题类型 | `comparison` |
+| 领域 / 子数据集 | `["web", "web"]` / `-` |
+| 正确答案 | `B` |
+
 - artifact 说明：TSAQA 此 case 已按 full-eval task 顺序和 local index 回连 phase_a 原始题干/序列；当前本地没有保存 OpenTSLM/ChatTS 原始 caption 对照文本，因此此处展示可用 SFT caption 样本和多条件答案。
-- 数值摘要：n=406, min=-1.8571, max=7.6106, mean=2.4631e-06, std=1, slope=0.00012909, argmax=318, argmin=168
+
+数值摘要：n=406, min=-1.8571, max=7.6106, mean=2.4631e-06, std=1, slope=0.00012909, argmax=318, argmin=168
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![tsaqa::0677](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/tsaqa_0677.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -40,11 +54,16 @@ D：两者都没有表现出正向局部趋势
 **背景信息中文翻译**
 
 ["单篇英文维基百科文章每日页面浏览次数的时间序列。", "单篇英文维基百科文章每日页面浏览次数的时间序列。"]
-- 选项：
-无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案：`B`
 
-**生成的 caption 与中文翻译**
+**选项**
+无固定选项；题目要求按指定格式直接生成答案。
+
+**正确答案**：`B`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **可用 caption 样本 原文**
 
@@ -60,7 +79,10 @@ D：两者都没有表现出正向局部趋势
 3. 从 -0.50 到 -0.50 保持稳定。
 4. 在点 152、点 155 和点 159，出现了 3 个连续的向上尖峰，幅度范围为 2.39 到 3.04，时间序列值反复从约 -0.50 急剧上升到约 1.89、2.47 和 1.9，然后迅速回落到约 -0.50，形成连续的向上尖峰；在点 298、点 302、点 309、点 314 和点 320，出现了 5 个连续的向上尖峰，幅度范围为 3.89 到 7.47，时间序列值反复从约 -0.50 急剧上升到约 5.77、3.39、7.24、6.94 和 4.37，然后迅速回落到约 -0.50，形成连续的向上尖峰。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -72,7 +94,14 @@ D：两者都没有表现出正向局部趋势
 | `chatts_caption_plus` | `A` | 错误 |
 | `tool_agent` | `B` | 正确 |
 
-**Case 分析**
+</details>
+
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：TSAQA comparison：两个 caption 都错，numbers/tool 对
 - 关键结论：问题要求判断哪个序列有更强的正向局部趋势。两个 caption 模型都未能把 upward spikes 的相对强弱编码清楚，raw numbers 和 tool-agent 可以恢复答案。
+
+</details>
+
+</details>

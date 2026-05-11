@@ -46,13 +46,13 @@ Across the full period, what is the overall direction of this exchange-rate seri
 
 **选项**
 
-- A. Steadily decreasing overall  
+- A. Steadily decreasing overall
   中文：A. 整体稳步下降
-- B. Mixed, with no consistent direction  
+- B. Mixed, with no consistent direction
   中文：B. 混合变化，没有一致方向
-- C. Steadily increasing overall  
+- C. Steadily increasing overall
   中文：C. 整体稳步上升
-- D. Roughly flat with minor noise  
+- D. Roughly flat with minor noise
   中文：D. 大致平稳，仅有轻微噪声
 
 </details>

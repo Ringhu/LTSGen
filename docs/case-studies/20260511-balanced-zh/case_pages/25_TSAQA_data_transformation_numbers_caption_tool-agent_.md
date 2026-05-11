@@ -1,15 +1,29 @@
-### Case 25：TSAQA data transformation：numbers/caption 都错，tool-agent 对
+<details>
+<summary>🧪 Case 25：TSAQA | TSAQA data transformation：numbers/caption 都错，tool-agent 对</summary>
 
-- 数据集：`TSAQA`
-- Case ID：`tsaqa::0858`
-- 问题类型：`data_transformation`
-- 领域 / 子数据集：`["finance", "nature"]` / `-`
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TSAQA` |
+| Case ID | `tsaqa::0858` |
+| 问题类型 | `data_transformation` |
+| 领域 / 子数据集 | `["finance", "nature"]` / `-` |
+| 正确答案 | `F` |
+
 - artifact 说明：TSAQA 此 case 已按 full-eval task 顺序和 local index 回连 phase_a 原始题干/序列；当前本地没有保存 OpenTSLM/ChatTS 原始 caption 对照文本，因此此处展示可用 SFT caption 样本和多条件答案。
-- 数值摘要：n=60, min=-1.8082, max=1.7084, mean=3.3333e-06, std=1, slope=0.056825, argmax=59, argmin=0
+
+数值摘要：n=60, min=-1.8082, max=1.7084, mean=3.3333e-06, std=1, slope=0.056825, argmax=59, argmin=0
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![tsaqa::0858](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/tsaqa_0858.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -38,11 +52,16 @@ F：错误。
 **背景信息中文翻译**
 
 ["单个美国经济时间序列的月度宏观经济指标测量时间序列。", "单个 1.5°×1.5° 经纬度网格单元的日降水量测量时间序列（毫米）。"]
-- 选项：
-无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案：`F`
 
-**生成的 caption 与中文翻译**
+**选项**
+无固定选项；题目要求按指定格式直接生成答案。
+
+**正确答案**：`F`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **可用 caption 样本 原文**
 
@@ -52,7 +71,10 @@ F：错误。
 
 1) 几乎没有噪声 2) 没有周期性波动 3) 从 -1.81 增加到 1.71 4) 未发现局部特征。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -64,7 +86,14 @@ F：错误。
 | `chatts_caption_plus` | `T` | 错误 |
 | `tool_agent` | `F` | 正确 |
 
-**Case 分析**
+</details>
+
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：TSAQA data transformation：numbers/caption 都错，tool-agent 对
 - 关键结论：该题判断 Fourier transform 序列真伪。numbers 和两个 caption 条件都答错，但 tool-agent 答对，说明这类题需要显式计算工具，而不是语言模型凭描述判断。
+
+</details>
+
+</details>

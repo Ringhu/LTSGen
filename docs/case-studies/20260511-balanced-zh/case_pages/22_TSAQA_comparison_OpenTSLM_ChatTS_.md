@@ -1,15 +1,29 @@
-### Case 22：TSAQA comparison：OpenTSLM 错、ChatTS 对
+<details>
+<summary>🧪 Case 22：TSAQA | TSAQA comparison：OpenTSLM 错、ChatTS 对</summary>
 
-- 数据集：`TSAQA`
-- Case ID：`tsaqa::0665`
-- 问题类型：`comparison`
-- 领域 / 子数据集：`["healthcare", "healthcare"]` / `-`
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TSAQA` |
+| Case ID | `tsaqa::0665` |
+| 问题类型 | `comparison` |
+| 领域 / 子数据集 | `["healthcare", "healthcare"]` / `-` |
+| 正确答案 | `F` |
+
 - artifact 说明：TSAQA 此 case 已按 full-eval task 顺序和 local index 回连 phase_a 原始题干/序列；当前本地没有保存 OpenTSLM/ChatTS 原始 caption 对照文本，因此此处展示可用 SFT caption 样本和多条件答案。
-- 数值摘要：n=410, min=-2.1711, max=2.4555, mean=-2.1951e-06, std=0.99999, slope=7.1544e-05, argmax=54, argmin=267
+
+数值摘要：n=410, min=-2.1711, max=2.4555, mean=-2.1951e-06, std=0.99999, slope=7.1544e-05, argmax=54, argmin=267
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![tsaqa::0665](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/tsaqa_0665.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -36,11 +50,16 @@ F：错误。
 **背景信息中文翻译**
 
 ["由光电容积脉搏波（PPG）和心电图（ECG）信号的滑动 32 秒窗口得出的心率测量数值序列（每分钟心跳次数），其中每个值反映其对应窗口内的估计心率。", "美国每日出生人数的时间序列。"]
-- 选项：
-无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案：`F`
 
-**生成的 caption 与中文翻译**
+**选项**
+无固定选项；题目要求按指定格式直接生成答案。
+
+**正确答案**：`F`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **可用 caption 样本 原文**
 
@@ -56,7 +75,10 @@ F：错误。
 3. 从 0.31 到 1.05 保持稳定。
 4. 未发现局部特征。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -68,7 +90,14 @@ F：错误。
 | `chatts_caption_plus` | `F` | 正确 |
 | `tool_agent` | `F` | 正确 |
 
-**Case 分析**
+</details>
+
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：TSAQA comparison：OpenTSLM 错、ChatTS 对
 - 关键结论：该题比较两个医疗时间序列的变异系数和自相关/周期峰谷。OpenTSLM caption 条件答错，ChatTS 和 numbers 答对，说明多序列比较需要保留跨序列相对量，而不是只描述单条序列。
+
+</details>
+
+</details>

@@ -1,11 +1,29 @@
-### Case 07：Oracle 局部 spike 被幻觉成 seasonality
+<details>
+<summary>🗄 Case 07：dataset_a | Oracle 局部 spike 被幻觉成 seasonality</summary>
 
-- 数据集：`dataset_a`
-- Case ID：`dataset_a::0000`
-- 问题类型：`noise,local,season,local-inductive`
-- Dataset-A 能力标签：`noise, local, season, local-inductive`
-- 数值摘要：n=256, min=0, max=4.2794, mean=0.016716, std=0.26694, slope=0.00030456, argmax=227, argmin=0
-- Dataset-A 标注属性原文：
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `dataset_a` |
+| Case ID | `dataset_a::0000` |
+| 问题类型 | `noise,local,season,local-inductive` |
+| Dataset-A 能力标签 | `noise, local, season, local-inductive` |
+| 正确答案 | `见 QA 折叠块` |
+
+数值摘要：n=256, min=0, max=4.2794, mean=0.016716, std=0.26694, slope=0.00030456, argmax=227, argmin=0
+
+<details>
+<summary>🖼 时序图</summary>
+
+![dataset_a::0000](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0000.png)
+
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
+
+**Dataset-A 标注属性原文**
 
 [
   {
@@ -34,7 +52,7 @@
   ]
 ]
 
-- Dataset-A 标注属性中文翻译：
+**Dataset-A 标注属性中文翻译**
 
 [
   {
@@ -63,10 +81,6 @@
   ]
 ]
 
-![dataset_a::0000](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0000.png)
-
-**QA 问题**
-
 **题干原文**
 
 You are a time series analysis expert. This time series is "##enq: SQ - contention" from Oracle Database System with length of 256: &lt;ts&gt;&lt;ts/&gt;, please analyze the time series features and answer the following questions:
@@ -91,23 +105,28 @@ Now, based on the above questions, please strictly follow the output format requ
 2. 严格格式化的答案 2
 3. 严格格式化的答案 3
 4. 严格格式化的答案 4
-- 选项：
+
+**选项**
 无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案原文：
+
+**正确答案原文**
 
 1. almost no noise, the overall noise standard deviation is around 0.00.
 2. upward spike, position around point 226, amplitude 4.28
 3. no periodic fluctuation
 4. upward spike, position around point 226, amplitude 4.28. The database is experiencing significant contention issues related to enqueue resources
 
-- 正确答案中文翻译：
+**正确答案中文翻译**
 
 1. 几乎没有噪声，整体噪声标准差约为 0.00。
 2. 向上尖峰，位置约在点 226，幅度为 4.28。
 3. 无周期性波动。
 4. 向上尖峰，位置约在点 226，幅度为 4.28。数据库正经历与入队资源相关的严重争用问题。
 
-**生成的 caption 与中文翻译**
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -125,7 +144,10 @@ The time series shows a flat trend with low volatility and a strong seasonal pat
 
 1) 几乎没有噪声 2) 无周期性波动 3) 保持稳定 4) 向上尖峰，位置约在点 226，幅度 4.28
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 条件 | 平均分 | 分项分数 |
 | --- | ---: | --- |
@@ -139,6 +161,11 @@ The time series shows a flat trend with low volatility and a strong seasonal pat
 | `chatts_caption` | 0.96 | local=1.00，local-inductive=0.83，noise=1.00，season=1.00 |
 | `chatts_caption_plus` | 0.96 | local=1.00，local-inductive=0.83，noise=1.00，season=1.00 |
 | `chatts_wrong_caption` | 0.25 | local=0.00，local-inductive=0.00，noise=0.00，season=1.00 |
+
+</details>
+
+<details>
+<summary>🧾 模型原始输出 / 代表性回答</summary>
 
 **代表性模型回答**
 
@@ -282,8 +309,14 @@ The time series shows a flat trend with low volatility and a strong seasonal pat
 3. 无周期性波动。
 4. 突然增加，位置约在点 128，幅度 11.80。急剧上升可能反映了争用活动的短暂激增，可能由突发工作负载、锁升级或并发访问激增引起。
 
+</details>
 
-**Case 分析**
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：Oracle 局部 spike 被幻觉成 seasonality
 - 关键结论：真实属性是 point 226 的 upward spike，领域含义是 enqueue 资源争用；OpenTSLM 编造 180-step seasonality 和多处事件，ChatTS 保留了关键局部事实。
+
+</details>
+
+</details>

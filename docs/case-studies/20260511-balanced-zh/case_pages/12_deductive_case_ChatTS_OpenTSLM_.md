@@ -1,25 +1,39 @@
-### Case 12：deductive case：ChatTS 对，OpenTSLM 失败
+<details>
+<summary>🗄 Case 12：dataset_a | deductive case：ChatTS 对，OpenTSLM 失败</summary>
 
-- 数据集：`dataset_a`
-- Case ID：`dataset_a::0096`
-- 问题类型：`deductive`
-- Dataset-A 能力标签：`deductive`
-- 数值摘要：n=256, min=160.4, max=265.6, mean=182.82, std=11.782, slope=0.013501, argmax=224, argmin=125
-- Dataset-A 标注属性原文：
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `dataset_a` |
+| Case ID | `dataset_a::0096` |
+| 问题类型 | `deductive` |
+| Dataset-A 能力标签 | `deductive` |
+| 正确答案 | `见 QA 折叠块` |
+
+数值摘要：n=256, min=160.4, max=265.6, mean=182.82, std=11.782, slope=0.013501, argmax=224, argmin=125
+
+<details>
+<summary>🖼 时序图</summary>
+
+![dataset_a::0096](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0096.png)
+
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
+
+**Dataset-A 标注属性原文**
 
 [
   "Yes, it should not be regarded as Active. The standard deviation of the noise is 7.52, which surpasses the normal threshold of 5, indicating that the utilization is not within expected normal limits."
 ]
 
-- Dataset-A 标注属性中文翻译：
+**Dataset-A 标注属性中文翻译**
 
 [
   "是的，不应将其视为 Active。噪声的标准差为 7.52，超过了正常阈值 5，表明利用率不在预期的正常范围内。"
 ]
-
-![dataset_a::0096](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0096.png)
-
-**QA 问题**
 
 **题干原文**
 
@@ -32,17 +46,22 @@ Now, based on the above questions, please strictly follow the output format requ
 你是一位时间序列分析专家。该时间序列是来自服务器、长度为 256 的“CPU 利用率”：&lt;ts&gt;&lt;ts/&gt;，请分析该时间序列的特征并回答以下问题：
 1. 已知如果整体噪声水平的标准差大于 1.0，则 CPU 利用率应标记为 "Active"。该时间序列是否应标记为 "Active"？回答是或否，并说明理由。
 现在，请基于上述问题，严格遵循输出格式要求并给出答案。每一行对应一个问题的答案，格式为：1. 严格格式化的答案 1
-- 选项：
+
+**选项**
 无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案原文：
+
+**正确答案原文**
 
 1. Yes, it should not be regarded as Active. The standard deviation of the noise is 7.52, which surpasses the normal threshold of 5, indicating that the utilization is not within expected normal limits.
 
-- 正确答案中文翻译：
+**正确答案中文翻译**
 
 1. 是的，不应将其视为 Active。噪声的标准差为 7.52，超过了正常阈值 5，表明利用率不在预期的正常范围内。
 
-**生成的 caption 与中文翻译**
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -66,7 +85,10 @@ The time series shows a flat trend with low volatility and medium strength seaso
 3. 从 179.50 到 179.50 保持稳定
 4. 未发现局部特征
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 条件 | 平均分 | 分项分数 |
 | --- | ---: | --- |
@@ -80,6 +102,11 @@ The time series shows a flat trend with low volatility and medium strength seaso
 | `chatts_caption` | 1.00 | deductive=1.00 |
 | `chatts_caption_plus` | 0.00 | deductive=0.00 |
 | `chatts_wrong_caption` | 0.00 | deductive=0.00 |
+
+</details>
+
+<details>
+<summary>🧾 模型原始输出 / 代表性回答</summary>
 
 **代表性模型回答**
 
@@ -163,8 +190,14 @@ The time series shows a flat trend with low volatility and medium strength seaso
 
 1. 是——该时间序列应标记为 **Active**，因为整体噪声标准差约为 **2.51**，大于阈值 **1.0**。
 
+</details>
 
-**Case 分析**
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：deductive case：ChatTS 对，OpenTSLM 失败
 - 关键结论：deductive 问题需要按题目规则推出结论，不只是描述时序。OpenTSLM caption 条件为 0，说明摘要并没有转化为可执行的推理前提。
+
+</details>
+
+</details>

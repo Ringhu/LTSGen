@@ -21,18 +21,32 @@
 
 ## A. 纯时序形态失败：趋势、极值、波动、异常
 
-### Case 01：mixed trend 被压缩成 flat/upward
+<details>
+<summary>📈 Case 01：TSShapeQA-OOD | mixed trend 被压缩成 flat/upward</summary>
 
-- 数据集：`TSShapeQA-OOD`
-- Case ID：`tsshapeqa::0008::exchange_rate:5:w384:s3456`
-- 问题类型：`TREND`
-- 领域 / 子数据集：`finance` / `exchange_rate`
-- 数值摘要：n=384, min=0.008729, max=0.010699, mean=0.0093172, std=0.00025239, slope=7.1632e-07, argmax=204, argmin=44
-- 标注特征：`{'ambiguous': False, 'label': 'mixed', 'norm_effect': 1.0870287886386036, 'r2': 0.09898349893857857, 'slope': 7.163240480146482e-07}`
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TSShapeQA-OOD` |
+| Case ID | `tsshapeqa::0008::exchange_rate:5:w384:s3456` |
+| 问题类型 | `TREND` |
+| 领域 / 子数据集 | `finance` / `exchange_rate` |
+| 正确答案 | `B` |
+
+数值摘要：n=384, min=0.008729, max=0.010699, mean=0.0093172, std=0.00025239, slope=7.1632e-07, argmax=204, argmin=44
+
+标注特征：`{'ambiguous': False, 'label': 'mixed', 'norm_effect': 1.0870287886386036, 'r2': 0.09898349893857857, 'slope': 7.163240480146482e-07}`
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![tsshapeqa::0008::exchange_rate:5:w384:s3456](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/tsshapeqa_0008_exchange_rate_5_w384_s3456.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -41,7 +55,8 @@ Across the full period, what is the overall direction of this exchange-rate seri
 **题干中文翻译**
 
 在整个时期内，该汇率序列的整体走势方向是什么？
-- 选项：
+
+**选项**
 - A. Steadily decreasing overall
   中文：A. 整体稳步下降
 - B. Mixed, with no consistent direction
@@ -50,9 +65,13 @@ Across the full period, what is the overall direction of this exchange-rate seri
   中文：C. 整体稳步上升
 - D. Roughly flat with minor noise
   中文：D. 大致平稳，仅有轻微噪声
-- 正确答案：`B`
 
-**生成的 caption 与中文翻译**
+**正确答案**：`B`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -78,7 +97,10 @@ The time series shows a flat trend with high volatility and no clear seasonality
 
 该时间序列呈现出平坦趋势，波动性较高，且没有明显季节性。数据在窗口早期出现显著下行，随后在前半段进入上行阶段，接着在后半段再次下降。后半段出现一个显著峰值，达到均值以上约 13.1 个标准差；而前半段观察到一个较小的谷值，约低于均值 1.0 个标准差。该序列分别与变量 6 和变量 3 存在中等程度的正相关和负相关。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -90,6 +112,12 @@ The time series shows a flat trend with high volatility and no clear seasonality
 | `chatts_caption` | `D` | 错误 |
 | `chatts_caption_plus` | `D` | 错误 |
 | `tool_agent` | `B` | 正确 |
+
+</details>
+
+<details>
+<summary>🧾 模型原始输出 / 代表性回答</summary>
+
 
 **模型原始输出（按源 artifact 原样展示）**
 
@@ -107,24 +135,44 @@ Final answer: D
 
 最终答案：D
 
+</details>
 
-**Case 分析**
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：mixed trend 被压缩成 flat/upward
 - 关键结论：真实答案需要识别完整窗口内的 mixed movement；OpenTSLM 把它写成上升和季节性，ChatTS 把它写成平坦，两个 caption 都没有保留可回答 QA 的趋势证据。
 
-### Case 02：峰值位置被错误 caption 污染
+</details>
 
-- 数据集：`TSShapeQA-OOD`
-- Case ID：`tsshapeqa::0005::timemmd:Energy:Weekly_New_England_(:w512:s0`
-- 问题类型：`EXTREMA_POS`
-- 领域 / 子数据集：`Energy` / `timemmd`
-- 数值摘要：n=512, min=0.993, max=1.791, mean=1.2973, std=0.18544, slope=0.00081632, argmax=425, argmin=308
-- 标注特征：`{'ambiguous': False, 'argmax_idx': 425, 'bucket': 'last', 'rel_position': 0.8317025440313112}`
+</details>
+
+<details>
+<summary>📈 Case 02：TSShapeQA-OOD | 峰值位置被错误 caption 污染</summary>
+
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TSShapeQA-OOD` |
+| Case ID | `tsshapeqa::0005::timemmd:Energy:Weekly_New_England_(:w512:s0` |
+| 问题类型 | `EXTREMA_POS` |
+| 领域 / 子数据集 | `Energy` / `timemmd` |
+| 正确答案 | `A` |
+
+数值摘要：n=512, min=0.993, max=1.791, mean=1.2973, std=0.18544, slope=0.00081632, argmax=425, argmin=308
+
+标注特征：`{'ambiguous': False, 'argmax_idx': 425, 'bucket': 'last', 'rel_position': 0.8317025440313112}`
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![tsshapeqa::0005::timemmd:Energy:Weekly_New_England_(:w512:s0](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/tsshapeqa_0005_timemmd_Energy_Weekly_New_England__w512_s0.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -133,7 +181,8 @@ In which third of this 512-week gasoline price series does the highest price occ
 **题干中文翻译**
 
 这条 512 周汽油价格序列中的最高价格出现在哪三分之一时段？
-- 选项：
+
+**选项**
 - A. last third
   中文：A. 最后三分之一
 - B. cannot determine from data
@@ -142,9 +191,13 @@ In which third of this 512-week gasoline price series does the highest price occ
   中文：C. 中间三分之一
 - D. first third
   中文：D. 前三分之一
-- 正确答案：`A`
 
-**生成的 caption 与中文翻译**
+**正确答案**：`A`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -170,7 +223,10 @@ The time series shows a flat trend with high volatility and no clear seasonality
 
 该时间序列表现为趋势平稳、波动性高，且没有明显季节性。数据在窗口早期以温和上升开始，随后在前半段出现更强的增长，并在后半段显著上升。峰值出现在窗口后期，达到约高于均值 3.0 个标准差；而谷值出现在早期，约低于均值 1.9 个标准差。该序列与另一个汽油价格变量 PADD 1B 呈强正相关。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -182,6 +238,12 @@ The time series shows a flat trend with high volatility and no clear seasonality
 | `chatts_caption` | `A` | 正确 |
 | `chatts_caption_plus` | `A` | 正确 |
 | `tool_agent` | `A` | 正确 |
+
+</details>
+
+<details>
+<summary>🧾 模型原始输出 / 代表性回答</summary>
+
 
 **模型原始输出（按源 artifact 原样展示）**
 
@@ -199,24 +261,44 @@ Final answer: A
 
 最终答案：A
 
+</details>
 
-**Case 分析**
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：峰值位置被错误 caption 污染
 - 关键结论：真实峰值在最后三分之一；OpenTSLM caption 写成前半段峰值，导致 caption-only 和 caption+numbers 都偏离。ChatTS 保留了最后三分之一这个关键证据。
 
-### Case 03：波动半区判断被反转
+</details>
 
-- 数据集：`TSShapeQA-OOD`
-- Case ID：`tsshapeqa::0000::timemmd:Climate:Total:D3:w256:s256`
-- 问题类型：`VOLATILITY_REGION`
-- 领域 / 子数据集：`Climate` / `timemmd`
-- 数值摘要：n=256, min=0, max=12.06, mean=4.1461, std=2.9609, slope=0.022335, argmax=191, argmin=5
-- 标注特征：`{'ambiguous': False, 'higher_half': 'first', 'ratio_first_over_second': 1.5634139069284252, 'std_first': 2.529450588926891, 'std_second': 1.6179020652917402}`
+</details>
+
+<details>
+<summary>📈 Case 03：TSShapeQA-OOD | 波动半区判断被反转</summary>
+
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TSShapeQA-OOD` |
+| Case ID | `tsshapeqa::0000::timemmd:Climate:Total:D3:w256:s256` |
+| 问题类型 | `VOLATILITY_REGION` |
+| 领域 / 子数据集 | `Climate` / `timemmd` |
+| 正确答案 | `D` |
+
+数值摘要：n=256, min=0, max=12.06, mean=4.1461, std=2.9609, slope=0.022335, argmax=191, argmin=5
+
+标注特征：`{'ambiguous': False, 'higher_half': 'first', 'ratio_first_over_second': 1.5634139069284252, 'std_first': 2.529450588926891, 'std_second': 1.6179020652917402}`
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![tsshapeqa::0000::timemmd:Climate:Total:D3:w256:s256](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/tsshapeqa_0000_timemmd_Climate_Total_D3_w256_s256.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -225,7 +307,8 @@ Looking across the 256-week drought series, which half shows greater short-term 
 **题干中文翻译**
 
 纵观 256 周的干旱序列，哪一半表现出更大的短期波动性，即周与周之间的变化更为锯齿状？
-- 选项：
+
+**选项**
 - A. Second half
   中文：A. 后半段
 - B. Roughly equal volatility
@@ -234,9 +317,13 @@ Looking across the 256-week drought series, which half shows greater short-term 
   中文：C. 无法从序列中判断
 - D. First half
   中文：D. 前半段
-- 正确答案：`D`
 
-**生成的 caption 与中文翻译**
+**正确答案**：`D`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -262,7 +349,10 @@ The time series shows a flat trend with medium volatility and a medium-strength 
 
 该时间序列呈现平稳趋势，具有中等波动性和中等强度的日季节性。窗口早期有一个明显的上升阶段，随后在前半部分出现显著的下降阶段，并且在后半部分出现强劲的上升走势。前半部分出现一个峰值，其幅度约为偏离均值 3.1 个标准差；而窗口早期观察到一个谷值，幅度较小，约为 1.1 个标准差。该序列与变量 D1 和 C2 呈中等程度的正相关。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -274,6 +364,12 @@ The time series shows a flat trend with medium volatility and a medium-strength 
 | `chatts_caption` | `D` | 正确 |
 | `chatts_caption_plus` | `D` | 正确 |
 | `tool_agent` | `D` | 正确 |
+
+</details>
+
+<details>
+<summary>🧾 模型原始输出 / 代表性回答</summary>
+
 
 **模型原始输出（按源 artifact 原样展示）**
 
@@ -291,24 +387,44 @@ Final answer: A
 
 最终答案：A
 
+</details>
 
-**Case 分析**
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：波动半区判断被反转
 - 关键结论：问题要求比较哪一半更 jagged。OpenTSLM 给出低波动、后段峰值等泛化描述，不能支持 first-half volatility；ChatTS 明确指出前半段波动更明显。
 
-### Case 04：caption+numbers 整合不稳定
+</details>
 
-- 数据集：`TSShapeQA-OOD`
-- Case ID：`tsshapeqa::0011::exchange_rate:1:w384:s2496`
-- 问题类型：`VOLATILITY_REGION`
-- 领域 / 子数据集：`finance` / `exchange_rate`
-- 数值摘要：n=384, min=1.3723, max=1.5974, mean=1.4682, std=0.05175, slope=-0.00038125, argmax=20, argmin=330
-- 标注特征：`{'ambiguous': False, 'higher_half': 'first', 'ratio_first_over_second': 1.2128497962927494, 'std_first': 0.02240062292164124, 'std_second': 0.018469412279161965}`
+</details>
+
+<details>
+<summary>📈 Case 04：TSShapeQA-OOD | caption+numbers 整合不稳定</summary>
+
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TSShapeQA-OOD` |
+| Case ID | `tsshapeqa::0011::exchange_rate:1:w384:s2496` |
+| 问题类型 | `VOLATILITY_REGION` |
+| 领域 / 子数据集 | `finance` / `exchange_rate` |
+| 正确答案 | `D` |
+
+数值摘要：n=384, min=1.3723, max=1.5974, mean=1.4682, std=0.05175, slope=-0.00038125, argmax=20, argmin=330
+
+标注特征：`{'ambiguous': False, 'higher_half': 'first', 'ratio_first_over_second': 1.2128497962927494, 'std_first': 0.02240062292164124, 'std_second': 0.018469412279161965}`
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![tsshapeqa::0011::exchange_rate:1:w384:s2496](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/tsshapeqa_0011_exchange_rate_1_w384_s2496.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -317,7 +433,8 @@ Which half of this exchange-rate series shows larger short-term fluctuations ove
 **题干中文翻译**
 
 这个汇率序列的哪一半总体上显示出更大的短期波动？
-- 选项：
+
+**选项**
 - A. Second half
   中文：A. 后半段
 - B. Roughly equal volatility
@@ -326,9 +443,13 @@ Which half of this exchange-rate series shows larger short-term fluctuations ove
   中文：C. 无法从序列中判断
 - D. First half
   中文：D. 前半段
-- 正确答案：`D`
 
-**生成的 caption 与中文翻译**
+**正确答案**：`D`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -354,7 +475,10 @@ The time series shows a flat trend with medium volatility and a medium-strength 
 
 该时间序列表现出平稳趋势、中等波动性以及中等强度的日季节性。数据在窗口早期以显著下降阶段开始，随后在前半段出现上升走势，然后在后半段急剧下降。一个显著峰值出现在后半段，达到高于均值约 3.0 个标准差；而在序列中部附近观察到一个谷值，约低于均值 1.8 个标准差。若干变量与目标序列表现出中等正相关。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -366,6 +490,12 @@ The time series shows a flat trend with medium volatility and a medium-strength 
 | `chatts_caption` | `D` | 正确 |
 | `chatts_caption_plus` | `D` | 正确 |
 | `tool_agent` | `D` | 正确 |
+
+</details>
+
+<details>
+<summary>🧾 模型原始输出 / 代表性回答</summary>
+
 
 **模型原始输出（按源 artifact 原样展示）**
 
@@ -383,22 +513,41 @@ Final answer: A
 
 最终答案：A
 
+</details>
 
-**Case 分析**
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：caption+numbers 整合不稳定
 - 关键结论：numbers 和 caption 单独都能给出正确答案，但 caption+numbers 反而答错，说明下游 QA 不是简单累加证据，而会被自然语言描述重新加权甚至带偏。
 
-### Case 05：异常类型识别失败
+</details>
 
-- 数据集：`TimeSeriesExam`
-- Case ID：`timeseriesexam::tse_0005`
-- 问题类型：`Anolmaly Detection`
-- 数值摘要：n=128, min=-13.721, max=16.502, mean=4.6743, std=4.7569, slope=0.085004, argmax=53, argmin=0
+</details>
+
+<details>
+<summary>🧭 Case 05：TimeSeriesExam | 异常类型识别失败</summary>
+
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TimeSeriesExam` |
+| Case ID | `timeseriesexam::tse_0005` |
+| 问题类型 | `Anolmaly Detection` |
+| 正确答案 | `Yes, it's pattern is distorted by random spikes` |
+
+数值摘要：n=128, min=-13.721, max=16.502, mean=4.6743, std=4.7569, slope=0.085004, argmax=53, argmin=0
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![timeseriesexam::tse_0005](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/timeseriesexam_tse_0005.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -407,16 +556,21 @@ Is the given time series likely to have an anomaly?
 **题干中文翻译**
 
 给定的时间序列是否可能存在异常？
-- 选项：
+
+**选项**
 - A: Yes, it's pattern is distorted by random spikes
   中文：是的，它的模式被随机尖峰扭曲了。
 - B: No
   中文：否
 - C: Yes, it's pattern is flipped at certain point in time
   中文：是的，它的模式在某个时间点发生了翻转。
-- 正确答案：`Yes, it's pattern is distorted by random spikes`
 
-**生成的 caption 与中文翻译**
+**正确答案**：`Yes, it's pattern is distorted by random spikes`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -434,7 +588,10 @@ The overall trend is increasing. The global maximum, 15.73, occurs at point 126,
 
 整体趋势正在增加。全局最大值 15.73 出现在点 126，位于窗口的后三分之一。短期波动在窗口的前半部分更为明显，这由该处较高的噪声水平所表明。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -444,21 +601,41 @@ The overall trend is increasing. The global maximum, 15.73, occurs at point 126,
 | `chatts_caption` | `B` | 错误 |
 | `wrong_caption` | `A` | 正确 |
 
-**Case 分析**
+</details>
+
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：异常类型识别失败
 - 关键结论：两个 caption 条件都没有正确定位 random spikes 造成的 anomaly；numbers 可以答对，说明错误主要来自 caption 没有把异常类型编码成可判别证据。
 
-### Case 06：周期模式被过度解释
+</details>
 
-- 数据集：`TimeSeriesExam`
-- Case ID：`timeseriesexam::tse_0194`
-- 问题类型：`Pattern Recognition`
-- 数值摘要：n=128, min=1.0208, max=1.0662, mean=1.0433, std=0.0096896, slope=3.0582e-06, argmax=89, argmin=18
+</details>
+
+<details>
+<summary>🧭 Case 06：TimeSeriesExam | 周期模式被过度解释</summary>
+
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TimeSeriesExam` |
+| Case ID | `timeseriesexam::tse_0194` |
+| 问题类型 | `Pattern Recognition` |
+| 正确答案 | `No Pattern at all` |
+
+数值摘要：n=128, min=1.0208, max=1.0662, mean=1.0433, std=0.0096896, slope=3.0582e-06, argmax=89, argmin=18
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![timeseriesexam::tse_0194](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/timeseriesexam_tse_0194.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -467,7 +644,8 @@ What is the primary cyclic pattern observed in the time series?
 **题干中文翻译**
 
 该时间序列中观察到的主要周期性模式是什么？
-- 选项：
+
+**选项**
 - A: SquareWave
   中文：方波
 - B: SawtoothWave
@@ -476,9 +654,13 @@ What is the primary cyclic pattern observed in the time series?
   中文：完全没有模式
 - D: SineWave
   中文：SineWave
-- 正确答案：`No Pattern at all`
 
-**生成的 caption 与中文翻译**
+**正确答案**：`No Pattern at all`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -496,7 +678,10 @@ The overall trend is flat, with the time series starting and ending near 1.04. T
 
 整体趋势平稳，时间序列的起点和终点都接近 1.04。全局最大值未被明确识别，但考虑到趋势稳定且噪声很小，它可能出现在窗口的中间三分之一。短期波动在整个过程中保持一致，因此两个半段都没有表现出明显更大的变化。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -506,21 +691,46 @@ The overall trend is flat, with the time series starting and ending near 1.04. T
 | `chatts_caption` | `D` | 错误 |
 | `wrong_caption` | `C` | 正确 |
 
-**Case 分析**
+</details>
+
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：周期模式被过度解释
 - 关键结论：真实答案是没有主导周期模式。这个 case 里 OpenTSLM/numbers 能答对，但 ChatTS 仍把平稳和轻微波动解释成某个周期类别，说明不同 caption 模型的偏差方向不同，不能只用单一 caption 模型代表整体失败。
 
+</details>
+
+</details>
+
 ## B. Dataset-A 领域解释失败：local-inductive / causal / deductive
 
-### Case 07：Oracle 局部 spike 被幻觉成 seasonality
+<details>
+<summary>🗄 Case 07：dataset_a | Oracle 局部 spike 被幻觉成 seasonality</summary>
 
-- 数据集：`dataset_a`
-- Case ID：`dataset_a::0000`
-- 问题类型：`noise,local,season,local-inductive`
-- Dataset-A 能力标签：`noise, local, season, local-inductive`
-- 数值摘要：n=256, min=0, max=4.2794, mean=0.016716, std=0.26694, slope=0.00030456, argmax=227, argmin=0
-- Dataset-A 标注属性原文：
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `dataset_a` |
+| Case ID | `dataset_a::0000` |
+| 问题类型 | `noise,local,season,local-inductive` |
+| Dataset-A 能力标签 | `noise, local, season, local-inductive` |
+| 正确答案 | `见 QA 折叠块` |
+
+数值摘要：n=256, min=0, max=4.2794, mean=0.016716, std=0.26694, slope=0.00030456, argmax=227, argmin=0
+
+<details>
+<summary>🖼 时序图</summary>
+
+![dataset_a::0000](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0000.png)
+
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
+
+**Dataset-A 标注属性原文**
 
 [
   {
@@ -549,7 +759,7 @@ The overall trend is flat, with the time series starting and ending near 1.04. T
   ]
 ]
 
-- Dataset-A 标注属性中文翻译：
+**Dataset-A 标注属性中文翻译**
 
 [
   {
@@ -578,10 +788,6 @@ The overall trend is flat, with the time series starting and ending near 1.04. T
   ]
 ]
 
-![dataset_a::0000](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0000.png)
-
-**QA 问题**
-
 **题干原文**
 
 You are a time series analysis expert. This time series is "##enq: SQ - contention" from Oracle Database System with length of 256: &lt;ts&gt;&lt;ts/&gt;, please analyze the time series features and answer the following questions:
@@ -606,23 +812,28 @@ Now, based on the above questions, please strictly follow the output format requ
 2. 严格格式化的答案 2
 3. 严格格式化的答案 3
 4. 严格格式化的答案 4
-- 选项：
+
+**选项**
 无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案原文：
+
+**正确答案原文**
 
 1. almost no noise, the overall noise standard deviation is around 0.00.
 2. upward spike, position around point 226, amplitude 4.28
 3. no periodic fluctuation
 4. upward spike, position around point 226, amplitude 4.28. The database is experiencing significant contention issues related to enqueue resources
 
-- 正确答案中文翻译：
+**正确答案中文翻译**
 
 1. 几乎没有噪声，整体噪声标准差约为 0.00。
 2. 向上尖峰，位置约在点 226，幅度为 4.28。
 3. 无周期性波动。
 4. 向上尖峰，位置约在点 226，幅度为 4.28。数据库正经历与入队资源相关的严重争用问题。
 
-**生成的 caption 与中文翻译**
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -640,7 +851,10 @@ The time series shows a flat trend with low volatility and a strong seasonal pat
 
 1) 几乎没有噪声 2) 无周期性波动 3) 保持稳定 4) 向上尖峰，位置约在点 226，幅度 4.28
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 条件 | 平均分 | 分项分数 |
 | --- | ---: | --- |
@@ -654,6 +868,11 @@ The time series shows a flat trend with low volatility and a strong seasonal pat
 | `chatts_caption` | 0.96 | local=1.00，local-inductive=0.83，noise=1.00，season=1.00 |
 | `chatts_caption_plus` | 0.96 | local=1.00，local-inductive=0.83，noise=1.00，season=1.00 |
 | `chatts_wrong_caption` | 0.25 | local=0.00，local-inductive=0.00，noise=0.00，season=1.00 |
+
+</details>
+
+<details>
+<summary>🧾 模型原始输出 / 代表性回答</summary>
 
 **代表性模型回答**
 
@@ -797,20 +1016,44 @@ The time series shows a flat trend with low volatility and a strong seasonal pat
 3. 无周期性波动。
 4. 突然增加，位置约在点 128，幅度 11.80。急剧上升可能反映了争用活动的短暂激增，可能由突发工作负载、锁升级或并发访问激增引起。
 
+</details>
 
-**Case 分析**
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：Oracle 局部 spike 被幻觉成 seasonality
 - 关键结论：真实属性是 point 226 的 upward spike，领域含义是 enqueue 资源争用；OpenTSLM 编造 180-step seasonality 和多处事件，ChatTS 保留了关键局部事实。
 
-### Case 08：交通速度局部异常与周期性混淆
+</details>
 
-- 数据集：`dataset_a`
-- Case ID：`dataset_a::0002`
-- 问题类型：`season,local-inductive,local`
-- Dataset-A 能力标签：`season, local-inductive, local`
-- 数值摘要：n=256, min=-50.045, max=58.14, mean=31.276, std=9.4217, slope=0.0086153, argmax=87, argmin=128
-- Dataset-A 标注属性原文：
+</details>
+
+<details>
+<summary>🗄 Case 08：dataset_a | 交通速度局部异常与周期性混淆</summary>
+
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `dataset_a` |
+| Case ID | `dataset_a::0002` |
+| 问题类型 | `season,local-inductive,local` |
+| Dataset-A 能力标签 | `season, local-inductive, local` |
+| 正确答案 | `见 QA 折叠块` |
+
+数值摘要：n=256, min=-50.045, max=58.14, mean=31.276, std=9.4217, slope=0.0086153, argmax=87, argmin=128
+
+<details>
+<summary>🖼 时序图</summary>
+
+![dataset_a::0002](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0002.png)
+
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
+
+**Dataset-A 标注属性原文**
 
 [
   {
@@ -852,7 +1095,7 @@ The time series shows a flat trend with low volatility and a strong seasonal pat
   ]
 ]
 
-- Dataset-A 标注属性中文翻译：
+**Dataset-A 标注属性中文翻译**
 
 [
   {
@@ -894,10 +1137,6 @@ The time series shows a flat trend with low volatility and a strong seasonal pat
   ]
 ]
 
-![dataset_a::0002](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0002.png)
-
-**QA 问题**
-
 **题干原文**
 
 You are a time series analysis expert. This time series is "travel speed" from Real time traffic data with length of 256: &lt;ts&gt;&lt;ts/&gt;, please analyze the time series features and answer the following questions:
@@ -918,21 +1157,26 @@ Now, based on the above questions, please strictly follow the output format requ
 1. 严格格式化答案 1
 2. 严格格式化答案 2
 3. 严格格式化答案 3
-- 选项：
+
+**选项**
 无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案原文：
+
+**正确答案原文**
 
 1. no periodic fluctuation
 2. slow decline followed by rapid rise, position around point 172, amplitude 35.09. A brief slowdown followed by a rapid recovery, likely due to a temporary obstruction or congestion that cleared quickly; downward spike, position around point 127, amplitude 78.66. A sudden drop in speed, likely caused by an unexpected event such as an accident, roadblock, or abrupt traffic congestion
 3. slow decline followed by rapid rise, position around point 172, amplitude 35.09; downward spike, position around point 127, amplitude 78.66
 
-- 正确答案中文翻译：
+**正确答案中文翻译**
 
 1. 无周期性波动
 2. 缓慢下降后迅速上升，位置约在第 172 点，幅度 35.09。短暂减速后迅速恢复，可能是由于临时障碍或拥堵很快解除；向下尖峰，位置约在第 127 点，幅度 78.66。速度突然下降，可能由事故、路障或突发交通拥堵等意外事件引起
 3. 缓慢下降后迅速上升，位置约在第 172 点，幅度 35.09；向下尖峰，位置约在第 127 点，幅度 78.66
 
-**生成的 caption 与中文翻译**
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -960,7 +1204,10 @@ The time series exhibits a steady trend, starting and ending near 33.19, with no
 
 该时间序列呈现稳定趋势，起始和结束值均接近 33.19，整体无显著变化。然而，它包含显著的局部特征：在点 127 和 129 之间出现一个急剧向下尖峰，数值从约 33.19 下降到 -46.13 后恢复；在点 171 和 176 之间出现另一个向下尖峰后快速增加，数值下降到约 2.83，然后上升到约 53.54。此外，还存在标准差约为 3.50 的随机噪声，增加了整体变异性。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 条件 | 平均分 | 分项分数 |
 | --- | ---: | --- |
@@ -974,6 +1221,11 @@ The time series exhibits a steady trend, starting and ending near 33.19, with no
 | `chatts_caption` | 0.86 | local=0.84，local-inductive=0.73，season=1.00 |
 | `chatts_caption_plus` | 0.86 | local=0.84，local-inductive=0.73，season=1.00 |
 | `chatts_wrong_caption` | 0.33 | local=0.00，local-inductive=0.00，season=1.00 |
+
+</details>
+
+<details>
+<summary>🧾 模型原始输出 / 代表性回答</summary>
 
 **代表性模型回答**
 
@@ -1101,20 +1353,44 @@ The time series exhibits a steady trend, starting and ending near 33.19, with no
 2. 突然增加，位置在约第 128 点，幅度 12.12。交通速度的急剧跃升可能由拥堵突然下降引起，例如临时道路疏通、信号配时变化或其他短时交通流改善。
 3. 突然增加，位置在约第 128 点，幅度 12.12；小幅抖动，位置在约第 128 点，幅度约 0.50。交通速度的急剧跃升可能由拥堵的临时下降引起，随后出现由正常交通变化导致的轻微噪声振荡。
 
+</details>
 
-**Case 分析**
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：交通速度局部异常与周期性混淆
 - 关键结论：真实问题需要 no periodic fluctuation 和局部速度下跌/恢复的解释；OpenTSLM 把它写成强季节性和上升趋势，造成 local-inductive 与 season 同时失败。
 
-### Case 09：Travel Time 领域事件需要局部位置和含义同时正确
+</details>
 
-- 数据集：`dataset_a`
-- Case ID：`dataset_a::0014`
-- 问题类型：`local,local-inductive,trend,season`
-- Dataset-A 能力标签：`local, local-inductive, trend, season`
-- 数值摘要：n=256, min=-15.886, max=2837.9, mean=170.24, std=225.83, slope=0.45297, argmax=128, argmin=58
-- Dataset-A 标注属性原文：
+</details>
+
+<details>
+<summary>🗄 Case 09：dataset_a | Travel Time 领域事件需要局部位置和含义同时正确</summary>
+
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `dataset_a` |
+| Case ID | `dataset_a::0014` |
+| 问题类型 | `local,local-inductive,trend,season` |
+| Dataset-A 能力标签 | `local, local-inductive, trend, season` |
+| 正确答案 | `见 QA 折叠块` |
+
+数值摘要：n=256, min=-15.886, max=2837.9, mean=170.24, std=225.83, slope=0.45297, argmax=128, argmin=58
+
+<details>
+<summary>🖼 时序图</summary>
+
+![dataset_a::0014](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0014.png)
+
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
+
+**Dataset-A 标注属性原文**
 
 [
   [
@@ -1144,7 +1420,7 @@ The time series exhibits a steady trend, starting and ending near 33.19, with no
   }
 ]
 
-- Dataset-A 标注属性中文翻译：
+**Dataset-A 标注属性中文翻译**
 
 [
   [
@@ -1174,10 +1450,6 @@ The time series exhibits a steady trend, starting and ending near 33.19, with no
   }
 ]
 
-![dataset_a::0014](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0014.png)
-
-**QA 问题**
-
 **题干原文**
 
 You are a time series analysis expert. This time series is "Travel Time" from Real time traffic data with length of 256: &lt;ts&gt;&lt;ts/&gt;, please analyze the time series features and answer the following questions:
@@ -1202,23 +1474,28 @@ Now, based on the above questions, please strictly follow the output format requ
 2. 严格格式化的答案 2
 3. 严格格式化的答案 3
 4. 严格格式化的答案 4
-- 选项：
+
+**选项**
 无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案原文：
+
+**正确答案原文**
 
 1. upward spike, position around point 129, amplitude 2685.01
 2. upward spike, position around point 129, amplitude 2685.01. A sudden and severe increase in travel time, likely due to a major traffic incident, road closure, or severe congestion
 3. keep steady, the starting point value is around 198.99, and the trend change value from left to right is around 0.00.
 4. periodic fluctuation, each period is around 65.70 points, and the amplitude of the periodic fluctuation is around 323.10.
 
-- 正确答案中文翻译：
+**正确答案中文翻译**
 
 1. 向上尖峰，位置在点 129 附近，幅度为 2685.01
 2. 向上尖峰，位置在点 129 附近，幅度为 2685.01。行程时间突然且严重增加，可能是由于重大交通事故、道路封闭或严重拥堵
 3. 保持稳定，起始点值约为 198.99，从左到右的趋势变化值约为 0.00。
 4. 周期性波动，每个周期约为 65.70 个点，周期性波动的幅度约为 323.10。
 
-**生成的 caption 与中文翻译**
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -1242,7 +1519,10 @@ ology. The time series shows a steady upward trend with low volatility, characte
 3. 保持稳定，从 198.98 到 148.60
 4. 在点 77 到点 97 之间缓慢上升后快速下降；在点 127 到点 129 之间出现向上尖峰，幅度为 2685.92；在点 183 到点 198 之间出现宽幅向上尖峰，幅度为 582.60
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 条件 | 平均分 | 分项分数 |
 | --- | ---: | --- |
@@ -1256,6 +1536,11 @@ ology. The time series shows a steady upward trend with low volatility, characte
 | `chatts_caption` | 0.93 | local=1.00，local-inductive=0.83，season=0.91，trend=1.00 |
 | `chatts_caption_plus` | 0.81 | local=1.00，local-inductive=0.83，season=0.91，trend=0.50 |
 | `chatts_wrong_caption` | 0.13 | local=0.00，local-inductive=0.00，season=0.00，trend=0.52 |
+
+</details>
+
+<details>
+<summary>🧾 模型原始输出 / 代表性回答</summary>
 
 **代表性模型回答**
 
@@ -1399,34 +1684,54 @@ ology. The time series shows a steady upward trend with low volatility, characte
 3. 稳定，起始点数值约为 6.31，从左到右的趋势变化值约为 0.60
 4. 无周期性波动
 
+</details>
 
-**Case 分析**
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：Travel Time 领域事件需要局部位置和含义同时正确
 - 关键结论：该类问题不只是找 spike，还要说明它代表事故、拥堵或路段异常；泛化 caption 即使说有波动，也容易错过具体位置和领域解释。
 
-### Case 10：AWS CPU causal case：OpenTSLM 丢失因果条件
+</details>
 
-- 数据集：`dataset_a`
-- Case ID：`dataset_a::0073`
-- 问题类型：`causal`
-- Dataset-A 能力标签：`causal`
-- 数值摘要：n=256, min=30.482, max=51.6, mean=44.588, std=2.1897, slope=-0.0019699, argmax=129, argmin=128
-- Dataset-A 标注属性原文：
+</details>
+
+<details>
+<summary>🗄 Case 10：dataset_a | AWS CPU causal case：OpenTSLM 丢失因果条件</summary>
+
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `dataset_a` |
+| Case ID | `dataset_a::0073` |
+| 问题类型 | `causal` |
+| Dataset-A 能力标签 | `causal` |
+| 正确答案 | `见 QA 折叠块` |
+
+数值摘要：n=256, min=30.482, max=51.6, mean=44.588, std=2.1897, slope=-0.0019699, argmax=129, argmin=128
+
+<details>
+<summary>🖼 时序图</summary>
+
+![dataset_a::0073](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0073.png)
+
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
+
+**Dataset-A 标注属性原文**
 
 [
   "Routine operations with minor fluctuations. The time series indicates that despite a generally stable trend, there are small fluctuations near point 127, which could suggest standard variation due to routine operational activities rather than unusual events like hardware malfunctions or system updates."
 ]
 
-- Dataset-A 标注属性中文翻译：
+**Dataset-A 标注属性中文翻译**
 
 [
   "常规运行，存在轻微波动。该时间序列显示，尽管总体趋势较为稳定，但在点 127 附近存在小幅波动，这可能表明这是由常规运行活动导致的标准变化，而非硬件故障或系统更新等异常事件。"
 ]
-
-![dataset_a::0073](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0073.png)
-
-**QA 问题**
 
 **题干原文**
 
@@ -1439,17 +1744,22 @@ Now, based on the above questions, please strictly follow the output format requ
 你是一名时间序列分析专家。该时间序列是来自 AWS API 服务器的“CPU Usage”，长度为 256：&lt;ts&gt;&lt;ts/&gt;，请分析该时间序列特征并回答以下问题：
 1. 给定来自 AWS API 服务器的 CPU Usage 时间序列，时间点 127 附近观察到的行为最可能的解释是什么？从以下选项中选择：硬件故障、伴有轻微波动的常规操作，或重大系统更新。
 现在，请基于上述问题，严格遵循输出格式要求并给出答案。每一行对应一个问题的答案，格式为：1. 严格格式化的答案 1
-- 选项：
+
+**选项**
 无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案原文：
+
+**正确答案原文**
 
 1. Routine operations with minor fluctuations. The time series indicates that despite a generally stable trend, there are small fluctuations near point 127, which could suggest standard variation due to routine operational activities rather than unusual events like hardware malfunctions or system updates.
 
-- 正确答案中文翻译：
+**正确答案中文翻译**
 
 1. 常规运行伴有轻微波动。该时间序列显示，尽管整体趋势总体稳定，但在点 127 附近存在小幅波动，这可能表明是由常规运行活动引起的标准变化，而不是硬件故障或系统更新等异常事件。
 
-**生成的 caption 与中文翻译**
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -1473,7 +1783,10 @@ The time series shows a flat trend with low volatility and medium strength seaso
 3. 保持稳定，从 44.92 到 44.92。
 4. 在点 128 和点 130 之间发生了一个幅度为 14.21 的向下尖峰，时间序列值从约 44.92 快速下降到约 30.71，然后迅速回升到约 44.92，形成一个向下尖峰。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 条件 | 平均分 | 分项分数 |
 | --- | ---: | --- |
@@ -1487,6 +1800,11 @@ The time series shows a flat trend with low volatility and medium strength seaso
 | `chatts_caption` | 1.00 | causal=1.00 |
 | `chatts_caption_plus` | 1.00 | causal=1.00 |
 | `chatts_wrong_caption` | 0.00 | causal=0.00 |
+
+</details>
+
+<details>
+<summary>🧾 模型原始输出 / 代表性回答</summary>
 
 **代表性模型回答**
 
@@ -1570,20 +1888,44 @@ The time series shows a flat trend with low volatility and medium strength seaso
 
 1. 重大系统更新
 
+</details>
 
-**Case 分析**
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：AWS CPU causal case：OpenTSLM 丢失因果条件
 - 关键结论：此类题目要求把形态变化和系统负载/服务事件联系起来；OpenTSLM caption 条件为 0 分而 ChatTS 为 1 分，说明领域因果语义不是自然从形态摘要中涌现。
 
-### Case 11：Twitter mention causal case：事件含义依赖领域背景
+</details>
 
-- 数据集：`dataset_a`
-- Case ID：`dataset_a::0083`
-- 问题类型：`causal,causal,causal,causal`
-- Dataset-A 能力标签：`causal, causal, causal, causal`
-- 数值摘要：n=256, min=0, max=1673, mean=70.09, std=105.16, slope=-0.039424, argmax=128, argmin=230
-- Dataset-A 标注属性原文：
+</details>
+
+<details>
+<summary>🗄 Case 11：dataset_a | Twitter mention causal case：事件含义依赖领域背景</summary>
+
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `dataset_a` |
+| Case ID | `dataset_a::0083` |
+| 问题类型 | `causal,causal,causal,causal` |
+| Dataset-A 能力标签 | `causal, causal, causal, causal` |
+| 正确答案 | `见 QA 折叠块` |
+
+数值摘要：n=256, min=0, max=1673, mean=70.09, std=105.16, slope=-0.039424, argmax=128, argmin=230
+
+<details>
+<summary>🖼 时序图</summary>
+
+![dataset_a::0083](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0083.png)
+
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
+
+**Dataset-A 标注属性原文**
 
 [
   "Unexpected news release. The time series indicates a generally stable level with a sudden upward spike near point 128, followed by an increase. This pattern suggests a reaction to a specific event, such as unexpected news, that would likely trigger a sudden surge in mentions.",
@@ -1592,7 +1934,7 @@ The time series shows a flat trend with low volatility and medium strength seaso
   "High volatility with no clear trend. Between time points 50 and 90, the overall behavior doesn't suggest a consistent upward or downward shift but rather significant noise, indicating substantial fluctuation with no distinct pattern."
 ]
 
-- Dataset-A 标注属性中文翻译：
+**Dataset-A 标注属性中文翻译**
 
 [
   "意外新闻发布。该时间序列显示总体水平较为稳定，在接近点 128 处突然向上飙升，随后出现增加。这种模式表明可能是对某一特定事件的反应，例如意外新闻，这很可能会引发提及量的突然激增。",
@@ -1600,10 +1942,6 @@ The time series shows a flat trend with low volatility and medium strength seaso
   "讨论水平稳定。在时间点 100 到 120 之间，提及次数保持稳定，随后在接近点 128 处出现向上飙升。这表明该时期内行为一致，没有任何显著增加或减少。",
   "高波动且无明确趋势。在时间点 50 到 90 之间，整体行为并不显示出一致的上升或下降变化，而是呈现显著噪声，表明存在大幅波动且没有明显模式。"
 ]
-
-![dataset_a::0083](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0083.png)
-
-**QA 问题**
 
 **题干原文**
 
@@ -1622,23 +1960,28 @@ Now, based on the above questions, please strictly follow the output format requ
 3. 观察 AMZN 提及次数的时间序列，在时间点 100 到 120 之间可能发生了什么？从以下选项中选择：讨论水平稳定、提及次数减少，或 AMZN 相关讨论显著上升。
 4. 基于 AMZN 的提及次数，时间点 50 到 90 之间的整体行为可能是什么？从以下选项中选择：持续上升趋势、显著下降变化，或高波动且无明确趋势。
 现在，请基于上述问题，严格遵循输出格式要求并提供答案。每一行对应一个问题的答案，格式为：1. 严格格式化的答案 1
-- 选项：
+
+**选项**
 无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案原文：
+
+**正确答案原文**
 
 1. Unexpected news release. The time series indicates a generally stable level with a sudden upward spike near point 128, followed by an increase. This pattern suggests a reaction to a specific event, such as unexpected news, that would likely trigger a sudden surge in mentions.
 2. Increased interest in AMZN stock. The observed pattern shows a significant upward spike followed by an increase, suggesting that similar future spikes could correlate with heightened public interest, potentially driving more attention and interest towards AMZN stock.
 3. Stable discussion levels. Between time points 100 and 120, the number of mentions remains steady before experiencing an upward spike near point 128. This indicates consistent behavior during this period without any notable increases or decreases.
 4. High volatility with no clear trend. Between time points 50 and 90, the overall behavior doesn't suggest a consistent upward or downward shift but rather significant noise, indicating substantial fluctuation with no distinct pattern.
 
-- 正确答案中文翻译：
+**正确答案中文翻译**
 
 1. 意外新闻发布。该时间序列显示出总体稳定的水平，在点 128 附近突然向上尖峰，随后增加。这种模式表明可能是对某一特定事件的反应，例如意外新闻，这很可能会引发提及量的突然激增。
 2. 对 AMZN 股票的兴趣增加。观察到的模式显示出一次显著的向上尖峰，随后增加，表明未来类似的尖峰可能与公众兴趣上升相关，并可能促使更多关注和兴趣转向 AMZN 股票。
 3. 讨论水平稳定。在时间点 100 到 120 之间，提及数量保持稳定，随后在点 128 附近出现向上尖峰。这表明该时期内行为一致，没有任何明显的增加或减少。
 4. 高波动性且无明确趋势。在时间点 50 到 90 之间，整体行为并不显示出一致的上升或下降变化，而是表现为显著噪声，表明存在大幅波动且没有明显模式。
 
-**生成的 caption 与中文翻译**
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -1656,7 +1999,10 @@ The time series shows a steady upward trend with low volatility, characterized b
 
 1. 噪声较大，标准差约为 13.74。2. 未观察到周期性波动，显示无周期性波动。3. 从 21.38 下降到 44.59。4. 在点 127 和点 130，出现了 2 次连续的向上尖峰，幅度范围为 1082.89 到 1622.15，时间序列值从约 49.86 反复急剧上升到约 1132.75 和 1672.01，然后迅速回落到约 49.86，形成连续的向上尖峰。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 条件 | 平均分 | 分项分数 |
 | --- | ---: | --- |
@@ -1670,6 +2016,11 @@ The time series shows a steady upward trend with low volatility, characterized b
 | `chatts_caption` | 1.00 | causal=1.00 |
 | `chatts_caption_plus` | 1.00 | causal=1.00 |
 | `chatts_wrong_caption` | 0.75 | causal=0.75 |
+
+</details>
+
+<details>
+<summary>🧾 模型原始输出 / 代表性回答</summary>
 
 **代表性模型回答**
 
@@ -1813,34 +2164,54 @@ The time series shows a steady upward trend with low volatility, characterized b
 3. 讨论水平稳定
 4. 高波动性且无明确趋势
 
+</details>
 
-**Case 分析**
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：Twitter mention causal case：事件含义依赖领域背景
 - 关键结论：社交媒体 mentions 的 spike 需要解释为新闻、公告或市场事件。OpenTSLM 只部分命中，ChatTS 更稳定，显示 caption 风格会影响领域归因。
 
-### Case 12：deductive case：ChatTS 对，OpenTSLM 失败
+</details>
 
-- 数据集：`dataset_a`
-- Case ID：`dataset_a::0096`
-- 问题类型：`deductive`
-- Dataset-A 能力标签：`deductive`
-- 数值摘要：n=256, min=160.4, max=265.6, mean=182.82, std=11.782, slope=0.013501, argmax=224, argmin=125
-- Dataset-A 标注属性原文：
+</details>
+
+<details>
+<summary>🗄 Case 12：dataset_a | deductive case：ChatTS 对，OpenTSLM 失败</summary>
+
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `dataset_a` |
+| Case ID | `dataset_a::0096` |
+| 问题类型 | `deductive` |
+| Dataset-A 能力标签 | `deductive` |
+| 正确答案 | `见 QA 折叠块` |
+
+数值摘要：n=256, min=160.4, max=265.6, mean=182.82, std=11.782, slope=0.013501, argmax=224, argmin=125
+
+<details>
+<summary>🖼 时序图</summary>
+
+![dataset_a::0096](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0096.png)
+
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
+
+**Dataset-A 标注属性原文**
 
 [
   "Yes, it should not be regarded as Active. The standard deviation of the noise is 7.52, which surpasses the normal threshold of 5, indicating that the utilization is not within expected normal limits."
 ]
 
-- Dataset-A 标注属性中文翻译：
+**Dataset-A 标注属性中文翻译**
 
 [
   "是的，不应将其视为 Active。噪声的标准差为 7.52，超过了正常阈值 5，表明利用率不在预期的正常范围内。"
 ]
-
-![dataset_a::0096](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0096.png)
-
-**QA 问题**
 
 **题干原文**
 
@@ -1853,17 +2224,22 @@ Now, based on the above questions, please strictly follow the output format requ
 你是一位时间序列分析专家。该时间序列是来自服务器、长度为 256 的“CPU 利用率”：&lt;ts&gt;&lt;ts/&gt;，请分析该时间序列的特征并回答以下问题：
 1. 已知如果整体噪声水平的标准差大于 1.0，则 CPU 利用率应标记为 "Active"。该时间序列是否应标记为 "Active"？回答是或否，并说明理由。
 现在，请基于上述问题，严格遵循输出格式要求并给出答案。每一行对应一个问题的答案，格式为：1. 严格格式化的答案 1
-- 选项：
+
+**选项**
 无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案原文：
+
+**正确答案原文**
 
 1. Yes, it should not be regarded as Active. The standard deviation of the noise is 7.52, which surpasses the normal threshold of 5, indicating that the utilization is not within expected normal limits.
 
-- 正确答案中文翻译：
+**正确答案中文翻译**
 
 1. 是的，不应将其视为 Active。噪声的标准差为 7.52，超过了正常阈值 5，表明利用率不在预期的正常范围内。
 
-**生成的 caption 与中文翻译**
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -1887,7 +2263,10 @@ The time series shows a flat trend with low volatility and medium strength seaso
 3. 从 179.50 到 179.50 保持稳定
 4. 未发现局部特征
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 条件 | 平均分 | 分项分数 |
 | --- | ---: | --- |
@@ -1901,6 +2280,11 @@ The time series shows a flat trend with low volatility and medium strength seaso
 | `chatts_caption` | 1.00 | deductive=1.00 |
 | `chatts_caption_plus` | 0.00 | deductive=0.00 |
 | `chatts_wrong_caption` | 0.00 | deductive=0.00 |
+
+</details>
+
+<details>
+<summary>🧾 模型原始输出 / 代表性回答</summary>
 
 **代表性模型回答**
 
@@ -1984,20 +2368,44 @@ The time series shows a flat trend with low volatility and medium strength seaso
 
 1. 是——该时间序列应标记为 **Active**，因为整体噪声标准差约为 **2.51**，大于阈值 **1.0**。
 
+</details>
 
-**Case 分析**
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：deductive case：ChatTS 对，OpenTSLM 失败
 - 关键结论：deductive 问题需要按题目规则推出结论，不只是描述时序。OpenTSLM caption 条件为 0，说明摘要并没有转化为可执行的推理前提。
 
-### Case 13：deductive hard case：两个 caption 都失败
+</details>
 
-- 数据集：`dataset_a`
-- Case ID：`dataset_a::0105`
-- 问题类型：`deductive,deductive,deductive`
-- Dataset-A 能力标签：`deductive, deductive, deductive`
-- 数值摘要：n=256, min=30.482, max=51.6, mean=44.588, std=2.1897, slope=-0.0019699, argmax=129, argmin=128
-- Dataset-A 标注属性原文：
+</details>
+
+<details>
+<summary>🗄 Case 13：dataset_a | deductive hard case：两个 caption 都失败</summary>
+
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `dataset_a` |
+| Case ID | `dataset_a::0105` |
+| 问题类型 | `deductive,deductive,deductive` |
+| Dataset-A 能力标签 | `deductive, deductive, deductive` |
+| 正确答案 | `见 QA 折叠块` |
+
+数值摘要：n=256, min=30.482, max=51.6, mean=44.588, std=2.1897, slope=-0.0019699, argmax=129, argmin=128
+
+<details>
+<summary>🖼 时序图</summary>
+
+![dataset_a::0105](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0105.png)
+
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
+
+**Dataset-A 标注属性原文**
 
 [
   "No, it does not suggest an anomaly. Although there are local fluctuations around point 127 with an amplitude of 15.79, this amplitude does not exceed three times the noise standard deviation (2.372 * 3 = 7.116). Therefore, the observed behavior remains within expected limits based on the noise characteristics.",
@@ -2005,17 +2413,13 @@ The time series shows a flat trend with low volatility and medium strength seaso
   "No, the data should not be considered suspicious. Despite the high noise level with a standard deviation of 2.372, the CPU usage trend remains constant at 44.7 throughout, with no significant deviations in the average values over extended intervals. This stability aligns with expected normal operation behavior."
 ]
 
-- Dataset-A 标注属性中文翻译：
+**Dataset-A 标注属性中文翻译**
 
 [
   "不，它并不表明存在异常。尽管在点 127 附近存在幅度为 15.79 的局部波动，但该幅度并未超过噪声标准差的三倍（2.372 * 3 = 7.116）。因此，基于噪声特征，观察到的行为仍处于预期范围内。",
   "不，当前行为不应被标记为异常。尽管存在明显噪声，并且有一个特别小的向下尖峰，但该时间序列在 150 个数据点的规定时间段内并未显示出三次超过指定阈值的小幅波动。因此，该行为仍处于预期的运行方差范围内。",
   "不，该数据不应被视为可疑。尽管噪声水平较高，标准差为 2.372，但 CPU 使用率趋势始终保持在 44.7，长期区间内平均值没有显著偏差。这种稳定性符合预期的正常运行行为。"
 ]
-
-![dataset_a::0105](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0105.png)
-
-**QA 问题**
 
 **题干原文**
 
@@ -2032,21 +2436,26 @@ Now, based on the above questions, please strictly follow the output format requ
 2. 在 CPU 使用率通常稳定的场景中，频繁的小幅波动可能会被忽略，除非它们遵循特定模式，或在 150 个数据点的期间内超过三次小幅波动的组合阈值。考虑所提供的 CPU 使用率时间序列，是否应由于潜在的累积异常模式而将当前行为标记为异常？回答 Yes 或 No，并解释原因。
 3. 考虑到具有高噪声的稳定 CPU 使用率模式表明运行正常，并且如果显著区间内平均值的突然偏离超过噪声标准差的两倍，则被认为可疑，那么基于所提供的噪声水平，当前时间序列数据是否应表明运行行为存在可疑偏离？回答 Yes 或 No，并解释原因。
 现在，请基于上述问题，严格遵循输出格式要求并给出答案。每一行对应一个问题的答案，格式为：1. 严格格式化的答案 1
-- 选项：
+
+**选项**
 无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案原文：
+
+**正确答案原文**
 
 1. No, it does not suggest an anomaly. Although there are local fluctuations around point 127 with an amplitude of 15.79, this amplitude does not exceed three times the noise standard deviation (2.372 * 3 = 7.116). Therefore, the observed behavior remains within expected limits based on the noise characteristics.
 2. No, the current behavior should not be flagged as unusual. Although there is noticeable noise with a particularly small downward spike, the time series does not show three small fluctuations exceeding the specified threshold within the defined period of 150 data points. Hence, the behavior remains within expected operational variance.
 3. No, the data should not be considered suspicious. Despite the high noise level with a standard deviation of 2.372, the CPU usage trend remains constant at 44.7 throughout, with no significant deviations in the average values over extended intervals. This stability aligns with expected normal operation behavior.
 
-- 正确答案中文翻译：
+**正确答案中文翻译**
 
 1. 否，它并不表明存在异常。尽管在点 127 附近存在幅度为 15.79 的局部波动，但该幅度未超过噪声标准差的三倍（2.372 * 3 = 7.116）。因此，根据噪声特征，观察到的行为仍处于预期范围内。
 2. 否，当前行为不应被标记为异常。尽管存在明显噪声，并伴有一个特别小的向下尖峰，但该时间序列在定义的 150 个数据点期间内，并未显示出三次超过指定阈值的小幅波动。因此，该行为仍处于预期的运行方差范围内。
 3. 否，该数据不应被视为可疑。尽管噪声水平较高，标准差为 2.372，但 CPU 使用率趋势始终保持在 44.7，且在较长区间内的平均值没有显著偏差。这种稳定性符合预期的正常运行行为。
 
-**生成的 caption 与中文翻译**
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -2070,7 +2479,10 @@ The time series shows a flat trend with low volatility and medium strength seaso
 3. 从 44.92 到 44.92 保持稳定。
 4. 在点 128 和点 130 之间出现了一个幅度为 14.21 的向下尖峰，时间序列值从约 44.92 快速下降到约 30.71，然后迅速回升到约 44.92，形成一个向下尖峰。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 条件 | 平均分 | 分项分数 |
 | --- | ---: | --- |
@@ -2084,6 +2496,11 @@ The time series shows a flat trend with low volatility and medium strength seaso
 | `chatts_caption` | 0.00 | deductive=0.00 |
 | `chatts_caption_plus` | 0.00 | deductive=0.00 |
 | `chatts_wrong_caption` | 0.00 | deductive=0.00 |
+
+</details>
+
+<details>
+<summary>🧾 模型原始输出 / 代表性回答</summary>
 
 **代表性模型回答**
 
@@ -2215,25 +2632,45 @@ The time series shows a flat trend with low volatility and medium strength seaso
 2. 否 — 尽管存在一个明显的尖峰，但描述并未表明在 150 个点范围内存在反复的小幅波动或累积模式；它看起来是单个孤立事件，而不是一系列小异常。
 3. 是 — CPU 使用率总体稳定，突然出现的尖峰表示相对于平均行为的显著偏离，超过了低噪声水平下的预期范围，因此看起来可疑。
 
+</details>
 
-**Case 分析**
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：deductive hard case：两个 caption 都失败
 - 关键结论：这类 case 说明失败不只来自某一个 caption 模型，也来自下游任务对规则推理和领域条件的依赖，单纯 caption 监督无法解决。
 
+</details>
+
+</details>
+
 ## C. FREDQA 宏观经济背景推理：变量关系与反事实
 
-### Case 14：PIH 语义关系不在局部形态里
+<details>
+<summary>💵 Case 14：FREDQA | PIH 语义关系不在局部形态里</summary>
 
-- 数据集：`FREDQA`
-- Case ID：`fredqa::1033`
-- 问题类型：`macro_economic_qa`
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `FREDQA` |
+| Case ID | `fredqa::1033` |
+| 问题类型 | `macro_economic_qa` |
+| 正确答案 | `A` |
+
 - artifact 说明：FREDQA has small n and no complete model-eval table in current artifacts; use for qualitative domain-context cases only.
-- 数值摘要：n=626, min=96.613, max=443.51, mean=244.59, std=101.46, slope=0.28037, argmax=311, argmin=11
+
+数值摘要：n=626, min=96.613, max=443.51, mean=244.59, std=101.46, slope=0.28037, argmax=311, argmin=11
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![fredqa::1033](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/fredqa_1033.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -2242,7 +2679,8 @@ You are a time series analysis expert. In the U.S. macroeconomy, there are two q
 **题干中文翻译**
 
 你是时间序列分析专家。在美国宏观经济中，有两个从 1947:Q1 到 2016:Q2 的季度指标：1) 实际人均国内生产总值（GDP）&lt;ts&gt;&lt;ts/&gt;，2) 实际个人消费（非耐用品加服务）&lt;ts&gt;&lt;ts/&gt;。两个序列都经过指数化处理，使得消费序列穿过 GDP 序列。永久收入假说（PIH）认为，家庭消费主要取决于感知到的永久收入（趋势 GDP），而暂时性收入变化对消费影响很小。基于早期阶段（1947:Q1–1984:Q1）与晚期阶段（1984:Q2–2016:Q2）中这两个序列之间的关联，关于 GDP 波动支持哪一种因果结论？
-- 选项：
+
+**选项**
 - A: Early-period GDP fluctuations were driven more by transitory factors, while late-period fluctuations were driven more by permanent factors.
   中文：早期阶段的 GDP 波动更多由暂时性因素驱动，而后期阶段的波动更多由永久性因素驱动。
 - B: Early-period GDP fluctuations were driven more by permanent factors, while late-period fluctuations were driven more by transitory factors.
@@ -2251,7 +2689,8 @@ You are a time series analysis expert. In the U.S. macroeconomy, there are two q
   中文：两个时期的 GDP 波动同样由暂时性因素和永久性因素驱动。
 - D: Late-period GDP fluctuations were driven by transitory factors unrelated to household perceptions of permanent income.
   中文：后期的 GDP 波动是由与家庭对永久收入的感知无关的暂时性因素驱动的。
-- 正确答案：`A`
+
+**正确答案**：`A`
 
 **标准解释原文**
 
@@ -2261,7 +2700,10 @@ To solve this, first observe the association between GDP and consumption across 
 
 为了解决这个问题，首先观察各时期 GDP 与消费之间的关联：数据显示，在早期（1947:Q1–1984:Q1），GDP 相对于消费的偏离更大，而在后期（1984:Q2–2016:Q2），GDP 与消费高度一致。根据 PIH，消费反映永久收入（趋势 GDP），因此 GDP 相对于消费的偏离表明暂时性收入变化。早期的偏离意味着暂时性因素主导了波动，而后期的一致性意味着永久性因素（趋势变化）驱动了大部分 GDP 变动。这直接支持选项 A。
 
-**生成的 caption 与中文翻译**
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **生成 caption 样本 1 原文**
 
@@ -2273,28 +2715,52 @@ To solve this, first observe the association between GDP and consumption across 
 【序列 1：real gross domestic product per capita】变量组包括 real gross domestic product per capita, real gross domestic product per capita+real personl consumption。下文重点描述 real gross domestic product per capita，并分析其与其它变量的联动。 从全局走势看，时间跨度为 1947-01-01–2025-01-01，real gross domestic product per capita 首尾分别为 98.00 和 442.4。 细分来看：1947-01-01–1950-10-01，real gross domestic product per capita 呈稳步上行态势，由 98.00 变至 107.7。 随后，1950-10-01–1965-10-01，涨势未减，继续抬升至 152.0。 之后，1965-10-01–1972-10-01，保持上涨态势，由 152.0 走到 180.3。 紧接着，1972-10-01–1988-04-01，保持上涨态势，由 180.3 走到 249.3。 紧接着，1988-04-01–2025-01-01，保持上涨态势，由 249.3 走到 442.4。 值得注意的极值点有：几个显著高位出现在：2019-10-01≈407.22；2021-10-01≈423.71；2024-10-01≈443.51。 几个显著低位出现在：1947-07-01≈96.66；1949-04-01≈97.29；1951-10-01≈111.67。 从变量联动角度看：real gross domestic product per capita+real personl consumption 和 real gross domestic product per capita 的变化多半同向。
 【序列 2：real gross domestic product per capita+real personl consumption】变量组包括 real gross domestic product per capita、real gross domestic product per capita+real personl consumption。下文重点描述 real gross domestic product per capita+real personl consumption，并分析其与其它变量的联动。 总体而言，时间跨度为 1947-01-01–2025-01-01，real gross domestic product per capita+real personl consumption 首尾分别为 100.0 和 437.3。 分阶段来看：1947-01-01–1972-07-01，real gross domestic product per capita+real personl consumption 呈明显上涨态势，由 100.0 变至 179.4。 紧接着，1972-07-01–1983-04-01，延续了上行趋势，从 179.4 进一步升至 218.1。 接着，1983-04-01–2005-01-01，保持上涨态势，由 218.1 走到 344.9。 紧接着，2005-01-01–2025-01-01，保持上涨态势，由 344.9 走到 437.3。 值得注意的极值点有：几个显著高位出现在：2007-01-01≈357.00；2008-04-01≈359.50；2019-10-01≈397.20。 几个显著低位出现在：1947-10-01≈99.40；1949-07-01≈100.30；1950-10-01≈103.50。 关于变量间的相关性：real gross domestic product per capita 和 real gross domestic product per capita+real personl consumption 的变化多半同向。 此外，未观察到明显的周期性规律。 临近 2025-01-01，real gross domestic product per capita+real personl consumption 仍在震荡，最终落在 437.30 左右。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
 | 当前 artifact | - | 没有完整模型答案表，仅用于定性领域推理分析 |
 
-**Case 分析**
+</details>
+
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：PIH 语义关系不在局部形态里
 - 关键结论：问题要求利用永久收入假说比较早期/晚期 GDP 与消费的联动。caption 可以描述走势，但是否能推出 transitory/permanent factor 需要宏观经济概念。
 
-### Case 15：反事实计算依赖指定窗口
+</details>
 
-- 数据集：`FREDQA`
-- Case ID：`fredqa::884`
-- 问题类型：`macro_economic_qa`
+</details>
+
+<details>
+<summary>💵 Case 15：FREDQA | 反事实计算依赖指定窗口</summary>
+
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `FREDQA` |
+| Case ID | `fredqa::884` |
+| 问题类型 | `macro_economic_qa` |
+| 正确答案 | `A` |
+
 - artifact 说明：FREDQA has small n and no complete model-eval table in current artifacts; use for qualitative domain-context cases only.
-- 数值摘要：n=80, min=536.25, max=2232.1, mean=1437.7, std=326.66, slope=12.477, argmax=73, argmin=0
+
+数值摘要：n=80, min=536.25, max=2232.1, mean=1437.7, std=326.66, slope=12.477, argmax=73, argmin=0
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![fredqa::884](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/fredqa_884.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -2303,7 +2769,8 @@ You are a time series analysis expert. This is a metric called Inflation-Adjuste
 **题干中文翻译**
 
 你是一位时间序列分析专家。这是一个名为通胀调整后的 IRA 账户余额的指标（计算方式为（IRA 美元价值 / 消费者价格指数，1982-1984=100）* 100），数据来自联邦储备系统理事会 &lt;ts&gt;&lt;ts/&gt;。该数据为半年频率，时间范围为 1984 年 1 月至 2023 年 7 月。2020 年，COVID-19 疫情减少了消费者支出，并导致了临时性的 IRA 税收优惠，这两者都增加了 IRA 余额。假设疫情没有发生，且 IRA 余额继续按照 2018 年 7 月至 2019 年 7 月期间观察到的平均半年增长率增长，那么 2021 年 1 月的 IRA 余额大约会是多少？这一反事实值与 2021 年 1 月的实际余额相比如何？
-- 选项：
+
+**选项**
 - A: Approximately $1,825 billion, which is about $407 billion lower than the actual value
   中文：约 1,825 十亿美元，比实际值低约 407 十亿美元
 - B: Approximately $2,078 billion, which is about $154 billion lower than the actual value
@@ -2312,7 +2779,8 @@ You are a time series analysis expert. This is a metric called Inflation-Adjuste
   中文：约 2,232 十亿美元，等于实际值
 - D: Approximately $2,639 billion, which is about $407 billion higher than the actual value
   中文：约为 2,639 十亿美元，比实际值高约 407 十亿美元
-- 正确答案：`A`
+
+**正确答案**：`A`
 
 **标准解释原文**
 
@@ -2322,7 +2790,10 @@ First, calculate the pre-pandemic semiannual growth rate: the IRA balance was $1
 
 首先，计算疫情前的半年度增长率：2018年7月的 IRA 余额为 1,692.68 十亿美元，2019年7月为 1,745.67 十亿美元，在 2 个期间内增加了 52.99 十亿美元。平均半年度增长为 52.99 / 2 = 26.50 十亿美元。接下来，将这一趋势从2019年7月（1,745.67 十亿美元）外推至2021年1月（3 个期间之后）：1,745.67 + (26.50 * 3) = 1,825.17 十亿美元。2021年1月的实际余额为 2,232.06 十亿美元。反事实值低约 407 十亿美元，因为疫情导致支出减少（推高储蓄）以及临时税收优惠——这些因素在假设情景中不存在——推动了比 2019 年前趋势更快的增长。这证实了反事实余额会远低于实际余额。
 
-**生成的 caption 与中文翻译**
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **生成 caption 样本 1 原文**
 
@@ -2332,28 +2803,52 @@ First, calculate the pre-pandemic semiannual growth rate: the IRA balance was $1
 
 【序列 1：(IRA/CUUS0000SA0)*100, (Bil. of $/Index 1982-1984=100)*100, Semiannual】该窗口仅包含变量 (IRA/CUUS0000SA0)*100, (Bil. of $/Index 1982-1984=100)*100, Semiannual。以下主要描述 (IRA/CUUS0000SA0)*100, (Bil. of $/Index 1982-1984=100)*100, Semiannual 的变化。 整体来看，时间跨度为 1984-01-01–2023-07-01，(IRA/CUUS0000SA0)*100, (Bil. of $/Index 1982-1984=100)*100, Semiannual 首尾分别为 536.2 和 1942.9。 细分来看：在 1984-01-01–1997-01-01 期间，(IRA/CUUS0000SA0)*100, (Bil. of $/Index 1982-1984=100)*100, Semiannual 持续抬升，从 536.2 到 1252.2。 紧接着，1997-07-01–2010-01-01，保持上涨态势，由 1240.4 走到 1568.7。 之后，2010-07-01–2023-07-01，保持上涨态势，由 1569.0 走到 1942.9。 局部波动方面：几个显著高位出现在：2017-01-01≈1771.05；2020-07-01≈2232.06。 末段，(IRA/CUUS0000SA0)*100, (Bil. of $/Index 1982-1984=100)*100, Semiannual 收于 1942.92 附近，最后时刻在 [1542.32, 2232.06] 区间内波动。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
 | 当前 artifact | - | 没有完整模型答案表，仅用于定性领域推理分析 |
 
-**Case 分析**
+</details>
+
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：反事实计算依赖指定窗口
 - 关键结论：问题要用疫情前半年度增长率外推 2021 年值，并与实际值比较。普通 caption 的全局趋势描述不足以替代局部数值计算。
 
-### Case 16：疫情背景下的群体差异推理
+</details>
 
-- 数据集：`FREDQA`
-- Case ID：`fredqa::971`
-- 问题类型：`macro_economic_qa`
+</details>
+
+<details>
+<summary>💵 Case 16：FREDQA | 疫情背景下的群体差异推理</summary>
+
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `FREDQA` |
+| Case ID | `fredqa::971` |
+| 问题类型 | `macro_economic_qa` |
+| 正确答案 | `B` |
+
 - artifact 说明：FREDQA has small n and no complete model-eval table in current artifacts; use for qualitative domain-context cases only.
-- 数值摘要：n=1260, min=29.2, max=59.3, mean=40.79, std=8.9047, slope=0.010616, argmax=697, argmin=240
+
+数值摘要：n=1260, min=29.2, max=59.3, mean=40.79, std=8.9047, slope=0.010616, argmax=697, argmin=240
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![fredqa::971](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/fredqa_971.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -2362,7 +2857,8 @@ You are a time series analysis expert. In a labor market, there are 2 metrics: L
 **题干中文翻译**
 
 你是时间序列分析专家。在劳动力市场中，有 2 个指标：55 岁及以上劳动力参与率&lt;ts&gt;&lt;ts/&gt;；16–19 岁劳动力参与率&lt;ts&gt;&lt;ts/&gt;。数据为 1973 年 1 月至 2025 年 6 月的月度数据。计算 2020 年 2 月（疫情前）和 2023 年 2 月 55 岁及以上劳动力参与率与 16–19 岁劳动力参与率之间的差值。基于这一变化，哪种解释符合以下背景：COVID-19 疫情导致年长劳动者超额退休，同时劳动力市场紧张增加了青少年的就业机会？
-- 选项：
+
+**选项**
 - A: The difference increased because 55+ LFPR rose while teen LFPR fell.
   中文：差异扩大是因为 55 岁及以上人群的 LFPR 上升，而青少年 LFPR 下降。
 - B: The difference decreased because 55+ LFPR fell and teen LFPR rose.
@@ -2371,7 +2867,8 @@ You are a time series analysis expert. In a labor market, there are 2 metrics: L
   中文：差异保持不变，因为两组的 LFPR 以相同幅度朝相反方向变化。
 - D: The difference increased because both groups’ LFPR fell, but 55+ LFPR fell slower.
   中文：差异扩大了，因为两组的 LFPR 均下降，但 55+ 的 LFPR 下降较慢。
-- 正确答案：`B`
+
+**正确答案**：`B`
 
 **标准解释原文**
 
@@ -2381,7 +2878,10 @@ First, calculate the 55+ minus 16-19 LFPR difference for February 2020 and 2023.
 
 首先，计算 2020 年 2 月和 2023 年 2 月 55 岁及以上与 16-19 岁 LFPR 的差值。根据数据，55 岁及以上 LFPR 从约 40.3%（2020 年 2 月）降至约 38.5%（2023 年 2 月），原因是疫情导致的超额退休。与此同时，青少年 LFPR 从约 35.1% 升至约 36.5%，因为紧张的劳动力市场增加了就业机会。这使差值从约 5.2 个百分点降至约 2.0 个百分点。因果背景直接将疫情与这些变化联系起来——退休导致 55 岁及以上人群劳动参与率下降，劳动力需求导致青少年劳动参与率上升——因此差距缩小了。选项 B 正确反映了这一点。
 
-**生成的 caption 与中文翻译**
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **生成 caption 样本 1 原文**
 
@@ -2393,28 +2893,52 @@ First, calculate the 55+ minus 16-19 LFPR difference for February 2020 and 2023.
 【序列 1：pLabor Force Participation Rate – 55 Yrs. & over】该窗口包含 2 个变量：pLabor Force Participation Rate – 55 Yrs. & over, Labor Force Participation Rate – 16-19 Yrs。主要关注 pLabor Force Participation Rate – 55 Yrs. & over。 整体来看，时间跨度为 1973-01-01–2025-06-01，pLabor Force Participation Rate – 55 Yrs. & over 首尾分别为 36.00 和 38.00。 沿时间线展开：1973-01-01–2013-11-01，虽然整体由 36.00 到 39.90，但期间一度下探至 29.20。 之后，在 2013-11-01–2022-06-01 期间，pLabor Force Participation Rate – 55 Yrs. & over 明显下跌，从 39.90 到 38.70。 紧接着，2022-06-01–2025-06-01，跌势未减，继续下探至 38.00。 关键的局部事件包括：几个显著高位出现在：2010-05-01≈40.40；2012-06-01≈40.60；2019-07-01≈40.50。 几个显著低位出现在：1991-08-01≈29.40；1993-04-01≈29.20；1993-09-01≈29.30。 从变量联动角度看：Labor Force Participation Rate – 16-19 Yrs 与 pLabor Force Participation Rate – 55 Yrs. & over 存在一定相关性（负），但并不稳定。 临近 2025-06-01，pLabor Force Participation Rate – 55 Yrs. & over 仍在震荡，最终落在 38.00 左右。
 【序列 2：Labor Force Participation Rate – 16-19 Yrs】该窗口包含 2 个变量：pLabor Force Participation Rate – 55 Yrs. & over、Labor Force Participation Rate – 16-19 Yrs。主要关注 Labor Force Participation Rate – 16-19 Yrs。 总体而言，时间跨度为 1973-01-01–2025-06-01，Labor Force Participation Rate – 16-19 Yrs 首尾分别为 50.80 和 35.10。 沿时间线展开：在 1973-01-01–1990-06-01 期间，整体趋势稳步上行，但中间曾明显反弹至 59.3。 之后，在 1990-07-01–2007-12-01 期间，Labor Force Participation Rate – 16-19 Yrs 一路走低，从 53.50 到 41.20。 紧接着，2008-01-01–2025-06-01，跌势未减，继续下探至 35.10。 局部波动方面：几个显著高位出现在：1978-06-01≈58.50；1979-02-01≈58.60；1979-09-01≈57.80。 几个显著低位出现在：2014-02-01≈32.50；2018-08-01≈33.10；2020-04-01≈29.80。 关于变量间的相关性：pLabor Force Participation Rate – 55 Yrs. & over 与 Labor Force Participation Rate – 16-19 Yrs 存在一定相关性（负），但并不稳定。 观察到明显的周期性，重复间隔约为 60 步。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
 | 当前 artifact | - | 没有完整模型答案表，仅用于定性领域推理分析 |
 
-**Case 分析**
+</details>
+
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：疫情背景下的群体差异推理
 - 关键结论：需要比较 55+ 与青少年劳动参与率差值，并结合疫情退休和劳动力紧张背景解释方向。该能力超出纯形态 caption。
 
-### Case 17：同名地区比较与产业结构解释
+</details>
 
-- 数据集：`FREDQA`
-- Case ID：`fredqa::358`
-- 问题类型：`macro_economic_qa`
+</details>
+
+<details>
+<summary>💵 Case 17：FREDQA | 同名地区比较与产业结构解释</summary>
+
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `FREDQA` |
+| Case ID | `fredqa::358` |
+| 问题类型 | `macro_economic_qa` |
+| 正确答案 | `B` |
+
 - artifact 说明：FREDQA has small n and no complete model-eval table in current artifacts; use for qualitative domain-context cases only.
-- 数值摘要：n=1700, min=1.6, max=19.2, mean=5.7437, std=2.4393, slope=0.0014599, argmax=1213, argmin=954
+
+数值摘要：n=1700, min=1.6, max=19.2, mean=5.7437, std=2.4393, slope=0.0014599, argmax=1213, argmin=954
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![fredqa::358](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/fredqa_358.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -2423,7 +2947,8 @@ You are a time series analysis expert. In a Regional Unemployment system, there 
 **题干中文翻译**
 
 你是时间序列分析专家。在一个地区失业率系统中，有 4 个指标：俄亥俄州哥伦布（MSA）失业率，单位为百分比 &lt;ts&gt;&lt;ts/&gt;；佐治亚州-阿拉巴马州哥伦布（MSA）失业率，单位为百分比 &lt;ts&gt;&lt;ts/&gt;；印第安纳州哥伦布（MSA）失业率，单位为百分比 &lt;ts&gt;&lt;ts/&gt;；北卡罗来纳州哥伦布县失业率，单位为百分比 &lt;ts&gt;&lt;ts/&gt;。使用 1990 年 1 月至 2025 年 5 月的月度数据，比较这些地区在 2020 年 4 月的失业率。哪一项经济特征最能解释为什么某个特定地区在这个疫情月份经历了最高失业率？
-- 选项：
+
+**选项**
 - A: Major city with substantial public sector employment vulnerable to operational shutdowns
   中文：拥有大量公共部门就业岗位、易受运营停摆影响的大城市
 - B: Manufacturing-dependent economy lacking work-from-home capabilities
@@ -2432,9 +2957,13 @@ You are a time series analysis expert. In a Regional Unemployment system, there 
   中文：以军事为重点的地区，政府就业稳定
 - D: Rural area with declining population limiting job diversity
   中文：人口减少的农村地区限制了工作多样性
-- 正确答案：`B`
 
-**生成的 caption 与中文翻译**
+**正确答案**：`B`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **生成 caption 样本 1 原文**
 
@@ -2450,28 +2979,52 @@ You are a time series analysis expert. In a Regional Unemployment system, there 
 【序列 3：Unemployment Rate in Columbus, IN (MSA)】变量组包括 Unemployment Rate in Columbus, OH (MSA)、Unemployment Rate in Columbus, GA-AL (MSA)、Unemployment Rate in Columbus, IN (MSA)、Unemployment Rate in Columbus County, NC。下文重点描述 Unemployment Rate in Columbus, IN (MSA)（Unemployment Rate in Columbus, IN (MSA), Percent, Monthly, Not Seasonally Adjusted ），并分析其与其它变量的联动。 概括一下，Unemployment Rate in Columbus, IN (MSA) 覆盖 1990-01-01 至 2025-05-01，整体从 5.200 变动至 3.200。 细分来看：1990-01-01–2001-10-01，虽然整体由 5.20 到 4.10，但期间一度下探至 1.60。 紧接着，2001-11-01–2013-07-01，虽然整体由 4.60 到 6.000，但期间一度冲高至 10.70。 接着，在 2013-08-01–2025-05-01 期间，整体趋势震荡下行，但中间曾明显反弹至 19.20。 关键的局部事件包括：几个显著高位出现在：2009-03-01≈9.80；2010-02-01≈10.70；2020-04-01≈19.20。 几个显著低位出现在：1996-09-01≈2.00；1998-04-01≈1.70；1998-09-01≈1.60。 关于变量间的相关性：Unemployment Rate in Columbus, OH (MSA) 与 Unemployment Rate in Columbus, IN (MSA) 存在一定相关性（正），但并不稳定。
 【序列 4：Unemployment Rate in Columbus County, NC】该窗口包含 4 个变量：Unemployment Rate in Columbus, OH (MSA)、Unemployment Rate in Columbus, GA-AL (MSA)、Unemployment Rate in Columbus, IN (MSA)、Unemployment Rate in Columbus County, NC。主要关注 Unemployment Rate in Columbus County, NC（Unemployment Rate in Columbus County, NC, Percent, Monthly, Not Seasonally Adjusted ）。 从全局走势看，时间跨度为 1990-01-01–2025-05-01，Unemployment Rate in Columbus County, NC 首尾分别为 4.80 和 4.200。 沿时间线展开：在 1990-01-01–2001-10-01 期间，Unemployment Rate in Columbus County, NC 明显上涨，从 4.800 到 8.20。 接着，2001-11-01–2013-07-01，虽然整体由 8.500 到 10.1，但期间一度下探至 4.600。 随后，2013-08-01–2025-05-01，Unemployment Rate in Columbus County, NC 呈震荡下行态势，由 9.40 变至 4.200。 值得注意的极值点有：几个显著高位出现在：2009-02-01≈14.20；2011-01-01≈14.70；2011-06-01≈14.10。 几个显著低位出现在：2023-04-01≈3.50；2023-09-01≈3.70；2025-04-01≈3.80。 关于变量间的相关性：Unemployment Rate in Columbus, GA-AL (MSA) 与 Unemployment Rate in Columbus County, NC 存在一定相关性（正），但并不稳定。 此外，未观察到明显的周期性规律。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
 | 当前 artifact | - | 没有完整模型答案表，仅用于定性领域推理分析 |
 
-**Case 分析**
+</details>
+
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：同名地区比较与产业结构解释
 - 关键结论：问题要求在多个 Columbus 地区中找 2020 年 4 月最高失业率，并用制造业依赖解释。caption 的相关性/趋势描述无法保证选对地区和原因。
 
-### Case 18：劳动市场净变化需要公式化计算
+</details>
 
-- 数据集：`FREDQA`
-- Case ID：`fredqa::1293`
-- 问题类型：`macro_economic_qa`
+</details>
+
+<details>
+<summary>💵 Case 18：FREDQA | 劳动市场净变化需要公式化计算</summary>
+
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `FREDQA` |
+| Case ID | `fredqa::1293` |
+| 问题类型 | `macro_economic_qa` |
+| 正确答案 | `B` |
+
 - artifact 说明：FREDQA has small n and no complete model-eval table in current artifacts; use for qualitative domain-context cases only.
-- 数值摘要：n=336, min=-6938, max=6192, mean=22.923, std=4811.6, slope=-42.28, argmax=66, argmin=169
+
+数值摘要：n=336, min=-6938, max=6192, mean=22.923, std=4811.6, slope=-42.28, argmax=66, argmin=169
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![fredqa::1293](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/fredqa_1293.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -2480,7 +3033,8 @@ You are a time series analysis expert. In the U.S. labor market, there are 2 met
 **题干中文翻译**
 
 你是时间序列分析专家。在美国劳动力市场中，有 2 个指标：招聘人数：非农总计，水平值（千人），月度，未经季节性调整 &lt;ts&gt;&lt;ts/&gt;；离职人数：非农总计，水平值（千人）（报告为负值），月度，未经季节性调整 &lt;ts&gt;&lt;ts/&gt;。月度净就业创造计算为招聘人数加上离职人数（因为离职代表就业损失）。大衰退始于 2007 年 12 月，并持续到 2009 年年中。使用 2000 年 12 月至 2014 年 11 月的月度数据，通过比较 2007 年 12 月与 2008 年 12 月的招聘人数、离职人数和净就业创造，关于衰退对劳动力市场影响的什么因果推断得到了支持？
-- 选项：
+
+**选项**
 - A: The recession reduced hires more than separations, leading to a larger net job loss in December 2008 compared to December 2007.
   中文：与 2007 年 12 月相比，经济衰退导致 2008 年 12 月的招聘减少幅度大于离职减少幅度，从而造成更大的净岗位流失。
 - B: The recession reduced separations more than hires, leading to a smaller net job loss in December 2008 compared to December 2007.
@@ -2489,7 +3043,8 @@ You are a time series analysis expert. In the U.S. labor market, there are 2 met
   中文：经济衰退使招聘人数和离职人数同等增加，导致这两个月之间的净就业创造没有变化。
 - D: The recession increased separations while reducing hires, leading to a larger net job loss in December 2008 compared to December 2007.
   中文：经济衰退增加了离职人数，同时减少了招聘人数，导致 2008 年 12 月的净岗位流失量大于 2007 年 12 月。
-- 正确答案：`B`
+
+**正确答案**：`B`
 
 **标准解释原文**
 
@@ -2499,7 +3054,10 @@ First, calculate values for the two months: December 2007 (pre-recession) had 3,
 
 首先，计算这两个月的数值：2007年12月（衰退前）有 3,765 千人被雇用，-4,847 千人离职（绝对值为 4,847），净就业创造为 3,765 + (-4,847) = -1,082 千人（损失）。2008年12月（衰退期间）有 3,126 千人被雇用，-4,087 千人离职（绝对值为 4,087），净就业创造为 3,126 + (-4,087) = -961 千人（较小的损失）。衰退使雇用人数减少了 639 千人（3,765 → 3,126），使离职人数（绝对值）减少了 760 千人（4,847 → 4,087）。由于离职人数的减少幅度大于雇用人数，净损失缩小了。这支持了以下因果推断：衰退对减少就业损失（离职）的影响超过了其对减少就业增长（雇用）的影响，从而导致较小的净损失。
 
-**生成的 caption 与中文翻译**
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **生成 caption 样本 1 原文**
 
@@ -2511,31 +3069,55 @@ First, calculate values for the two months: December 2007 (pre-recession) had 3,
 【序列 1：Hires: Total Nonfarm, Level in Thousands】该窗口包含 2 个变量：Hires: Total Nonfarm, Level in Thousands、-JTUTSL, -Level in Thous.。主要关注 Hires: Total Nonfarm, Level in Thousands（Hires: Total Nonfarm, Level in Thousands, Monthly, Not Seasonally Adjusted ）。 整体来看，时间跨度为 2000-12-01–2014-11-01，Hires: Total Nonfarm, Level in Thousands 首尾分别为 4141 和 4634。 细分来看：在 2000-12-01–2005-07-01 期间，Hires: Total Nonfarm, Level in Thousands 明显上涨，从 4141 到 5845。 接着，2005-08-01–2010-03-01，Hires: Total Nonfarm, Level in Thousands 呈明显下跌态势，由 5823 变至 3993。 随后，在 2010-04-01–2014-11-01 期间，整体趋势持续抬升，但中间曾深跌至 3087。 值得注意的极值点有：几个显著高位出现在：2005-04-01≈5935；2006-06-01≈6192；2007-06-01≈6016。 几个显著低位出现在：2008-12-01≈3126；2009-12-01≈2822；2010-12-01≈3087。 从变量联动角度看：-JTUTSL, -Level in Thous. 与 Hires: Total Nonfarm, Level in Thousands 呈现**负相关**，往往此消彼长。 观察到明显的周期性，重复间隔约为 12 步。
 【序列 2：-JTUTSL, -Level in Thous.】该窗口包含 2 个变量：Hires: Total Nonfarm, Level in Thousands、-JTUTSL, -Level in Thous.。主要关注 -JTUTSL, -Level in Thous.（-JTUTSL, -Level in Thous., Monthly, Not Seasonally Adjusted ）。 概括一下，时间跨度为 2000-12-01–2014-11-01，-JTUTSL, -Level in Thous. 首尾分别为 -4939 和 -4097。 分阶段来看：在 2000-12-01–2005-07-01 期间，整体趋势一路走低，但中间曾深跌至 -6938。 随后，在 2005-08-01–2010-03-01 期间，-JTUTSL, -Level in Thous. 震荡走高，从 -6109 到 -3387。 随后，2010-04-01–2014-11-01，虽然整体由 -3815 到 -4097，但期间一度下探至 -5547。 值得注意的极值点有：几个显著高位出现在：2009-11-01≈-3588；2010-11-01≈-3617；2011-11-01≈-3778。 几个显著低位出现在：2001-01-01≈-6938；2001-08-01≈-6264；2007-08-01≈-6313。 从变量联动角度看：Hires: Total Nonfarm, Level in Thousands 与 -JTUTSL, -Level in Thous. 呈现**负相关**，往往此消彼长。 此外，序列呈现约 12 个时间步的周期性律动。 末段，-JTUTSL, -Level in Thous. 收于 -4097 附近，最后时刻在 [-5547, -3200] 区间内波动。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
 | 当前 artifact | - | 没有完整模型答案表，仅用于定性领域推理分析 |
 
-**Case 分析**
+</details>
+
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：劳动市场净变化需要公式化计算
 - 关键结论：hires 与 separations 要按符号相加得到净岗位变化。caption 若只描述趋势，很容易漏掉 separations 负值和净变化公式。
 
+</details>
+
+</details>
+
 ## D. 混合 QA 与模型差异：TSAQA / TimeSeriesExam
 
-### Case 19：TSAQA 分类：caption 与 numbers 都不够，tool-agent 对
+<details>
+<summary>🧪 Case 19：TSAQA | TSAQA 分类：caption 与 numbers 都不够，tool-agent 对</summary>
 
-- 数据集：`TSAQA`
-- Case ID：`tsaqa::0003`
-- 问题类型：`classification`
-- 领域 / 子数据集：`synthetic` / `-`
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TSAQA` |
+| Case ID | `tsaqa::0003` |
+| 问题类型 | `classification` |
+| 领域 / 子数据集 | `synthetic` / `-` |
+| 正确答案 | `D` |
+
 - artifact 说明：TSAQA 此 case 已按 full-eval task 顺序和 local index 回连 phase_a 原始题干/序列；当前本地没有保存 OpenTSLM/ChatTS 原始 caption 对照文本，因此此处展示可用 SFT caption 样本和多条件答案。
-- 数值摘要：n=128, min=-1.5334, max=1.5422, mean=-7.8125e-06, std=1, slope=0.0026186, argmax=45, argmin=34
+
+数值摘要：n=128, min=-1.5334, max=1.5422, mean=-7.8125e-06, std=1, slope=0.0026186, argmax=45, argmin=34
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![tsaqa::0003](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/tsaqa_0003.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -2566,11 +3148,16 @@ This time series comes from a dataset designed to simulate and classify sequence
 **背景信息中文翻译**
 
 该时间序列来自一个数据集，该数据集旨在基于不同的向上和向下运动模式来模拟和分类序列，每个序列都根据四种方向类别之一进行标记，这些类别反映了上升和下降变化的不同组合。
-- 选项：
-无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案：`D`
 
-**生成的 caption 与中文翻译**
+**选项**
+无固定选项；题目要求按指定格式直接生成答案。
+
+**正确答案**：`D`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **可用 caption 样本 原文**
 
@@ -2586,7 +3173,10 @@ This time series comes from a dataset designed to simulate and classify sequence
 3. 从 0.64 下降到 -0.38。
 4. 从点 34 开始，时间序列值从约 0.14 上升到约 1.38，形成一个振幅约为 1.74 的上凸形态，然后回落到约 -0.58，形成一个上凸形态。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -2598,23 +3188,44 @@ This time series comes from a dataset designed to simulate and classify sequence
 | `chatts_caption_plus` | `C` | 错误 |
 | `tool_agent` | `D` | 正确 |
 
-**Case 分析**
+</details>
+
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：TSAQA 分类：caption 与 numbers 都不够，tool-agent 对
 - 关键结论：该 case 中两个 caption 条件和 numbers 都错，tool-agent 对，说明需要结构化工具提取方向组合，而不是只靠自然语言摘要。
 
-### Case 20：caption+numbers 弱于 caption / meta
+</details>
 
-- 数据集：`TSAQA`
-- Case ID：`tsaqa::0004`
-- 问题类型：`classification`
-- 领域 / 子数据集：`synthetic` / `-`
+</details>
+
+<details>
+<summary>🧪 Case 20：TSAQA | caption+numbers 弱于 caption / meta</summary>
+
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TSAQA` |
+| Case ID | `tsaqa::0004` |
+| 问题类型 | `classification` |
+| 领域 / 子数据集 | `synthetic` / `-` |
+| 正确答案 | `B` |
+
 - artifact 说明：TSAQA 此 case 已按 full-eval task 顺序和 local index 回连 phase_a 原始题干/序列；当前本地没有保存 OpenTSLM/ChatTS 原始 caption 对照文本，因此此处展示可用 SFT caption 样本和多条件答案。
-- 数值摘要：n=128, min=-1.4575, max=1.429, mean=-1.5625e-06, std=1, slope=9.9218e-05, argmax=43, argmin=28
+
+数值摘要：n=128, min=-1.4575, max=1.429, mean=-1.5625e-06, std=1, slope=9.9218e-05, argmax=43, argmin=28
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![tsaqa::0004](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/tsaqa_0004.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -2645,11 +3256,16 @@ This time series comes from a dataset designed to simulate and classify sequence
 **背景信息中文翻译**
 
 该时间序列来自一个数据集，该数据集旨在根据不同的上升和下降运动模式来模拟并分类序列，每个序列都根据四种方向类别之一进行标注，这些类别反映了上升和下降变化的不同组合。
-- 选项：
-无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案：`B`
 
-**生成的 caption 与中文翻译**
+**选项**
+无固定选项；题目要求按指定格式直接生成答案。
+
+**正确答案**：`B`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **可用 caption 样本 原文**
 
@@ -2665,7 +3281,10 @@ This time series comes from a dataset designed to simulate and classify sequence
   3. 从 0.29 下降到 0.01。
   4. 从点 28 开始，时间序列值从约 0.78 下降到约 -1.48，形成一个幅度约为 0.92 的向下凸起，然后回升到约 0.27，形成向下凸起；从点 64 开始，时间序列值缓慢上升，在点 80 达到峰值，随后在点 80 到点 82 之间快速下降，回到约 -0.78，形成先缓慢上升后快速下降的形态。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -2677,23 +3296,44 @@ This time series comes from a dataset designed to simulate and classify sequence
 | `chatts_caption_plus` | `A` | 错误 |
 | `tool_agent` | `B` | 正确 |
 
-**Case 分析**
+</details>
+
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：caption+numbers 弱于 caption / meta
 - 关键结论：OpenTSLM caption 单独正确，但 caption+numbers 错，显示混合输入可能让模型重新解释证据，造成集成失败。
 
-### Case 21：OpenTSLM 错、ChatTS 对的混合 QA
+</details>
 
-- 数据集：`TSAQA`
-- Case ID：`tsaqa::0006`
-- 问题类型：`classification`
-- 领域 / 子数据集：`healthcare` / `-`
+</details>
+
+<details>
+<summary>🧪 Case 21：TSAQA | OpenTSLM 错、ChatTS 对的混合 QA</summary>
+
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TSAQA` |
+| Case ID | `tsaqa::0006` |
+| 问题类型 | `classification` |
+| 领域 / 子数据集 | `healthcare` / `-` |
+| 正确答案 | `B` |
+
 - artifact 说明：TSAQA 此 case 已按 full-eval task 顺序和 local index 回连 phase_a 原始题干/序列；当前本地没有保存 OpenTSLM/ChatTS 原始 caption 对照文本，因此此处展示可用 SFT caption 样本和多条件答案。
-- 数值摘要：n=80, min=-1.0853, max=1.5287, mean=-6.25e-06, std=1, slope=-0.029443, argmax=13, argmin=50
+
+数值摘要：n=80, min=-1.0853, max=1.5287, mean=-6.25e-06, std=1, slope=-0.029443, argmax=13, argmin=50
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![tsaqa::0006](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/tsaqa_0006.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -2720,11 +3360,16 @@ This time series comes from a dataset capturing hand and finger bone outlines ex
 **背景信息中文翻译**
 
 该时间序列来自一个数据集，该数据集捕获从医学图像中提取的手部和手指骨骼轮廓，用于支持与骨骼轮廓检测准确性、受试者年龄组估计以及用于儿科骨龄评估的 Tanner-Whitehouse 发育评分相关的分类和预测任务。
-- 选项：
-无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案：`B`
 
-**生成的 caption 与中文翻译**
+**选项**
+无固定选项；题目要求按指定格式直接生成答案。
+
+**正确答案**：`B`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **可用 caption 样本 原文**
 
@@ -2734,7 +3379,10 @@ The time series has almost no noise. It exhibits square periodic fluctuations wi
 
 该时间序列几乎没有噪声。它呈现方形周期性波动，每个周期大约持续 25.1 个点，振幅为 1.6。整体趋势呈下降，从 -0.49 开始，到 -1.09 结束，整体幅度为 -0.60。除上述周期性和趋势外，未发现局部特征。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -2746,23 +3394,44 @@ The time series has almost no noise. It exhibits square periodic fluctuations wi
 | `chatts_caption_plus` | `A` | 错误 |
 | `tool_agent` | `B` | 正确 |
 
-**Case 分析**
+</details>
+
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：OpenTSLM 错、ChatTS 对的混合 QA
 - 关键结论：医疗骨轮廓分类问题中，ChatTS caption 与 numbers 能答对，OpenTSLM caption 答错；说明 caption 质量差异会直接转化为分类失败。
 
-### Case 22：TSAQA comparison：OpenTSLM 错、ChatTS 对
+</details>
 
-- 数据集：`TSAQA`
-- Case ID：`tsaqa::0665`
-- 问题类型：`comparison`
-- 领域 / 子数据集：`["healthcare", "healthcare"]` / `-`
+</details>
+
+<details>
+<summary>🧪 Case 22：TSAQA | TSAQA comparison：OpenTSLM 错、ChatTS 对</summary>
+
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TSAQA` |
+| Case ID | `tsaqa::0665` |
+| 问题类型 | `comparison` |
+| 领域 / 子数据集 | `["healthcare", "healthcare"]` / `-` |
+| 正确答案 | `F` |
+
 - artifact 说明：TSAQA 此 case 已按 full-eval task 顺序和 local index 回连 phase_a 原始题干/序列；当前本地没有保存 OpenTSLM/ChatTS 原始 caption 对照文本，因此此处展示可用 SFT caption 样本和多条件答案。
-- 数值摘要：n=410, min=-2.1711, max=2.4555, mean=-2.1951e-06, std=0.99999, slope=7.1544e-05, argmax=54, argmin=267
+
+数值摘要：n=410, min=-2.1711, max=2.4555, mean=-2.1951e-06, std=0.99999, slope=7.1544e-05, argmax=54, argmin=267
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![tsaqa::0665](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/tsaqa_0665.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -2789,11 +3458,16 @@ F：错误。
 **背景信息中文翻译**
 
 ["由光电容积脉搏波（PPG）和心电图（ECG）信号的滑动 32 秒窗口得出的心率测量数值序列（每分钟心跳次数），其中每个值反映其对应窗口内的估计心率。", "美国每日出生人数的时间序列。"]
-- 选项：
-无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案：`F`
 
-**生成的 caption 与中文翻译**
+**选项**
+无固定选项；题目要求按指定格式直接生成答案。
+
+**正确答案**：`F`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **可用 caption 样本 原文**
 
@@ -2809,7 +3483,10 @@ F：错误。
 3. 从 0.31 到 1.05 保持稳定。
 4. 未发现局部特征。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -2821,23 +3498,44 @@ F：错误。
 | `chatts_caption_plus` | `F` | 正确 |
 | `tool_agent` | `F` | 正确 |
 
-**Case 分析**
+</details>
+
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：TSAQA comparison：OpenTSLM 错、ChatTS 对
 - 关键结论：该题比较两个医疗时间序列的变异系数和自相关/周期峰谷。OpenTSLM caption 条件答错，ChatTS 和 numbers 答对，说明多序列比较需要保留跨序列相对量，而不是只描述单条序列。
 
-### Case 23：TSAQA comparison：两个 caption 都错，numbers/tool 对
+</details>
 
-- 数据集：`TSAQA`
-- Case ID：`tsaqa::0677`
-- 问题类型：`comparison`
-- 领域 / 子数据集：`["web", "web"]` / `-`
+</details>
+
+<details>
+<summary>🧪 Case 23：TSAQA | TSAQA comparison：两个 caption 都错，numbers/tool 对</summary>
+
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TSAQA` |
+| Case ID | `tsaqa::0677` |
+| 问题类型 | `comparison` |
+| 领域 / 子数据集 | `["web", "web"]` / `-` |
+| 正确答案 | `B` |
+
 - artifact 说明：TSAQA 此 case 已按 full-eval task 顺序和 local index 回连 phase_a 原始题干/序列；当前本地没有保存 OpenTSLM/ChatTS 原始 caption 对照文本，因此此处展示可用 SFT caption 样本和多条件答案。
-- 数值摘要：n=406, min=-1.8571, max=7.6106, mean=2.4631e-06, std=1, slope=0.00012909, argmax=318, argmin=168
+
+数值摘要：n=406, min=-1.8571, max=7.6106, mean=2.4631e-06, std=1, slope=0.00012909, argmax=318, argmin=168
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![tsaqa::0677](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/tsaqa_0677.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -2868,11 +3566,16 @@ D：两者都没有表现出正向局部趋势
 **背景信息中文翻译**
 
 ["单篇英文维基百科文章每日页面浏览次数的时间序列。", "单篇英文维基百科文章每日页面浏览次数的时间序列。"]
-- 选项：
-无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案：`B`
 
-**生成的 caption 与中文翻译**
+**选项**
+无固定选项；题目要求按指定格式直接生成答案。
+
+**正确答案**：`B`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **可用 caption 样本 原文**
 
@@ -2888,7 +3591,10 @@ D：两者都没有表现出正向局部趋势
 3. 从 -0.50 到 -0.50 保持稳定。
 4. 在点 152、点 155 和点 159，出现了 3 个连续的向上尖峰，幅度范围为 2.39 到 3.04，时间序列值反复从约 -0.50 急剧上升到约 1.89、2.47 和 1.9，然后迅速回落到约 -0.50，形成连续的向上尖峰；在点 298、点 302、点 309、点 314 和点 320，出现了 5 个连续的向上尖峰，幅度范围为 3.89 到 7.47，时间序列值反复从约 -0.50 急剧上升到约 5.77、3.39、7.24、6.94 和 4.37，然后迅速回落到约 -0.50，形成连续的向上尖峰。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -2900,23 +3606,44 @@ D：两者都没有表现出正向局部趋势
 | `chatts_caption_plus` | `A` | 错误 |
 | `tool_agent` | `B` | 正确 |
 
-**Case 分析**
+</details>
+
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：TSAQA comparison：两个 caption 都错，numbers/tool 对
 - 关键结论：问题要求判断哪个序列有更强的正向局部趋势。两个 caption 模型都未能把 upward spikes 的相对强弱编码清楚，raw numbers 和 tool-agent 可以恢复答案。
 
-### Case 24：TSAQA data transformation：一阶差分选择题
+</details>
 
-- 数据集：`TSAQA`
-- Case ID：`tsaqa::0833`
-- 问题类型：`data_transformation`
-- 领域 / 子数据集：`["web", "finance", "transport", "nature"]` / `-`
+</details>
+
+<details>
+<summary>🧪 Case 24：TSAQA | TSAQA data transformation：一阶差分选择题</summary>
+
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TSAQA` |
+| Case ID | `tsaqa::0833` |
+| 问题类型 | `data_transformation` |
+| 领域 / 子数据集 | `["web", "finance", "transport", "nature"]` / `-` |
+| 正确答案 | `D` |
+
 - artifact 说明：TSAQA 此 case 已按 full-eval task 顺序和 local index 回连 phase_a 原始题干/序列；当前本地没有保存 OpenTSLM/ChatTS 原始 caption 对照文本，因此此处展示可用 SFT caption 样本和多条件答案。
-- 数值摘要：n=62, min=-1.8972, max=4.0781, mean=-4.8387e-06, std=1, slope=0.0030177, argmax=40, argmin=18
+
+数值摘要：n=62, min=-1.8972, max=4.0781, mean=-4.8387e-06, std=1, slope=0.0030177, argmax=40, argmin=18
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![tsaqa::0833](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/tsaqa_0833.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -2947,11 +3674,16 @@ D: [0, -1.7704, -1.4385, 1.9917, -0.9959, 1.3278, -2.1024, 0.7746, -0.6639, 0.99
 **背景信息中文翻译**
 
 ["单篇英文维基百科文章每日页面浏览量计数的时间序列。", "单一货币每日即期汇率测量值（每美元对应的外国货币单位）的时间序列。", "来自湾区单个传感器的每 5 分钟交通流量测量值（车辆计数）的时间序列。", "每日相对太阳黑子数测量值的时间序列，其中每个值表示太阳可见圆面上太阳黑子活动的量化计数。"]
-- 选项：
-无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案：`D`
 
-**生成的 caption 与中文翻译**
+**选项**
+无固定选项；题目要求按指定格式直接生成答案。
+
+**正确答案**：`D`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **可用 caption 样本 原文**
 
@@ -2967,7 +3699,10 @@ D: [0, -1.7704, -1.4385, 1.9917, -0.9959, 1.3278, -2.1024, 0.7746, -0.6639, 0.99
   3. 从 2.20 到 -1.57 保持稳定。
   4. 未发现局部特征。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -2979,23 +3714,44 @@ D: [0, -1.7704, -1.4385, 1.9917, -0.9959, 1.3278, -2.1024, 0.7746, -0.6639, 0.99
 | `chatts_caption_plus` | `D` | 正确 |
 | `tool_agent` | `D` | 正确 |
 
-**Case 分析**
+</details>
+
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：TSAQA data transformation：一阶差分选择题
 - 关键结论：该题需要把原始序列映射到一阶差分候选。OpenTSLM caption 错、ChatTS 对，说明自由文本形态描述对可计算变换题并不稳定。
 
-### Case 25：TSAQA data transformation：numbers/caption 都错，tool-agent 对
+</details>
 
-- 数据集：`TSAQA`
-- Case ID：`tsaqa::0858`
-- 问题类型：`data_transformation`
-- 领域 / 子数据集：`["finance", "nature"]` / `-`
+</details>
+
+<details>
+<summary>🧪 Case 25：TSAQA | TSAQA data transformation：numbers/caption 都错，tool-agent 对</summary>
+
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TSAQA` |
+| Case ID | `tsaqa::0858` |
+| 问题类型 | `data_transformation` |
+| 领域 / 子数据集 | `["finance", "nature"]` / `-` |
+| 正确答案 | `F` |
+
 - artifact 说明：TSAQA 此 case 已按 full-eval task 顺序和 local index 回连 phase_a 原始题干/序列；当前本地没有保存 OpenTSLM/ChatTS 原始 caption 对照文本，因此此处展示可用 SFT caption 样本和多条件答案。
-- 数值摘要：n=60, min=-1.8082, max=1.7084, mean=3.3333e-06, std=1, slope=0.056825, argmax=59, argmin=0
+
+数值摘要：n=60, min=-1.8082, max=1.7084, mean=3.3333e-06, std=1, slope=0.056825, argmax=59, argmin=0
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![tsaqa::0858](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/tsaqa_0858.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -3024,11 +3780,16 @@ F：错误。
 **背景信息中文翻译**
 
 ["单个美国经济时间序列的月度宏观经济指标测量时间序列。", "单个 1.5°×1.5° 经纬度网格单元的日降水量测量时间序列（毫米）。"]
-- 选项：
-无固定选项；题目要求按指定格式直接生成答案。
-- 正确答案：`F`
 
-**生成的 caption 与中文翻译**
+**选项**
+无固定选项；题目要求按指定格式直接生成答案。
+
+**正确答案**：`F`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **可用 caption 样本 原文**
 
@@ -3038,7 +3799,10 @@ F：错误。
 
 1) 几乎没有噪声 2) 没有周期性波动 3) 从 -1.81 增加到 1.71 4) 未发现局部特征。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -3050,21 +3814,41 @@ F：错误。
 | `chatts_caption_plus` | `T` | 错误 |
 | `tool_agent` | `F` | 正确 |
 
-**Case 分析**
+</details>
+
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：TSAQA data transformation：numbers/caption 都错，tool-agent 对
 - 关键结论：该题判断 Fourier transform 序列真伪。numbers 和两个 caption 条件都答错，但 tool-agent 答对，说明这类题需要显式计算工具，而不是语言模型凭描述判断。
 
-### Case 26：ChatTS 错、OpenTSLM 对的反例
+</details>
 
-- 数据集：`TimeSeriesExam`
-- Case ID：`timeseriesexam::tse_0010`
-- 问题类型：`Anolmaly Detection`
-- 数值摘要：n=128, min=-11.128, max=13.743, mean=3.8142, std=3.8011, slope=0.070196, argmax=103, argmin=0
+</details>
+
+<details>
+<summary>🧭 Case 26：TimeSeriesExam | ChatTS 错、OpenTSLM 对的反例</summary>
+
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TimeSeriesExam` |
+| Case ID | `timeseriesexam::tse_0010` |
+| 问题类型 | `Anolmaly Detection` |
+| 正确答案 | `Yes, it's pattern is distorted by random spikes` |
+
+数值摘要：n=128, min=-11.128, max=13.743, mean=3.8142, std=3.8011, slope=0.070196, argmax=103, argmin=0
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![timeseriesexam::tse_0010](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/timeseriesexam_tse_0010.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -3073,16 +3857,21 @@ Is the given time series likely to have an anomaly?
 **题干中文翻译**
 
 给定的时间序列是否可能存在异常？
-- 选项：
+
+**选项**
 - A: No
   中文：否
 - B: Yes, it's pattern is distorted by random spikes
   中文：是的，它的模式被随机尖峰扭曲了。
 - C: Yes, it's pattern is flipped at certain point in time
   中文：是的，它的模式在某个时间点发生了翻转。
-- 正确答案：`Yes, it's pattern is distorted by random spikes`
 
-**生成的 caption 与中文翻译**
+**正确答案**：`Yes, it's pattern is distorted by random spikes`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -3100,7 +3889,10 @@ The overall trend is increasing. The global maximum, 11.65, occurs at point 127,
 
 整体趋势是上升的。全局最大值 11.65 出现在点 127，位于 128 点窗口的后三分之一。由噪声标准差（约 3.0）表征的短期波动，在窗口前半部分比后半部分更明显，而后半部分的趋势趋于稳定。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -3110,21 +3902,41 @@ The overall trend is increasing. The global maximum, 11.65, occurs at point 127,
 | `chatts_caption` | `A` | 错误 |
 | `wrong_caption` | `B` | 正确 |
 
-**Case 分析**
+</details>
+
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：ChatTS 错、OpenTSLM 对的反例
 - 关键结论：并非所有失败都来自 OpenTSLM；该 anomaly case 中 OpenTSLM 正确而 ChatTS 错，说明不同 caption 模型的偏差方向不同。
 
-### Case 27：趋势-周期组合的概念题
+</details>
 
-- 数据集：`TimeSeriesExam`
-- Case ID：`timeseriesexam::tse_0182`
-- 问题类型：`Pattern Recognition`
-- 数值摘要：n=128, min=-12.254, max=10.704, mean=-0.51551, std=5.382, slope=-0.024376, argmax=105, argmin=121
+</details>
+
+<details>
+<summary>🧭 Case 27：TimeSeriesExam | 趋势-周期组合的概念题</summary>
+
+### 基本信息
+
+| 字段 | 内容 |
+| --- | --- |
+| 数据集 | `TimeSeriesExam` |
+| Case ID | `timeseriesexam::tse_0182` |
+| 问题类型 | `Pattern Recognition` |
+| 正确答案 | `Multiplicative` |
+
+数值摘要：n=128, min=-12.254, max=10.704, mean=-0.51551, std=5.382, slope=-0.024376, argmax=105, argmin=121
+
+<details>
+<summary>🖼 时序图</summary>
 
 ![timeseriesexam::tse_0182](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/timeseriesexam_tse_0182.png)
 
-**QA 问题**
+</details>
+
+<details>
+<summary>❓ QA 问题与中文翻译</summary>
 
 **题干原文**
 
@@ -3133,14 +3945,19 @@ The given time series has a cycle component and a trend component. Is it an addi
 **题干中文翻译**
 
 给定的时间序列包含周期成分和趋势成分。它是加性模型还是乘性模型？
-- 选项：
+
+**选项**
 - A: Multiplicative
   中文：乘法式
 - B: Additive
   中文：加性
-- 正确答案：`Multiplicative`
 
-**生成的 caption 与中文翻译**
+**正确答案**：`Multiplicative`
+
+</details>
+
+<details>
+<summary>📝 生成的 caption 与中文翻译</summary>
 
 **OpenTSLM caption 原文**
 
@@ -3158,7 +3975,10 @@ The overall trend is decreasing. The global maximum occurs at the start of the s
 
 整体趋势是下降的。全局最大值出现在序列开始处（窗口的前三分之一）。短期波动在整个过程中保持一致，在窗口的前后两半显示出相似的振幅。
 
-**不同输入条件下的答案 / 评分**
+</details>
+
+<details>
+<summary>🧪 下游 QA 模型答案 / 评分</summary>
 
 | 输入条件 | 预测答案 | 结果 |
 | --- | --- | --- |
@@ -3168,10 +3988,17 @@ The overall trend is decreasing. The global maximum occurs at the start of the s
 | `chatts_caption` | `B` | 错误 |
 | `wrong_caption` | `B` | 错误 |
 
-**Case 分析**
+</details>
+
+<details>
+<summary>🔎 Case 分析</summary>
 
 - 失败标签：趋势-周期组合的概念题
 - 关键结论：该题判断 additive/multiplicative。ChatTS 错、OpenTSLM 对，说明 ChatTS 的简洁描述有时不足以保留组合模型结构。
+
+</details>
+
+</details>
 
 ## 全局 Case Study 分析
 
