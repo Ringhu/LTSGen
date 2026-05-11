@@ -13,7 +13,6 @@
 
 **题干原文**
 
-```text
 Classify the given time series into one of the categories below.
 Respond ONLY with the letter of the correct choice (A, B, C, D).
 
@@ -22,11 +21,9 @@ A: down-down (1306 cases)
 B: up-down (1248 cases)
 C: down-up (1245 cases)
 D: up-up (1201 cases)
-```
 
 **题干中文翻译**
 
-```text
 将给定时间序列分类到以下类别之一。
 只回复正确选项的字母（A、B、C、D）。
 
@@ -35,19 +32,14 @@ A：下降-下降（1306 个案例）
 B：上升-下降（1248 个案例）
 C：下降-上升（1245 个案例）
 D：上升-上升（1201 个案例）
-```
 
 **背景信息原文**
 
-```text
 This time series comes from a dataset designed to simulate and classify sequences based on distinct upward and downward movement patterns, with each series labeled according to one of four directional classes reflecting different combinations of up and down changes.
-```
 
 **背景信息中文翻译**
 
-```text
 该时间序列来自一个数据集，该数据集旨在基于不同的向上和向下运动模式来模拟和分类序列，每个序列都根据四种方向类别之一进行标记，这些类别反映了上升和下降变化的不同组合。
-```
 - 选项：
 无固定选项；题目要求按指定格式直接生成答案。
 - 正确答案：`D`
@@ -56,21 +48,17 @@ This time series comes from a dataset designed to simulate and classify sequence
 
 **可用 caption 样本 原文**
 
-```text
 1. Noisy with std around 0.29.
 2. No periodic fluctuations observed, showing no periodic fluctuation.
 3. Decrease from 0.64 to -0.38.
 4. Starting from point 34, the time series value rises from around 0.14 to around 1.38, forms an upward convex with an amplitude of about 1.74, and then falls back to around -0.58, forming a upward convex.
-```
 
 **可用 caption 样本 中文翻译**
 
-```text
 1. 带噪声，标准差约为 0.29。
 2. 未观察到周期性波动，表现为无周期性波动。
 3. 从 0.64 下降到 -0.38。
 4. 从点 34 开始，时间序列值从约 0.14 上升到约 1.38，形成一个振幅约为 1.74 的上凸形态，然后回落到约 -0.58，形成一个上凸形态。
-```
 
 **不同输入条件下的答案 / 评分**
 

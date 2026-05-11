@@ -13,37 +13,29 @@
 
 **题干原文**
 
-```text
 Classify the given time series into one of the categories below.
 Respond ONLY with the letter of the correct choice (A, B).
 
 Choices:
 A: correct
 B: incorrect
-```
 
 **题干中文翻译**
 
-```text
 将给定时间序列分类到以下类别之一。
 仅回复正确选项的字母（A、B）。
 
 选项：
 A：正确
 B：不正确
-```
 
 **背景信息原文**
 
-```text
 This time series comes from a dataset capturing hand and finger bone outlines extracted from medical images to support classification and prediction tasks related to bone outline detection accuracy, subject age group estimation, and Tanner-Whitehouse developmental scoring for pediatric bone age assessment.
-```
 
 **背景信息中文翻译**
 
-```text
 该时间序列来自一个数据集，该数据集捕获从医学图像中提取的手部和手指骨骼轮廓，用于支持与骨骼轮廓检测准确性、受试者年龄组估计以及用于儿科骨龄评估的 Tanner-Whitehouse 发育评分相关的分类和预测任务。
-```
 - 选项：
 无固定选项；题目要求按指定格式直接生成答案。
 - 正确答案：`B`
@@ -52,15 +44,11 @@ This time series comes from a dataset capturing hand and finger bone outlines ex
 
 **可用 caption 样本 原文**
 
-```text
 The time series has almost no noise. It exhibits square periodic fluctuations with each period lasting approximately 25.1 points and having an amplitude of 1.6. The overall trend is decreasing, starting at -0.49 and ending at -1.09, with an overall amplitude of -0.60. No local characteristics were found beyond the described periodicity and trend.
-```
 
 **可用 caption 样本 中文翻译**
 
-```text
 该时间序列几乎没有噪声。它呈现方形周期性波动，每个周期大约持续 25.1 个点，振幅为 1.6。整体趋势呈下降，从 -0.49 开始，到 -1.09 结束，整体幅度为 -0.60。除上述周期性和趋势外，未发现局部特征。
-```
 
 **不同输入条件下的答案 / 评分**
 

@@ -36,15 +36,11 @@
 
 **题干原文**
 
-```text
 Across the full period, what is the overall direction of this exchange-rate series?
-```
 
 **题干中文翻译**
 
-```text
 在整个时期内，该汇率序列的整体走势方向是什么？
-```
 - 选项：
 - A. Steadily decreasing overall
   中文：A. 整体稳步下降
@@ -60,39 +56,27 @@ Across the full period, what is the overall direction of this exchange-rate seri
 
 **OpenTSLM caption 原文**
 
-```text
 7. The time series shows a strong seasonal pattern with a period of 40 time units, and a gradual upward trend over the entire window. The early part of the series experiences a significant increase, followed by a moderate rise in the first half, and a slight flattening in the second half. A notable peak occurs in the second half, reaching about 1.5 standard deviations above the mean, while a deep valley is observed early in the window, about 1.8 standard deviations below the mean. The series is strongly correlated with variables 6 and 3, showing strong positive relationships.
-```
 
 **OpenTSLM caption 中文翻译**
 
-```text
 7. 该时间序列呈现出明显的季节性模式，周期为 40 个时间单位，并且在整个窗口内呈现逐渐上升的趋势。序列早期出现显著增长，随后在前半段中等幅度上升，在后半段略有趋平。后半段出现一个显著峰值，达到均值以上约 1.5 个标准差；而窗口早期观察到一个深谷，约低于均值 1.8 个标准差。该序列与变量 6 和变量 3 强相关，表现出很强的正相关关系。
-```
 
 **ChatTS caption 原文**
 
-```text
 The overall trend is flat, with no significant changes in value throughout the time series. The global maximum, which is consistently around 0.01, is present throughout the entire window, indicating no specific peak position. There are no short-term fluctuations observed in either half of the window. In summary, the time series exhibits a steady trend with no notable peaks or fluctuations.
-```
 
 **ChatTS caption 中文翻译**
 
-```text
 整体趋势平稳，在整个时间序列中数值没有显著变化。全局最大值始终约为 0.01，贯穿整个窗口，表明没有特定的峰值位置。在窗口的任一半段都未观察到短期波动。总之，该时间序列表现出稳定趋势，没有明显峰值或波动。
-```
 
 **OpenTSLM Q3-format SFT caption 原文**
 
-```text
 The time series shows a flat trend with high volatility and no clear seasonality. The data starts with a significant downward movement early in the window, followed by an upward phase in the first half, and then another decline in the second half. A notable peak occurs in the second half, reaching about 13.1 standard deviations above the mean, while a smaller valley is observed in the first half, about 1.0 standard deviation below the mean. The series has moderate positive and negative correlations with variables 6 and 3, respectively.
-```
 
 **OpenTSLM Q3-format SFT caption 中文翻译**
 
-```text
 该时间序列呈现出平坦趋势，波动性较高，且没有明显季节性。数据在窗口早期出现显著下行，随后在前半段进入上行阶段，接着在后半段再次下降。后半段出现一个显著峰值，达到均值以上约 13.1 个标准差；而前半段观察到一个较小的谷值，约低于均值 1.0 个标准差。该序列分别与变量 6 和变量 3 存在中等程度的正相关和负相关。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -113,19 +97,15 @@ The time series shows a flat trend with high volatility and no clear seasonality
 
 > 注：该字段在源 artifact 中已经像是从中间开始保存的片段，当前报告不再二次裁剪；无法从现有文件恢复更早的前文。
 
-```text
 dly without a clear sustained trend, though the ending is slightly higher than the start. Overall, it looks mostly flat with minor noise rather than steadily increasing or decreasing.
 
 Final answer: D
-```
 
 **`numbers_cot` 中文翻译**
 
-```text
 没有明确的持续趋势，尽管结尾略高于起点。整体来看，它基本持平，只有轻微噪声，而不是持续上升或下降。
 
 最终答案：D
-```
 
 
 **Case 分析**
@@ -148,15 +128,11 @@ Final answer: D
 
 **题干原文**
 
-```text
 In which third of this 512-week gasoline price series does the highest price occur?
-```
 
 **题干中文翻译**
 
-```text
 这条 512 周汽油价格序列中的最高价格出现在哪三分之一时段？
-```
 - 选项：
 - A. last third
   中文：A. 最后三分之一
@@ -172,39 +148,27 @@ In which third of this 512-week gasoline price series does the highest price occ
 
 **OpenTSLM caption 原文**
 
-```text
 The time series shows a flat trend with low volatility and a strong seasonal pattern repeating every 104 weeks. The data experiences a notable upward phase early in the window, followed by a significant downward movement in the first half, and a smaller upward trend in the second half. A peak occurs in the first half, reaching about 1.5 standard deviations above the mean, while a valley appears late in the window, about 1.2 standard deviations below the mean. The series is strongly positively correlated with weekly prices from the New England region.
-```
 
 **OpenTSLM caption 中文翻译**
 
-```text
 该时间序列呈现低波动的平稳趋势，并具有每 104 周重复一次的强季节性模式。数据在窗口早期经历了显著上升阶段，随后在前半段出现明显下行，并在后半段呈现较小幅度的上升趋势。一个峰值出现在前半段，达到高于均值约 1.5 个标准差的位置；一个谷值出现在窗口后期，约低于均值 1.2 个标准差。该序列与新英格兰地区的周价格呈强正相关。
-```
 
 **ChatTS caption 原文**
 
-```text
 The overall trend is increasing. The global maximum, approximately 1.56, occurs around point 511, which is in the last third of the 512-point window. Short-term fluctuations are more pronounced in the first half (points 1–256) due to a higher-frequency sinusoidal pattern with a period of ~100 points, compared to a longer period of ~194 points in the second half (points 257–512).
-```
 
 **ChatTS caption 中文翻译**
 
-```text
 整体趋势是上升的。全局最大值约为 1.56，出现在点 511 附近，位于 512 点窗口的后三分之一。由于前半部分（点 1–256）存在周期约为 100 点的较高频率正弦模式，而后半部分（点 257–512）的周期较长，约为 194 点，因此前半部分的短期波动更为明显。
-```
 
 **OpenTSLM Q3-format SFT caption 原文**
 
-```text
 The time series shows a flat trend with high volatility and no clear seasonality. The data starts with a moderate upward movement in the early part of the window, followed by a stronger increase in the first half, and a significant rise in the second half. A peak occurs late in the window, reaching about 3.0 standard deviations above the mean, while a valley is observed early on, about 1.9 standard deviations below the mean. The series has a strong positive correlation with another gas price variable, PADD 1B.
-```
 
 **OpenTSLM Q3-format SFT caption 中文翻译**
 
-```text
 该时间序列表现为趋势平稳、波动性高，且没有明显季节性。数据在窗口早期以温和上升开始，随后在前半段出现更强的增长，并在后半段显著上升。峰值出现在窗口后期，达到约高于均值 3.0 个标准差；而谷值出现在早期，约低于均值 1.9 个标准差。该序列与另一个汽油价格变量 PADD 1B 呈强正相关。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -225,19 +189,15 @@ The time series shows a flat trend with high volatility and no clear seasonality
 
 > 注：该字段在源 artifact 中已经像是从中间开始保存的片段，当前报告不再二次裁剪；无法从现有文件恢复更早的前文。
 
-```text
 series’ maximum value is about 1.791, and it appears well after the midpoint of the 512 weeks, closer to the later portion of the data. So the highest price occurs in the last third.
 
 Final answer: A
-```
 
 **`numbers_cot` 中文翻译**
 
-```text
 序列的最大值约为 1.791，并且它出现在 512 周中点之后较远的位置，更接近数据的后半部分。因此，最高价格出现在后三分之一。
 
 最终答案：A
-```
 
 
 **Case 分析**
@@ -260,15 +220,11 @@ Final answer: A
 
 **题干原文**
 
-```text
 Looking across the 256-week drought series, which half shows greater short-term volatility, with more jagged week-to-week changes?
-```
 
 **题干中文翻译**
 
-```text
 纵观 256 周的干旱序列，哪一半表现出更大的短期波动性，即周与周之间的变化更为锯齿状？
-```
 - 选项：
 - A. Second half
   中文：A. 后半段
@@ -284,39 +240,27 @@ Looking across the 256-week drought series, which half shows greater short-term 
 
 **OpenTSLM caption 原文**
 
-```text
 The time series shows a steady upward trend with low volatility and a strong seasonal pattern repeating every 12 months. The data starts with a moderate increase in the early part of the window, followed by a more pronounced rise in the first half, and a slightly smaller but still positive growth in the second half. A notable peak occurs late in the window, reaching about 1.5 standard deviations above the mean, while a valley is observed early on, about 1.2 standard deviations below the mean. Several variables exhibit strong positive correlations with the target series.
-```
 
 **OpenTSLM caption 中文翻译**
 
-```text
 该时间序列呈现出稳定的上升趋势，波动性较低，并且具有每 12 个月重复一次的强季节性模式。数据在窗口早期以温和增长开始，随后在前半段出现更明显的上升，在后半段增长幅度略小但仍为正。窗口后期出现一个显著峰值，达到均值以上约 1.5 个标准差；而早期观察到一个谷值，约低于均值 1.2 个标准差。多个变量与目标序列表现出强正相关。
-```
 
 **ChatTS caption 原文**
 
-```text
 The overall trend is mixed, with increasing and decreasing segments. The global maximum (12.06) occurs at point 189, which is in the last third of the 256-point window. Short-term fluctuations are more pronounced in the first half (e.g., the rapid rise between points 125–132 and the decline after point 132) compared to the smoother second half.
-```
 
 **ChatTS caption 中文翻译**
 
-```text
 整体趋势是混合的，既有上升段也有下降段。全局最大值（12.06）出现在点 189，位于 256 点窗口的后三分之一。与更平滑的后半段相比，前半段的短期波动更明显（例如，点 125–132 之间的快速上升以及点 132 之后的下降）。
-```
 
 **OpenTSLM Q3-format SFT caption 原文**
 
-```text
 The time series shows a flat trend with medium volatility and a medium-strength daily seasonality. There is a noticeable upward phase early in the window followed by a significant downward phase in the first half, and a strong upward movement in the second half. A peak occurs in the first half with a magnitude of about 3.1 standard deviations from the mean, while a valley is observed early in the window with a smaller magnitude of about 1.1 standard deviations. The series has moderate positive correlations with variables D1 and C2.
-```
 
 **OpenTSLM Q3-format SFT caption 中文翻译**
 
-```text
 该时间序列呈现平稳趋势，具有中等波动性和中等强度的日季节性。窗口早期有一个明显的上升阶段，随后在前半部分出现显著的下降阶段，并且在后半部分出现强劲的上升走势。前半部分出现一个峰值，其幅度约为偏离均值 3.1 个标准差；而窗口早期观察到一个谷值，幅度较小，约为 1.1 个标准差。该序列与变量 D1 和 C2 呈中等程度的正相关。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -337,19 +281,15 @@ The time series shows a flat trend with medium volatility and a medium-strength 
 
 > 注：该字段在源 artifact 中已经像是从中间开始保存的片段，当前报告不再二次裁剪；无法从现有文件恢复更早的前文。
 
-```text
 frequent small up-and-down movements and several jagged swings around a rising plateau, especially in the later weeks. Overall, the second half looks a bit more volatile week-to-week.
 
 Final answer: A
-```
 
 **`numbers_cot` 中文翻译**
 
-```text
 频繁的小幅上下波动，以及围绕上升平台期的几次锯齿状摆动，尤其是在后几周。整体来看，后半段的逐周波动似乎略大。
 
 最终答案：A
-```
 
 
 **Case 分析**
@@ -372,15 +312,11 @@ Final answer: A
 
 **题干原文**
 
-```text
 Which half of this exchange-rate series shows larger short-term fluctuations overall?
-```
 
 **题干中文翻译**
 
-```text
 这个汇率序列的哪一半总体上显示出更大的短期波动？
-```
 - 选项：
 - A. Second half
   中文：A. 后半段
@@ -396,39 +332,27 @@ Which half of this exchange-rate series shows larger short-term fluctuations ove
 
 **OpenTSLM caption 原文**
 
-```text
 1. The time series shows a steady upward trend with low volatility and a strong seasonal pattern repeating every 18 periods. The data starts with a moderate increase in the early part of the window, followed by a more pronounced rise in the first half, and a slightly smaller but still positive growth in the second half. A notable peak occurs in the second half, reaching about 1.3 standard deviations above the mean, while a deep valley is observed early in the window, about 2.0 standard deviations below the mean. The series is strongly correlated with variable '2', showing a strong positive relationship.
-```
 
 **OpenTSLM caption 中文翻译**
 
-```text
 1. 该时间序列呈现稳定上升趋势，波动性较低，并具有每 18 个周期重复一次的强季节性模式。数据在窗口早期以温和增长开始，随后在前半部分出现更明显的上升，而在后半部分则保持略小但仍为正的增长。后半部分出现一个显著峰值，达到约高于均值 1.3 个标准差；窗口早期则观察到一个深谷，约低于均值 2.0 个标准差。该序列与变量“2”强相关，表现出强正相关关系。
-```
 
 **ChatTS caption 原文**
 
-```text
 The overall trend is decreasing. The global maximum occurs at the start of the time series (first third of the window). The first half of the window exhibits larger short-term fluctuations, including a rapid decline with an amplitude of 0.12, whereas the second half shows smaller fluctuations.
-```
 
 **ChatTS caption 中文翻译**
 
-```text
 整体趋势正在下降。全局最大值出现在时间序列的起始处（窗口的前三分之一）。窗口的前半部分表现出较大的短期波动，包括一次幅度为 0.12 的快速下降，而后半部分的波动较小。
-```
 
 **OpenTSLM Q3-format SFT caption 原文**
 
-```text
 The time series shows a flat trend with medium volatility and a medium-strength daily seasonality. The data starts with a significant downward phase early in the window, followed by an upward movement in the first half, and then a sharp decline in the second half. A notable peak occurs in the second half, reaching about 3.0 standard deviations above the mean, while a valley is observed around the middle of the series, approximately 1.8 standard deviations below the mean. Several variables exhibit moderate positive correlations with the target series.
-```
 
 **OpenTSLM Q3-format SFT caption 中文翻译**
 
-```text
 该时间序列表现出平稳趋势、中等波动性以及中等强度的日季节性。数据在窗口早期以显著下降阶段开始，随后在前半段出现上升走势，然后在后半段急剧下降。一个显著峰值出现在后半段，达到高于均值约 3.0 个标准差；而在序列中部附近观察到一个谷值，约低于均值 1.8 个标准差。若干变量与目标序列表现出中等正相关。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -449,19 +373,15 @@ The time series shows a flat trend with medium volatility and a medium-strength 
 
 > 注：该字段在源 artifact 中已经像是从中间开始保存的片段，当前报告不再二次裁剪；无法从现有文件恢复更早的前文。
 
-```text
 rebounds, especially around the middle and later sections (larger swings between roughly 1.47 and 1.37, then back up). That indicates greater short-term volatility in the second half.
 
 Final answer: A
-```
 
 **`numbers_cot` 中文翻译**
 
-```text
 反弹，尤其是在中段和后段附近（大幅波动大约在 1.47 和 1.37 之间，然后再次上升）。这表明后半段的短期波动性更大。
 
 最终答案：A
-```
 
 
 **Case 分析**
@@ -482,15 +402,11 @@ Final answer: A
 
 **题干原文**
 
-```text
 Is the given time series likely to have an anomaly?
-```
 
 **题干中文翻译**
 
-```text
 给定的时间序列是否可能存在异常？
-```
 - 选项：
 - A: Yes, it's pattern is distorted by random spikes
   中文：是的，它的模式被随机尖峰扭曲了。
@@ -504,27 +420,19 @@ Is the given time series likely to have an anomaly?
 
 **OpenTSLM caption 原文**
 
-```text
 The time series shows a downward trend early in the window followed by an upward movement in the first half and a stronger upward trend in the second half. There is a moderate seasonal pattern with a period of about 1.8 time units. The overall net change is a significant increase of over 100%. A notable peak occurs in the second half, reaching about 1.5 standard deviations above the mean, while a valley is observed early in the window, about 1.2 standard deviations below the mean. The data is part of the NBER macroeconomic time series, representing a specific economic indicator.
-```
 
 **OpenTSLM caption 中文翻译**
 
-```text
 该时间序列在窗口早期呈下降趋势，随后在前半部分出现上行走势，并在后半部分表现出更强的上升趋势。存在中等程度的季节性模式，周期约为 1.8 个时间单位。整体净变化为显著增加，增幅超过 100%。后半部分出现一个显著峰值，约达到均值以上 1.5 个标准差；而窗口早期观察到一个低谷，约低于均值 1.2 个标准差。该数据属于 NBER 宏观经济时间序列，代表某一特定经济指标。
-```
 
 **ChatTS caption 原文**
 
-```text
 The overall trend is increasing. The global maximum, 15.73, occurs at point 126, which is in the last third of the window. Short-term fluctuations are more pronounced in the first half of the window, as indicated by the higher noise levels there.
-```
 
 **ChatTS caption 中文翻译**
 
-```text
 整体趋势正在增加。全局最大值 15.73 出现在点 126，位于窗口的后三分之一。短期波动在窗口的前半部分更为明显，这由该处较高的噪声水平所表明。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -554,15 +462,11 @@ The overall trend is increasing. The global maximum, 15.73, occurs at point 126,
 
 **题干原文**
 
-```text
 What is the primary cyclic pattern observed in the time series?
-```
 
 **题干中文翻译**
 
-```text
 该时间序列中观察到的主要周期性模式是什么？
-```
 - 选项：
 - A: SquareWave
   中文：方波
@@ -578,27 +482,19 @@ What is the primary cyclic pattern observed in the time series?
 
 **OpenTSLM caption 原文**
 
-```text
 The time series shows an initial upward trend that peaks early in the window, followed by a decline that continues through the first half and further decreases in the second half. The data exhibits medium volatility with no clear seasonal pattern. A notable peak occurs early, reaching about 1.5 standard deviations above the mean, while a deeper valley appears in the second half, reaching about 1.7 standard deviations below the mean. The overall net change is a modest increase of approximately 1.1%.
-```
 
 **OpenTSLM caption 中文翻译**
 
-```text
 该时间序列显示出初始上升趋势，并在窗口早期达到峰值，随后出现下降，这一下降持续贯穿前半段，并在后半段进一步降低。数据表现出中等波动性，没有明显的季节性模式。一个显著峰值出现在早期，达到均值以上约 1.5 个标准差，而一个更深的谷值出现在后半段，达到均值以下约 1.7 个标准差。整体净变化为小幅增加，约为 1.1%。
-```
 
 **ChatTS caption 原文**
 
-```text
 The overall trend is flat, with the time series starting and ending near 1.04. The global maximum is not explicitly identified, but given the steady trend and minimal noise, it likely occurs in the middle third of the window. Short-term fluctuations are consistent throughout, so neither half shows significantly larger variations.
-```
 
 **ChatTS caption 中文翻译**
 
-```text
 整体趋势平稳，时间序列的起点和终点都接近 1.04。全局最大值未被明确识别，但考虑到趋势稳定且噪声很小，它可能出现在窗口的中间三分之一。短期波动在整个过程中保持一致，因此两个半段都没有表现出明显更大的变化。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -626,7 +522,6 @@ The overall trend is flat, with the time series starting and ending near 1.04. T
 - 数值摘要：n=256, min=0, max=4.2794, mean=0.016716, std=0.26694, slope=0.00030456, argmax=227, argmin=0
 - Dataset-A 标注属性原文：
 
-```json
 [
   {
     "std": 0.0,
@@ -653,11 +548,9 @@ The overall trend is flat, with the time series starting and ending near 1.04. T
     }
   ]
 ]
-```
 
 - Dataset-A 标注属性中文翻译：
 
-```text
 [
   {
     "std": 0.0,
@@ -684,7 +577,6 @@ The overall trend is flat, with the time series starting and ending near 1.04. T
     }
   ]
 ]
-```
 
 ![dataset_a::0000](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0000.png)
 
@@ -692,8 +584,7 @@ The overall trend is flat, with the time series starting and ending near 1.04. T
 
 **题干原文**
 
-```text
-You are a time series analysis expert. This time series is "##enq: SQ - contention" from Oracle Database System with length of 256: <ts><ts/>, please analyze the time series features and answer the following questions:
+You are a time series analysis expert. This time series is "##enq: SQ - contention" from Oracle Database System with length of 256: &lt;ts&gt;&lt;ts/&gt;, please analyze the time series features and answer the following questions:
 1. What are the noise characteristics of this time series? Please choose from ["noisy", "almost no noise"]. Answer format: noisy, the overall noise standard deviation is around 1.5.
 2. What are the local characteristic fluctuations of this time series? The optional types of local characteristic fluctuations include: ["continuous downward spike", "continuous upward spike", "decrease after downward spike", "decrease after upward spike", "downward convex", "downward spike", "increase after downward spike", "increase after upward spike", "rapid decline followed by slow rise", "rapid rise followed by slow decline", "shake", "slow decline followed by rapid rise", "slow rise followed by rapid decline", "sudden decrease", "sudden increase", "upward convex", "upward spike", "wide downward spike", "wide upward spike"]. You need to analyze all the characteristic fluctuations that appear in this time series and answer each type, position, and amplitude in the format. Different local characteristic fluctuations should be separated by semicolons. Answer format: shake, position around point 125, amplitude 135.03; small sudden decrease, position around point 102, amplitude 31.05.
 3. What is the periodicity of this time series? Please choose from ["no periodic fluctuation", "periodic fluctuation"]. If there is periodic fluctuation, describe the fluctuation frequency and amplitude. Answer format: periodic fluctuation, each period is around 20.58 points, and the amplitude of the periodic fluctuation is around 31.51.
@@ -702,12 +593,10 @@ Now, based on the above questions, please strictly follow the output format requ
 2. Strictly formatted answer 2
 3. Strictly formatted answer 3
 4. Strictly formatted answer 4
-```
 
 **题干中文翻译**
 
-```text
-你是时间序列分析专家。该时间序列来自 Oracle Database System，名称为“##enq: SQ - contention”，长度为 256：<ts><ts/>，请分析该时间序列特征并回答以下问题：
+你是时间序列分析专家。该时间序列来自 Oracle Database System，名称为“##enq: SQ - contention”，长度为 256：&lt;ts&gt;&lt;ts/&gt;，请分析该时间序列特征并回答以下问题：
 1. 该时间序列的噪声特征是什么？请从 ["有噪声", "几乎没有噪声"] 中选择。回答格式：有噪声，整体噪声标准差约为 1.5。
 2. 该时间序列的局部特征波动是什么？可选的局部特征波动类型包括：["连续向下尖峰", "连续向上尖峰", "向下尖峰后下降", "向上尖峰后下降", "向下凸起", "向下尖峰", "向下尖峰后上升", "向上尖峰后上升", "快速下降后缓慢上升", "快速上升后缓慢下降", "震荡", "缓慢下降后快速上升", "缓慢上升后快速下降", "突然下降", "突然上升", "向上凸起", "向上尖峰", "宽向下尖峰", "宽向上尖峰"]。你需要分析该时间序列中出现的所有特征波动，并按格式回答每种类型、位置和幅度。不同的局部特征波动应以分号分隔。回答格式：震荡，位置在第 125 点左右，幅度为 135.03；小幅突然下降，位置在第 102 点左右，幅度为 31.05。
 3. 该时间序列的周期性是什么？请从 ["无周期性波动", "周期性波动"] 中选择。如果存在周期性波动，请描述波动频率和幅度。回答格式：周期性波动，每个周期约为 20.58 个点，周期性波动的幅度约为 31.51。
@@ -717,52 +606,39 @@ Now, based on the above questions, please strictly follow the output format requ
 2. 严格格式化的答案 2
 3. 严格格式化的答案 3
 4. 严格格式化的答案 4
-```
 - 选项：
 无固定选项；题目要求按指定格式直接生成答案。
 - 正确答案原文：
 
-```text
 1. almost no noise, the overall noise standard deviation is around 0.00.
 2. upward spike, position around point 226, amplitude 4.28
 3. no periodic fluctuation
 4. upward spike, position around point 226, amplitude 4.28. The database is experiencing significant contention issues related to enqueue resources
-```
 
 - 正确答案中文翻译：
 
-```text
 1. 几乎没有噪声，整体噪声标准差约为 0.00。
 2. 向上尖峰，位置约在点 226，幅度为 4.28。
 3. 无周期性波动。
 4. 向上尖峰，位置约在点 226，幅度为 4.28。数据库正经历与入队资源相关的严重争用问题。
-```
 
 **生成的 caption 与中文翻译**
 
 **OpenTSLM caption 原文**
 
-```text
 The time series shows a flat trend with low volatility and a strong seasonal pattern repeating every 180 time units. There is a noticeable upward phase early in the window followed by a significant downward movement in the first half, then a smaller upward trend in the second half. A peak occurs in the first half with a magnitude of about 1.6 standard deviations from the mean, while a valley is observed early in the window with a magnitude of about 1.7 standard deviations from the mean. The series exhibits strong negative correlation with the "SQ - contention" variable.
-```
 
 **OpenTSLM caption 中文翻译**
 
-```text
 该时间序列呈现平稳趋势，波动性较低，并具有每 180 个时间单位重复一次的强季节性模式。窗口早期有一个明显的上升阶段，随后在前半段出现显著下降，之后在后半段出现较小的上升趋势。前半段出现一个峰值，幅度约为偏离均值 1.6 个标准差；窗口早期观察到一个谷值，幅度约为偏离均值 1.7 个标准差。该序列与“SQ - contention”变量表现出强负相关。
-```
 
 **ChatTS caption 原文**
 
-```text
 1) almost no noise 2) no periodic fluctuation 3) keep steady 4) upward spike, position around point 226, amplitude 4.28
-```
 
 **ChatTS caption 中文翻译**
 
-```text
 1) 几乎没有噪声 2) 无周期性波动 3) 保持稳定 4) 向上尖峰，位置约在点 226，幅度 4.28
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -783,183 +659,143 @@ The time series shows a flat trend with low volatility and a strong seasonal pat
 
 **`opentslm_meta_only` 模型回答原文**
 
-```text
 1. almost no noise
 2. shake, position around point 128, amplitude about 2.0; shake, position around point 192, amplitude about 1.8
 3. no periodic fluctuation
 4. shake, position around point 128, amplitude about 2.0. This likely reflects minor transient contention variability in Oracle system enqueue waits, without a strong directional trend; shake, position around point 192, amplitude about 1.8. This likely reflects another brief fluctuation in SQ enqueue contention, consistent with momentary workload or locking changes
-```
 
 **`opentslm_meta_only` 模型回答中文翻译**
 
-```text
 1. 几乎没有噪声
 2. 抖动，位置在点 128 附近，幅度约 2.0；抖动，位置在点 192 附近，幅度约 1.8
 3. 无周期性波动
 4. 抖动，位置在点 128 附近，幅度约 2.0。这可能反映了 Oracle 系统入队等待中的轻微瞬时争用变异，没有明显的方向性趋势；抖动，位置在点 192 附近，幅度约 1.8。这可能反映了 SQ 入队争用中的另一次短暂波动，与瞬时工作负载或锁定变化一致。
-```
 
 **`opentslm_numbers` 模型回答原文**
 
-```text
 1. almost no noise, the overall noise standard deviation is around 0.09.
 2. sudden increase, position around point 194, amplitude 4.28
 3. no periodic fluctuation
 4. sudden increase, position around point 194, amplitude 4.28. A brief isolated contention spike occurred, likely reflecting a short-lived burst of enqueue-related lock or resource contention in the Oracle database; the rest of the series stayed near zero, indicating the event was transient and not part of a sustained pattern.
-```
 
 **`opentslm_numbers` 模型回答中文翻译**
 
-```text
 1. 几乎没有噪声，整体噪声标准差约为 0.09。
 2. 突然增加，位置约在点 194，幅度为 4.28
 3. 无周期性波动
 4. 突然增加，位置约在点 194，幅度为 4.28。出现了一次短暂的孤立竞争尖峰，可能反映了 Oracle 数据库中与入队相关的锁或资源竞争的短时突发；序列其余部分保持接近零，表明该事件是暂时性的，并非持续模式的一部分。
-```
 
 **`opentslm_caption` 模型回答原文**
 
-```text
 1. almost no noise, the overall noise standard deviation is around 0.15.
 2. rapid rise followed by slow decline, position around point 45, amplitude 1.60; rapid decline followed by slow rise, position around point 18, amplitude 1.70; wide upward spike, position around point 120, amplitude 1.10; wide downward spike, position around point 170, amplitude 1.20
 3. periodic fluctuation, each period is around 180 points, and the amplitude of the periodic fluctuation is around 1.40.
 4. rapid rise followed by slow decline, position around point 45, amplitude 1.60. This suggests a brief build-up in the system metric followed by a more gradual relaxation, consistent with a transient workload or contention burst; rapid decline followed by slow rise, position around point 18, amplitude 1.70. This indicates a sharp drop followed by gradual recovery, likely reflecting a temporary easing of contention or a short-lived operational change; wide upward spike, position around point 120, amplitude 1.10. This represents a moderate prolonged increase, possibly due to sustained but limited pressure on the database resource; wide downward spike, position around point 170, amplitude 1.20. This reflects a sustained decrease, likely caused by a period of reduced demand or improved contention conditions.
-```
 
 **`opentslm_caption` 模型回答中文翻译**
 
-```text
 1. 几乎没有噪声，整体噪声标准差约为 0.15。
 2. 快速上升后缓慢下降，位置约在第 45 个点，幅度 1.60；快速下降后缓慢上升，位置约在第 18 个点，幅度 1.70；宽的向上尖峰，位置约在第 120 个点，幅度 1.10；宽的向下尖峰，位置约在第 170 个点，幅度 1.20
 3. 周期性波动，每个周期约为 180 个点，周期性波动的幅度约为 1.40。
 4. 快速上升后缓慢下降，位置约在第 45 个点，幅度 1.60。这表明系统指标短暂累积后出现更渐进的回落，与瞬时工作负载或争用突增相一致；快速下降后缓慢上升，位置约在第 18 个点，幅度 1.70。这表示急剧下降后逐渐恢复，可能反映出争用的暂时缓解或短暂的运行变化；宽的向上尖峰，位置约在第 120 个点，幅度 1.10。这表示中等程度的持续增加，可能是由于数据库资源承受了持续但有限的压力；宽的向下尖峰，位置约在第 170 个点，幅度 1.20。这反映出持续下降，可能由需求降低期或争用状况改善所导致。
-```
 
 **`opentslm_caption_plus` 模型回答原文**
 
-```text
 1. almost no noise, the overall noise standard deviation is around 0.0
 2. upward spike, position around point 198, amplitude 4.28
 3. no periodic fluctuation
 4. upward spike, position around point 198, amplitude 4.28. A brief isolated surge likely caused by a transient event or short-lived contention burst, after which the series immediately returns to its baseline zero level.
-```
 
 **`opentslm_caption_plus` 模型回答中文翻译**
 
-```text
 1. 几乎没有噪声，整体噪声标准差约为 0.0
 2. 向上尖峰，位置约在点 198，幅度 4.28
 3. 无周期性波动
 4. 向上尖峰，位置约在点 198，幅度 4.28。一次短暂的孤立性激增，可能由瞬态事件或短暂的竞争突发引起，随后该序列立即回到其零基线水平。
-```
 
 **`opentslm_wrong_caption` 模型回答原文**
 
-```text
 1. almost no noise, the overall noise standard deviation is around 0.8.
 2. rapid rise followed by slow decline, position around point 20, amplitude 1.5; sharp downward spike, position around point 28, amplitude 1.4
 3. periodic fluctuation, each period is around 120 points, and the amplitude of the periodic fluctuation is around 0.9.
 4. rapid rise followed by slow decline, position around point 20, amplitude 1.5. This likely reflects a brief surge in SQ contention, possibly caused by a sudden burst of concurrent database activity or locking pressure; sharp downward spike, position around point 28, amplitude 1.4. This likely indicates contention quickly easing as the triggering workload subsided or the database returned to a more stable operating state.
-```
 
 **`opentslm_wrong_caption` 模型回答中文翻译**
 
-```text
 1. 几乎没有噪声，整体噪声标准差约为 0.8。
 2. 快速上升后缓慢下降，位置约在第 20 个点，幅度为 1.5；尖锐的向下尖峰，位置约在第 28 个点，幅度为 1.4
 3. 周期性波动，每个周期约为 120 个点，周期性波动的幅度约为 0.9。
 4. 快速上升后缓慢下降，位置约在第 20 个点，幅度为 1.5。这可能反映了 SQ 争用的短暂激增，可能由并发数据库活动突然爆发或锁压力导致；尖锐的向下尖峰，位置约在第 28 个点，幅度为 1.4。这可能表明随着触发工作负载减弱或数据库恢复到更稳定的运行状态，争用迅速缓解。
-```
 
 **`chatts_meta_only` 模型回答原文**
 
-```text
 1. almost no noise
 2. no obvious local characteristic fluctuations
 3. no periodic fluctuation
 4. no obvious local characteristic fluctuations. In Oracle Database, the enqueue SQ contention metric appears stable overall, suggesting no notable contention bursts or sharp behavioral changes in the observed window.
-```
 
 **`chatts_meta_only` 模型回答中文翻译**
 
-```text
 1. 几乎没有噪声
 2. 没有明显的局部特征波动
 3. 没有周期性波动
 4. 没有明显的局部特征波动。在 Oracle Database 中，enqueue SQ 争用指标整体表现稳定，表明在观察窗口内没有显著的争用突发或剧烈的行为变化。
-```
 
 **`chatts_numbers` 模型回答原文**
 
-```text
 1. almost no noise, the overall noise standard deviation is around 0.16.
 2. sudden increase, position around point 203, amplitude 4.279.
 3. no periodic fluctuation.
 4. sudden increase, position around point 203, amplitude 4.279. A brief isolated spike in enqueue contention, likely caused by a short-lived burst of concurrent access or locking pressure, after which the metric immediately returns to near-zero.
-```
 
 **`chatts_numbers` 模型回答中文翻译**
 
-```text
 1. 几乎没有噪声，整体噪声标准差约为 0.16。
 2. 突然增加，位置约在点 203，幅度为 4.279。
 3. 无周期性波动。
 4. 突然增加，位置约在点 203，幅度为 4.279。入队争用出现一次短暂的孤立尖峰，可能由短时间的并发访问突增或锁压力引起，之后该指标立即恢复到接近零的水平。
-```
 
 **`chatts_caption` 模型回答原文**
 
-```text
 1. almost no noise, the overall noise standard deviation is around 0.15
 2. upward spike, position around point 226, amplitude 4.28
 3. no periodic fluctuation
 4. upward spike, position around point 226, amplitude 4.28. A brief contention surge in the database workload, likely caused by a short-lived spike in concurrent access or lock contention, rapidly increasing before returning toward baseline.
-```
 
 **`chatts_caption` 模型回答中文翻译**
 
-```text
 1. 几乎没有噪声，整体噪声标准差约为 0.15
 2. 向上尖峰，位置约在点 226，幅度 4.28
 3. 无周期性波动
 4. 向上尖峰，位置约在点 226，幅度 4.28。数据库工作负载中出现短暂的争用激增，可能由并发访问或锁争用的短时尖峰引起，在迅速增加后又回落至基线附近。
-```
 
 **`chatts_caption_plus` 模型回答原文**
 
-```text
 1. almost no noise, the overall noise standard deviation is around 0.00
 2. upward spike, position around point 226, amplitude 4.28
 3. no periodic fluctuation
 4. upward spike, position around point 226, amplitude 4.28. A brief and isolated surge in SQ contention, likely caused by a short-lived locking or enqueue conflict event, after which the system immediately returned to its steady baseline.
-```
 
 **`chatts_caption_plus` 模型回答中文翻译**
 
-```text
 1. 几乎没有噪声，整体噪声标准差约为 0.00
 2. 向上尖峰，位置约在点 226，幅度 4.28
 3. 无周期性波动
 4. 向上尖峰，位置约在点 226，幅度 4.28。SQ 争用出现短暂且孤立的激增，可能由短暂的锁定或入队冲突事件导致，之后系统立即恢复到其稳定基线。
-```
 
 **`chatts_wrong_caption` 模型回答原文**
 
-```text
 1. noisy, the overall noise standard deviation is around 0.44.
 2. sudden increase, position around point 128, amplitude 11.80.
 3. no periodic fluctuation.
 4. sudden increase, position around point 128, amplitude 11.80. A sharp rise likely reflects a brief surge in contention activity, possibly caused by a sudden workload burst, lock escalation, or concurrent access spike.
-```
 
 **`chatts_wrong_caption` 模型回答中文翻译**
 
-```text
 1. 有噪声，整体噪声标准差约为 0.44。
 2. 突然增加，位置约在点 128，幅度 11.80。
 3. 无周期性波动。
 4. 突然增加，位置约在点 128，幅度 11.80。急剧上升可能反映了争用活动的短暂激增，可能由突发工作负载、锁升级或并发访问激增引起。
-```
 
 
 **Case 分析**
@@ -976,7 +812,6 @@ The time series shows a flat trend with low volatility and a strong seasonal pat
 - 数值摘要：n=256, min=-50.045, max=58.14, mean=31.276, std=9.4217, slope=0.0086153, argmax=87, argmin=128
 - Dataset-A 标注属性原文：
 
-```json
 [
   {
     "amplitude": 0.0,
@@ -1016,11 +851,9 @@ The time series shows a flat trend with low volatility and a strong seasonal pat
     }
   ]
 ]
-```
 
 - Dataset-A 标注属性中文翻译：
 
-```text
 [
   {
     "amplitude": 0.0,
@@ -1060,7 +893,6 @@ The time series shows a flat trend with low volatility and a strong seasonal pat
     }
   ]
 ]
-```
 
 ![dataset_a::0002](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0002.png)
 
@@ -1068,20 +900,17 @@ The time series shows a flat trend with low volatility and a strong seasonal pat
 
 **题干原文**
 
-```text
-You are a time series analysis expert. This time series is "travel speed" from Real time traffic data with length of 256: <ts><ts/>, please analyze the time series features and answer the following questions:
+You are a time series analysis expert. This time series is "travel speed" from Real time traffic data with length of 256: &lt;ts&gt;&lt;ts/&gt;, please analyze the time series features and answer the following questions:
 1. What is the periodicity of this time series? Please choose from ["no periodic fluctuation", "periodic fluctuation"]. If there is periodic fluctuation, describe the fluctuation frequency and amplitude. Answer format: periodic fluctuation, each period is around 20.58 points, and the amplitude of the periodic fluctuation is around 31.51.
 2. What are the local characteristic fluctuations of this time series? The optional types of local characteristic fluctuations include: ["continuous downward spike", "continuous upward spike", "decrease after downward spike", "decrease after upward spike", "downward convex", "downward spike", "increase after downward spike", "increase after upward spike", "rapid decline followed by slow rise", "rapid rise followed by slow decline", "shake", "slow decline followed by rapid rise", "slow rise followed by rapid decline", "sudden decrease", "sudden increase", "upward convex", "upward spike", "wide downward spike", "wide upward spike"]. You need to analyze all the characteristic fluctuations that appear in this time series and answer each type, position, and amplitude in the format, and conclude the physical meaning of **each** fluctuation in one sentence. Different local characteristic fluctuations should be separated by semicolons. Answer format: shake, position around point 125, amplitude 135.03. A sudden surge in public interest, likely due to significant news, a major event, or a trending topic related to the platform that rapidly captured user attention; small sudden decrease, position around point 102, amplitude 31.05. A slight increase in interest, possibly driven by minor news, promotions, or social media discussions that briefly captured attention without indicating a significant trend.
 3. What are the local characteristic fluctuations of this time series? The optional types of local characteristic fluctuations include: ["continuous downward spike", "continuous upward spike", "decrease after downward spike", "decrease after upward spike", "downward convex", "downward spike", "increase after downward spike", "increase after upward spike", "rapid decline followed by slow rise", "rapid rise followed by slow decline", "shake", "slow decline followed by rapid rise", "slow rise followed by rapid decline", "sudden decrease", "sudden increase", "upward convex", "upward spike", "wide downward spike", "wide upward spike"]. You need to analyze all the characteristic fluctuations that appear in this time series and answer each type, position, and amplitude in the format. Different local characteristic fluctuations should be separated by semicolons. Answer format: shake, position around point 125, amplitude 135.03; small sudden decrease, position around point 102, amplitude 31.05.
 Now, based on the above questions, please strictly follow the output format requirements and provide the answers. Each line corresponds to an answer to a question, formatted as:1. Strictly formatted answer 1
 2. Strictly formatted answer 2
 3. Strictly formatted answer 3
-```
 
 **题干中文翻译**
 
-```text
-你是时间序列分析专家。该时间序列是来自实时交通数据的“行驶速度”，长度为 256：<ts><ts/>，请分析该时间序列特征并回答以下问题：
+你是时间序列分析专家。该时间序列是来自实时交通数据的“行驶速度”，长度为 256：&lt;ts&gt;&lt;ts/&gt;，请分析该时间序列特征并回答以下问题：
 1. 该时间序列的周期性是什么？请从 ["无周期性波动", "周期性波动"] 中选择。如果存在周期性波动，请描述波动频率和幅度。回答格式：周期性波动，每个周期约为 20.58 个点，周期性波动的幅度约为 31.51。
 2. 该时间序列的局部特征波动是什么？局部特征波动的可选类型包括：["连续向下尖峰", "连续向上尖峰", "向下尖峰后下降", "向上尖峰后下降", "向下凸起", "向下尖峰", "向下尖峰后上升", "向上尖峰后上升", "快速下降后缓慢上升", "快速上升后缓慢下降", "抖动", "缓慢下降后快速上升", "缓慢上升后快速下降", "突然下降", "突然上升", "向上凸起", "向上尖峰", "宽向下尖峰", "宽向上尖峰"]。你需要分析该时间序列中出现的所有特征波动，并按格式回答每种类型、位置和幅度，并用一句话总结**每个**波动的物理含义。不同的局部特征波动应使用分号分隔。回答格式：抖动，位置约在第 125 点，幅度 135.03。公众兴趣突然激增，可能是由于与该平台相关的重大新闻、重大事件或热门话题迅速吸引了用户注意；小幅突然下降，位置约在第 102 点，幅度 31.05。兴趣略有增加，可能由小型新闻、促销或社交媒体讨论驱动，这些因素短暂吸引了注意，但并不表明显著趋势。
 3. 该时间序列的局部特征波动是什么？局部特征波动的可选类型包括：["连续向下尖峰", "连续向上尖峰", "向下尖峰后下降", "向上尖峰后下降", "向下凸起", "向下尖峰", "向下尖峰后上升", "向上尖峰后上升", "快速下降后缓慢上升", "快速上升后缓慢下降", "抖动", "缓慢下降后快速上升", "缓慢上升后快速下降", "突然下降", "突然上升", "向上凸起", "向上尖峰", "宽向下尖峰", "宽向上尖峰"]。你需要分析该时间序列中出现的所有特征波动，并按格式回答每种类型、位置和幅度。不同的局部特征波动应使用分号分隔。回答格式：抖动，位置约在第 125 点，幅度 135.03；小幅突然下降，位置约在第 102 点，幅度 31.05。
@@ -1089,60 +918,47 @@ Now, based on the above questions, please strictly follow the output format requ
 1. 严格格式化答案 1
 2. 严格格式化答案 2
 3. 严格格式化答案 3
-```
 - 选项：
 无固定选项；题目要求按指定格式直接生成答案。
 - 正确答案原文：
 
-```text
 1. no periodic fluctuation
 2. slow decline followed by rapid rise, position around point 172, amplitude 35.09. A brief slowdown followed by a rapid recovery, likely due to a temporary obstruction or congestion that cleared quickly; downward spike, position around point 127, amplitude 78.66. A sudden drop in speed, likely caused by an unexpected event such as an accident, roadblock, or abrupt traffic congestion
 3. slow decline followed by rapid rise, position around point 172, amplitude 35.09; downward spike, position around point 127, amplitude 78.66
-```
 
 - 正确答案中文翻译：
 
-```text
 1. 无周期性波动
 2. 缓慢下降后迅速上升，位置约在第 172 点，幅度 35.09。短暂减速后迅速恢复，可能是由于临时障碍或拥堵很快解除；向下尖峰，位置约在第 127 点，幅度 78.66。速度突然下降，可能由事故、路障或突发交通拥堵等意外事件引起
 3. 缓慢下降后迅速上升，位置约在第 172 点，幅度 35.09；向下尖峰，位置约在第 127 点，幅度 78.66
-```
 
 **生成的 caption 与中文翻译**
 
 **OpenTSLM caption 原文**
 
-```text
 ington, the data shows a consistent upward trend with low volatility and a strong seasonal pattern repeating every 18 periods. The series starts with a moderate increase in the early part of the window, followed by a more pronounced rise in the first half, and a slightly smaller but still positive growth in the second half. A notable peak occurs in the second half, reaching about 1.5 standard deviations above the mean, while a deep valley is observed early in the window, about 1.8 standard deviations below the mean. The overall net increase over the time span is over 100%.
-```
 
 **OpenTSLM caption 中文翻译**
 
-```text
 ington，数据显示出一致的上升趋势，波动性较低，并且存在每 18 个周期重复一次的强季节性模式。该序列在窗口早期以适度增长开始，随后在前半段出现更明显的上升，而在后半段增幅略小但仍为正。后半段出现一个显著峰值，达到均值以上约 1.5 个标准差；同时在窗口早期观察到一个深谷，约为均值以下 1.8 个标准差。整个时间跨度内的总体净增长超过 100%。
-```
 
 **ChatTS caption 原文**
 
-```text
 1. Noisy with std around 3.50.
 2. No periodic fluctuations observed, showing no periodic fluctuation.
 3. Keep steady from around 33.19 to around 33.19.
 4. Downward spike around point 127 with an amplitude of 79.32; increase after downward spike around point 171 with an amplitude of 31.49
 
 The time series exhibits a steady trend, starting and ending near 33.19, with no significant overall change. However, it contains notable local features: a sharp downward spike between points 127 and 129, where the value drops from approximately 33.19 to -46.13 before recovering, and another downward spike followed by a rapid increase between points 171 and 176, where the value falls to around 2.83 and then rises to around 53.54. Additionally, there is a random noise with a standard deviation of about 3.50, contributing to the overall variability.
-```
 
 **ChatTS caption 中文翻译**
 
-```text
 1. 噪声标准差约为 3.50。
 2. 未观察到周期性波动，表现为无周期性波动。
 3. 从约 33.19 到约 33.19 保持稳定。
 4. 在点 127 附近出现向下尖峰，幅度为 79.32；在点 171 附近出现向下尖峰后增加，幅度为 31.49。
 
 该时间序列呈现稳定趋势，起始和结束值均接近 33.19，整体无显著变化。然而，它包含显著的局部特征：在点 127 和 129 之间出现一个急剧向下尖峰，数值从约 33.19 下降到 -46.13 后恢复；在点 171 和 176 之间出现另一个向下尖峰后快速增加，数值下降到约 2.83，然后上升到约 53.54。此外，还存在标准差约为 3.50 的随机噪声，增加了整体变异性。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -1163,167 +979,127 @@ The time series exhibits a steady trend, starting and ending near 33.19, with no
 
 **`opentslm_meta_only` 模型回答原文**
 
-```text
 1. no periodic fluctuation
 2. shake, position around point 128, amplitude small to moderate; sudden increase, position around point 128, amplitude moderate. This likely reflects brief traffic instability and a short-lived surge in travel speed, possibly caused by a temporary clearing of congestion or a change in road conditions.
 3. shake, position around point 128, amplitude small to moderate; sudden increase, position around point 128, amplitude moderate.
-```
 
 **`opentslm_meta_only` 模型回答中文翻译**
 
-```text
 1. 无周期性波动
 2. 抖动，位置在点 128 附近，幅度为小到中等；突然增加，位置在点 128 附近，幅度为中等。这可能反映了短暂的交通不稳定以及行驶速度的短时激增，可能由拥堵暂时缓解或道路状况变化导致。
 3. 抖动，位置在点 128 附近，幅度为小到中等；突然增加，位置在点 128 附近，幅度为中等。
-```
 
 **`opentslm_numbers` 模型回答原文**
 
-```text
 1. periodic fluctuation, each period is around 24 points, and the amplitude of the periodic fluctuation is around 20.00.
 
 2. shake, position around point 12, amplitude 22.38. The traffic speed fluctuates within a relatively stable range with short-term oscillations, likely reflecting routine changes in road conditions and signal timing; downward spike, position around point 49, amplitude 18.65. A brief sharp slowdown likely caused by a transient congestion or localized disturbance; sudden decrease, position around point 121, amplitude 72.95. An abrupt drop in speed suggests a major traffic incident, blockage, or sudden congestion; sudden increase, position around point 124, amplitude 54.09. A rapid recovery in speed likely indicates the clearing of the disturbance or a sudden improvement in traffic flow; upward spike, position around point 141, amplitude 26.28. A short-lived speed surge likely reflects a temporary opening in traffic or reduced density; wide upward spike, position around point 165, amplitude 29.57. A sustained improvement in speed suggests a broader period of free-flowing traffic; downward spike, position around point 203, amplitude 18.95. A brief localized slowdown likely due to short-term traffic interruption or merging effects.
 
 3. shake, position around point 12, amplitude 22.38; downward spike, position around point 49, amplitude 18.65; sudden decrease, position around point 121, amplitude 72.95; sudden increase, position around point 124, amplitude 54.09; upward spike, position around point 141, amplitude 26.28; wide upward spike, position around point 165, amplitude 29.57; downward spike, position around point 203, amplitude 18.95.
-```
 
 **`opentslm_numbers` 模型回答中文翻译**
 
-```text
 1. 周期性波动，每个周期约为 24 个点，周期性波动的振幅约为 20.00。
 
 2. 抖动，位置约在第 12 个点，振幅 22.38。交通速度在相对稳定的范围内波动，并伴有短期振荡，可能反映了道路状况和信号配时的常规变化；向下尖峰，位置约在第 49 个点，振幅 18.65。短暂的急剧减速可能由瞬时拥堵或局部扰动引起；突然下降，位置约在第 121 个点，振幅 72.95。速度的 abrupt 下降表明可能发生了重大交通事故、阻塞或突然拥堵；突然上升，位置约在第 124 个点，振幅 54.09。速度的快速恢复可能表明扰动已消除或交通流突然改善；向上尖峰，位置约在第 141 个点，振幅 26.28。短暂的速度激增可能反映了交通中的临时通畅或密度降低；宽幅向上尖峰，位置约在第 165 个点，振幅 29.57。速度的持续改善表明可能出现了较长一段自由流交通；向下尖峰，位置约在第 203 个点，振幅 18.95。短暂的局部减速可能是由于短期交通中断或并流影响造成的。
 
 3. 抖动，位置约在第 12 个点，振幅 22.38；向下尖峰，位置约在第 49 个点，振幅 18.65；突然下降，位置约在第 121 个点，振幅 72.95；突然上升，位置约在第 124 个点，振幅 54.09；向上尖峰，位置约在第 141 个点，振幅 26.28；宽幅向上尖峰，位置约在第 165 个点，振幅 29.57；向下尖峰，位置约在第 203 个点，振幅 18.95。
-```
 
 **`opentslm_caption` 模型回答原文**
 
-```text
 1. periodic fluctuation, each period is around 18 points, and the amplitude of the periodic fluctuation is around 1.5 standard deviations
 2. upward convex, position around point 70, amplitude about 1.5 standard deviations. A sustained acceleration in travel speed, likely reflecting improving traffic flow over an extended segment; wide upward spike, position around point 150, amplitude about 1.5 standard deviations. A broad surge in travel speed, possibly caused by a prolonged reduction in congestion or a temporary drop in traffic demand; downward spike, position around point 25, amplitude about 1.8 standard deviations. A sharp local slowdown in travel speed, likely due to a brief congestion incident, traffic signal disruption, or road constraint
 3. upward convex, position around point 70, amplitude about 1.5 standard deviations; wide upward spike, position around point 150, amplitude about 1.5 standard deviations; downward spike, position around point 25, amplitude about 1.8 standard deviations
-```
 
 **`opentslm_caption` 模型回答中文翻译**
 
-```text
 1. 周期性波动，每个周期约为 18 个点，周期性波动的幅度约为 1.5 个标准差
 2. 向上凸起，位置约在第 70 个点，幅度约为 1.5 个标准差。行驶速度持续加快，可能反映出较长路段上的交通流状况改善；宽幅向上尖峰，位置约在第 150 个点，幅度约为 1.5 个标准差。行驶速度出现较宽范围的激增，可能由拥堵持续缓解或交通需求暂时下降引起；向下尖峰，位置约在第 25 个点，幅度约为 1.8 个标准差。行驶速度出现局部急剧下降，可能由于短暂拥堵事件、交通信号中断或道路限制所致
 3. 向上凸起，位置约在第 70 个点，幅度约为 1.5 个标准差；宽幅向上尖峰，位置约在第 150 个点，幅度约为 1.5 个标准差；向下尖峰，位置约在第 25 个点，幅度约为 1.8 个标准差
-```
 
 **`opentslm_caption_plus` 模型回答原文**
 
-```text
 1. periodic fluctuation, each period is around 18 points, and the amplitude of the periodic fluctuation is around 23.74
 2. downward spike, position around point 50, amplitude 24.25. A sharp temporary drop in travel speed, likely reflecting a brief severe congestion incident, road blockage, or signal disruption; sudden decrease, position around point 120, amplitude 83.93. An abrupt collapse in travel speed, likely caused by an extreme traffic interruption such as an accident, closure, or data anomaly; upward spike, position around point 83, amplitude 27.12. A sudden temporary surge in speed, possibly due to an incident clearing, lane reopening, or short-lived free-flow condition; upward spike, position around point 164, amplitude 26.55. A sudden temporary surge in speed, likely reflecting a brief traffic relief or capacity increase.
 3. downward spike, position around point 50, amplitude 24.25; sudden decrease, position around point 120, amplitude 83.93; upward spike, position around point 83, amplitude 27.12; upward spike, position around point 164, amplitude 26.55
-```
 
 **`opentslm_caption_plus` 模型回答中文翻译**
 
-```text
 1. 周期性波动，每个周期约为 18 个点，周期性波动的幅度约为 23.74
 2. 向下尖峰，位置约在第 50 个点，幅度 24.25。行驶速度出现短暂急剧下降，可能反映短暂的严重拥堵事件、道路阻塞或信号中断；突然下降，位置约在第 120 个点，幅度 83.93。行驶速度突然崩塌，可能由事故、封闭或数据异常等极端交通中断引起；向上尖峰，位置约在第 83 个点，幅度 27.12。速度出现短暂突然上升，可能由于事故解除、车道重新开放或短暂的自由流状态；向上尖峰，位置约在第 164 个点，幅度 26.55。速度出现短暂突然上升，可能反映短暂的交通缓解或通行能力增加。
 3. 向下尖峰，位置约在第 50 个点，幅度 24.25；突然下降，位置约在第 120 个点，幅度 83.93；向上尖峰，位置约在第 83 个点，幅度 27.12；向上尖峰，位置约在第 164 个点，幅度 26.55
-```
 
 **`opentslm_wrong_caption` 模型回答原文**
 
-```text
 1. periodic fluctuation, each period is around 120 points, and the amplitude of the periodic fluctuation is around 2.1 standard deviations
 2. upward spike, position around point 35, amplitude 2.1 standard deviations. A brief sharp rise likely caused by a short-lived surge in traffic speed, possibly due to a temporary drop in congestion; downward spike, position around point 55, amplitude 1.7 standard deviations. A brief sharp drop likely reflecting a short-lived slowdown from localized congestion or disturbance; increase after downward spike, position around point 130, amplitude 2.1 standard deviations. A recovery from a prior dip, suggesting traffic conditions improved and speeds increased; rapid rise followed by slow decline, position around point 170, amplitude 2.1 standard deviations. A quick speed-up followed by gradual easing, consistent with a temporary clearing of traffic that later re-congested; upward convex, position around point 210, amplitude 2.1 standard deviations. A broad strengthening in speed over time, indicating a sustained improvement in traffic flow
 3. upward spike, position around point 35, amplitude 2.1 standard deviations; downward spike, position around point 55, amplitude 1.7 standard deviations; increase after downward spike, position around point 130, amplitude 2.1 standard deviations; rapid rise followed by slow decline, position around point 170, amplitude 2.1 standard deviations; upward convex, position around point 210, amplitude 2.1 standard deviations
-```
 
 **`opentslm_wrong_caption` 模型回答中文翻译**
 
-```text
 1. 周期性波动，每个周期约为 120 个点，周期性波动的幅度约为 2.1 个标准差
 2. 向上尖峰，位置约在第 35 个点，幅度为 2.1 个标准差。短暂的急剧上升，可能由交通速度短时激增导致，可能是由于拥堵暂时减轻；向下尖峰，位置约在第 55 个点，幅度为 1.7 个标准差。短暂的急剧下降，可能反映由局部拥堵或扰动引起的短时减速；向下尖峰后的上升，位置约在第 130 个点，幅度为 2.1 个标准差。此前下降后的恢复，表明交通状况改善且速度提高；快速上升后缓慢下降，位置约在第 170 个点，幅度为 2.1 个标准差。快速提速后逐渐回落，符合交通暂时疏通后随后再次拥堵的情况；向上凸形，位置约在第 210 个点，幅度为 2.1 个标准差。速度随时间呈现广泛增强，表明交通流持续改善
 3. 向上尖峰，位置约在第 35 个点，幅度为 2.1 个标准差；向下尖峰，位置约在第 55 个点，幅度为 1.7 个标准差；向下尖峰后的上升，位置约在第 130 个点，幅度为 2.1 个标准差；快速上升后缓慢下降，位置约在第 170 个点，幅度为 2.1 个标准差；向上凸形，位置约在第 210 个点，幅度为 2.1 个标准差
-```
 
 **`chatts_meta_only` 模型回答原文**
 
-```text
 1. no periodic fluctuation
 2. shake, position around point 128, amplitude cannot be reliably estimated from the column name alone. Travel speed data often shows irregular stop-and-go variations rather than a stable repeating cycle; this is consistent with fluctuating traffic conditions caused by congestion, signals, or intermittent disturbances.
 3. shake, position around point 128, amplitude cannot be reliably estimated from the column name alone; no other local characteristic fluctuations can be determined without the actual time series values.
-```
 
 **`chatts_meta_only` 模型回答中文翻译**
 
-```text
 1. 无周期性波动
 2. 抖动，位置约在点 128，仅凭列名无法可靠估计振幅。行驶速度数据通常表现为不规则的走走停停变化，而不是稳定的重复周期；这与由拥堵、信号灯或间歇性扰动引起的交通状况波动一致。
 3. 抖动，位置约在点 128，仅凭列名无法可靠估计振幅；如果没有实际时间序列数值，无法确定其他局部特征波动。
-```
 
 **`chatts_numbers` 模型回答原文**
 
-```text
 1. periodic fluctuation, each period is around 24-32 points, and the amplitude of the periodic fluctuation is around 20-25.
 2. shake, position around point 1-47, amplitude around 10-20. The travel speed fluctuates frequently with no strong directional trend, reflecting normal traffic instability; downward spike, position around point 48, amplitude around 11.51. A brief sharp slowdown likely caused by a transient congestion or signal delay; upward spike, position around point 84, amplitude around 58.14. A sudden speed increase suggesting a temporary clearing of traffic or free-flow road segment; downward spike, position around point 117, amplitude around -50.04. An abrupt slowdown likely due to a bottleneck, incident, or traffic disturbance; upward spike, position around point 129, amplitude around 54.41. A sudden speed recovery consistent with traffic dispersal or return to smoother flow; upward spike, position around point 134, amplitude around 56.28. Another abrupt acceleration indicating a short free-flow section or reduced congestion.
 3. shake, position around point 1-47, amplitude around 10-20; downward spike, position around point 48, amplitude around 11.51; upward spike, position around point 84, amplitude around 58.14; downward spike, position around point 117, amplitude around -50.04; upward spike, position around point 129, amplitude around 54.41; upward spike, position around point 134, amplitude around 56.28
-```
 
 **`chatts_numbers` 模型回答中文翻译**
 
-```text
 1. 周期性波动，每个周期约为 24-32 个点，周期性波动的振幅约为 20-25。
 2. 震荡，位置约在点 1-47，振幅约为 10-20。行驶速度频繁波动，没有明显的方向性趋势，反映出正常的交通不稳定性；向下尖峰，位置约在点 48，振幅约为 11.51。短暂的急剧减速，可能由瞬时拥堵或信号延误引起；向上尖峰，位置约在点 84，振幅约为 58.14。突然的速度增加，表明交通暂时疏通或进入自由流道路路段；向下尖峰，位置约在点 117，振幅约为 -50.04。突然减速，可能由于瓶颈、事故或交通扰动；向上尖峰，位置约在点 129，振幅约为 54.41。突然的速度恢复，与交通消散或恢复到更平稳的车流一致；向上尖峰，位置约在点 134，振幅约为 56.28。另一次突然加速，表明短暂的自由流路段或拥堵减轻。
 3. 震荡，位置约在点 1-47，振幅约为 10-20；向下尖峰，位置约在点 48，振幅约为 11.51；向上尖峰，位置约在点 84，振幅约为 58.14；向下尖峰，位置约在点 117，振幅约为 -50.04；向上尖峰，位置约在点 129，振幅约为 54.41；向上尖峰，位置约在点 134，振幅约为 56.28。
-```
 
 **`chatts_caption` 模型回答原文**
 
-```text
 1. no periodic fluctuation
 2. downward spike, position around point 128, amplitude 79.32. A sharp transient drop in travel speed, likely caused by an abrupt road obstruction, incident, or measurement anomaly; increase after downward spike, position around point 173, amplitude 31.49. A rapid rebound in travel speed after a brief drop, likely reflecting the clearing of a temporary disruption or a quick return to normal traffic flow.
 3. downward spike, position around point 128, amplitude 79.32; increase after downward spike, position around point 173, amplitude 31.49
-```
 
 **`chatts_caption` 模型回答中文翻译**
 
-```text
 1. 无周期性波动
 2. 向下尖峰，位置约在点 128，幅度 79.32。行驶速度出现急剧的短暂下降，可能由突发道路障碍、事故或测量异常引起；向下尖峰后的上升，位置约在点 173，幅度 31.49。短暂下降后行驶速度迅速回升，可能反映临时干扰被清除或交通流快速恢复正常。
 3. 向下尖峰，位置约在点 128，幅度 79.32；向下尖峰后的上升，位置约在点 173，幅度 31.49
-```
 
 **`chatts_caption_plus` 模型回答原文**
 
-```text
 1. no periodic fluctuation
 2. downward spike, position around point 127, amplitude 79.32. A sharp traffic-speed drop, likely caused by a brief incident, congestion shock, or lane blockage that temporarily disrupted normal flow; increase after downward spike, position around point 171, amplitude 31.49. A rapid recovery in travel speed after a short disruption, likely reflecting clearance of the incident or easing congestion.
 3. downward spike, position around point 127, amplitude 79.32; increase after downward spike, position around point 171, amplitude 31.49
-```
 
 **`chatts_caption_plus` 模型回答中文翻译**
 
-```text
 1. 无周期性波动
 2. 向下尖峰，位置约在点 127，幅度 79.32。交通速度急剧下降，可能是由短暂事件、拥堵冲击或车道阻塞导致，暂时扰乱了正常车流；向下尖峰后的上升，位置约在点 171，幅度 31.49。短暂扰动后行驶速度快速恢复，可能反映事件清除或拥堵缓解。
 3. 向下尖峰，位置约在点 127，幅度 79.32；向下尖峰后的上升，位置约在点 171，幅度 31.49
-```
 
 **`chatts_wrong_caption` 模型回答原文**
 
-```text
 1. no periodic fluctuation
 2. sudden increase, position around point 128, amplitude 12.12. A sharp traffic speed jump likely caused by a sudden drop in congestion, such as a temporary road clearing, signal timing change, or other short-lived improvement in traffic flow.
 3. sudden increase, position around point 128, amplitude 12.12; small shake, position around point 128, amplitude around 0.50. A sharp traffic speed jump likely caused by a temporary drop in congestion, followed by minor noisy oscillations from normal traffic variability.
-```
 
 **`chatts_wrong_caption` 模型回答中文翻译**
 
-```text
 1. 无周期性波动
 2. 突然增加，位置在约第 128 点，幅度 12.12。交通速度的急剧跃升可能由拥堵突然下降引起，例如临时道路疏通、信号配时变化或其他短时交通流改善。
 3. 突然增加，位置在约第 128 点，幅度 12.12；小幅抖动，位置在约第 128 点，幅度约 0.50。交通速度的急剧跃升可能由拥堵的临时下降引起，随后出现由正常交通变化导致的轻微噪声振荡。
-```
 
 
 **Case 分析**
@@ -1340,7 +1116,6 @@ The time series exhibits a steady trend, starting and ending near 33.19, with no
 - 数值摘要：n=256, min=-15.886, max=2837.9, mean=170.24, std=225.83, slope=0.45297, argmax=128, argmin=58
 - Dataset-A 标注属性原文：
 
-```json
 [
   [
     {
@@ -1368,11 +1143,9 @@ The time series exhibits a steady trend, starting and ending near 33.19, with no
     "type": "periodic fluctuation"
   }
 ]
-```
 
 - Dataset-A 标注属性中文翻译：
 
-```text
 [
   [
     {
@@ -1400,7 +1173,6 @@ The time series exhibits a steady trend, starting and ending near 33.19, with no
     "type": "周期性波动"
   }
 ]
-```
 
 ![dataset_a::0014](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0014.png)
 
@@ -1408,8 +1180,7 @@ The time series exhibits a steady trend, starting and ending near 33.19, with no
 
 **题干原文**
 
-```text
-You are a time series analysis expert. This time series is "Travel Time" from Real time traffic data with length of 256: <ts><ts/>, please analyze the time series features and answer the following questions:
+You are a time series analysis expert. This time series is "Travel Time" from Real time traffic data with length of 256: &lt;ts&gt;&lt;ts/&gt;, please analyze the time series features and answer the following questions:
 1. What are the local characteristic fluctuations of this time series? The optional types of local characteristic fluctuations include: ["continuous downward spike", "continuous upward spike", "decrease after downward spike", "decrease after upward spike", "downward convex", "downward spike", "increase after downward spike", "increase after upward spike", "rapid decline followed by slow rise", "rapid rise followed by slow decline", "shake", "slow decline followed by rapid rise", "slow rise followed by rapid decline", "sudden decrease", "sudden increase", "upward convex", "upward spike", "wide downward spike", "wide upward spike"]. You need to analyze all the characteristic fluctuations that appear in this time series and answer each type, position, and amplitude in the format. Different local characteristic fluctuations should be separated by semicolons. Answer format: shake, position around point 125, amplitude 135.03; small sudden decrease, position around point 102, amplitude 31.05.
 2. What are the local characteristic fluctuations of this time series? The optional types of local characteristic fluctuations include: ["continuous downward spike", "continuous upward spike", "decrease after downward spike", "decrease after upward spike", "downward convex", "downward spike", "increase after downward spike", "increase after upward spike", "rapid decline followed by slow rise", "rapid rise followed by slow decline", "shake", "slow decline followed by rapid rise", "slow rise followed by rapid decline", "sudden decrease", "sudden increase", "upward convex", "upward spike", "wide downward spike", "wide upward spike"]. You need to analyze all the characteristic fluctuations that appear in this time series and answer each type, position, and amplitude in the format, and conclude the physical meaning of **each** fluctuation in one sentence. Different local characteristic fluctuations should be separated by semicolons. Answer format: shake, position around point 125, amplitude 135.03. A sudden surge in public interest, likely due to significant news, a major event, or a trending topic related to the platform that rapidly captured user attention; small sudden decrease, position around point 102, amplitude 31.05. A slight increase in interest, possibly driven by minor news, promotions, or social media discussions that briefly captured attention without indicating a significant trend.
 3. What is the trend of this time series (considering the slope of the curve)? Please choose from ["steady", "decreasing", "increasing"] and describe the value trend change. Answer format: steady, the starting point value is around 32.10, and the trend change value from left to right is around 0.12.
@@ -1418,12 +1189,10 @@ Now, based on the above questions, please strictly follow the output format requ
 2. Strictly formatted answer 2
 3. Strictly formatted answer 3
 4. Strictly formatted answer 4
-```
 
 **题干中文翻译**
 
-```text
-你是一名时间序列分析专家。该时间序列是来自实时交通数据的“Travel Time”，长度为 256：<ts><ts/>，请分析该时间序列特征并回答以下问题：
+你是一名时间序列分析专家。该时间序列是来自实时交通数据的“Travel Time”，长度为 256：&lt;ts&gt;&lt;ts/&gt;，请分析该时间序列特征并回答以下问题：
 1. 该时间序列的局部特征波动有哪些？可选的局部特征波动类型包括：["连续向下尖峰", "连续向上尖峰", "向下尖峰后下降", "向上尖峰后下降", "向下凸起", "向下尖峰", "向下尖峰后上升", "向上尖峰后上升", "快速下降后缓慢上升", "快速上升后缓慢下降", "震荡", "缓慢下降后快速上升", "缓慢上升后快速下降", "突然下降", "突然上升", "向上凸起", "向上尖峰", "宽向下尖峰", "宽向上尖峰"]。你需要分析该时间序列中出现的所有特征波动，并按格式回答每种类型、位置和幅度。不同的局部特征波动应使用分号分隔。回答格式：震荡，位置在点 125 附近，幅度 135.03；小幅突然下降，位置在点 102 附近，幅度 31.05。
 2. 该时间序列的局部特征波动有哪些？可选的局部特征波动类型包括：["连续向下尖峰", "连续向上尖峰", "向下尖峰后下降", "向上尖峰后下降", "向下凸起", "向下尖峰", "向下尖峰后上升", "向上尖峰后上升", "快速下降后缓慢上升", "快速上升后缓慢下降", "震荡", "缓慢下降后快速上升", "缓慢上升后快速下降", "突然下降", "突然上升", "向上凸起", "向上尖峰", "宽向下尖峰", "宽向上尖峰"]。你需要分析该时间序列中出现的所有特征波动，并按格式回答每种类型、位置和幅度，并用一句话总结**每个**波动的物理含义。不同的局部特征波动应使用分号分隔。回答格式：震荡，位置在点 125 附近，幅度 135.03。公众兴趣突然激增，可能是由于重大新闻、重要事件或与该平台相关的热门话题迅速吸引了用户注意；小幅突然下降，位置在点 102 附近，幅度 31.05。兴趣略有增加，可能由小型新闻、促销或社交媒体讨论推动，短暂吸引了注意力，但并不表明存在显著趋势。
 3. 该时间序列的趋势是什么（考虑曲线斜率）？请从 ["平稳", "下降", "上升"] 中选择，并描述数值趋势变化。回答格式：平稳，起点值约为 32.10，从左到右的趋势变化值约为 0.12。
@@ -1433,58 +1202,45 @@ Now, based on the above questions, please strictly follow the output format requ
 2. 严格格式化的答案 2
 3. 严格格式化的答案 3
 4. 严格格式化的答案 4
-```
 - 选项：
 无固定选项；题目要求按指定格式直接生成答案。
 - 正确答案原文：
 
-```text
 1. upward spike, position around point 129, amplitude 2685.01
 2. upward spike, position around point 129, amplitude 2685.01. A sudden and severe increase in travel time, likely due to a major traffic incident, road closure, or severe congestion
 3. keep steady, the starting point value is around 198.99, and the trend change value from left to right is around 0.00.
 4. periodic fluctuation, each period is around 65.70 points, and the amplitude of the periodic fluctuation is around 323.10.
-```
 
 - 正确答案中文翻译：
 
-```text
 1. 向上尖峰，位置在点 129 附近，幅度为 2685.01
 2. 向上尖峰，位置在点 129 附近，幅度为 2685.01。行程时间突然且严重增加，可能是由于重大交通事故、道路封闭或严重拥堵
 3. 保持稳定，起始点值约为 198.99，从左到右的趋势变化值约为 0.00。
 4. 周期性波动，每个周期约为 65.70 个点，周期性波动的幅度约为 323.10。
-```
 
 **生成的 caption 与中文翻译**
 
 **OpenTSLM caption 原文**
 
-```text
 ology. The time series shows a steady upward trend with low volatility, characterized by a strong seasonal pattern repeating every 10 periods. The data starts with a moderate increase in the early part of the window, followed by a more pronounced rise in the first half, and a slightly smaller but still positive growth in the second half. A notable peak occurs late in the window, reaching about 1.2 standard deviations above the mean. There is no valley identified in the series. The overall growth from start to finish is substantial, with a total increase of over 100%.
-```
 
 **OpenTSLM caption 中文翻译**
 
-```text
 该时间序列呈现出稳定的上升趋势，波动性较低，并具有每 10 个周期重复一次的强季节性模式。数据在窗口早期开始适度增加，随后在前半部分出现更明显的上升，在后半部分增幅略小但仍保持正增长。窗口后期出现一个显著峰值，达到均值以上约 1.2 个标准差。该序列中未识别到谷值。从开始到结束的整体增长显著，总增幅超过 100%。
-```
 
 **ChatTS caption 原文**
 
-```text
 1. Noisy with std around 16.24
 2. Low frequency periodic fluctuation: each fluctuation period is approximately 53.7 points and the amplitude of the periodic fluctuation is 264.8 between point 0 and point 256.
 3. Keep steady from 198.98 to 148.60
 4. Slow rise followed by rapid decline between point 77 and point 97; upward spike between point 127 and point 129 with an amplitude of 2685.92; wide upward spike between point 183 and point 198 with an amplitude of 582.60
-```
 
 **ChatTS caption 中文翻译**
 
-```text
 1. 噪声较大，标准差约为 16.24
 2. 低频周期性波动：每个波动周期约为 53.7 个点，在点 0 到点 256 之间，周期性波动的幅度为 264.8。
 3. 保持稳定，从 198.98 到 148.60
 4. 在点 77 到点 97 之间缓慢上升后快速下降；在点 127 到点 129 之间出现向上尖峰，幅度为 2685.92；在点 183 到点 198 之间出现宽幅向上尖峰，幅度为 582.60
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -1505,183 +1261,143 @@ ology. The time series shows a steady upward trend with low volatility, characte
 
 **`opentslm_meta_only` 模型回答原文**
 
-```text
 1. Unable to determine specific local characteristic fluctuations because no actual time series values are provided; no reliable positions or amplitudes can be inferred from the column name alone.
 2. Unable to determine specific local characteristic fluctuations or their physical meanings because no actual time series values are provided; no reliable positions or amplitudes can be inferred from the column name alone.
 3. steady, the starting point value is unknown from the provided information, and the trend change value from left to right cannot be determined without the data.
 4. no periodic fluctuation
-```
 
 **`opentslm_meta_only` 模型回答中文翻译**
 
-```text
 1. 无法确定具体的局部特征波动，因为未提供实际时间序列数值；仅凭列名无法推断出可靠的位置或幅度。
 2. 无法确定具体的局部特征波动或其物理意义，因为未提供实际时间序列数值；仅凭列名无法推断出可靠的位置或幅度。
 3. 稳定，起点值无法根据所提供的信息得知，并且没有数据无法确定从左到右的趋势变化值。
 4. 无周期性波动。
-```
 
 **`opentslm_numbers` 模型回答原文**
 
-```text
 1. sudden decrease, position around point 115, amplitude 179.01; sudden increase, position around point 124, amplitude 2794.00; sudden decrease, position around point 125, amplitude 2791.19; sudden increase, position around point 177, amplitude 322.40; sudden decrease, position around point 178, amplitude 295.24; sudden increase, position around point 179, amplitude 155.12; sudden decrease, position around point 183, amplitude 89.61
 2. sudden decrease, position around point 115, amplitude 179.01. A sharp drop in travel time, likely caused by a sudden easing of congestion, a change in traffic conditions, or a data anomaly; sudden increase, position around point 124, amplitude 2794.00. A dramatic spike in travel time, likely reflecting an incident, severe congestion, or a sensor/data error causing an extreme surge; sudden decrease, position around point 125, amplitude 2791.19. A rapid return from the extreme spike, likely indicating the abnormal event ended quickly or the measurement corrected itself; sudden increase, position around point 177, amplitude 322.40. A noticeable jump in travel time, possibly due to worsening traffic flow, an event, or localized congestion; sudden decrease, position around point 178, amplitude 295.24. A quick drop after the jump, suggesting traffic briefly improved or the spike was transient; sudden increase, position around point 179, amplitude 155.12. A rebound in travel time, likely from renewed congestion or another short-lived disturbance; sudden decrease, position around point 183, amplitude 89.61. A moderate decline in travel time, consistent with partial traffic relief or normalization.
 3. increasing, the starting point value is around 199.00, and the trend change value from left to right is around 50.00.
 4. no periodic fluctuation
-```
 
 **`opentslm_numbers` 模型回答中文翻译**
 
-```text
 1. 突然下降，位置在点 115 附近，幅度 179.01；突然上升，位置在点 124 附近，幅度 2794.00；突然下降，位置在点 125 附近，幅度 2791.19；突然上升，位置在点 177 附近，幅度 322.40；突然下降，位置在点 178 附近，幅度 295.24；突然上升，位置在点 179 附近，幅度 155.12；突然下降，位置在点 183 附近，幅度 89.61
 2. 突然下降，位置在点 115 附近，幅度 179.01。行程时间急剧下降，可能是由拥堵突然缓解、交通状况变化或数据异常引起；突然上升，位置在点 124 附近，幅度 2794.00。行程时间出现剧烈峰值，可能反映了事故、严重拥堵，或传感器/数据错误导致的极端激增；突然下降，位置在点 125 附近，幅度 2791.19。从极端峰值快速回落，可能表明异常事件很快结束，或测量值自行修正；突然上升，位置在点 177 附近，幅度 322.40。行程时间明显跳升，可能是由于交通流恶化、某一事件或局部拥堵；突然下降，位置在点 178 附近，幅度 295.24。跳升后快速下降，表明交通短暂改善或该峰值是暂时性的；突然上升，位置在点 179 附近，幅度 155.12。行程时间回升，可能由再次拥堵或另一次短时扰动引起；突然下降，位置在点 183 附近，幅度 89.61。行程时间中等程度下降，与交通部分缓解或恢复正常一致。
 3. 上升，起始点数值约为 199.00，从左到右的趋势变化值约为 50.00。
 4. 无周期性波动
-```
 
 **`opentslm_caption` 模型回答原文**
 
-```text
 1. shake, position around point 18, amplitude 2.10; shake, position around point 37, amplitude 2.35; shake, position around point 58, amplitude 2.20; shake, position around point 79, amplitude 2.40; shake, position around point 99, amplitude 2.15; shake, position around point 121, amplitude 2.30; shake, position around point 143, amplitude 2.25; shake, position around point 165, amplitude 2.50; shake, position around point 187, amplitude 2.20; shake, position around point 208, amplitude 2.30; shake, position around point 229, amplitude 2.15; wide upward spike, position around point 236, amplitude 11.80
 2. shake, position around point 18, amplitude 2.10. Small short-term irregular fluctuation likely caused by minor traffic variability without changing the overall trend; shake, position around point 37, amplitude 2.35. Small short-term irregular fluctuation likely caused by minor traffic variability without changing the overall trend; shake, position around point 58, amplitude 2.20. Small short-term irregular fluctuation likely caused by minor traffic variability without changing the overall trend; shake, position around point 79, amplitude 2.40. Small short-term irregular fluctuation likely caused by minor traffic variability without changing the overall trend; shake, position around point 99, amplitude 2.15. Small short-term irregular fluctuation likely caused by minor traffic variability without changing the overall trend; shake, position around point 121, amplitude 2.30. Small short-term irregular fluctuation likely caused by minor traffic variability without changing the overall trend; shake, position around point 143, amplitude 2.25. Small short-term irregular fluctuation likely caused by minor traffic variability without changing the overall trend; shake, position around point 165, amplitude 2.50. Small short-term irregular fluctuation likely caused by minor traffic variability without changing the overall trend; shake, position around point 187, amplitude 2.20. Small short-term irregular fluctuation likely caused by minor traffic variability without changing the overall trend; shake, position around point 208, amplitude 2.30. Small short-term irregular fluctuation likely caused by minor traffic variability without changing the overall trend; shake, position around point 229, amplitude 2.15. Small short-term irregular fluctuation likely caused by minor traffic variability without changing the overall trend; wide upward spike, position around point 236, amplitude 11.80. A pronounced traffic surge likely caused by a temporary congestion incident, peak travel demand, or an external event that sharply increased travel time.
 3. increasing, the starting point value is around 32.10, and the trend change value from left to right is around 0.12
 4. periodic fluctuation, each period is around 10 points, and the amplitude of the periodic fluctuation is around 2.40
-```
 
 **`opentslm_caption` 模型回答中文翻译**
 
-```text
 1. 抖动，位置在点 18 附近，幅度 2.10；抖动，位置在点 37 附近，幅度 2.35；抖动，位置在点 58 附近，幅度 2.20；抖动，位置在点 79 附近，幅度 2.40；抖动，位置在点 99 附近，幅度 2.15；抖动，位置在点 121 附近，幅度 2.30；抖动，位置在点 143 附近，幅度 2.25；抖动，位置在点 165 附近，幅度 2.50；抖动，位置在点 187 附近，幅度 2.20；抖动，位置在点 208 附近，幅度 2.30；抖动，位置在点 229 附近，幅度 2.15；宽幅向上尖峰，位置在点 236 附近，幅度 11.80
 2. 抖动，位置在点 18 附近，幅度 2.10。可能由轻微交通波动引起的小幅短期不规则波动，不改变整体趋势；抖动，位置在点 37 附近，幅度 2.35。可能由轻微交通波动引起的小幅短期不规则波动，不改变整体趋势；抖动，位置在点 58 附近，幅度 2.20。可能由轻微交通波动引起的小幅短期不规则波动，不改变整体趋势；抖动，位置在点 79 附近，幅度 2.40。可能由轻微交通波动引起的小幅短期不规则波动，不改变整体趋势；抖动，位置在点 99 附近，幅度 2.15。可能由轻微交通波动引起的小幅短期不规则波动，不改变整体趋势；抖动，位置在点 121 附近，幅度 2.30。可能由轻微交通波动引起的小幅短期不规则波动，不改变整体趋势；抖动，位置在点 143 附近，幅度 2.25。可能由轻微交通波动引起的小幅短期不规则波动，不改变整体趋势；抖动，位置在点 165 附近，幅度 2.50。可能由轻微交通波动引起的小幅短期不规则波动，不改变整体趋势；抖动，位置在点 187 附近，幅度 2.20。可能由轻微交通波动引起的小幅短期不规则波动，不改变整体趋势；抖动，位置在点 208 附近，幅度 2.30。可能由轻微交通波动引起的小幅短期不规则波动，不改变整体趋势；抖动，位置在点 229 附近，幅度 2.15。可能由轻微交通波动引起的小幅短期不规则波动，不改变整体趋势；宽幅向上尖峰，位置在点 236 附近，幅度 11.80。一次显著的交通激增，可能由临时拥堵事件、出行需求高峰或外部事件引起，使出行时间急剧增加。
 3. 上升，起点值约为 32.10，从左到右的趋势变化值约为 0.12
 4. 周期性波动，每个周期约为 10 个点，周期性波动的幅度约为 2.40
-```
 
 **`opentslm_caption_plus` 模型回答原文**
 
-```text
 1. shake, position around point 7, amplitude 114.00; sudden decrease, position around point 18, amplitude 62.20; sudden decrease, position around point 24, amplitude 38.90; sudden increase, position around point 33, amplitude 37.62; sudden decrease, position around point 47, amplitude 34.20; sudden increase, position around point 74, amplitude 58.10; sudden decrease, position around point 84, amplitude 109.40; sudden increase, position around point 112, amplitude 70.10; sudden increase, position around point 126, amplitude 2791.20; sudden increase, position around point 172, amplitude 127.00; sudden decrease, position around point 190, amplitude 388.90; sudden increase, position around point 214, amplitude 75.80
 2. shake, position around point 7, amplitude 114.00. Short-term oscillation in travel time, likely reflecting brief traffic instability from routine congestion or signal timing changes; sudden decrease, position around point 18, amplitude 62.20. A rapid drop in travel time, possibly caused by a temporary clearing of congestion or a change in traffic flow; sudden decrease, position around point 24, amplitude 38.90. A further abrupt reduction in travel time, suggesting a short-lived easing of road load; sudden increase, position around point 33, amplitude 37.62. A quick rise in travel time, likely due to sudden congestion buildup or localized traffic interference; sudden decrease, position around point 47, amplitude 34.20. A brief improvement in traffic conditions, causing travel time to fall sharply; sudden increase, position around point 74, amplitude 58.10. A pronounced jump in travel time, likely from an abrupt traffic slowdown or bottleneck; sudden decrease, position around point 84, amplitude 109.40. A sharp easing of travel time, consistent with congestion dispersing rapidly; sudden increase, position around point 112, amplitude 70.10. A strong surge in travel time, likely driven by a sudden traffic incident or peak-demand pressure; sudden increase, position around point 126, amplitude 2791.20. An extreme spike in travel time, which likely indicates an outlier, sensor error, or a severe abnormal traffic event; sudden increase, position around point 172, amplitude 127.00. A marked rise in travel time, suggesting a major but short-term traffic disruption; sudden decrease, position around point 190, amplitude 388.90. A very large drop in travel time, likely reflecting traffic recovery after a severe congestion episode; sudden increase, position around point 214, amplitude 75.80. A renewed rise in travel time, possibly due to another congestion wave or recurring traffic load.
 3. increasing, the starting point value is around 199.00, and the trend change value from left to right is around 150.30.
 4. periodic fluctuation, each period is around 10 points, and the amplitude of the periodic fluctuation is around 31.51
-```
 
 **`opentslm_caption_plus` 模型回答中文翻译**
 
-```text
 1. 抖动，位置约在点 7，幅度 114.00；突然下降，位置约在点 18，幅度 62.20；突然下降，位置约在点 24，幅度 38.90；突然上升，位置约在点 33，幅度 37.62；突然下降，位置约在点 47，幅度 34.20；突然上升，位置约在点 74，幅度 58.10；突然下降，位置约在点 84，幅度 109.40；突然上升，位置约在点 112，幅度 70.10；突然上升，位置约在点 126，幅度 2791.20；突然上升，位置约在点 172，幅度 127.00；突然下降，位置约在点 190，幅度 388.90；突然上升，位置约在点 214，幅度 75.80
 2. 抖动，位置约在点 7，幅度 114.00。出行时间出现短期振荡，可能反映了常规拥堵或信号配时变化导致的短暂交通不稳定；突然下降，位置约在点 18，幅度 62.20。出行时间快速下降，可能由拥堵暂时缓解或交通流变化引起；突然下降，位置约在点 24，幅度 38.90。出行时间进一步突然减少，表明道路负荷出现短暂缓解；突然上升，位置约在点 33，幅度 37.62。出行时间快速上升，可能由于拥堵突然形成或局部交通干扰所致；突然下降，位置约在点 47，幅度 34.20。交通状况短暂改善，导致出行时间急剧下降；突然上升，位置约在点 74，幅度 58.10。出行时间显著跃升，可能来自突发交通减速或瓶颈；突然下降，位置约在点 84，幅度 109.40。出行时间急剧缓解，与拥堵快速消散相一致；突然上升，位置约在点 112，幅度 70.10。出行时间强烈上升，可能由突发交通事件或高峰需求压力驱动；突然上升，位置约在点 126，幅度 2791.20。出行时间出现极端峰值，可能表明存在异常值、传感器错误或严重异常交通事件；突然上升，位置约在点 172，幅度 127.00。出行时间明显上升，表明存在重大但短期的交通扰动；突然下降，位置约在点 190，幅度 388.90。出行时间大幅下降，可能反映严重拥堵后的交通恢复；突然上升，位置约在点 214，幅度 75.80。出行时间再次上升，可能由于另一轮拥堵波或反复出现的交通负荷所致。
 3. 上升，起始点数值约为 199.00，从左到右的趋势变化值约为 150.30。
 4. 周期性波动，每个周期约为 10 个点，周期性波动的幅度约为 31.51。
-```
 
 **`opentslm_wrong_caption` 模型回答原文**
 
-```text
 1. upward convex, position around point 60, amplitude 18.00; downward spike, position around point 95, amplitude 22.00; continuous upward spike, position around point 210, amplitude 15.00
 2. upward convex, position around point 60, amplitude 18.00. The series accelerates upward there, suggesting a period of gradually strengthening traffic delay growth; downward spike, position around point 95, amplitude 22.00. A brief dip in travel time likely caused by a short-lived improvement in traffic flow or reduced congestion; continuous upward spike, position around point 210, amplitude 15.00. A late-stage surge indicates a temporary worsening of congestion, possibly from an incident, bottleneck, or rush-hour effect.
 3. increasing, the starting point value is around 32.10, and the trend change value from left to right is around 0.55.
 4. no periodic fluctuation
-```
 
 **`opentslm_wrong_caption` 模型回答中文翻译**
 
-```text
 1. 向上凸起，位置在点 60 附近，幅度 18.00；向下尖峰，位置在点 95 附近，幅度 22.00；连续向上尖峰，位置在点 210 附近，幅度 15.00
 2. 向上凸起，位置在点 60 附近，幅度 18.00。该序列在此处加速上升，表明交通延误增长逐渐增强的一段时期；向下尖峰，位置在点 95 附近，幅度 22.00。出行时间短暂下降，可能是由交通流短时改善或拥堵减轻造成的；连续向上尖峰，位置在点 210 附近，幅度 15.00。后期的激增表明拥堵暂时加重，可能由事故、瓶颈或高峰时段效应引起。
 3. 增加，起点值约为 32.10，从左到右的趋势变化值约为 0.55。
 4. 无周期性波动
-```
 
 **`chatts_meta_only` 模型回答原文**
 
-```text
 1. Unable to determine specific local characteristic fluctuations from the column name alone; no time series values are available for identifying positions or amplitudes.
 2. Unable to determine specific local characteristic fluctuations or their physical meanings from the column name alone; no time series values are available for identifying positions or amplitudes.
 3. steady, the starting point value and left-to-right trend change cannot be determined because no time series values are available.
 4. no periodic fluctuation
-```
 
 **`chatts_meta_only` 模型回答中文翻译**
 
-```text
 1. 仅凭列名无法确定具体的局部特征波动；没有可用于识别位置或幅度的时间序列数值。
 2. 仅凭列名无法确定具体的局部特征波动或其物理意义；没有可用于识别位置或幅度的时间序列数值。
 3. 稳定，由于没有可用的时间序列数值，无法确定起点值和从左到右的趋势变化。
 4. 无周期性波动
-```
 
 **`chatts_numbers` 模型回答原文**
 
-```text
 1. downward spike, position around point 24, amplitude 18.81; upward spike, position around point 75, amplitude 58.08; upward spike, position around point 120, amplitude 2793.73; sudden increase, position around point 152, amplitude 89.44; sudden decrease, position around point 189, amplitude 88.62; shake, position around point 210, amplitude 22.36
 2. downward spike, position around point 24, amplitude 18.81. A brief sharp drop in travel time, likely reflecting a temporary reduction in congestion or a short-lived traffic clearing event; upward spike, position around point 75, amplitude 58.08. A short-lived surge in travel time, likely caused by a transient traffic jam, incident, or bottleneck; upward spike, position around point 120, amplitude 2793.73. An extreme one-point spike suggesting an abnormal traffic disturbance or a data outlier/measurement error; sudden increase, position around point 152, amplitude 89.44. A rapid worsening of traffic conditions, likely due to growing congestion or a localized road slowdown; sudden decrease, position around point 189, amplitude 88.62. A rapid improvement in traffic flow, likely caused by congestion dissipating or traffic volume dropping; shake, position around point 210, amplitude 22.36. A moderate oscillation around a local level, likely reflecting unstable but not extreme traffic conditions.
 3. increasing, the starting point value is around 199.00, and the trend change value from left to right is around 0.08.
 4. no periodic fluctuation
-```
 
 **`chatts_numbers` 模型回答中文翻译**
 
-```text
 1. 向下尖峰，位置约在点 24，幅度 18.81；向上尖峰，位置约在点 75，幅度 58.08；向上尖峰，位置约在点 120，幅度 2793.73；突然增加，位置约在点 152，幅度 89.44；突然减少，位置约在点 189，幅度 88.62；抖动，位置约在点 210，幅度 22.36
 2. 向下尖峰，位置约在点 24，幅度 18.81。行程时间短暂急剧下降，可能反映了拥堵的暂时缓解或短暂的交通疏通事件；向上尖峰，位置约在点 75，幅度 58.08。行程时间短暂激增，可能由临时交通拥堵、事故或瓶颈造成；向上尖峰，位置约在点 120，幅度 2793.73。一个极端的单点尖峰，表明异常交通扰动或数据异常值/测量误差；突然增加，位置约在点 152，幅度 89.44。交通状况迅速恶化，可能由于拥堵加剧或局部道路减速；突然减少，位置约在点 189，幅度 88.62。交通流迅速改善，可能由拥堵消散或交通量下降造成；抖动，位置约在点 210，幅度 22.36。围绕局部水平的中等幅度振荡，可能反映了不稳定但并非极端的交通状况。
 3. 增加，起点值约为 199.00，从左到右的趋势变化值约为 0.08。
 4. 无周期性波动
-```
 
 **`chatts_caption` 模型回答原文**
 
-```text
 1. shake, position around point 0-256, amplitude around 16.24; slow rise followed by rapid decline, position around point 77-97, amplitude around 198.98 to 148.60; upward spike, position around point 127-129, amplitude around 2685.92; wide upward spike, position around point 183-198, amplitude around 582.60
 2. shake, position around point 0-256, amplitude around 16.24. The fluctuations are small random variations around the baseline, likely caused by ordinary traffic noise or short-term measurement variability; slow rise followed by rapid decline, position around point 77-97, amplitude around 198.98 to 148.60. A short-lived buildup in travel time followed by a quick drop, possibly due to temporary congestion that cleared rapidly; upward spike, position around point 127-129, amplitude around 2685.92. A sharp sudden surge in travel time, likely caused by an abrupt incident, severe congestion, or a major disruption on the road; wide upward spike, position around point 183-198, amplitude around 582.60. A prolonged increase in travel time over several points, suggesting sustained traffic slowing from heavier-than-normal flow or a longer incident.
 3. steady, the starting point value is around 198.98, and the trend change value from left to right is around 0.00
 4. periodic fluctuation, each period is around 53.7 points, and the amplitude of the periodic fluctuation is around 264.8
-```
 
 **`chatts_caption` 模型回答中文翻译**
 
-```text
 1. 抖动，位置约在点 0-256，幅度约为 16.24；缓慢上升后快速下降，位置约在点 77-97，幅度约从 198.98 到 148.60；向上尖峰，位置约在点 127-129，幅度约为 2685.92；宽幅向上尖峰，位置约在点 183-198，幅度约为 582.60
 2. 抖动，位置约在点 0-256，幅度约为 16.24。波动是基线附近的小幅随机变化，可能由普通交通噪声或短期测量变异引起；缓慢上升后快速下降，位置约在点 77-97，幅度约从 198.98 到 148.60。行程时间短暂累积后快速下降，可能是由于临时拥堵迅速消散；向上尖峰，位置约在点 127-129，幅度约为 2685.92。行程时间突然急剧上升，可能由突发事件、严重拥堵或道路上的重大干扰引起；宽幅向上尖峰，位置约在点 183-198，幅度约为 582.60。行程时间在多个点上持续增加，提示可能存在由高于正常水平的车流量或持续时间较长的事件导致的持续交通减速。
 3. 稳定，起始点值约为 198.98，从左到右的趋势变化值约为 0.00
 4. 周期性波动，每个周期约为 53.7 个点，周期性波动的幅度约为 264.8
-```
 
 **`chatts_caption_plus` 模型回答原文**
 
-```text
 1. shake, position around point 10, amplitude 165.50; slow rise followed by rapid decline, position around point 88, amplitude 401.30; upward spike, position around point 127, amplitude 2685.92; wide upward spike, position around point 191, amplitude 582.60; shake, position around point 232, amplitude 130.60
 2. shake, position around point 10, amplitude 165.50. This reflects short-term traffic volatility around a generally elevated level, likely caused by routine fluctuations in road conditions or demand; slow rise followed by rapid decline, position around point 88, amplitude 401.30. This suggests a buildup of congestion or travel time that then clears quickly, possibly due to a temporary bottleneck resolving; upward spike, position around point 127, amplitude 2685.92. This indicates an extreme traffic incident or abrupt blockage causing a sudden and severe travel time surge; wide upward spike, position around point 191, amplitude 582.60. This points to a broader congestion episode, likely from sustained high traffic or an extended disruption; shake, position around point 232, amplitude 130.60. This indicates renewed short-range oscillation in travel time, likely from unstable traffic flow near the end of the series
 3. increasing, the starting point value is around 199.00, and the trend change value from left to right is around 200.00
 4. periodic fluctuation, each period is around 53.70 points, and the amplitude of the periodic fluctuation is around 264.80
-```
 
 **`chatts_caption_plus` 模型回答中文翻译**
 
-```text
 1. 抖动，位置约第 10 个点，振幅 165.50；缓慢上升后快速下降，位置约第 88 个点，振幅 401.30；向上尖峰，位置约第 127 个点，振幅 2685.92；宽幅向上尖峰，位置约第 191 个点，振幅 582.60；抖动，位置约第 232 个点，振幅 130.60
 2. 抖动，位置约第 10 个点，振幅 165.50。这反映出在总体较高水平附近的短期交通波动，可能由道路状况或需求的常规波动引起；缓慢上升后快速下降，位置约第 88 个点，振幅 401.30。这表明拥堵或通行时间逐步累积后迅速消散，可能是由于临时瓶颈得到缓解；向上尖峰，位置约第 127 个点，振幅 2685.92。这表明极端交通事件或突然阻塞导致通行时间骤然且严重上升；宽幅向上尖峰，位置约第 191 个点，振幅 582.60。这指向一次范围更广的拥堵过程，可能由持续高交通量或长时间扰动引起；抖动，位置约第 232 个点，振幅 130.60。这表明序列末端附近通行时间再次出现短范围振荡，可能由不稳定交通流引起
 3. 增加，起点值约为 199.00，从左到右的趋势变化值约为 200.00
 4. 周期性波动，每个周期约为 53.70 个点，周期性波动的振幅约为 264.80
-```
 
 **`chatts_wrong_caption` 模型回答原文**
 
-```text
 1. slow rise followed by rapid decline, position around point 94-131, amplitude around 6.27 to 12.50 then back to 6.21; slow rise followed by rapid decline, position around point 125-133, amplitude around 10.13 to 26.42 then back to 6.20
 2. slow rise followed by rapid decline, position around point 94-131, amplitude around 6.27 to 12.50 then back to 6.21. A gradual buildup in travel time followed by a sharp drop, likely reflecting a temporary congestion event that cleared quickly; slow rise followed by rapid decline, position around point 125-133, amplitude around 10.13 to 26.42 then back to 6.20. A stronger temporary traffic disruption with a rapid spike in travel time, likely due to a short-lived incident, bottleneck, or unusual congestion that resolved abruptly
 3. steady, the starting point value is around 6.31, and the trend change value from left to right is around 0.60
 4. no periodic fluctuation
-```
 
 **`chatts_wrong_caption` 模型回答中文翻译**
 
-```text
 1. 缓慢上升后快速下降，位置约在第 94-131 点，幅度约从 6.27 到 12.50，然后回到 6.21；缓慢上升后快速下降，位置约在第 125-133 点，幅度约从 10.13 到 26.42，然后回到 6.20
 2. 缓慢上升后快速下降，位置约在第 94-131 点，幅度约从 6.27 到 12.50，然后回到 6.21。出行时间逐渐累积后急剧下降，可能反映了一个迅速消散的临时拥堵事件；缓慢上升后快速下降，位置约在第 125-133 点，幅度约从 10.13 到 26.42，然后回到 6.20。一次更强的临时交通扰动，出行时间快速飙升，可能由短时事件、瓶颈或异常拥堵导致，并突然消退
 3. 稳定，起始点数值约为 6.31，从左到右的趋势变化值约为 0.60
 4. 无周期性波动
-```
 
 
 **Case 分析**
@@ -1698,19 +1414,15 @@ ology. The time series shows a steady upward trend with low volatility, characte
 - 数值摘要：n=256, min=30.482, max=51.6, mean=44.588, std=2.1897, slope=-0.0019699, argmax=129, argmin=128
 - Dataset-A 标注属性原文：
 
-```json
 [
   "Routine operations with minor fluctuations. The time series indicates that despite a generally stable trend, there are small fluctuations near point 127, which could suggest standard variation due to routine operational activities rather than unusual events like hardware malfunctions or system updates."
 ]
-```
 
 - Dataset-A 标注属性中文翻译：
 
-```text
 [
   "常规运行，存在轻微波动。该时间序列显示，尽管总体趋势较为稳定，但在点 127 附近存在小幅波动，这可能表明这是由常规运行活动导致的标准变化，而非硬件故障或系统更新等异常事件。"
 ]
-```
 
 ![dataset_a::0073](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0073.png)
 
@@ -1718,64 +1430,48 @@ ology. The time series shows a steady upward trend with low volatility, characte
 
 **题干原文**
 
-```text
-You are a time series analysis expert. This time series is "CPU Usage" from AWS API servers with length of 256: <ts><ts/>, please analyze the time series features and answer the following questions:
+You are a time series analysis expert. This time series is "CPU Usage" from AWS API servers with length of 256: &lt;ts&gt;&lt;ts/&gt;, please analyze the time series features and answer the following questions:
 1. Given the time series for CPU Usage from AWS API servers, what is the most plausible explanation for the behavior observed near time point 127? Choose from: hardware malfunction, routine operations with minor fluctuations, or significant system update.
 Now, based on the above questions, please strictly follow the output format requirements and provide the answers. Each line corresponds to an answer to a question, formatted as:1. Strictly formatted answer 1
-```
 
 **题干中文翻译**
 
-```text
-你是一名时间序列分析专家。该时间序列是来自 AWS API 服务器的“CPU Usage”，长度为 256：<ts><ts/>，请分析该时间序列特征并回答以下问题：
+你是一名时间序列分析专家。该时间序列是来自 AWS API 服务器的“CPU Usage”，长度为 256：&lt;ts&gt;&lt;ts/&gt;，请分析该时间序列特征并回答以下问题：
 1. 给定来自 AWS API 服务器的 CPU Usage 时间序列，时间点 127 附近观察到的行为最可能的解释是什么？从以下选项中选择：硬件故障、伴有轻微波动的常规操作，或重大系统更新。
 现在，请基于上述问题，严格遵循输出格式要求并给出答案。每一行对应一个问题的答案，格式为：1. 严格格式化的答案 1
-```
 - 选项：
 无固定选项；题目要求按指定格式直接生成答案。
 - 正确答案原文：
 
-```text
 1. Routine operations with minor fluctuations. The time series indicates that despite a generally stable trend, there are small fluctuations near point 127, which could suggest standard variation due to routine operational activities rather than unusual events like hardware malfunctions or system updates.
-```
 
 - 正确答案中文翻译：
 
-```text
 1. 常规运行伴有轻微波动。该时间序列显示，尽管整体趋势总体稳定，但在点 127 附近存在小幅波动，这可能表明是由常规运行活动引起的标准变化，而不是硬件故障或系统更新等异常事件。
-```
 
 **生成的 caption 与中文翻译**
 
 **OpenTSLM caption 原文**
 
-```text
 The time series shows a flat trend with low volatility and medium strength seasonality every 100 time units. Early in the window, there is a significant upward phase followed by a sharp downward movement, with a peak that stands out as about 2.1 standard deviations above the mean. The data exhibits strong positive correlation with temperature and moderate positive correlation with humidity.
-```
 
 **OpenTSLM caption 中文翻译**
 
-```text
 该时间序列呈现平稳趋势，波动性较低，并且每 100 个时间单位表现出中等强度的季节性。窗口早期存在一个显著的上升阶段，随后出现急剧下降，并且有一个峰值明显突出，约高于均值 2.1 个标准差。数据与温度呈强正相关，与湿度呈中等正相关。
-```
 
 **ChatTS caption 原文**
 
-```text
 1. Noisy with std around 3.12.
 2. No periodic fluctuations observed, showing no periodic fluctuation.
 3. Keep steady from 44.92 to 44.92.
 4. A downward spike with an amplitude of 14.21 occurred between point 128 and point 130, with the time series value rapidly falling from around 44.92 to around 30.71 and then quickly rising back to around 44.92, forming a downward spike.
-```
 
 **ChatTS caption 中文翻译**
 
-```text
 1. 有噪声，标准差约为 3.12。
 2. 未观察到周期性波动，显示无周期性波动。
 3. 保持稳定，从 44.92 到 44.92。
 4. 在点 128 和点 130 之间发生了一个幅度为 14.21 的向下尖峰，时间序列值从约 44.92 快速下降到约 30.71，然后迅速回升到约 44.92，形成一个向下尖峰。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -1796,123 +1492,83 @@ The time series shows a flat trend with low volatility and medium strength seaso
 
 **`opentslm_meta_only` 模型回答原文**
 
-```text
 1. routine operations with minor fluctuations
-```
 
 **`opentslm_meta_only` 模型回答中文翻译**
 
-```text
 1. 常规操作，伴有轻微波动
-```
 
 **`opentslm_numbers` 模型回答原文**
 
-```text
 1. routine operations with minor fluctuations
-```
 
 **`opentslm_numbers` 模型回答中文翻译**
 
-```text
 常规运行，伴有轻微波动
-```
 
 **`opentslm_caption` 模型回答原文**
 
-```text
 1. significant system update
-```
 
 **`opentslm_caption` 模型回答中文翻译**
 
-```text
 1. 重大系统更新
-```
 
 **`opentslm_caption_plus` 模型回答原文**
 
-```text
 1. significant system update
-```
 
 **`opentslm_caption_plus` 模型回答中文翻译**
 
-```text
 1. 重大系统更新
-```
 
 **`opentslm_wrong_caption` 模型回答原文**
 
-```text
 1. routine operations with minor fluctuations
-```
 
 **`opentslm_wrong_caption` 模型回答中文翻译**
 
-```text
 常规运行，伴有轻微波动
-```
 
 **`chatts_meta_only` 模型回答原文**
 
-```text
 1. routine operations with minor fluctuations
-```
 
 **`chatts_meta_only` 模型回答中文翻译**
 
-```text
 常规运行，伴有轻微波动
-```
 
 **`chatts_numbers` 模型回答原文**
 
-```text
 1. routine operations with minor fluctuations
-```
 
 **`chatts_numbers` 模型回答中文翻译**
 
-```text
 1. 常规运行，伴有轻微波动
-```
 
 **`chatts_caption` 模型回答原文**
 
-```text
 1. routine operations with minor fluctuations
-```
 
 **`chatts_caption` 模型回答中文翻译**
 
-```text
 1. 伴有轻微波动的常规操作
-```
 
 **`chatts_caption_plus` 模型回答原文**
 
-```text
 1. routine operations with minor fluctuations
-```
 
 **`chatts_caption_plus` 模型回答中文翻译**
 
-```text
 1. 常规操作伴有轻微波动
-```
 
 **`chatts_wrong_caption` 模型回答原文**
 
-```text
 1. significant system update
-```
 
 **`chatts_wrong_caption` 模型回答中文翻译**
 
-```text
 1. 重大系统更新
-```
 
 
 **Case 分析**
@@ -1929,25 +1585,21 @@ The time series shows a flat trend with low volatility and medium strength seaso
 - 数值摘要：n=256, min=0, max=1673, mean=70.09, std=105.16, slope=-0.039424, argmax=128, argmin=230
 - Dataset-A 标注属性原文：
 
-```json
 [
   "Unexpected news release. The time series indicates a generally stable level with a sudden upward spike near point 128, followed by an increase. This pattern suggests a reaction to a specific event, such as unexpected news, that would likely trigger a sudden surge in mentions.",
   "Increased interest in AMZN stock. The observed pattern shows a significant upward spike followed by an increase, suggesting that similar future spikes could correlate with heightened public interest, potentially driving more attention and interest towards AMZN stock.",
   "Stable discussion levels. Between time points 100 and 120, the number of mentions remains steady before experiencing an upward spike near point 128. This indicates consistent behavior during this period without any notable increases or decreases.",
   "High volatility with no clear trend. Between time points 50 and 90, the overall behavior doesn't suggest a consistent upward or downward shift but rather significant noise, indicating substantial fluctuation with no distinct pattern."
 ]
-```
 
 - Dataset-A 标注属性中文翻译：
 
-```text
 [
   "意外新闻发布。该时间序列显示总体水平较为稳定，在接近点 128 处突然向上飙升，随后出现增加。这种模式表明可能是对某一特定事件的反应，例如意外新闻，这很可能会引发提及量的突然激增。",
   "对 AMZN 股票的兴趣增加。观察到的模式显示出显著的向上飙升，随后出现增加，这表明未来类似的飙升可能与公众兴趣升高相关，可能会推动更多关注和兴趣转向 AMZN 股票。",
   "讨论水平稳定。在时间点 100 到 120 之间，提及次数保持稳定，随后在接近点 128 处出现向上飙升。这表明该时期内行为一致，没有任何显著增加或减少。",
   "高波动且无明确趋势。在时间点 50 到 90 之间，整体行为并不显示出一致的上升或下降变化，而是呈现显著噪声，表明存在大幅波动且没有明显模式。"
 ]
-```
 
 ![dataset_a::0083](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0083.png)
 
@@ -1955,70 +1607,54 @@ The time series shows a flat trend with low volatility and medium strength seaso
 
 **题干原文**
 
-```text
-You are a time series analysis expert. This time series is "the number of mentions for AMZN" from Twitter with length of 256: <ts><ts/>, please analyze the time series features and answer the following questions:
+You are a time series analysis expert. This time series is "the number of mentions for AMZN" from Twitter with length of 256: &lt;ts&gt;&lt;ts/&gt;, please analyze the time series features and answer the following questions:
 1. Given the time series for the number of mentions for AMZN, which of the following is the most plausible factor influencing the observed behavior? Choose from: unexpected news release, normal social media discourse, or deliberate viral marketing campaign.
 2. According to the time series for the number of mentions for AMZN on Twitter, what might be a possible outcome if a sudden spike occurs again after point 128? Choose from: increased interest in AMZN stock, decrease in AMZN's visibility, or no impact on social discourse.
 3. Observing the time series for the number of mentions for AMZN, what might have happened between time points 100 and 120? Choose from: stable discussion levels, decrease in mentions, or a significant rise in AMZN-related discussions.
 4. Based on the number of mentions for AMZN, what might have been the overall behavior between time points 50 and 90? Choose from: consistent upward trend, significant downward shift, or high volatility with no clear trend.
 Now, based on the above questions, please strictly follow the output format requirements and provide the answers. Each line corresponds to an answer to a question, formatted as:1. Strictly formatted answer 1
-```
 
 **题干中文翻译**
 
-```text
-你是时间序列分析专家。该时间序列是来自 Twitter 的“AMZN 提及次数”，长度为 256：<ts><ts/>，请分析该时间序列特征并回答以下问题：
+你是时间序列分析专家。该时间序列是来自 Twitter 的“AMZN 提及次数”，长度为 256：&lt;ts&gt;&lt;ts/&gt;，请分析该时间序列特征并回答以下问题：
 1. 给定 AMZN 提及次数的时间序列，以下哪一个是影响所观察到行为的最可能因素？从以下选项中选择：突发新闻发布、正常社交媒体讨论，或有意的病毒式营销活动。
 2. 根据 Twitter 上 AMZN 提及次数的时间序列，如果在点 128 之后再次出现突然峰值，可能的结果是什么？从以下选项中选择：对 AMZN 股票的兴趣增加、AMZN 的可见度下降，或对社交讨论没有影响。
 3. 观察 AMZN 提及次数的时间序列，在时间点 100 到 120 之间可能发生了什么？从以下选项中选择：讨论水平稳定、提及次数减少，或 AMZN 相关讨论显著上升。
 4. 基于 AMZN 的提及次数，时间点 50 到 90 之间的整体行为可能是什么？从以下选项中选择：持续上升趋势、显著下降变化，或高波动且无明确趋势。
 现在，请基于上述问题，严格遵循输出格式要求并提供答案。每一行对应一个问题的答案，格式为：1. 严格格式化的答案 1
-```
 - 选项：
 无固定选项；题目要求按指定格式直接生成答案。
 - 正确答案原文：
 
-```text
 1. Unexpected news release. The time series indicates a generally stable level with a sudden upward spike near point 128, followed by an increase. This pattern suggests a reaction to a specific event, such as unexpected news, that would likely trigger a sudden surge in mentions.
 2. Increased interest in AMZN stock. The observed pattern shows a significant upward spike followed by an increase, suggesting that similar future spikes could correlate with heightened public interest, potentially driving more attention and interest towards AMZN stock.
 3. Stable discussion levels. Between time points 100 and 120, the number of mentions remains steady before experiencing an upward spike near point 128. This indicates consistent behavior during this period without any notable increases or decreases.
 4. High volatility with no clear trend. Between time points 50 and 90, the overall behavior doesn't suggest a consistent upward or downward shift but rather significant noise, indicating substantial fluctuation with no distinct pattern.
-```
 
 - 正确答案中文翻译：
 
-```text
 1. 意外新闻发布。该时间序列显示出总体稳定的水平，在点 128 附近突然向上尖峰，随后增加。这种模式表明可能是对某一特定事件的反应，例如意外新闻，这很可能会引发提及量的突然激增。
 2. 对 AMZN 股票的兴趣增加。观察到的模式显示出一次显著的向上尖峰，随后增加，表明未来类似的尖峰可能与公众兴趣上升相关，并可能促使更多关注和兴趣转向 AMZN 股票。
 3. 讨论水平稳定。在时间点 100 到 120 之间，提及数量保持稳定，随后在点 128 附近出现向上尖峰。这表明该时期内行为一致，没有任何明显的增加或减少。
 4. 高波动性且无明确趋势。在时间点 50 到 90 之间，整体行为并不显示出一致的上升或下降变化，而是表现为显著噪声，表明存在大幅波动且没有明显模式。
-```
 
 **生成的 caption 与中文翻译**
 
 **OpenTSLM caption 原文**
 
-```text
 The time series shows a steady upward trend with low volatility, characterized by a strong seasonal pattern repeating every 10 periods. The early part of the series experiences a moderate increase, followed by a more pronounced rise in the first half, and a slightly less steep but still positive growth in the second half. The overall growth is substantial, with a total increase of over 100% over the time span.
-```
 
 **OpenTSLM caption 中文翻译**
 
-```text
 该时间序列呈现出稳定的上升趋势，波动性较低，其特点是每 10 个周期重复一次的强季节性模式。序列早期经历了适度增长，随后在前半段出现更明显的上升，而在后半段增速略有放缓但仍保持正增长。整体增长显著，在整个时间跨度内总增幅超过 100%。
-```
 
 **ChatTS caption 原文**
 
-```text
 1. Noisy with std around 13.74. 2. No periodic fluctuations observed, showing no periodic fluctuation. 3. Decrease from 21.38 to 44.59. 4. At point 127 and point 130, there were 2 consecutive upward spikes with amplitudes ranging from 1082.89 to 1622.15, with the time series value repeatedly rising sharply from around 49.86 to around 1132.75 and 1672.01, and then quickly falling back to around 49.86, forming a continuous upward spike.
-```
 
 **ChatTS caption 中文翻译**
 
-```text
 1. 噪声较大，标准差约为 13.74。2. 未观察到周期性波动，显示无周期性波动。3. 从 21.38 下降到 44.59。4. 在点 127 和点 130，出现了 2 次连续的向上尖峰，幅度范围为 1082.89 到 1622.15，时间序列值从约 49.86 反复急剧上升到约 1132.75 和 1672.01，然后迅速回落到约 49.86，形成连续的向上尖峰。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -2039,183 +1675,143 @@ The time series shows a steady upward trend with low volatility, characterized b
 
 **`opentslm_meta_only` 模型回答原文**
 
-```text
 1. normal social media discourse
 2. increased interest in AMZN stock
 3. stable discussion levels
 4. high volatility with no clear trend
-```
 
 **`opentslm_meta_only` 模型回答中文翻译**
 
-```text
 1. 正常的社交媒体讨论
 2. 对 AMZN 股票的兴趣增加
 3. 讨论水平稳定
 4. 高波动性且无明确趋势
-```
 
 **`opentslm_numbers` 模型回答原文**
 
-```text
 1. unexpected news release
 2. increased interest in AMZN stock
 3. stable discussion levels
 4. high volatility with no clear trend
-```
 
 **`opentslm_numbers` 模型回答中文翻译**
 
-```text
 1. 意外的新闻发布
 2. 对 AMZN 股票的兴趣增加
 3. 讨论水平稳定
 4. 高波动性且无明显趋势
-```
 
 **`opentslm_caption` 模型回答原文**
 
-```text
 1. normal social media discourse
 2. increased interest in AMZN stock
 3. a significant rise in AMZN-related discussions
 4. consistent upward trend
-```
 
 **`opentslm_caption` 模型回答中文翻译**
 
-```text
 1. 正常的社交媒体讨论
 2. 对 AMZN 股票的兴趣增加
 3. 与 AMZN 相关的讨论显著增加
 4. 持续上升趋势
-```
 
 **`opentslm_caption_plus` 模型回答原文**
 
-```text
 1. normal social media discourse
 2. increased interest in AMZN stock
 3. a significant rise in AMZN-related discussions
 4. consistent upward trend
-```
 
 **`opentslm_caption_plus` 模型回答中文翻译**
 
-```text
 1. 正常的社交媒体讨论
 2. 对 AMZN 股票的兴趣增加
 3. 与 AMZN 相关的讨论显著增加
 4. 持续上升趋势
-```
 
 **`opentslm_wrong_caption` 模型回答原文**
 
-```text
 1. normal social media discourse
 2. increased interest in AMZN stock
 3. a significant rise in AMZN-related discussions
 4. consistent upward trend
-```
 
 **`opentslm_wrong_caption` 模型回答中文翻译**
 
-```text
 1. 正常的社交媒体讨论
 2. 对 AMZN 股票的兴趣增加
 3. 与 AMZN 相关的讨论显著增加
 4. 持续上升趋势
-```
 
 **`chatts_meta_only` 模型回答原文**
 
-```text
 1. normal social media discourse
 2. increased interest in AMZN stock
 3. stable discussion levels
 4. high volatility with no clear trend
-```
 
 **`chatts_meta_only` 模型回答中文翻译**
 
-```text
 1. 正常的社交媒体讨论
 2. 对 AMZN 股票的兴趣增加
 3. 讨论水平稳定
 4. 高波动性且无明确趋势
-```
 
 **`chatts_numbers` 模型回答原文**
 
-```text
 1. unexpected news release
 2. increased interest in AMZN stock
 3. stable discussion levels
 4. high volatility with no clear trend
-```
 
 **`chatts_numbers` 模型回答中文翻译**
 
-```text
 1. 意外的新闻发布
 2. 对 AMZN 股票的兴趣增加
 3. 稳定的讨论水平
 4. 高波动性且无明确趋势
-```
 
 **`chatts_caption` 模型回答原文**
 
-```text
 1. unexpected news release
 2. increased interest in AMZN stock
 3. stable discussion levels
 4. high volatility with no clear trend
-```
 
 **`chatts_caption` 模型回答中文翻译**
 
-```text
 1. 意外的新闻发布
 2. 对 AMZN 股票的兴趣增加
 3. 讨论水平稳定
 4. 高波动性且无明确趋势
-```
 
 **`chatts_caption_plus` 模型回答原文**
 
-```text
 1. unexpected news release
 2. increased interest in AMZN stock
 3. stable discussion levels
 4. high volatility with no clear trend
-```
 
 **`chatts_caption_plus` 模型回答中文翻译**
 
-```text
 1. 意外的新闻发布
 2. 对 AMZN 股票的兴趣增加
 3. 讨论水平稳定
 4. 高波动性且无明显趋势
-```
 
 **`chatts_wrong_caption` 模型回答原文**
 
-```text
 1. normal social media discourse
 2. increased interest in AMZN stock
 3. stable discussion levels
 4. high volatility with no clear trend
-```
 
 **`chatts_wrong_caption` 模型回答中文翻译**
 
-```text
 1. 正常的社交媒体讨论
 2. 对 AMZN 股票的兴趣增加
 3. 讨论水平稳定
 4. 高波动性且无明确趋势
-```
 
 
 **Case 分析**
@@ -2232,19 +1828,15 @@ The time series shows a steady upward trend with low volatility, characterized b
 - 数值摘要：n=256, min=160.4, max=265.6, mean=182.82, std=11.782, slope=0.013501, argmax=224, argmin=125
 - Dataset-A 标注属性原文：
 
-```json
 [
   "Yes, it should not be regarded as Active. The standard deviation of the noise is 7.52, which surpasses the normal threshold of 5, indicating that the utilization is not within expected normal limits."
 ]
-```
 
 - Dataset-A 标注属性中文翻译：
 
-```text
 [
   "是的，不应将其视为 Active。噪声的标准差为 7.52，超过了正常阈值 5，表明利用率不在预期的正常范围内。"
 ]
-```
 
 ![dataset_a::0096](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0096.png)
 
@@ -2252,64 +1844,48 @@ The time series shows a steady upward trend with low volatility, characterized b
 
 **题干原文**
 
-```text
-You are a time series analysis expert. This time series is "cpu utilization" from server with length of 256: <ts><ts/>, please analyze the time series features and answer the following questions:
+You are a time series analysis expert. This time series is "cpu utilization" from server with length of 256: &lt;ts&gt;&lt;ts/&gt;, please analyze the time series features and answer the following questions:
 1. Given that if the std of overall noise level is larger than the value of 1.0, the CPU utilization should be marked as "Active". Should this timeseries be marked as "Active"? Answer Yes or No and explain the reason.
 Now, based on the above questions, please strictly follow the output format requirements and provide the answers. Each line corresponds to an answer to a question, formatted as:1. Strictly formatted answer 1
-```
 
 **题干中文翻译**
 
-```text
-你是一位时间序列分析专家。该时间序列是来自服务器、长度为 256 的“CPU 利用率”：<ts><ts/>，请分析该时间序列的特征并回答以下问题：
+你是一位时间序列分析专家。该时间序列是来自服务器、长度为 256 的“CPU 利用率”：&lt;ts&gt;&lt;ts/&gt;，请分析该时间序列的特征并回答以下问题：
 1. 已知如果整体噪声水平的标准差大于 1.0，则 CPU 利用率应标记为 "Active"。该时间序列是否应标记为 "Active"？回答是或否，并说明理由。
 现在，请基于上述问题，严格遵循输出格式要求并给出答案。每一行对应一个问题的答案，格式为：1. 严格格式化的答案 1
-```
 - 选项：
 无固定选项；题目要求按指定格式直接生成答案。
 - 正确答案原文：
 
-```text
 1. Yes, it should not be regarded as Active. The standard deviation of the noise is 7.52, which surpasses the normal threshold of 5, indicating that the utilization is not within expected normal limits.
-```
 
 - 正确答案中文翻译：
 
-```text
 1. 是的，不应将其视为 Active。噪声的标准差为 7.52，超过了正常阈值 5，表明利用率不在预期的正常范围内。
-```
 
 **生成的 caption 与中文翻译**
 
 **OpenTSLM caption 原文**
 
-```text
 The time series shows a flat trend with low volatility and medium strength seasonality every 120 time units. Early in the window, there is a significant upward phase followed by a sharp downward movement, with a peak that stands out as about 1.5 standard deviations above the mean. The data exhibits strong positive correlation with temperature and moderate positive correlation with humidity.
-```
 
 **OpenTSLM caption 中文翻译**
 
-```text
 该时间序列表现出平稳趋势、低波动性，并且每 120 个时间单位呈现中等强度的季节性。窗口早期出现显著上升阶段，随后急剧下降，其中一个峰值较为突出，约高于均值 1.5 个标准差。数据与温度呈强正相关，与湿度呈中等正相关。
-```
 
 **ChatTS caption 原文**
 
-```text
 1. Noisy with std around 10.50
 2. No periodic fluctuations observed, showing no periodic fluctuation
 3. Keep steady from 179.50 to 179.50
 4. No local features found.
-```
 
 **ChatTS caption 中文翻译**
 
-```text
 1. 有噪声，标准差约为 10.50
 2. 未观察到周期性波动，显示无周期性波动
 3. 从 179.50 到 179.50 保持稳定
 4. 未发现局部特征
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -2330,123 +1906,83 @@ The time series shows a flat trend with low volatility and medium strength seaso
 
 **`opentslm_meta_only` 模型回答原文**
 
-```text
 1. No — with only the column name “cpu utilization” and no actual time series values, there is no basis to estimate the overall noise standard deviation. Since the std of noise is not provided and cannot be determined from the metadata alone, it should not be marked as “Active” based on the given rule.
-```
 
 **`opentslm_meta_only` 模型回答中文翻译**
 
-```text
 1. 否——仅有列名“cpu utilization”而没有实际的时间序列数值，无法估计整体噪声标准差。由于未提供噪声的标准差，且无法仅从元数据确定，因此根据给定规则，不应将其标记为“Active”。
-```
 
 **`opentslm_numbers` 模型回答原文**
 
-```text
 1. Yes — this CPU utilization series should be marked as **Active** because its fluctuations are very large and clearly exceed a noise standard deviation of 1.0. The values span a wide range, including a notable spike up to **265.6**, with many other substantial variations around the typical level, indicating the overall noise level is well above the threshold.
-```
 
 **`opentslm_numbers` 模型回答中文翻译**
 
-```text
 1. 是——该 CPU 利用率序列应标记为 **Active**，因为其波动非常大，并且明显超过 1.0 的噪声标准差。数值跨度很广，包括一次显著峰值达到 **265.6**，并且在典型水平附近还有许多其他显著变化，表明整体噪声水平远高于阈值。
-```
 
 **`opentslm_caption` 模型回答原文**
 
-```text
 1. Yes — the series is described as having low volatility overall, but it also includes a noticeable upward phase, a sharp downward movement, and a standout peak around 1.5 standard deviations above the mean. This suggests the noise level is likely above 1.0, so it should be marked as **Active**.
-```
 
 **`opentslm_caption` 模型回答中文翻译**
 
-```text
 1. 是——该序列被描述为整体波动性较低，但它也包含一个明显的上升阶段、一次急剧的下行运动，以及一个高于均值约 1.5 个标准差的突出峰值。这表明噪声水平很可能高于 1.0，因此应标记为 **Active**。
-```
 
 **`opentslm_caption_plus` 模型回答原文**
 
-```text
 1. Yes — this time series should be marked as **Active** because it shows noticeable volatility with repeated spikes and sharp movements, including an outlier around 265.6. The overall noise level is clearly above 1.0 in standardized terms, and the combination of fluctuations, seasonal variation, and abrupt jumps indicates active CPU behavior rather than a stable idle pattern.
-```
 
 **`opentslm_caption_plus` 模型回答中文翻译**
 
-```text
 1. 是——该时间序列应标记为 **Active**，因为它表现出明显的波动性，伴有反复的峰值和剧烈变动，包括约 265.6 的离群值。按标准化尺度来看，整体噪声水平明显高于 1.0；波动、季节性变化和突发跳变的组合表明这是活跃的 CPU 行为，而不是稳定的空闲模式。
-```
 
 **`opentslm_wrong_caption` 模型回答原文**
 
-```text
 1. Yes — the time series shows a steady upward trend with a pronounced seasonal pattern and a late peak, indicating meaningful variability in the CPU utilization. Given these fluctuations and the described strong dynamics, it is reasonable to mark it as **Active** since the overall noise/variability is likely above the 1.0 threshold.
-```
 
 **`opentslm_wrong_caption` 模型回答中文翻译**
 
-```text
 1. 是——该时间序列显示出稳定的上升趋势，并具有明显的季节性模式和较晚出现的峰值，表明 CPU 利用率存在有意义的波动。鉴于这些波动以及所描述的强动态特征，将其标记为 **Active** 是合理的，因为整体噪声/变异性很可能高于 1.0 阈值。
-```
 
 **`chatts_meta_only` 模型回答原文**
 
-```text
 1. No. Based on the column name alone (“cpu utilization”) and with no actual time series values available, there is no evidence that the overall noise level’s standard deviation exceeds 1.0. Therefore, it should not be marked as “Active” from the available information.
-```
 
 **`chatts_meta_only` 模型回答中文翻译**
 
-```text
 1. 否。仅根据列名（“cpu utilization”）且没有可用的实际时间序列值，没有证据表明整体噪声水平的标准差超过 1.0。因此，根据可用信息，不应将其标记为“Active”。
-```
 
 **`chatts_numbers` 模型回答原文**
 
-```text
 1. Yes — this time series should be marked as **Active**. The CPU utilization values fluctuate substantially over time, with many deviations around the central level and several noticeable spikes (for example, values above 200 and even around 265.6). This indicates the overall noise level is well above the threshold of 1.0, so it meets the criterion for being Active.
-```
 
 **`chatts_numbers` 模型回答中文翻译**
 
-```text
 1. 是——该时间序列应标记为 **Active**。CPU 利用率数值随时间大幅波动，在中心水平附近有许多偏离，并且出现了几个明显峰值（例如，高于 200，甚至约为 265.6 的数值）。这表明整体噪声水平明显高于 1.0 的阈值，因此符合判定为 Active 的标准。
-```
 
 **`chatts_caption` 模型回答原文**
 
-```text
 1. Yes. The reported overall noise standard deviation is about 10.50, which is much larger than the 1.0 threshold, so this CPU utilization time series should be marked as "Active".
-```
 
 **`chatts_caption` 模型回答中文翻译**
 
-```text
 1. 是。报告的整体噪声标准差约为 10.50，远大于 1.0 阈值，因此该 CPU 利用率时间序列应标记为“Active”。
-```
 
 **`chatts_caption_plus` 模型回答原文**
 
-```text
 1. Yes — this time series should be marked as **Active** because the overall noise level is high, with a reported standard deviation of around **10.50**, which is much larger than the threshold of **1.0**.
-```
 
 **`chatts_caption_plus` 模型回答中文翻译**
 
-```text
 1. 是——该时间序列应标记为 **Active**，因为整体噪声水平很高，报告的标准差约为 **10.50**，远大于 **1.0** 的阈值。
-```
 
 **`chatts_wrong_caption` 模型回答原文**
 
-```text
 1. Yes — the time series should be marked as **Active** because the overall noise standard deviation is about **2.51**, which is greater than the threshold **1.0**.
-```
 
 **`chatts_wrong_caption` 模型回答中文翻译**
 
-```text
 1. 是——该时间序列应标记为 **Active**，因为整体噪声标准差约为 **2.51**，大于阈值 **1.0**。
-```
 
 
 **Case 分析**
@@ -2463,23 +1999,19 @@ The time series shows a flat trend with low volatility and medium strength seaso
 - 数值摘要：n=256, min=30.482, max=51.6, mean=44.588, std=2.1897, slope=-0.0019699, argmax=129, argmin=128
 - Dataset-A 标注属性原文：
 
-```json
 [
   "No, it does not suggest an anomaly. Although there are local fluctuations around point 127 with an amplitude of 15.79, this amplitude does not exceed three times the noise standard deviation (2.372 * 3 = 7.116). Therefore, the observed behavior remains within expected limits based on the noise characteristics.",
   "No, the current behavior should not be flagged as unusual. Although there is noticeable noise with a particularly small downward spike, the time series does not show three small fluctuations exceeding the specified threshold within the defined period of 150 data points. Hence, the behavior remains within expected operational variance.",
   "No, the data should not be considered suspicious. Despite the high noise level with a standard deviation of 2.372, the CPU usage trend remains constant at 44.7 throughout, with no significant deviations in the average values over extended intervals. This stability aligns with expected normal operation behavior."
 ]
-```
 
 - Dataset-A 标注属性中文翻译：
 
-```text
 [
   "不，它并不表明存在异常。尽管在点 127 附近存在幅度为 15.79 的局部波动，但该幅度并未超过噪声标准差的三倍（2.372 * 3 = 7.116）。因此，基于噪声特征，观察到的行为仍处于预期范围内。",
   "不，当前行为不应被标记为异常。尽管存在明显噪声，并且有一个特别小的向下尖峰，但该时间序列在 150 个数据点的规定时间段内并未显示出三次超过指定阈值的小幅波动。因此，该行为仍处于预期的运行方差范围内。",
   "不，该数据不应被视为可疑。尽管噪声水平较高，标准差为 2.372，但 CPU 使用率趋势始终保持在 44.7，长期区间内平均值没有显著偏差。这种稳定性符合预期的正常运行行为。"
 ]
-```
 
 ![dataset_a::0105](https://raw.githubusercontent.com/Ringhu/LTSGen/balanced-case-study-zh-20260511/docs/case-studies/20260511-balanced-zh/figures/dataset_a_0105.png)
 
@@ -2487,72 +2019,56 @@ The time series shows a flat trend with low volatility and medium strength seaso
 
 **题干原文**
 
-```text
-You are a time series analysis expert. This time series is "CPU Usage" from AWS API servers with length of 256: <ts><ts/>, please analyze the time series features and answer the following questions:
+You are a time series analysis expert. This time series is "CPU Usage" from AWS API servers with length of 256: &lt;ts&gt;&lt;ts/&gt;, please analyze the time series features and answer the following questions:
 1. Given that CPU usage typically remains stable with minimal fluctuations, and it's considered abnormal if there's a fluctuation greater than three times the standard deviation of the noise, does the current observed behavior suggest an anomaly? Answer Yes or No and explain the reason.
 2. In scenarios where CPU usage is generally stable, frequent small fluctuations might be overlooked unless they follow a specific pattern or exceed a combined threshold of three small fluctuations within a period of 150 data points. Considering the time series provided for CPU usage, should we flag the current behavior as unusual due to potential accumulative anomaly patterns? Answer Yes or No and explain the reason.
 3. Considering that a stable CPU usage pattern with high noise suggests normal operation, and sudden deviations in average values over significant intervals are considered suspicious if they deviate more than twice the noise standard deviation, should the current time series data indicate a suspicious deviation in operational behavior based on the provided noise levels? Answer Yes or No and explain the reason.
 Now, based on the above questions, please strictly follow the output format requirements and provide the answers. Each line corresponds to an answer to a question, formatted as:1. Strictly formatted answer 1
-```
 
 **题干中文翻译**
 
-```text
-你是时间序列分析专家。该时间序列是来自 AWS API 服务器、长度为 256 的“CPU Usage”：<ts><ts/>，请分析该时间序列特征并回答以下问题：
+你是时间序列分析专家。该时间序列是来自 AWS API 服务器、长度为 256 的“CPU Usage”：&lt;ts&gt;&lt;ts/&gt;，请分析该时间序列特征并回答以下问题：
 1. 鉴于 CPU 使用率通常保持稳定且波动很小，并且如果波动大于噪声标准差的三倍则被认为是异常，那么当前观测到的行为是否表明存在异常？回答 Yes 或 No，并解释原因。
 2. 在 CPU 使用率通常稳定的场景中，频繁的小幅波动可能会被忽略，除非它们遵循特定模式，或在 150 个数据点的期间内超过三次小幅波动的组合阈值。考虑所提供的 CPU 使用率时间序列，是否应由于潜在的累积异常模式而将当前行为标记为异常？回答 Yes 或 No，并解释原因。
 3. 考虑到具有高噪声的稳定 CPU 使用率模式表明运行正常，并且如果显著区间内平均值的突然偏离超过噪声标准差的两倍，则被认为可疑，那么基于所提供的噪声水平，当前时间序列数据是否应表明运行行为存在可疑偏离？回答 Yes 或 No，并解释原因。
 现在，请基于上述问题，严格遵循输出格式要求并给出答案。每一行对应一个问题的答案，格式为：1. 严格格式化的答案 1
-```
 - 选项：
 无固定选项；题目要求按指定格式直接生成答案。
 - 正确答案原文：
 
-```text
 1. No, it does not suggest an anomaly. Although there are local fluctuations around point 127 with an amplitude of 15.79, this amplitude does not exceed three times the noise standard deviation (2.372 * 3 = 7.116). Therefore, the observed behavior remains within expected limits based on the noise characteristics.
 2. No, the current behavior should not be flagged as unusual. Although there is noticeable noise with a particularly small downward spike, the time series does not show three small fluctuations exceeding the specified threshold within the defined period of 150 data points. Hence, the behavior remains within expected operational variance.
 3. No, the data should not be considered suspicious. Despite the high noise level with a standard deviation of 2.372, the CPU usage trend remains constant at 44.7 throughout, with no significant deviations in the average values over extended intervals. This stability aligns with expected normal operation behavior.
-```
 
 - 正确答案中文翻译：
 
-```text
 1. 否，它并不表明存在异常。尽管在点 127 附近存在幅度为 15.79 的局部波动，但该幅度未超过噪声标准差的三倍（2.372 * 3 = 7.116）。因此，根据噪声特征，观察到的行为仍处于预期范围内。
 2. 否，当前行为不应被标记为异常。尽管存在明显噪声，并伴有一个特别小的向下尖峰，但该时间序列在定义的 150 个数据点期间内，并未显示出三次超过指定阈值的小幅波动。因此，该行为仍处于预期的运行方差范围内。
 3. 否，该数据不应被视为可疑。尽管噪声水平较高，标准差为 2.372，但 CPU 使用率趋势始终保持在 44.7，且在较长区间内的平均值没有显著偏差。这种稳定性符合预期的正常运行行为。
-```
 
 **生成的 caption 与中文翻译**
 
 **OpenTSLM caption 原文**
 
-```text
 The time series shows a flat trend with low volatility and medium strength seasonality every 100 time units. Early in the window, there is a significant upward phase followed by a sharp downward movement, with a peak that stands out as about 2.1 standard deviations above the mean. The data exhibits strong positive correlation with temperature and moderate positive correlation with humidity.
-```
 
 **OpenTSLM caption 中文翻译**
 
-```text
 该时间序列呈现平稳趋势，波动性低，并且每 100 个时间单位具有中等强度的季节性。窗口早期出现显著上升阶段，随后急剧下降，其中一个峰值明显突出，约高于均值 2.1 个标准差。数据与温度呈强正相关，与湿度呈中等正相关。
-```
 
 **ChatTS caption 原文**
 
-```text
 1. Noisy with std around 3.12.
 2. No periodic fluctuations observed, showing no periodic fluctuation.
 3. Keep steady from 44.92 to 44.92.
 4. A downward spike with an amplitude of 14.21 occurred between point 128 and point 130, with the time series value rapidly falling from around 44.92 to around 30.71 and then quickly rising back to around 44.92, forming a downward spike.
-```
 
 **ChatTS caption 中文翻译**
 
-```text
 1. 有噪声，标准差约为 3.12。
 2. 未观察到周期性波动，显示无周期性波动。
 3. 从 44.92 到 44.92 保持稳定。
 4. 在点 128 和点 130 之间出现了一个幅度为 14.21 的向下尖峰，时间序列值从约 44.92 快速下降到约 30.71，然后迅速回升到约 44.92，形成一个向下尖峰。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -2573,171 +2089,131 @@ The time series shows a flat trend with low volatility and medium strength seaso
 
 **`opentslm_meta_only` 模型回答原文**
 
-```text
 1. No — with no actual CPU usage values provided, there is no evidence of a fluctuation exceeding three times the noise standard deviation, so an anomaly cannot be confirmed from the column name alone.
 2. No — there is no time series data to evaluate for repeated small fluctuations or any accumulative pattern over 150 points, so this cannot be flagged as unusual based on the available information.
 3. No — without observed values or estimated noise levels from the series, there is no basis to identify a sustained deviation in the average CPU usage that exceeds twice the noise standard deviation.
-```
 
 **`opentslm_meta_only` 模型回答中文翻译**
 
-```text
 1. 否——由于未提供实际的 CPU 使用率数值，没有证据表明存在超过噪声标准差三倍的波动，因此不能仅凭列名确认异常。
 2. 否——没有可用于评估重复小幅波动或 150 个点内任何累积模式的时间序列数据，因此基于现有信息不能将其标记为异常。
 3. 否——如果没有序列中的观测值或估计噪声水平，就没有依据识别平均 CPU 使用率中超过噪声标准差两倍的持续偏离。
-```
 
 **`opentslm_numbers` 模型回答原文**
 
-```text
 1. Yes — the series is mostly stable around the mid-40s, but it contains a clear outlier-like dip/spike pair (notably around 30.48 and 51.6), which is a fluctuation larger than what would typically be expected from normal noise.
 2. Yes — although many points are small fluctuations, the series includes repeated local deviations and at least one notable abnormal segment, so the accumulated pattern is unusual enough to flag.
 3. Yes — the overall level is mostly stable, but the abrupt deviation around the low-30s and subsequent rebound is large relative to the normal noise level, making it suspicious by the “more than twice the noise standard deviation” criterion.
-```
 
 **`opentslm_numbers` 模型回答中文翻译**
 
-```text
 1. 是——该序列大多稳定在 40 多的中段附近，但包含一对明显类似离群值的下跌/峰值（尤其是在 30.48 和 51.6 附近），这是一次大于通常正常噪声预期范围的波动。
 2. 是——尽管许多点只是小幅波动，但该序列包含反复出现的局部偏差，并且至少有一个明显的异常片段，因此累积模式异常到足以被标记。
 3. 是——整体水平大多稳定，但在 30 多的低段附近出现的突然偏离以及随后的反弹，相对于正常噪声水平来说幅度较大，因此按照“超过噪声标准差两倍”的标准来看是可疑的。
-```
 
 **`opentslm_caption` 模型回答原文**
 
-```text
 1. Yes — the series is mostly stable, but it contains a notable upward spike followed by a sharp drop, with a peak around 2.1 standard deviations above the mean. While this is below the “greater than 3σ” threshold, the described abrupt deviation is still unusual relative to the otherwise low-volatility pattern.
 
 2. No — there is no clear indication of repeated small fluctuations accumulating into a three-fluctuation pattern within 150 points. The dominant behavior is a single short-lived spike and reversal, not a sustained sequence of small anomalies.
 
 3. Yes — the data shows a sudden deviation in the average level during the early part of the window, and the peak is well above the normal baseline. Even though the spike is not above 2σ by a large margin, the abrupt change in behavior makes it suspicious for operational deviation.
-```
 
 **`opentslm_caption` 模型回答中文翻译**
 
-```text
 1. 是——该序列总体上大致稳定，但包含一次显著的向上尖峰，随后出现急剧下降，峰值约高于均值 2.1 个标准差。虽然这低于“大于 3σ”的阈值，但相对于其余部分低波动的模式而言，所描述的突发偏离仍然不寻常。
 
 2. 否——没有明确迹象表明反复的小幅波动在 150 个点内累积成三次波动模式。主要行为是一次短暂的尖峰及回落，而不是一系列持续的小异常。
 
 3. 是——数据显示窗口早期的平均水平出现突然偏离，且峰值明显高于正常基线。尽管该尖峰并未大幅超过 2σ，但这种行为上的突变使其在运行偏离方面显得可疑。
-```
 
 **`opentslm_caption_plus` 模型回答原文**
 
-```text
 1. No — the series is mostly stable with low-volatility fluctuations, and the few spikes/dips visible do not clearly exceed a sustained 3σ noise threshold in a way that indicates a strong anomaly.
 2. No — although there are some isolated irregular points, the pattern does not show repeated accumulative fluctuations meeting the “three small fluctuations within 150 points” criterion strongly enough to flag it as unusual.
 3. No — the average level remains broadly stable overall, and there is not enough evidence of a significant interval-level deviation beyond 2× the noise standard deviation to classify the behavior as suspicious.
-```
 
 **`opentslm_caption_plus` 模型回答中文翻译**
 
-```text
 1. 否——该序列大体稳定，仅有低波动幅度的起伏，可见的少数尖峰/下探并未明显超过持续的 3σ 噪声阈值，因此不足以表明存在强异常。
 2. 否——尽管存在一些孤立的不规则点，但该模式并未表现出足够明显的、符合“150 个点内出现三次小幅波动”标准的重复累积波动，因此不足以将其标记为异常。
 3. 否——整体平均水平总体保持稳定，且没有足够证据显示存在超过 2× 噪声标准差的显著区间级偏差，因此不足以将该行为归类为可疑。
-```
 
 **`opentslm_wrong_caption` 模型回答原文**
 
-```text
 1. No — the series is mostly flat with low volatility, and the described peak/valley are around 1.6–1.7 standard deviations, which is below the “greater than 3× noise standard deviation” anomaly threshold.
 
 2. No — although there is a clear seasonal pattern and some directional movement, the description does not indicate repeated small fluctuations accumulating into three distinct small anomalies within 150 points, so it should not be flagged as an accumulative anomaly pattern.
 
 3. No — the behavior does not show a sustained suspicious shift in the average that exceeds twice the noise standard deviation; it remains largely stable with only moderate deviations, which is consistent with normal operation.
-```
 
 **`opentslm_wrong_caption` 模型回答中文翻译**
 
-```text
 1. 否——该序列大部分较为平坦且波动性较低，所描述的峰值/谷值约为 1.6–1.7 个标准差，低于“超过 3× 噪声标准差”的异常阈值。
 
 2. 否——尽管存在明显的季节性模式和一定的方向性移动，但描述并未表明在 150 个点内有反复的小幅波动累积成三个不同的小异常，因此不应标记为累积性异常模式。
 
 3. 否——该行为未显示出平均值存在持续的可疑偏移且超过两倍噪声标准差；它整体上仍较为稳定，仅有中等程度的偏离，这与正常运行一致。
-```
 
 **`chatts_meta_only` 模型回答原文**
 
-```text
 1. No — with no actual time series values provided, there is no evidence of a fluctuation exceeding three times the noise standard deviation.
 2. No — without observed data points or a visible pattern of repeated small fluctuations, there is no basis to flag an accumulative anomaly over 150 points.
 3. No — based on the column name alone and no numerical series or noise estimates, there is no evidence of a sustained mean shift exceeding twice the noise standard deviation.
-```
 
 **`chatts_meta_only` 模型回答中文翻译**
 
-```text
 1. 否——未提供实际时间序列数值，因此没有证据表明存在超过噪声标准差三倍的波动。
 2. 否——没有观测数据点或可见的重复小幅波动模式，因此没有依据标记 150 个点上的累积异常。
 3. 否——仅根据列名且没有数值序列或噪声估计，没有证据表明存在超过噪声标准差两倍的持续均值偏移。
-```
 
 **`chatts_numbers` 模型回答原文**
 
-```text
 1. Yes — there is a clear spike/drop pattern, most notably the dip to 30.48 followed by a jump to 51.6, which is larger than a typical 3× noise-scale fluctuation for an otherwise stable CPU series.
 2. Yes — although most values are stable, the series contains a noticeable abnormal local burst around the sharp dip-and-rebound segment, which could satisfy an accumulative anomaly pattern over a short window.
 3. Yes — the sudden deviation in average level around the outlier region is suspicious because it departs from the otherwise tight baseline by more than a normal 2× noise-standard-deviation range.
-```
 
 **`chatts_numbers` 模型回答中文翻译**
 
-```text
 1. 是——存在明显的尖峰/下降模式，最显著的是降至 30.48 后又跃升至 51.6，这比原本稳定的 CPU 序列中典型的 3× 噪声尺度波动更大。
 2. 是——尽管大多数数值较为稳定，但该序列在急剧下降并反弹的片段附近包含一个明显的异常局部突增，这可能在短窗口内满足累积异常模式。
 3. 是——离群区域附近平均水平的突然偏离值得怀疑，因为它偏离了原本紧密的基线，幅度超过正常的 2× 噪声标准差范围。
-```
 
 **`chatts_caption` 模型回答原文**
 
-```text
 1. Yes — the downward spike drops from about 44.92 to 30.71, an amplitude of 14.21, which is greater than three times the noise standard deviation (3 × 3.12 = 9.36), so it qualifies as an anomaly.
 2. No — the series is mostly steady with only one isolated spike, not a pattern of frequent small fluctuations, and it does not show three small fluctuations accumulating within 150 points.
 3. Yes — although the overall CPU usage is stable, the sudden drop is a clear deviation from the usual average level, and its magnitude exceeds twice the noise standard deviation (2 × 3.12 = 6.24), making it suspicious.
-```
 
 **`chatts_caption` 模型回答中文翻译**
 
-```text
 1. 是——向下的尖峰从约 44.92 降至 30.71，幅度为 14.21，大于三倍噪声标准差（3 × 3.12 = 9.36），因此符合异常条件。
 2. 否——该序列总体较为稳定，只有一个孤立的尖峰，并非频繁小幅波动的模式，也没有显示出在 150 个点内累积三次小幅波动。
 3. 是——尽管整体 CPU 使用率稳定，但突然下降明显偏离了通常的平均水平，且其幅度超过两倍噪声标准差（2 × 3.12 = 6.24），因此可疑。
-```
 
 **`chatts_caption_plus` 模型回答原文**
 
-```text
 1. Yes — the series is mostly stable around 44.9, but it contains a sharp downward spike to about 30.5 and a rebound to above 51, which is far greater than three times the noise standard deviation (~9.36), so this is anomalous.
 2. No — although there are small noisy fluctuations, the main abnormal event is a single sharp spike rather than a repeated accumulative pattern of three small fluctuations within 150 points, so this does not fit the described cumulative anomaly rule.
 3. Yes — the abrupt deviation around the spike changes the local average far more than twice the noise standard deviation (~6.24), so it is suspicious and indicates abnormal operational behavior.
-```
 
 **`chatts_caption_plus` 模型回答中文翻译**
 
-```text
 1. 是——该序列大部分时间在 44.9 附近保持稳定，但包含一次急剧向下的尖峰，降至约 30.5，随后反弹至 51 以上，这远大于噪声标准差的三倍（~9.36），因此这是异常的。
 2. 否——尽管存在小幅噪声波动，但主要异常事件是单次急剧尖峰，而不是在 150 个点内三次小幅波动的重复累积模式，因此这不符合所描述的累积异常规则。
 3. 是——尖峰附近的突然偏离使局部平均值变化远超过噪声标准差的两倍（~6.24），因此它是可疑的，并表明存在异常运行行为。
-```
 
 **`chatts_wrong_caption` 模型回答原文**
 
-```text
 1. Yes — the series is mostly stable with almost no noise, but there is a clear upward spike around point 226 with amplitude 4.28, which is likely greater than three times the noise standard deviation and therefore anomalous.
 2. No — although there is a noticeable spike, the description does not indicate repeated small fluctuations or an accumulative pattern over 150 points; it appears to be a single isolated event rather than a series of small anomalies.
 3. Yes — the CPU usage is generally steady, and the sudden spike represents a significant deviation from the average behavior, exceeding what would be expected from the low noise level and thus looks suspicious.
-```
 
 **`chatts_wrong_caption` 模型回答中文翻译**
 
-```text
 1. 是 — 该序列大体稳定，几乎没有噪声，但在点 226 附近有一个明显的向上尖峰，幅度为 4.28，很可能大于噪声标准差的三倍，因此属于异常。
 2. 否 — 尽管存在一个明显的尖峰，但描述并未表明在 150 个点范围内存在反复的小幅波动或累积模式；它看起来是单个孤立事件，而不是一系列小异常。
 3. 是 — CPU 使用率总体稳定，突然出现的尖峰表示相对于平均行为的显著偏离，超过了低噪声水平下的预期范围，因此看起来可疑。
-```
 
 
 **Case 分析**
@@ -2761,15 +2237,11 @@ The time series shows a flat trend with low volatility and medium strength seaso
 
 **题干原文**
 
-```text
-You are a time series analysis expert. In the U.S. macroeconomy, there are two quarterly metrics from 1947:Q1 to 2016:Q2: 1) Real gross domestic product (GDP) per capita <ts><ts/>, 2) Real personal consumption (nondurables plus services) <ts><ts/>. Both series are indexed so the consumption series passes through the GDP series. The Permanent Income Hypothesis (PIH) posits that household consumption depends primarily on perceived permanent income (trend GDP), while transitory income changes have little effect on consumption. Based on the association between the two series in the early period (1947:Q1–1984:Q1) versus the late period (1984:Q2–2016:Q2), which causal conclusion about GDP fluctuations is supported?
-```
+You are a time series analysis expert. In the U.S. macroeconomy, there are two quarterly metrics from 1947:Q1 to 2016:Q2: 1) Real gross domestic product (GDP) per capita &lt;ts&gt;&lt;ts/&gt;, 2) Real personal consumption (nondurables plus services) &lt;ts&gt;&lt;ts/&gt;. Both series are indexed so the consumption series passes through the GDP series. The Permanent Income Hypothesis (PIH) posits that household consumption depends primarily on perceived permanent income (trend GDP), while transitory income changes have little effect on consumption. Based on the association between the two series in the early period (1947:Q1–1984:Q1) versus the late period (1984:Q2–2016:Q2), which causal conclusion about GDP fluctuations is supported?
 
 **题干中文翻译**
 
-```text
-你是时间序列分析专家。在美国宏观经济中，有两个从 1947:Q1 到 2016:Q2 的季度指标：1) 实际人均国内生产总值（GDP）<ts><ts/>，2) 实际个人消费（非耐用品加服务）<ts><ts/>。两个序列都经过指数化处理，使得消费序列穿过 GDP 序列。永久收入假说（PIH）认为，家庭消费主要取决于感知到的永久收入（趋势 GDP），而暂时性收入变化对消费影响很小。基于早期阶段（1947:Q1–1984:Q1）与晚期阶段（1984:Q2–2016:Q2）中这两个序列之间的关联，关于 GDP 波动支持哪一种因果结论？
-```
+你是时间序列分析专家。在美国宏观经济中，有两个从 1947:Q1 到 2016:Q2 的季度指标：1) 实际人均国内生产总值（GDP）&lt;ts&gt;&lt;ts/&gt;，2) 实际个人消费（非耐用品加服务）&lt;ts&gt;&lt;ts/&gt;。两个序列都经过指数化处理，使得消费序列穿过 GDP 序列。永久收入假说（PIH）认为，家庭消费主要取决于感知到的永久收入（趋势 GDP），而暂时性收入变化对消费影响很小。基于早期阶段（1947:Q1–1984:Q1）与晚期阶段（1984:Q2–2016:Q2）中这两个序列之间的关联，关于 GDP 波动支持哪一种因果结论？
 - 选项：
 - A: Early-period GDP fluctuations were driven more by transitory factors, while late-period fluctuations were driven more by permanent factors.
   中文：早期阶段的 GDP 波动更多由暂时性因素驱动，而后期阶段的波动更多由永久性因素驱动。
@@ -2783,31 +2255,23 @@ You are a time series analysis expert. In the U.S. macroeconomy, there are two q
 
 **标准解释原文**
 
-```text
 To solve this, first observe the association between GDP and consumption across periods: the data show GDP deviates more from consumption in the early period (1947:Q1–1984:Q1) but aligns closely with consumption in the late period (1984:Q2–2016:Q2). Per the PIH, consumption reflects permanent income (trend GDP), so deviations of GDP from consumption signal transitory income changes. Early-period deviations mean transitory factors dominated fluctuations, while late-period alignment means permanent factors (trend shifts) drove most GDP movement. This directly supports option A.
-```
 
 **标准解释中文翻译**
 
-```text
 为了解决这个问题，首先观察各时期 GDP 与消费之间的关联：数据显示，在早期（1947:Q1–1984:Q1），GDP 相对于消费的偏离更大，而在后期（1984:Q2–2016:Q2），GDP 与消费高度一致。根据 PIH，消费反映永久收入（趋势 GDP），因此 GDP 相对于消费的偏离表明暂时性收入变化。早期的偏离意味着暂时性因素主导了波动，而后期的一致性意味着永久性因素（趋势变化）驱动了大部分 GDP 变动。这直接支持选项 A。
-```
 
 **生成的 caption 与中文翻译**
 
 **生成 caption 样本 1 原文**
 
-```text
 【序列 1：real gross domestic product per capita】变量组包括 real gross domestic product per capita, real gross domestic product per capita+real personl consumption。下文重点描述 real gross domestic product per capita，并分析其与其它变量的联动。 从全局走势看，时间跨度为 1947-01-01–2025-01-01，real gross domestic product per capita 首尾分别为 98.00 和 442.4。 细分来看：1947-01-01–1950-10-01，real gross domestic product per capita 呈稳步上行态势，由 98.00 变至 107.7。 随后，1950-10-01–1965-10-01，涨势未减，继续抬升至 152.0。 之后，1965-10-01–1972-10-01，保持上涨态势，由 152.0 走到 180.3。 紧接着，1972-10-01–1988-04-01，保持上涨态势，由 180.3 走到 249.3。 紧接着，1988-04-01–2025-01-01，保持上涨态势，由 249.3 走到 442.4。 值得注意的极值点有：几个显著高位出现在：2019-10-01≈407.22；2021-10-01≈423.71；2024-10-01≈443.51。 几个显著低位出现在：1947-07-01≈96.66；1949-04-01≈97.29；1951-10-01≈111.67。 从变量联动角度看：real gross domestic product per capita+real personl consumption 和 real gross domestic product per capita 的变化多半同向。
 【序列 2：real gross domestic product per capita+real personl consumption】变量组包括 real gross domestic product per capita、real gross domestic product per capita+real personl consumption。下文重点描述 real gross domestic product per capita+real personl consumption，并分析其与其它变量的联动。 总体而言，时间跨度为 1947-01-01–2025-01-01，real gross domestic product per capita+real personl consumption 首尾分别为 100.0 和 437.3。 分阶段来看：1947-01-01–1972-07-01，real gross domestic product per capita+real personl consumption 呈明显上涨态势，由 100.0 变至 179.4。 紧接着，1972-07-01–1983-04-01，延续了上行趋势，从 179.4 进一步升至 218.1。 接着，1983-04-01–2005-01-01，保持上涨态势，由 218.1 走到 344.9。 紧接着，2005-01-01–2025-01-01，保持上涨态势，由 344.9 走到 437.3。 值得注意的极值点有：几个显著高位出现在：2007-01-01≈357.00；2008-04-01≈359.50；2019-10-01≈397.20。 几个显著低位出现在：1947-10-01≈99.40；1949-07-01≈100.30；1950-10-01≈103.50。 关于变量间的相关性：real gross domestic product per capita 和 real gross domestic product per capita+real personl consumption 的变化多半同向。 此外，未观察到明显的周期性规律。 临近 2025-01-01，real gross domestic product per capita+real personl consumption 仍在震荡，最终落在 437.30 左右。
-```
 
 **生成 caption 样本 1 中文翻译**
 
-```text
 【序列 1：real gross domestic product per capita】变量组包括 real gross domestic product per capita, real gross domestic product per capita+real personl consumption。下文重点描述 real gross domestic product per capita，并分析其与其它变量的联动。 从全局走势看，时间跨度为 1947-01-01–2025-01-01，real gross domestic product per capita 首尾分别为 98.00 和 442.4。 细分来看：1947-01-01–1950-10-01，real gross domestic product per capita 呈稳步上行态势，由 98.00 变至 107.7。 随后，1950-10-01–1965-10-01，涨势未减，继续抬升至 152.0。 之后，1965-10-01–1972-10-01，保持上涨态势，由 152.0 走到 180.3。 紧接着，1972-10-01–1988-04-01，保持上涨态势，由 180.3 走到 249.3。 紧接着，1988-04-01–2025-01-01，保持上涨态势，由 249.3 走到 442.4。 值得注意的极值点有：几个显著高位出现在：2019-10-01≈407.22；2021-10-01≈423.71；2024-10-01≈443.51。 几个显著低位出现在：1947-07-01≈96.66；1949-04-01≈97.29；1951-10-01≈111.67。 从变量联动角度看：real gross domestic product per capita+real personl consumption 和 real gross domestic product per capita 的变化多半同向。
 【序列 2：real gross domestic product per capita+real personl consumption】变量组包括 real gross domestic product per capita、real gross domestic product per capita+real personl consumption。下文重点描述 real gross domestic product per capita+real personl consumption，并分析其与其它变量的联动。 总体而言，时间跨度为 1947-01-01–2025-01-01，real gross domestic product per capita+real personl consumption 首尾分别为 100.0 和 437.3。 分阶段来看：1947-01-01–1972-07-01，real gross domestic product per capita+real personl consumption 呈明显上涨态势，由 100.0 变至 179.4。 紧接着，1972-07-01–1983-04-01，延续了上行趋势，从 179.4 进一步升至 218.1。 接着，1983-04-01–2005-01-01，保持上涨态势，由 218.1 走到 344.9。 紧接着，2005-01-01–2025-01-01，保持上涨态势，由 344.9 走到 437.3。 值得注意的极值点有：几个显著高位出现在：2007-01-01≈357.00；2008-04-01≈359.50；2019-10-01≈397.20。 几个显著低位出现在：1947-10-01≈99.40；1949-07-01≈100.30；1950-10-01≈103.50。 关于变量间的相关性：real gross domestic product per capita 和 real gross domestic product per capita+real personl consumption 的变化多半同向。 此外，未观察到明显的周期性规律。 临近 2025-01-01，real gross domestic product per capita+real personl consumption 仍在震荡，最终落在 437.30 左右。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -2834,15 +2298,11 @@ To solve this, first observe the association between GDP and consumption across 
 
 **题干原文**
 
-```text
-You are a time series analysis expert. This is a metric called Inflation-Adjusted IRA Account Balances (calculated as (IRA dollar value / Consumer Price Index, 1982-1984=100) * 100) collected from the Board of Governors of the Federal Reserve System <ts><ts/>. The data are semiannual, spanning from January 1984 to July 2023. In 2020, the COVID-19 pandemic reduced consumer spending and led to temporary IRA tax benefits, both of which increased IRA balances. Suppose the pandemic had not occurred, and IRA balances had continued growing at the average semiannual rate observed from July 2018 to July 2019. What would the approximate IRA balance have been in January 2021, and how does this counterfactual value compare to the actual January 2021 balance?
-```
+You are a time series analysis expert. This is a metric called Inflation-Adjusted IRA Account Balances (calculated as (IRA dollar value / Consumer Price Index, 1982-1984=100) * 100) collected from the Board of Governors of the Federal Reserve System &lt;ts&gt;&lt;ts/&gt;. The data are semiannual, spanning from January 1984 to July 2023. In 2020, the COVID-19 pandemic reduced consumer spending and led to temporary IRA tax benefits, both of which increased IRA balances. Suppose the pandemic had not occurred, and IRA balances had continued growing at the average semiannual rate observed from July 2018 to July 2019. What would the approximate IRA balance have been in January 2021, and how does this counterfactual value compare to the actual January 2021 balance?
 
 **题干中文翻译**
 
-```text
-你是一位时间序列分析专家。这是一个名为通胀调整后的 IRA 账户余额的指标（计算方式为（IRA 美元价值 / 消费者价格指数，1982-1984=100）* 100），数据来自联邦储备系统理事会 <ts><ts/>。该数据为半年频率，时间范围为 1984 年 1 月至 2023 年 7 月。2020 年，COVID-19 疫情减少了消费者支出，并导致了临时性的 IRA 税收优惠，这两者都增加了 IRA 余额。假设疫情没有发生，且 IRA 余额继续按照 2018 年 7 月至 2019 年 7 月期间观察到的平均半年增长率增长，那么 2021 年 1 月的 IRA 余额大约会是多少？这一反事实值与 2021 年 1 月的实际余额相比如何？
-```
+你是一位时间序列分析专家。这是一个名为通胀调整后的 IRA 账户余额的指标（计算方式为（IRA 美元价值 / 消费者价格指数，1982-1984=100）* 100），数据来自联邦储备系统理事会 &lt;ts&gt;&lt;ts/&gt;。该数据为半年频率，时间范围为 1984 年 1 月至 2023 年 7 月。2020 年，COVID-19 疫情减少了消费者支出，并导致了临时性的 IRA 税收优惠，这两者都增加了 IRA 余额。假设疫情没有发生，且 IRA 余额继续按照 2018 年 7 月至 2019 年 7 月期间观察到的平均半年增长率增长，那么 2021 年 1 月的 IRA 余额大约会是多少？这一反事实值与 2021 年 1 月的实际余额相比如何？
 - 选项：
 - A: Approximately $1,825 billion, which is about $407 billion lower than the actual value
   中文：约 1,825 十亿美元，比实际值低约 407 十亿美元
@@ -2856,29 +2316,21 @@ You are a time series analysis expert. This is a metric called Inflation-Adjuste
 
 **标准解释原文**
 
-```text
 First, calculate the pre-pandemic semiannual growth rate: the IRA balance was $1,692.68 billion in July 2018 and $1,745.67 billion in July 2019, a $52.99 billion increase over 2 periods. The average semiannual growth is $52.99 / 2 = $26.50 billion. Next, extrapolate this trend from July 2019 ($1,745.67 billion) to January 2021 (3 periods later): $1,745.67 + ($26.50 * 3) = $1,825.17 billion. The actual January 2021 balance is $2,232.06 billion. The counterfactual value is ~$407 billion lower because the pandemic’s reduced spending (boosting savings) and temporary tax benefits—factors absent in the hypothetical scenario—drove faster growth than the pre-2019 trend. This confirms the counterfactual balance would be far lower than actual.
-```
 
 **标准解释中文翻译**
 
-```text
 首先，计算疫情前的半年度增长率：2018年7月的 IRA 余额为 1,692.68 十亿美元，2019年7月为 1,745.67 十亿美元，在 2 个期间内增加了 52.99 十亿美元。平均半年度增长为 52.99 / 2 = 26.50 十亿美元。接下来，将这一趋势从2019年7月（1,745.67 十亿美元）外推至2021年1月（3 个期间之后）：1,745.67 + (26.50 * 3) = 1,825.17 十亿美元。2021年1月的实际余额为 2,232.06 十亿美元。反事实值低约 407 十亿美元，因为疫情导致支出减少（推高储蓄）以及临时税收优惠——这些因素在假设情景中不存在——推动了比 2019 年前趋势更快的增长。这证实了反事实余额会远低于实际余额。
-```
 
 **生成的 caption 与中文翻译**
 
 **生成 caption 样本 1 原文**
 
-```text
 【序列 1：(IRA/CUUS0000SA0)*100, (Bil. of $/Index 1982-1984=100)*100, Semiannual】该窗口仅包含变量 (IRA/CUUS0000SA0)*100, (Bil. of $/Index 1982-1984=100)*100, Semiannual。以下主要描述 (IRA/CUUS0000SA0)*100, (Bil. of $/Index 1982-1984=100)*100, Semiannual 的变化。 整体来看，时间跨度为 1984-01-01–2023-07-01，(IRA/CUUS0000SA0)*100, (Bil. of $/Index 1982-1984=100)*100, Semiannual 首尾分别为 536.2 和 1942.9。 细分来看：在 1984-01-01–1997-01-01 期间，(IRA/CUUS0000SA0)*100, (Bil. of $/Index 1982-1984=100)*100, Semiannual 持续抬升，从 536.2 到 1252.2。 紧接着，1997-07-01–2010-01-01，保持上涨态势，由 1240.4 走到 1568.7。 之后，2010-07-01–2023-07-01，保持上涨态势，由 1569.0 走到 1942.9。 局部波动方面：几个显著高位出现在：2017-01-01≈1771.05；2020-07-01≈2232.06。 末段，(IRA/CUUS0000SA0)*100, (Bil. of $/Index 1982-1984=100)*100, Semiannual 收于 1942.92 附近，最后时刻在 [1542.32, 2232.06] 区间内波动。
-```
 
 **生成 caption 样本 1 中文翻译**
 
-```text
 【序列 1：(IRA/CUUS0000SA0)*100, (Bil. of $/Index 1982-1984=100)*100, Semiannual】该窗口仅包含变量 (IRA/CUUS0000SA0)*100, (Bil. of $/Index 1982-1984=100)*100, Semiannual。以下主要描述 (IRA/CUUS0000SA0)*100, (Bil. of $/Index 1982-1984=100)*100, Semiannual 的变化。 整体来看，时间跨度为 1984-01-01–2023-07-01，(IRA/CUUS0000SA0)*100, (Bil. of $/Index 1982-1984=100)*100, Semiannual 首尾分别为 536.2 和 1942.9。 细分来看：在 1984-01-01–1997-01-01 期间，(IRA/CUUS0000SA0)*100, (Bil. of $/Index 1982-1984=100)*100, Semiannual 持续抬升，从 536.2 到 1252.2。 紧接着，1997-07-01–2010-01-01，保持上涨态势，由 1240.4 走到 1568.7。 之后，2010-07-01–2023-07-01，保持上涨态势，由 1569.0 走到 1942.9。 局部波动方面：几个显著高位出现在：2017-01-01≈1771.05；2020-07-01≈2232.06。 末段，(IRA/CUUS0000SA0)*100, (Bil. of $/Index 1982-1984=100)*100, Semiannual 收于 1942.92 附近，最后时刻在 [1542.32, 2232.06] 区间内波动。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -2905,15 +2357,11 @@ First, calculate the pre-pandemic semiannual growth rate: the IRA balance was $1
 
 **题干原文**
 
-```text
-You are a time series analysis expert. In a labor market, there are 2 metrics: Labor Force Participation Rate – 55 Yrs. & over<ts><ts/>; Labor Force Participation Rate – 16-19 Yrs<ts><ts/>. The data is monthly from January 1973 to June 2025. Calculate the difference between the 55+ LFPR and 16–19 LFPR in February 2020 (pre-pandemic) and February 2023. Based on this change, which explanation aligns with the context that the COVID-19 pandemic caused excess retirements among older workers and a tight labor market that increased job opportunities for teens?
-```
+You are a time series analysis expert. In a labor market, there are 2 metrics: Labor Force Participation Rate – 55 Yrs. & over&lt;ts&gt;&lt;ts/&gt;; Labor Force Participation Rate – 16-19 Yrs&lt;ts&gt;&lt;ts/&gt;. The data is monthly from January 1973 to June 2025. Calculate the difference between the 55+ LFPR and 16–19 LFPR in February 2020 (pre-pandemic) and February 2023. Based on this change, which explanation aligns with the context that the COVID-19 pandemic caused excess retirements among older workers and a tight labor market that increased job opportunities for teens?
 
 **题干中文翻译**
 
-```text
-你是时间序列分析专家。在劳动力市场中，有 2 个指标：55 岁及以上劳动力参与率<ts><ts/>；16–19 岁劳动力参与率<ts><ts/>。数据为 1973 年 1 月至 2025 年 6 月的月度数据。计算 2020 年 2 月（疫情前）和 2023 年 2 月 55 岁及以上劳动力参与率与 16–19 岁劳动力参与率之间的差值。基于这一变化，哪种解释符合以下背景：COVID-19 疫情导致年长劳动者超额退休，同时劳动力市场紧张增加了青少年的就业机会？
-```
+你是时间序列分析专家。在劳动力市场中，有 2 个指标：55 岁及以上劳动力参与率&lt;ts&gt;&lt;ts/&gt;；16–19 岁劳动力参与率&lt;ts&gt;&lt;ts/&gt;。数据为 1973 年 1 月至 2025 年 6 月的月度数据。计算 2020 年 2 月（疫情前）和 2023 年 2 月 55 岁及以上劳动力参与率与 16–19 岁劳动力参与率之间的差值。基于这一变化，哪种解释符合以下背景：COVID-19 疫情导致年长劳动者超额退休，同时劳动力市场紧张增加了青少年的就业机会？
 - 选项：
 - A: The difference increased because 55+ LFPR rose while teen LFPR fell.
   中文：差异扩大是因为 55 岁及以上人群的 LFPR 上升，而青少年 LFPR 下降。
@@ -2927,31 +2375,23 @@ You are a time series analysis expert. In a labor market, there are 2 metrics: L
 
 **标准解释原文**
 
-```text
 First, calculate the 55+ minus 16-19 LFPR difference for February 2020 and 2023. From the data, the 55+ LFPR dropped from ~40.3% (February 2020) to ~38.5% (February 2023) due to pandemic-driven excess retirements. Meanwhile, the teen LFPR rose from ~35.1% to ~36.5% as a tight labor market increased job opportunities. This reduces the difference from ~5.2 to ~2.0 percentage points. The causal context directly links the pandemic to these changes—lower 55+ participation from retirements and higher teen participation from labor demand—so the gap narrowed. Option B correctly reflects this.
-```
 
 **标准解释中文翻译**
 
-```text
 首先，计算 2020 年 2 月和 2023 年 2 月 55 岁及以上与 16-19 岁 LFPR 的差值。根据数据，55 岁及以上 LFPR 从约 40.3%（2020 年 2 月）降至约 38.5%（2023 年 2 月），原因是疫情导致的超额退休。与此同时，青少年 LFPR 从约 35.1% 升至约 36.5%，因为紧张的劳动力市场增加了就业机会。这使差值从约 5.2 个百分点降至约 2.0 个百分点。因果背景直接将疫情与这些变化联系起来——退休导致 55 岁及以上人群劳动参与率下降，劳动力需求导致青少年劳动参与率上升——因此差距缩小了。选项 B 正确反映了这一点。
-```
 
 **生成的 caption 与中文翻译**
 
 **生成 caption 样本 1 原文**
 
-```text
 【序列 1：pLabor Force Participation Rate – 55 Yrs. & over】该窗口包含 2 个变量：pLabor Force Participation Rate – 55 Yrs. & over, Labor Force Participation Rate – 16-19 Yrs。主要关注 pLabor Force Participation Rate – 55 Yrs. & over。 整体来看，时间跨度为 1973-01-01–2025-06-01，pLabor Force Participation Rate – 55 Yrs. & over 首尾分别为 36.00 和 38.00。 沿时间线展开：1973-01-01–2013-11-01，虽然整体由 36.00 到 39.90，但期间一度下探至 29.20。 之后，在 2013-11-01–2022-06-01 期间，pLabor Force Participation Rate – 55 Yrs. & over 明显下跌，从 39.90 到 38.70。 紧接着，2022-06-01–2025-06-01，跌势未减，继续下探至 38.00。 关键的局部事件包括：几个显著高位出现在：2010-05-01≈40.40；2012-06-01≈40.60；2019-07-01≈40.50。 几个显著低位出现在：1991-08-01≈29.40；1993-04-01≈29.20；1993-09-01≈29.30。 从变量联动角度看：Labor Force Participation Rate – 16-19 Yrs 与 pLabor Force Participation Rate – 55 Yrs. & over 存在一定相关性（负），但并不稳定。 临近 2025-06-01，pLabor Force Participation Rate – 55 Yrs. & over 仍在震荡，最终落在 38.00 左右。
 【序列 2：Labor Force Participation Rate – 16-19 Yrs】该窗口包含 2 个变量：pLabor Force Participation Rate – 55 Yrs. & over、Labor Force Participation Rate – 16-19 Yrs。主要关注 Labor Force Participation Rate – 16-19 Yrs。 总体而言，时间跨度为 1973-01-01–2025-06-01，Labor Force Participation Rate – 16-19 Yrs 首尾分别为 50.80 和 35.10。 沿时间线展开：在 1973-01-01–1990-06-01 期间，整体趋势稳步上行，但中间曾明显反弹至 59.3。 之后，在 1990-07-01–2007-12-01 期间，Labor Force Participation Rate – 16-19 Yrs 一路走低，从 53.50 到 41.20。 紧接着，2008-01-01–2025-06-01，跌势未减，继续下探至 35.10。 局部波动方面：几个显著高位出现在：1978-06-01≈58.50；1979-02-01≈58.60；1979-09-01≈57.80。 几个显著低位出现在：2014-02-01≈32.50；2018-08-01≈33.10；2020-04-01≈29.80。 关于变量间的相关性：pLabor Force Participation Rate – 55 Yrs. & over 与 Labor Force Participation Rate – 16-19 Yrs 存在一定相关性（负），但并不稳定。 观察到明显的周期性，重复间隔约为 60 步。
-```
 
 **生成 caption 样本 1 中文翻译**
 
-```text
 【序列 1：pLabor Force Participation Rate – 55 Yrs. & over】该窗口包含 2 个变量：pLabor Force Participation Rate – 55 Yrs. & over, Labor Force Participation Rate – 16-19 Yrs。主要关注 pLabor Force Participation Rate – 55 Yrs. & over。 整体来看，时间跨度为 1973-01-01–2025-06-01，pLabor Force Participation Rate – 55 Yrs. & over 首尾分别为 36.00 和 38.00。 沿时间线展开：1973-01-01–2013-11-01，虽然整体由 36.00 到 39.90，但期间一度下探至 29.20。 之后，在 2013-11-01–2022-06-01 期间，pLabor Force Participation Rate – 55 Yrs. & over 明显下跌，从 39.90 到 38.70。 紧接着，2022-06-01–2025-06-01，跌势未减，继续下探至 38.00。 关键的局部事件包括：几个显著高位出现在：2010-05-01≈40.40；2012-06-01≈40.60；2019-07-01≈40.50。 几个显著低位出现在：1991-08-01≈29.40；1993-04-01≈29.20；1993-09-01≈29.30。 从变量联动角度看：Labor Force Participation Rate – 16-19 Yrs 与 pLabor Force Participation Rate – 55 Yrs. & over 存在一定相关性（负），但并不稳定。 临近 2025-06-01，pLabor Force Participation Rate – 55 Yrs. & over 仍在震荡，最终落在 38.00 左右。
 【序列 2：Labor Force Participation Rate – 16-19 Yrs】该窗口包含 2 个变量：pLabor Force Participation Rate – 55 Yrs. & over、Labor Force Participation Rate – 16-19 Yrs。主要关注 Labor Force Participation Rate – 16-19 Yrs。 总体而言，时间跨度为 1973-01-01–2025-06-01，Labor Force Participation Rate – 16-19 Yrs 首尾分别为 50.80 和 35.10。 沿时间线展开：在 1973-01-01–1990-06-01 期间，整体趋势稳步上行，但中间曾明显反弹至 59.3。 之后，在 1990-07-01–2007-12-01 期间，Labor Force Participation Rate – 16-19 Yrs 一路走低，从 53.50 到 41.20。 紧接着，2008-01-01–2025-06-01，跌势未减，继续下探至 35.10。 局部波动方面：几个显著高位出现在：1978-06-01≈58.50；1979-02-01≈58.60；1979-09-01≈57.80。 几个显著低位出现在：2014-02-01≈32.50；2018-08-01≈33.10；2020-04-01≈29.80。 关于变量间的相关性：pLabor Force Participation Rate – 55 Yrs. & over 与 Labor Force Participation Rate – 16-19 Yrs 存在一定相关性（负），但并不稳定。 观察到明显的周期性，重复间隔约为 60 步。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -2978,15 +2418,11 @@ First, calculate the 55+ minus 16-19 LFPR difference for February 2020 and 2023.
 
 **题干原文**
 
-```text
-You are a time series analysis expert. In a Regional Unemployment system, there are 4 metrics: Unemployment Rate in Columbus, OH (MSA) in percent <ts><ts/>; Unemployment Rate in Columbus, GA-AL (MSA) in percent <ts><ts/>; Unemployment Rate in Columbus, IN (MSA) in percent <ts><ts/>; Unemployment Rate in Columbus County, NC in percent <ts><ts/>. Using monthly data from January 1990 to May 2025, compare the unemployment rates in April 2020 across these regions. Which economic characteristic best explains why one specific region experienced the highest unemployment rate during this pandemic month?
-```
+You are a time series analysis expert. In a Regional Unemployment system, there are 4 metrics: Unemployment Rate in Columbus, OH (MSA) in percent &lt;ts&gt;&lt;ts/&gt;; Unemployment Rate in Columbus, GA-AL (MSA) in percent &lt;ts&gt;&lt;ts/&gt;; Unemployment Rate in Columbus, IN (MSA) in percent &lt;ts&gt;&lt;ts/&gt;; Unemployment Rate in Columbus County, NC in percent &lt;ts&gt;&lt;ts/&gt;. Using monthly data from January 1990 to May 2025, compare the unemployment rates in April 2020 across these regions. Which economic characteristic best explains why one specific region experienced the highest unemployment rate during this pandemic month?
 
 **题干中文翻译**
 
-```text
-你是时间序列分析专家。在一个地区失业率系统中，有 4 个指标：俄亥俄州哥伦布（MSA）失业率，单位为百分比 <ts><ts/>；佐治亚州-阿拉巴马州哥伦布（MSA）失业率，单位为百分比 <ts><ts/>；印第安纳州哥伦布（MSA）失业率，单位为百分比 <ts><ts/>；北卡罗来纳州哥伦布县失业率，单位为百分比 <ts><ts/>。使用 1990 年 1 月至 2025 年 5 月的月度数据，比较这些地区在 2020 年 4 月的失业率。哪一项经济特征最能解释为什么某个特定地区在这个疫情月份经历了最高失业率？
-```
+你是时间序列分析专家。在一个地区失业率系统中，有 4 个指标：俄亥俄州哥伦布（MSA）失业率，单位为百分比 &lt;ts&gt;&lt;ts/&gt;；佐治亚州-阿拉巴马州哥伦布（MSA）失业率，单位为百分比 &lt;ts&gt;&lt;ts/&gt;；印第安纳州哥伦布（MSA）失业率，单位为百分比 &lt;ts&gt;&lt;ts/&gt;；北卡罗来纳州哥伦布县失业率，单位为百分比 &lt;ts&gt;&lt;ts/&gt;。使用 1990 年 1 月至 2025 年 5 月的月度数据，比较这些地区在 2020 年 4 月的失业率。哪一项经济特征最能解释为什么某个特定地区在这个疫情月份经历了最高失业率？
 - 选项：
 - A: Major city with substantial public sector employment vulnerable to operational shutdowns
   中文：拥有大量公共部门就业岗位、易受运营停摆影响的大城市
@@ -3002,21 +2438,17 @@ You are a time series analysis expert. In a Regional Unemployment system, there 
 
 **生成 caption 样本 1 原文**
 
-```text
 【序列 1：Unemployment Rate in Columbus, OH (MSA)】该窗口包含 4 个变量：Unemployment Rate in Columbus, OH (MSA)、Unemployment Rate in Columbus, GA-AL (MSA)、Unemployment Rate in Columbus, IN (MSA)、Unemployment Rate in Columbus County, NC。主要关注 Unemployment Rate in Columbus, OH (MSA)（Unemployment Rate in Columbus, OH (MSA), Percent, Monthly, Not Seasonally Adjusted ）。 整体来看，Unemployment Rate in Columbus, OH (MSA) 覆盖 1990-01-01 至 2025-05-01，整体从 4.900 变动至 4.30。 沿时间线展开：1990-01-01–2007-12-01，虽然整体由 4.900 到 4.900，但期间一度下探至 2.80。 接着，在 2007-12-01–2025-05-01 期间，整体趋势震荡下行，但中间曾深跌至 2.80。 关键的局部事件包括：几个显著高位出现在：2010-01-01≈10.00；2010-06-01≈9.00；2020-04-01≈12.50。 几个显著低位出现在：1998-04-01≈2.80；1998-12-01≈2.90；1999-12-01≈2.80。 从变量联动角度看：Unemployment Rate in Columbus, GA-AL (MSA) 均与 Unemployment Rate in Columbus, OH (MSA) 呈现较强的**正相关**，走势较为同步。 此外，序列呈现约 24 个时间步的周期性律动。
 【序列 2：Unemployment Rate in Columbus, GA-AL (MSA)】该窗口包含 4 个变量：Unemployment Rate in Columbus, OH (MSA)、Unemployment Rate in Columbus, GA-AL (MSA)、Unemployment Rate in Columbus, IN (MSA)、Unemployment Rate in Columbus County, NC。主要关注 Unemployment Rate in Columbus, GA-AL (MSA)（Unemployment Rate in Columbus, GA-AL (MSA), Percent, Monthly, Not Seasonally Adjusted ）。 从全局走势看，Unemployment Rate in Columbus, GA-AL (MSA) 覆盖 1990-01-01 至 2025-05-01，整体从 6.50 变动至 3.90。 沿时间线展开：在 1990-01-01–2001-10-01 期间，整体趋势震荡下行，但中间曾深跌至 4.00。 紧接着，在 2001-11-01–2013-07-01 期间，Unemployment Rate in Columbus, GA-AL (MSA) 明显上涨，从 5.500 到 8.90。 之后，2013-08-01–2025-05-01，Unemployment Rate in Columbus, GA-AL (MSA) 呈震荡下行态势，由 8.700 变至 3.900。 局部波动方面：几个显著高位出现在：2010-01-01≈10.50；2011-06-01≈10.20；2020-04-01≈11.30。 几个显著低位出现在：2021-12-01≈3.10；2022-12-01≈3.40；2024-04-01≈3.40。 关于变量间的相关性：Unemployment Rate in Columbus, OH (MSA) 和 Unemployment Rate in Columbus, GA-AL (MSA) 的变化多半同向。 此外，序列呈现约 12 个时间步的周期性律动。 末段，Unemployment Rate in Columbus, GA-AL (MSA) 收于 3.90 附近，最后时刻在 [3.00, 11.30] 区间内波动。
 【序列 3：Unemployment Rate in Columbus, IN (MSA)】变量组包括 Unemployment Rate in Columbus, OH (MSA)、Unemployment Rate in Columbus, GA-AL (MSA)、Unemployment Rate in Columbus, IN (MSA)、Unemployment Rate in Columbus County, NC。下文重点描述 Unemployment Rate in Columbus, IN (MSA)（Unemployment Rate in Columbus, IN (MSA), Percent, Monthly, Not Seasonally Adjusted ），并分析其与其它变量的联动。 概括一下，Unemployment Rate in Columbus, IN (MSA) 覆盖 1990-01-01 至 2025-05-01，整体从 5.200 变动至 3.200。 细分来看：1990-01-01–2001-10-01，虽然整体由 5.20 到 4.10，但期间一度下探至 1.60。 紧接着，2001-11-01–2013-07-01，虽然整体由 4.60 到 6.000，但期间一度冲高至 10.70。 接着，在 2013-08-01–2025-05-01 期间，整体趋势震荡下行，但中间曾明显反弹至 19.20。 关键的局部事件包括：几个显著高位出现在：2009-03-01≈9.80；2010-02-01≈10.70；2020-04-01≈19.20。 几个显著低位出现在：1996-09-01≈2.00；1998-04-01≈1.70；1998-09-01≈1.60。 关于变量间的相关性：Unemployment Rate in Columbus, OH (MSA) 与 Unemployment Rate in Columbus, IN (MSA) 存在一定相关性（正），但并不稳定。
 【序列 4：Unemployment Rate in Columbus County, NC】该窗口包含 4 个变量：Unemployment Rate in Columbus, OH (MSA)、Unemployment Rate in Columbus, GA-AL (MSA)、Unemployment Rate in Columbus, IN (MSA)、Unemployment Rate in Columbus County, NC。主要关注 Unemployment Rate in Columbus County, NC（Unemployment Rate in Columbus County, NC, Percent, Monthly, Not Seasonally Adjusted ）。 从全局走势看，时间跨度为 1990-01-01–2025-05-01，Unemployment Rate in Columbus County, NC 首尾分别为 4.80 和 4.200。 沿时间线展开：在 1990-01-01–2001-10-01 期间，Unemployment Rate in Columbus County, NC 明显上涨，从 4.800 到 8.20。 接着，2001-11-01–2013-07-01，虽然整体由 8.500 到 10.1，但期间一度下探至 4.600。 随后，2013-08-01–2025-05-01，Unemployment Rate in Columbus County, NC 呈震荡下行态势，由 9.40 变至 4.200。 值得注意的极值点有：几个显著高位出现在：2009-02-01≈14.20；2011-01-01≈14.70；2011-06-01≈14.10。 几个显著低位出现在：2023-04-01≈3.50；2023-09-01≈3.70；2025-04-01≈3.80。 关于变量间的相关性：Unemployment Rate in Columbus, GA-AL (MSA) 与 Unemployment Rate in Columbus County, NC 存在一定相关性（正），但并不稳定。 此外，未观察到明显的周期性规律。
-```
 
 **生成 caption 样本 1 中文翻译**
 
-```text
 【序列 1：Unemployment Rate in Columbus, OH (MSA)】该窗口包含 4 个变量：Unemployment Rate in Columbus, OH (MSA)、Unemployment Rate in Columbus, GA-AL (MSA)、Unemployment Rate in Columbus, IN (MSA)、Unemployment Rate in Columbus County, NC。主要关注 Unemployment Rate in Columbus, OH (MSA)（Unemployment Rate in Columbus, OH (MSA), Percent, Monthly, Not Seasonally Adjusted ）。 整体来看，Unemployment Rate in Columbus, OH (MSA) 覆盖 1990-01-01 至 2025-05-01，整体从 4.900 变动至 4.30。 沿时间线展开：1990-01-01–2007-12-01，虽然整体由 4.900 到 4.900，但期间一度下探至 2.80。 接着，在 2007-12-01–2025-05-01 期间，整体趋势震荡下行，但中间曾深跌至 2.80。 关键的局部事件包括：几个显著高位出现在：2010-01-01≈10.00；2010-06-01≈9.00；2020-04-01≈12.50。 几个显著低位出现在：1998-04-01≈2.80；1998-12-01≈2.90；1999-12-01≈2.80。 从变量联动角度看：Unemployment Rate in Columbus, GA-AL (MSA) 均与 Unemployment Rate in Columbus, OH (MSA) 呈现较强的**正相关**，走势较为同步。 此外，序列呈现约 24 个时间步的周期性律动。
 【序列 2：Unemployment Rate in Columbus, GA-AL (MSA)】该窗口包含 4 个变量：Unemployment Rate in Columbus, OH (MSA)、Unemployment Rate in Columbus, GA-AL (MSA)、Unemployment Rate in Columbus, IN (MSA)、Unemployment Rate in Columbus County, NC。主要关注 Unemployment Rate in Columbus, GA-AL (MSA)（Unemployment Rate in Columbus, GA-AL (MSA), Percent, Monthly, Not Seasonally Adjusted ）。 从全局走势看，Unemployment Rate in Columbus, GA-AL (MSA) 覆盖 1990-01-01 至 2025-05-01，整体从 6.50 变动至 3.90。 沿时间线展开：在 1990-01-01–2001-10-01 期间，整体趋势震荡下行，但中间曾深跌至 4.00。 紧接着，在 2001-11-01–2013-07-01 期间，Unemployment Rate in Columbus, GA-AL (MSA) 明显上涨，从 5.500 到 8.90。 之后，2013-08-01–2025-05-01，Unemployment Rate in Columbus, GA-AL (MSA) 呈震荡下行态势，由 8.700 变至 3.900。 局部波动方面：几个显著高位出现在：2010-01-01≈10.50；2011-06-01≈10.20；2020-04-01≈11.30。 几个显著低位出现在：2021-12-01≈3.10；2022-12-01≈3.40；2024-04-01≈3.40。 关于变量间的相关性：Unemployment Rate in Columbus, OH (MSA) 和 Unemployment Rate in Columbus, GA-AL (MSA) 的变化多半同向。 此外，序列呈现约 12 个时间步的周期性律动。 末段，Unemployment Rate in Columbus, GA-AL (MSA) 收于 3.90 附近，最后时刻在 [3.00, 11.30] 区间内波动。
 【序列 3：Unemployment Rate in Columbus, IN (MSA)】变量组包括 Unemployment Rate in Columbus, OH (MSA)、Unemployment Rate in Columbus, GA-AL (MSA)、Unemployment Rate in Columbus, IN (MSA)、Unemployment Rate in Columbus County, NC。下文重点描述 Unemployment Rate in Columbus, IN (MSA)（Unemployment Rate in Columbus, IN (MSA), Percent, Monthly, Not Seasonally Adjusted ），并分析其与其它变量的联动。 概括一下，Unemployment Rate in Columbus, IN (MSA) 覆盖 1990-01-01 至 2025-05-01，整体从 5.200 变动至 3.200。 细分来看：1990-01-01–2001-10-01，虽然整体由 5.20 到 4.10，但期间一度下探至 1.60。 紧接着，2001-11-01–2013-07-01，虽然整体由 4.60 到 6.000，但期间一度冲高至 10.70。 接着，在 2013-08-01–2025-05-01 期间，整体趋势震荡下行，但中间曾明显反弹至 19.20。 关键的局部事件包括：几个显著高位出现在：2009-03-01≈9.80；2010-02-01≈10.70；2020-04-01≈19.20。 几个显著低位出现在：1996-09-01≈2.00；1998-04-01≈1.70；1998-09-01≈1.60。 关于变量间的相关性：Unemployment Rate in Columbus, OH (MSA) 与 Unemployment Rate in Columbus, IN (MSA) 存在一定相关性（正），但并不稳定。
 【序列 4：Unemployment Rate in Columbus County, NC】该窗口包含 4 个变量：Unemployment Rate in Columbus, OH (MSA)、Unemployment Rate in Columbus, GA-AL (MSA)、Unemployment Rate in Columbus, IN (MSA)、Unemployment Rate in Columbus County, NC。主要关注 Unemployment Rate in Columbus County, NC（Unemployment Rate in Columbus County, NC, Percent, Monthly, Not Seasonally Adjusted ）。 从全局走势看，时间跨度为 1990-01-01–2025-05-01，Unemployment Rate in Columbus County, NC 首尾分别为 4.80 和 4.200。 沿时间线展开：在 1990-01-01–2001-10-01 期间，Unemployment Rate in Columbus County, NC 明显上涨，从 4.800 到 8.20。 接着，2001-11-01–2013-07-01，虽然整体由 8.500 到 10.1，但期间一度下探至 4.600。 随后，2013-08-01–2025-05-01，Unemployment Rate in Columbus County, NC 呈震荡下行态势，由 9.40 变至 4.200。 值得注意的极值点有：几个显著高位出现在：2009-02-01≈14.20；2011-01-01≈14.70；2011-06-01≈14.10。 几个显著低位出现在：2023-04-01≈3.50；2023-09-01≈3.70；2025-04-01≈3.80。 关于变量间的相关性：Unemployment Rate in Columbus, GA-AL (MSA) 与 Unemployment Rate in Columbus County, NC 存在一定相关性（正），但并不稳定。 此外，未观察到明显的周期性规律。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -3043,15 +2475,11 @@ You are a time series analysis expert. In a Regional Unemployment system, there 
 
 **题干原文**
 
-```text
-You are a time series analysis expert. In the U.S. labor market, there are 2 metrics: Hires: Total Nonfarm, Level in Thousands, Monthly, Not Seasonally Adjusted <ts><ts/>; Job Separations: Total Nonfarm, Level in Thousands (reported as negative values), Monthly, Not Seasonally Adjusted <ts><ts/>. Monthly net job creation is calculated as hires plus job separations (since separations represent job losses). The Great Recession began in December 2007 and persisted through mid-2009. Using monthly data from December 2000 to November 2014, what causal inference about the recession’s effect on the labor market is supported by comparing hires, separations, and net job creation in December 2007 versus December 2008?
-```
+You are a time series analysis expert. In the U.S. labor market, there are 2 metrics: Hires: Total Nonfarm, Level in Thousands, Monthly, Not Seasonally Adjusted &lt;ts&gt;&lt;ts/&gt;; Job Separations: Total Nonfarm, Level in Thousands (reported as negative values), Monthly, Not Seasonally Adjusted &lt;ts&gt;&lt;ts/&gt;. Monthly net job creation is calculated as hires plus job separations (since separations represent job losses). The Great Recession began in December 2007 and persisted through mid-2009. Using monthly data from December 2000 to November 2014, what causal inference about the recession’s effect on the labor market is supported by comparing hires, separations, and net job creation in December 2007 versus December 2008?
 
 **题干中文翻译**
 
-```text
-你是时间序列分析专家。在美国劳动力市场中，有 2 个指标：招聘人数：非农总计，水平值（千人），月度，未经季节性调整 <ts><ts/>；离职人数：非农总计，水平值（千人）（报告为负值），月度，未经季节性调整 <ts><ts/>。月度净就业创造计算为招聘人数加上离职人数（因为离职代表就业损失）。大衰退始于 2007 年 12 月，并持续到 2009 年年中。使用 2000 年 12 月至 2014 年 11 月的月度数据，通过比较 2007 年 12 月与 2008 年 12 月的招聘人数、离职人数和净就业创造，关于衰退对劳动力市场影响的什么因果推断得到了支持？
-```
+你是时间序列分析专家。在美国劳动力市场中，有 2 个指标：招聘人数：非农总计，水平值（千人），月度，未经季节性调整 &lt;ts&gt;&lt;ts/&gt;；离职人数：非农总计，水平值（千人）（报告为负值），月度，未经季节性调整 &lt;ts&gt;&lt;ts/&gt;。月度净就业创造计算为招聘人数加上离职人数（因为离职代表就业损失）。大衰退始于 2007 年 12 月，并持续到 2009 年年中。使用 2000 年 12 月至 2014 年 11 月的月度数据，通过比较 2007 年 12 月与 2008 年 12 月的招聘人数、离职人数和净就业创造，关于衰退对劳动力市场影响的什么因果推断得到了支持？
 - 选项：
 - A: The recession reduced hires more than separations, leading to a larger net job loss in December 2008 compared to December 2007.
   中文：与 2007 年 12 月相比，经济衰退导致 2008 年 12 月的招聘减少幅度大于离职减少幅度，从而造成更大的净岗位流失。
@@ -3065,31 +2493,23 @@ You are a time series analysis expert. In the U.S. labor market, there are 2 met
 
 **标准解释原文**
 
-```text
 First, calculate values for the two months: December 2007 (pre-recession) had 3,765 thousand hires, -4,847 thousand separations (absolute value 4,847), and net job creation of 3,765 + (-4,847) = -1,082 thousand (a loss). December 2008 (during the recession) had 3,126 thousand hires, -4,087 thousand separations (absolute value 4,087), and net job creation of 3,126 + (-4,087) = -961 thousand (a smaller loss). The recession reduced hires by 639 thousand (3,765 → 3,126) and separations (absolute) by 760 thousand (4,847 → 4,087). Since separations decreased more than hires, the net loss shrank. This supports the causal inference that the recession’s impact on reducing job losses (separations) outweighed its impact on reducing job gains (hires), leading to a smaller net loss.
-```
 
 **标准解释中文翻译**
 
-```text
 首先，计算这两个月的数值：2007年12月（衰退前）有 3,765 千人被雇用，-4,847 千人离职（绝对值为 4,847），净就业创造为 3,765 + (-4,847) = -1,082 千人（损失）。2008年12月（衰退期间）有 3,126 千人被雇用，-4,087 千人离职（绝对值为 4,087），净就业创造为 3,126 + (-4,087) = -961 千人（较小的损失）。衰退使雇用人数减少了 639 千人（3,765 → 3,126），使离职人数（绝对值）减少了 760 千人（4,847 → 4,087）。由于离职人数的减少幅度大于雇用人数，净损失缩小了。这支持了以下因果推断：衰退对减少就业损失（离职）的影响超过了其对减少就业增长（雇用）的影响，从而导致较小的净损失。
-```
 
 **生成的 caption 与中文翻译**
 
 **生成 caption 样本 1 原文**
 
-```text
 【序列 1：Hires: Total Nonfarm, Level in Thousands】该窗口包含 2 个变量：Hires: Total Nonfarm, Level in Thousands、-JTUTSL, -Level in Thous.。主要关注 Hires: Total Nonfarm, Level in Thousands（Hires: Total Nonfarm, Level in Thousands, Monthly, Not Seasonally Adjusted ）。 整体来看，时间跨度为 2000-12-01–2014-11-01，Hires: Total Nonfarm, Level in Thousands 首尾分别为 4141 和 4634。 细分来看：在 2000-12-01–2005-07-01 期间，Hires: Total Nonfarm, Level in Thousands 明显上涨，从 4141 到 5845。 接着，2005-08-01–2010-03-01，Hires: Total Nonfarm, Level in Thousands 呈明显下跌态势，由 5823 变至 3993。 随后，在 2010-04-01–2014-11-01 期间，整体趋势持续抬升，但中间曾深跌至 3087。 值得注意的极值点有：几个显著高位出现在：2005-04-01≈5935；2006-06-01≈6192；2007-06-01≈6016。 几个显著低位出现在：2008-12-01≈3126；2009-12-01≈2822；2010-12-01≈3087。 从变量联动角度看：-JTUTSL, -Level in Thous. 与 Hires: Total Nonfarm, Level in Thousands 呈现**负相关**，往往此消彼长。 观察到明显的周期性，重复间隔约为 12 步。
 【序列 2：-JTUTSL, -Level in Thous.】该窗口包含 2 个变量：Hires: Total Nonfarm, Level in Thousands、-JTUTSL, -Level in Thous.。主要关注 -JTUTSL, -Level in Thous.（-JTUTSL, -Level in Thous., Monthly, Not Seasonally Adjusted ）。 概括一下，时间跨度为 2000-12-01–2014-11-01，-JTUTSL, -Level in Thous. 首尾分别为 -4939 和 -4097。 分阶段来看：在 2000-12-01–2005-07-01 期间，整体趋势一路走低，但中间曾深跌至 -6938。 随后，在 2005-08-01–2010-03-01 期间，-JTUTSL, -Level in Thous. 震荡走高，从 -6109 到 -3387。 随后，2010-04-01–2014-11-01，虽然整体由 -3815 到 -4097，但期间一度下探至 -5547。 值得注意的极值点有：几个显著高位出现在：2009-11-01≈-3588；2010-11-01≈-3617；2011-11-01≈-3778。 几个显著低位出现在：2001-01-01≈-6938；2001-08-01≈-6264；2007-08-01≈-6313。 从变量联动角度看：Hires: Total Nonfarm, Level in Thousands 与 -JTUTSL, -Level in Thous. 呈现**负相关**，往往此消彼长。 此外，序列呈现约 12 个时间步的周期性律动。 末段，-JTUTSL, -Level in Thous. 收于 -4097 附近，最后时刻在 [-5547, -3200] 区间内波动。
-```
 
 **生成 caption 样本 1 中文翻译**
 
-```text
 【序列 1：Hires: Total Nonfarm, Level in Thousands】该窗口包含 2 个变量：Hires: Total Nonfarm, Level in Thousands、-JTUTSL, -Level in Thous.。主要关注 Hires: Total Nonfarm, Level in Thousands（Hires: Total Nonfarm, Level in Thousands, Monthly, Not Seasonally Adjusted ）。 整体来看，时间跨度为 2000-12-01–2014-11-01，Hires: Total Nonfarm, Level in Thousands 首尾分别为 4141 和 4634。 细分来看：在 2000-12-01–2005-07-01 期间，Hires: Total Nonfarm, Level in Thousands 明显上涨，从 4141 到 5845。 接着，2005-08-01–2010-03-01，Hires: Total Nonfarm, Level in Thousands 呈明显下跌态势，由 5823 变至 3993。 随后，在 2010-04-01–2014-11-01 期间，整体趋势持续抬升，但中间曾深跌至 3087。 值得注意的极值点有：几个显著高位出现在：2005-04-01≈5935；2006-06-01≈6192；2007-06-01≈6016。 几个显著低位出现在：2008-12-01≈3126；2009-12-01≈2822；2010-12-01≈3087。 从变量联动角度看：-JTUTSL, -Level in Thous. 与 Hires: Total Nonfarm, Level in Thousands 呈现**负相关**，往往此消彼长。 观察到明显的周期性，重复间隔约为 12 步。
 【序列 2：-JTUTSL, -Level in Thous.】该窗口包含 2 个变量：Hires: Total Nonfarm, Level in Thousands、-JTUTSL, -Level in Thous.。主要关注 -JTUTSL, -Level in Thous.（-JTUTSL, -Level in Thous., Monthly, Not Seasonally Adjusted ）。 概括一下，时间跨度为 2000-12-01–2014-11-01，-JTUTSL, -Level in Thous. 首尾分别为 -4939 和 -4097。 分阶段来看：在 2000-12-01–2005-07-01 期间，整体趋势一路走低，但中间曾深跌至 -6938。 随后，在 2005-08-01–2010-03-01 期间，-JTUTSL, -Level in Thous. 震荡走高，从 -6109 到 -3387。 随后，2010-04-01–2014-11-01，虽然整体由 -3815 到 -4097，但期间一度下探至 -5547。 值得注意的极值点有：几个显著高位出现在：2009-11-01≈-3588；2010-11-01≈-3617；2011-11-01≈-3778。 几个显著低位出现在：2001-01-01≈-6938；2001-08-01≈-6264；2007-08-01≈-6313。 从变量联动角度看：Hires: Total Nonfarm, Level in Thousands 与 -JTUTSL, -Level in Thous. 呈现**负相关**，往往此消彼长。 此外，序列呈现约 12 个时间步的周期性律动。 末段，-JTUTSL, -Level in Thous. 收于 -4097 附近，最后时刻在 [-5547, -3200] 区间内波动。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -3119,7 +2539,6 @@ First, calculate values for the two months: December 2007 (pre-recession) had 3,
 
 **题干原文**
 
-```text
 Classify the given time series into one of the categories below.
 Respond ONLY with the letter of the correct choice (A, B, C, D).
 
@@ -3128,11 +2547,9 @@ A: down-down (1306 cases)
 B: up-down (1248 cases)
 C: down-up (1245 cases)
 D: up-up (1201 cases)
-```
 
 **题干中文翻译**
 
-```text
 将给定时间序列分类到以下类别之一。
 只回复正确选项的字母（A、B、C、D）。
 
@@ -3141,19 +2558,14 @@ A：下降-下降（1306 个案例）
 B：上升-下降（1248 个案例）
 C：下降-上升（1245 个案例）
 D：上升-上升（1201 个案例）
-```
 
 **背景信息原文**
 
-```text
 This time series comes from a dataset designed to simulate and classify sequences based on distinct upward and downward movement patterns, with each series labeled according to one of four directional classes reflecting different combinations of up and down changes.
-```
 
 **背景信息中文翻译**
 
-```text
 该时间序列来自一个数据集，该数据集旨在基于不同的向上和向下运动模式来模拟和分类序列，每个序列都根据四种方向类别之一进行标记，这些类别反映了上升和下降变化的不同组合。
-```
 - 选项：
 无固定选项；题目要求按指定格式直接生成答案。
 - 正确答案：`D`
@@ -3162,21 +2574,17 @@ This time series comes from a dataset designed to simulate and classify sequence
 
 **可用 caption 样本 原文**
 
-```text
 1. Noisy with std around 0.29.
 2. No periodic fluctuations observed, showing no periodic fluctuation.
 3. Decrease from 0.64 to -0.38.
 4. Starting from point 34, the time series value rises from around 0.14 to around 1.38, forms an upward convex with an amplitude of about 1.74, and then falls back to around -0.58, forming a upward convex.
-```
 
 **可用 caption 样本 中文翻译**
 
-```text
 1. 带噪声，标准差约为 0.29。
 2. 未观察到周期性波动，表现为无周期性波动。
 3. 从 0.64 下降到 -0.38。
 4. 从点 34 开始，时间序列值从约 0.14 上升到约 1.38，形成一个振幅约为 1.74 的上凸形态，然后回落到约 -0.58，形成一个上凸形态。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -3210,7 +2618,6 @@ This time series comes from a dataset designed to simulate and classify sequence
 
 **题干原文**
 
-```text
 Classify the given time series into one of the categories below.
 Respond ONLY with the letter of the correct choice (A, B, C, D).
 
@@ -3219,11 +2626,9 @@ A: down-down (1306 cases)
 B: up-down (1248 cases)
 C: down-up (1245 cases)
 D: up-up (1201 cases)
-```
 
 **题干中文翻译**
 
-```text
 将给定时间序列分类到以下类别之一。
 仅回复正确选项的字母（A、B、C、D）。
 
@@ -3232,19 +2637,14 @@ A: 下降-下降（1306 个案例）
 B: 上升-下降（1248 个案例）
 C: 下降-上升（1245 个案例）
 D: 上升-上升（1201 个案例）
-```
 
 **背景信息原文**
 
-```text
 This time series comes from a dataset designed to simulate and classify sequences based on distinct upward and downward movement patterns, with each series labeled according to one of four directional classes reflecting different combinations of up and down changes.
-```
 
 **背景信息中文翻译**
 
-```text
 该时间序列来自一个数据集，该数据集旨在根据不同的上升和下降运动模式来模拟并分类序列，每个序列都根据四种方向类别之一进行标注，这些类别反映了上升和下降变化的不同组合。
-```
 - 选项：
 无固定选项；题目要求按指定格式直接生成答案。
 - 正确答案：`B`
@@ -3253,21 +2653,17 @@ This time series comes from a dataset designed to simulate and classify sequence
 
 **可用 caption 样本 原文**
 
-```text
 1. Noisy with std around 0.20.
   2. No periodic fluctuations observed, showing no periodic fluctuation.
   3. Decrease from 0.29 to 0.01.
   4. Starting from point 28, the time series value falls from around 0.78 to around -1.48, forms a downward convex with an amplitude of about 0.92, and then rises back to around 0.27, forming a downward convex;starting from point 64, the time series value slowly rises, reaching a peak at point 80, followed by a rapid decline between point 80 and point 82 back to around -0.78, forming a slow rise followed by rapid decline.
-```
 
 **可用 caption 样本 中文翻译**
 
-```text
 1. 噪声较大，标准差约为 0.20。
   2. 未观察到周期性波动，显示无周期性波动。
   3. 从 0.29 下降到 0.01。
   4. 从点 28 开始，时间序列值从约 0.78 下降到约 -1.48，形成一个幅度约为 0.92 的向下凸起，然后回升到约 0.27，形成向下凸起；从点 64 开始，时间序列值缓慢上升，在点 80 达到峰值，随后在点 80 到点 82 之间快速下降，回到约 -0.78，形成先缓慢上升后快速下降的形态。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -3301,37 +2697,29 @@ This time series comes from a dataset designed to simulate and classify sequence
 
 **题干原文**
 
-```text
 Classify the given time series into one of the categories below.
 Respond ONLY with the letter of the correct choice (A, B).
 
 Choices:
 A: correct
 B: incorrect
-```
 
 **题干中文翻译**
 
-```text
 将给定时间序列分类到以下类别之一。
 仅回复正确选项的字母（A、B）。
 
 选项：
 A：正确
 B：不正确
-```
 
 **背景信息原文**
 
-```text
 This time series comes from a dataset capturing hand and finger bone outlines extracted from medical images to support classification and prediction tasks related to bone outline detection accuracy, subject age group estimation, and Tanner-Whitehouse developmental scoring for pediatric bone age assessment.
-```
 
 **背景信息中文翻译**
 
-```text
 该时间序列来自一个数据集，该数据集捕获从医学图像中提取的手部和手指骨骼轮廓，用于支持与骨骼轮廓检测准确性、受试者年龄组估计以及用于儿科骨龄评估的 Tanner-Whitehouse 发育评分相关的分类和预测任务。
-```
 - 选项：
 无固定选项；题目要求按指定格式直接生成答案。
 - 正确答案：`B`
@@ -3340,15 +2728,11 @@ This time series comes from a dataset capturing hand and finger bone outlines ex
 
 **可用 caption 样本 原文**
 
-```text
 The time series has almost no noise. It exhibits square periodic fluctuations with each period lasting approximately 25.1 points and having an amplitude of 1.6. The overall trend is decreasing, starting at -0.49 and ending at -1.09, with an overall amplitude of -0.60. No local characteristics were found beyond the described periodicity and trend.
-```
 
 **可用 caption 样本 中文翻译**
 
-```text
 该时间序列几乎没有噪声。它呈现方形周期性波动，每个周期大约持续 25.1 个点，振幅为 1.6。整体趋势呈下降，从 -0.49 开始，到 -1.09 结束，整体幅度为 -0.60。除上述周期性和趋势外，未发现局部特征。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -3382,37 +2766,29 @@ The time series has almost no noise. It exhibits square periodic fluctuations wi
 
 **题干原文**
 
-```text
 Does time series 1 have greater variability, measured by coefficient of variation, than time series 2, while both series show some level of persistence in short-term autocorrelations and frequent cyclic peaks and troughs?
 Respond ONLY with the letter of the correct choice (T or F).
 
 Choices:
 T: True.
 F: False.
-```
 
 **题干中文翻译**
 
-```text
 时间序列 1 的变异性（以变异系数衡量）是否大于时间序列 2，同时两个序列在短期自相关中都表现出一定程度的持续性，并且频繁出现周期性峰值和谷值？
 仅用正确选项的字母（T 或 F）作答。
 
 选项：
 T：正确。
 F：错误。
-```
 
 **背景信息原文**
 
-```text
 ["A numerical sequence of heart rate measurements (beats per minute) derived from sliding 32-second windows of photoplethysmogram (PPG) and electrocardiogram (ECG) signals, where each value reflects the estimated heart rate over its respective window.", "A time series of daily birth counts in the United States."]
-```
 
 **背景信息中文翻译**
 
-```text
 ["由光电容积脉搏波（PPG）和心电图（ECG）信号的滑动 32 秒窗口得出的心率测量数值序列（每分钟心跳次数），其中每个值反映其对应窗口内的估计心率。", "美国每日出生人数的时间序列。"]
-```
 - 选项：
 无固定选项；题目要求按指定格式直接生成答案。
 - 正确答案：`F`
@@ -3421,21 +2797,17 @@ F：错误。
 
 **可用 caption 样本 原文**
 
-```text
 1. Noisy with std around 0.52.
 2. The time series is showing sin periodic fluctuation: the amplitude of the periodic fluctuation is 2.5 between point 0 and point 410. Each fluctuation period is approximately 79.3 points, thus the overall fluctuation is low frequency.
 3. Keep steady from 0.31 to 1.05.
 4. No local characteristics found.
-```
 
 **可用 caption 样本 中文翻译**
 
-```text
 1. 噪声较大，标准差约为 0.52。
 2. 该时间序列表现出正弦周期性波动：在点 0 到点 410 之间，周期性波动的振幅为 2.5。每个波动周期约为 79.3 个点，因此整体波动为低频。
 3. 从 0.31 到 1.05 保持稳定。
 4. 未发现局部特征。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -3469,7 +2841,6 @@ F：错误。
 
 **题干原文**
 
-```text
 Which time series exhibits a stronger positive local trend based on visible upward spikes in the data?
 Respond ONLY with the letter of the correct choice (A, B, C, or D).
 
@@ -3478,11 +2849,9 @@ A: Time Series 1
 B: Time Series 2
 C: Both exhibit equal strength
 D: Neither exhibits a positive local trend
-```
 
 **题干中文翻译**
 
-```text
 哪条时间序列基于数据中可见的向上尖峰表现出更强的正向局部趋势？
 请仅用正确选项的字母作答（A、B、C 或 D）。
 
@@ -3491,19 +2860,14 @@ A：时间序列 1
 B：时间序列 2
 C：两者表现出相同强度
 D：两者都没有表现出正向局部趋势
-```
 
 **背景信息原文**
 
-```text
 ["A time series of daily page\u2010view counts for a single English Wikipedia article.", "A time series of daily page\u2010view counts for a single English Wikipedia article."]
-```
 
 **背景信息中文翻译**
 
-```text
 ["单篇英文维基百科文章每日页面浏览次数的时间序列。", "单篇英文维基百科文章每日页面浏览次数的时间序列。"]
-```
 - 选项：
 无固定选项；题目要求按指定格式直接生成答案。
 - 正确答案：`B`
@@ -3512,21 +2876,17 @@ D：两者都没有表现出正向局部趋势
 
 **可用 caption 样本 原文**
 
-```text
 1. Noisy with std around 0.62.
 2. No periodic fluctuations observed, showing no periodic fluctuation.
 3. Keep steady from -0.50 to -0.50.
 4. At point 152 and point 155 and point 159, there were 3 consecutive upward spikes with amplitudes ranging from 2.39 to 3.04, with the time series value repeatedly rising sharply from around -0.50 to around 1.89 and 2.47 and 1.9, and then quickly falling back to around -0.50, forming a continuous upward spike;at point 298 and point 302 and point 309 and point 314 and point 320, there were 5 consecutive upward spikes with amplitudes ranging from 3.89 to 7.47, with the time series value repeatedly rising sharply from around -0.50 to around 5.77 and 3.39 and 7.24 and 6.94 and 4.37, and then quickly falling back to around -0.50, forming a continuous upward spike.
-```
 
 **可用 caption 样本 中文翻译**
 
-```text
 1. 含噪声，标准差约为 0.62。
 2. 未观察到周期性波动，表现为无周期性波动。
 3. 从 -0.50 到 -0.50 保持稳定。
 4. 在点 152、点 155 和点 159，出现了 3 个连续的向上尖峰，幅度范围为 2.39 到 3.04，时间序列值反复从约 -0.50 急剧上升到约 1.89、2.47 和 1.9，然后迅速回落到约 -0.50，形成连续的向上尖峰；在点 298、点 302、点 309、点 314 和点 320，出现了 5 个连续的向上尖峰，幅度范围为 3.89 到 7.47，时间序列值反复从约 -0.50 急剧上升到约 5.77、3.39、7.24、6.94 和 4.37，然后迅速回落到约 -0.50，形成连续的向上尖峰。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -3560,7 +2920,6 @@ D：两者都没有表现出正向局部趋势
 
 **题干原文**
 
-```text
 Which of the following choices is most likely the First Order Difference of the given time series?
 Respond ONLY with the letter of the correct choice (A, B, C, or D).
 
@@ -3569,11 +2928,9 @@ A: [0, -0.11, -0.0245, 0, 0.0978, 2.0047, -0.819, -0.6234, 0.0611, -0.0122, 0.02
 B: [0, -0.2173, 0.9778, -1.1951, 0.7605, -0.8692, 1.4668, -1.2495, 1.1136, -0.9778, 0.2173, -0.2445, 0.7605, -0.1901, 0.163, 0.0272, 0.1086, 0.9507, -0.4618, 0.2173, -0.7605, 0.6791, 0.0815, -0.2988, -0.0272, 0.2716, -1.0322, 0.1086, 0.9507, 0.5432, -1.4124, 0.7605, -0.8692, 0.2445, 1.168, 0.1086, -0.5704, -0.3803, 0.9235, -0.5432, -0.2173, 0.842, 0.0815, -0.7334, 0.2173, 0.2445, 0.8149, 0.4618, 0.0272, -1.2223, 1.005, -0.3259, -0.7062, 1.2766, -0.1358, -0.4618, -0.8692, 0.163, 0.1086, 0.6519, 1.0322, -0.1086]
 C: [0, -0.1934, -0.3867, -0.7348, -0.8508, -1.0829, -0.2707, -0.0773, 0.232, -0.5028, -0.0773, -0.3094, -0.232, 0.2707, -0.116, 0.3867, 1.0442, 0.6575, -0.2707, 0.5801, -0.232, 0.0387, -0.5028, -0.5028, -0.3481, -0.2707, -0.6961, 0.2707, 0.116, 0.4254, 0.3481, -0.3481, 0.116, 0.3481, -0.3094, -0.0387, -0.5028, -0.1547, 0.4254, 0.5801, -0.4254, -0.3094, 0.1934, 0.3481, -0.0387, -0.8508, -0.6961, 0.1547, 0.9668, -0.116, 0.0387, -0.2707, 0.1547, 0.3867, 0.4641, 0.0773, 0.4254, 0.3481, -0.4641, -0.232, 0.5801, -0.4641]
 D: [0, -1.7704, -1.4385, 1.9917, -0.9959, 1.3278, -2.1024, 0.7746, -0.6639, 0.9959, -0.8852, 0.6639, -0.1107, -0.1107, 0.1107, -0.6639, -0.1107, 0.8852, -1.9917, 1.4385, -0.6639, 0.7746, 1.7704, -2.2131, 0.6639, -0.9959, -0.2213, 2.1024, -1.4385, 2.545, -2.3237, 0.2213, 0.4426, -0.332, -0.8852, 1.7704, -1.9917, 0.2213, 0.8852, 0.332, 3.8728, -3.6515, 0.1107, -1.3278, 1.1065, -1.1065, 0.8852, -0.2213, 2.2131, -1.9917, 0, -0.1107, -0.2213, 0.4426, -0.2213, -0.8852, 1.3278, 0.6639, -0.332, -1.6598, 2.2131, -2.877]
-```
 
 **题干中文翻译**
 
-```text
 以下哪个选项最可能是给定时间序列的一阶差分？
 仅回复正确选项的字母（A、B、C 或 D）。
 
@@ -3582,19 +2939,14 @@ A: [0, -0.11, -0.0245, 0, 0.0978, 2.0047, -0.819, -0.6234, 0.0611, -0.0122, 0.02
 B: [0, -0.2173, 0.9778, -1.1951, 0.7605, -0.8692, 1.4668, -1.2495, 1.1136, -0.9778, 0.2173, -0.2445, 0.7605, -0.1901, 0.163, 0.0272, 0.1086, 0.9507, -0.4618, 0.2173, -0.7605, 0.6791, 0.0815, -0.2988, -0.0272, 0.2716, -1.0322, 0.1086, 0.9507, 0.5432, -1.4124, 0.7605, -0.8692, 0.2445, 1.168, 0.1086, -0.5704, -0.3803, 0.9235, -0.5432, -0.2173, 0.842, 0.0815, -0.7334, 0.2173, 0.2445, 0.8149, 0.4618, 0.0272, -1.2223, 1.005, -0.3259, -0.7062, 1.2766, -0.1358, -0.4618, -0.8692, 0.163, 0.1086, 0.6519, 1.0322, -0.1086]
 C: [0, -0.1934, -0.3867, -0.7348, -0.8508, -1.0829, -0.2707, -0.0773, 0.232, -0.5028, -0.0773, -0.3094, -0.232, 0.2707, -0.116, 0.3867, 1.0442, 0.6575, -0.2707, 0.5801, -0.232, 0.0387, -0.5028, -0.5028, -0.3481, -0.2707, -0.6961, 0.2707, 0.116, 0.4254, 0.3481, -0.3481, 0.116, 0.3481, -0.3094, -0.0387, -0.5028, -0.1547, 0.4254, 0.5801, -0.4254, -0.3094, 0.1934, 0.3481, -0.0387, -0.8508, -0.6961, 0.1547, 0.9668, -0.116, 0.0387, -0.2707, 0.1547, 0.3867, 0.4641, 0.0773, 0.4254, 0.3481, -0.4641, -0.232, 0.5801, -0.4641]
 D: [0, -1.7704, -1.4385, 1.9917, -0.9959, 1.3278, -2.1024, 0.7746, -0.6639, 0.9959, -0.8852, 0.6639, -0.1107, -0.1107, 0.1107, -0.6639, -0.1107, 0.8852, -1.9917, 1.4385, -0.6639, 0.7746, 1.7704, -2.2131, 0.6639, -0.9959, -0.2213, 2.1024, -1.4385, 2.545, -2.3237, 0.2213, 0.4426, -0.332, -0.8852, 1.7704, -1.9917, 0.2213, 0.8852, 0.332, 3.8728, -3.6515, 0.1107, -1.3278, 1.1065, -1.1065, 0.8852, -0.2213, 2.2131, -1.9917, 0, -0.1107, -0.2213, 0.4426, -0.2213, -0.8852, 1.3278, 0.6639, -0.332, -1.6598, 2.2131, -2.877]
-```
 
 **背景信息原文**
 
-```text
 ["A time series of daily page\u2010view counts for a single English Wikipedia article.", "A time series of daily spot exchange rate measurements (foreign currency units per U.S. dollar) for a single currency.", "A time series of 5-minute traffic flow measurements (vehicle counts) from a single Bay Area sensor.", "A time series of daily relative sunspot number measurements, where each value represents the quantified count of sunspot activity on the Sun\u2019s visible disk."]
-```
 
 **背景信息中文翻译**
 
-```text
 ["单篇英文维基百科文章每日页面浏览量计数的时间序列。", "单一货币每日即期汇率测量值（每美元对应的外国货币单位）的时间序列。", "来自湾区单个传感器的每 5 分钟交通流量测量值（车辆计数）的时间序列。", "每日相对太阳黑子数测量值的时间序列，其中每个值表示太阳可见圆面上太阳黑子活动的量化计数。"]
-```
 - 选项：
 无固定选项；题目要求按指定格式直接生成答案。
 - 正确答案：`D`
@@ -3603,21 +2955,17 @@ D: [0, -1.7704, -1.4385, 1.9917, -0.9959, 1.3278, -2.1024, 0.7746, -0.6639, 0.99
 
 **可用 caption 样本 原文**
 
-```text
 1. Noisy with std around 1.29.
   2. No periodic fluctuations observed, showing no periodic fluctuation.
   3. Keep steady from 2.20 to -1.57.
   4. No local features found.
-```
 
 **可用 caption 样本 中文翻译**
 
-```text
 1. 噪声较大，std 约为 1.29。
   2. 未观察到周期性波动，显示无周期性波动。
   3. 从 2.20 到 -1.57 保持稳定。
   4. 未发现局部特征。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -3651,7 +2999,6 @@ D: [0, -1.7704, -1.4385, 1.9917, -0.9959, 1.3278, -2.1024, 0.7746, -0.6639, 0.99
 
 **题干原文**
 
-```text
 Is the following sequence the Fourier Transform of the given time series?
 [0, 13.7297, 33.7742, 18.4157, 4.0489, 3.7777, 1.4631, 2.522, 1.5447, 1.2527, 3.8876, 3.288, 2.882, 1.1669, 3.6571, 2.2853, 3.1854, 1.8801, 1.3621, 0.9566, 0.6499, 0.3914, 0.3976, 1.8261, 1.0968, 1.3006, 0.624, 1.7817, 2.3862, 0.7909, 1.4543, 0.7909, 2.3862, 1.7817, 0.624, 1.3006, 1.0968, 1.8261, 0.3976, 0.3914, 0.6499, 0.9566, 1.3621, 1.8801, 3.1854, 2.2853, 3.6571, 1.1669, 2.882, 3.288, 3.8876, 1.2527, 1.5447, 2.522, 1.4631, 3.7777, 4.0489, 18.4157, 33.7742, 13.7297]
 Respond ONLY with the letter of the correct choice (T or F).
@@ -3659,11 +3006,9 @@ Respond ONLY with the letter of the correct choice (T or F).
 Choices:
 T: True.
 F: False.
-```
 
 **题干中文翻译**
 
-```text
 以下序列是给定时间序列的傅里叶变换吗？
 [0, 13.7297, 33.7742, 18.4157, 4.0489, 3.7777, 1.4631, 2.522, 1.5447, 1.2527, 3.8876, 3.288, 2.882, 1.1669, 3.6571, 2.2853, 3.1854, 1.8801, 1.3621, 0.9566, 0.6499, 0.3914, 0.3976, 1.8261, 1.0968, 1.3006, 0.624, 1.7817, 2.3862, 0.7909, 1.4543, 0.7909, 2.3862, 1.7817, 0.624, 1.3006, 1.0968, 1.8261, 0.3976, 0.3914, 0.6499, 0.9566, 1.3621, 1.8801, 3.1854, 2.2853, 3.6571, 1.1669, 2.882, 3.288, 3.8876, 1.2527, 1.5447, 2.522, 1.4631, 3.7777, 4.0489, 18.4157, 33.7742, 13.7297]
 请仅用正确选项的字母（T 或 F）作答。
@@ -3671,19 +3016,14 @@ F: False.
 选项：
 T：正确。
 F：错误。
-```
 
 **背景信息原文**
 
-```text
 ["A time series of monthly macroeconomic indicator measurements for a single U.S. economic time series.", "A time series of daily precipitation measurements (millimeters) for a single 1.5\u00b0\u00d71.5\u00b0 latitude\u2013longitude grid cell."]
-```
 
 **背景信息中文翻译**
 
-```text
 ["单个美国经济时间序列的月度宏观经济指标测量时间序列。", "单个 1.5°×1.5° 经纬度网格单元的日降水量测量时间序列（毫米）。"]
-```
 - 选项：
 无固定选项；题目要求按指定格式直接生成答案。
 - 正确答案：`F`
@@ -3692,15 +3032,11 @@ F：错误。
 
 **可用 caption 样本 原文**
 
-```text
 1) almost no noise 2) no periodic fluctuation 3) increase from -1.81 to 1.71 4) No local features found.
-```
 
 **可用 caption 样本 中文翻译**
 
-```text
 1) 几乎没有噪声 2) 没有周期性波动 3) 从 -1.81 增加到 1.71 4) 未发现局部特征。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -3732,15 +3068,11 @@ F：错误。
 
 **题干原文**
 
-```text
 Is the given time series likely to have an anomaly?
-```
 
 **题干中文翻译**
 
-```text
 给定的时间序列是否可能存在异常？
-```
 - 选项：
 - A: No
   中文：否
@@ -3754,27 +3086,19 @@ Is the given time series likely to have an anomaly?
 
 **OpenTSLM caption 原文**
 
-```text
 The time series shows a downward trend early in the window followed by an upward movement in the first half and a stronger upward trend in the second half. There is a moderate seasonal pattern with a period of about 10 time units. The overall net change is a significant increase of over 40%. A notable peak occurs in the first half, reaching about 1.5 standard deviations above the mean, while a deep valley is observed early in the window, about 1.8 standard deviations below the mean. The data exhibits strong positive correlation with variable 2 and moderate positive correlation with variable 3.
-```
 
 **OpenTSLM caption 中文翻译**
 
-```text
 该时间序列在窗口早期呈下降趋势，随后在前半段出现上行走势，并在后半段呈现更强的上升趋势。存在中等程度的季节性模式，周期约为 10 个时间单位。整体净变化为显著增加，增幅超过 40%。前半段出现一个显著峰值，达到均值以上约 1.5 个标准差；而窗口早期观察到一个深谷，约低于均值 1.8 个标准差。数据与变量 2 表现出强正相关，与变量 3 表现出中等正相关。
-```
 
 **ChatTS caption 原文**
 
-```text
 The overall trend is increasing. The global maximum, 11.65, occurs at point 127, which is in the last third of the 128-point window. Short-term fluctuations, characterized by the standard deviation of noise (~3.0), are more pronounced in the first half of the window compared to the second half, where the trend stabilizes.
-```
 
 **ChatTS caption 中文翻译**
 
-```text
 整体趋势是上升的。全局最大值 11.65 出现在点 127，位于 128 点窗口的后三分之一。由噪声标准差（约 3.0）表征的短期波动，在窗口前半部分比后半部分更明显，而后半部分的趋势趋于稳定。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -3804,15 +3128,11 @@ The overall trend is increasing. The global maximum, 11.65, occurs at point 127,
 
 **题干原文**
 
-```text
 The given time series has a cycle component and a trend component. Is it an additive or multiplicative model?
-```
 
 **题干中文翻译**
 
-```text
 给定的时间序列包含周期成分和趋势成分。它是加性模型还是乘性模型？
-```
 - 选项：
 - A: Multiplicative
   中文：乘法式
@@ -3824,27 +3144,19 @@ The given time series has a cycle component and a trend component. Is it an addi
 
 **OpenTSLM caption 原文**
 
-```text
 The time series shows a downward trend early in the window, followed by a moderate decline in the first half, and a significant upward movement in the second half. There is a strong seasonal pattern with a period of 3 time units. The overall net change is a decrease of about 12.6%. A notable peak occurs in the second half, reaching about 1.6 standard deviations above the mean, while a deep valley is observed around the middle, reaching about 2.0 standard deviations below the mean. The data exhibits strong positive correlation with variable 2 and moderate positive correlation with variable 3.
-```
 
 **OpenTSLM caption 中文翻译**
 
-```text
 该时间序列在窗口早期呈下降趋势，随后在前半段出现适度下降，并在后半段出现显著上升。存在较强的季节性模式，周期为 3 个时间单位。整体净变化为下降约 12.6%。后半段出现一个显著峰值，达到均值以上约 1.6 个标准差；而在中部附近观察到一个深谷，达到均值以下约 2.0 个标准差。数据与变量 2 表现出强正相关，与变量 3 表现出中等正相关。
-```
 
 **ChatTS caption 原文**
 
-```text
 The overall trend is decreasing. The global maximum occurs at the start of the series (first third of the window). Short-term fluctuations are consistent throughout, showing similar amplitudes in both halves of the window.
-```
 
 **ChatTS caption 中文翻译**
 
-```text
 整体趋势是下降的。全局最大值出现在序列开始处（窗口的前三分之一）。短期波动在整个过程中保持一致，在窗口的前后两半显示出相似的振幅。
-```
 
 **不同输入条件下的答案 / 评分**
 

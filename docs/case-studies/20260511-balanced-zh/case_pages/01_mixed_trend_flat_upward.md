@@ -13,15 +13,11 @@
 
 **题干原文**
 
-```text
 Across the full period, what is the overall direction of this exchange-rate series?
-```
 
 **题干中文翻译**
 
-```text
 在整个时期内，该汇率序列的整体走势方向是什么？
-```
 - 选项：
 - A. Steadily decreasing overall
   中文：A. 整体稳步下降
@@ -37,39 +33,27 @@ Across the full period, what is the overall direction of this exchange-rate seri
 
 **OpenTSLM caption 原文**
 
-```text
 7. The time series shows a strong seasonal pattern with a period of 40 time units, and a gradual upward trend over the entire window. The early part of the series experiences a significant increase, followed by a moderate rise in the first half, and a slight flattening in the second half. A notable peak occurs in the second half, reaching about 1.5 standard deviations above the mean, while a deep valley is observed early in the window, about 1.8 standard deviations below the mean. The series is strongly correlated with variables 6 and 3, showing strong positive relationships.
-```
 
 **OpenTSLM caption 中文翻译**
 
-```text
 7. 该时间序列呈现出明显的季节性模式，周期为 40 个时间单位，并且在整个窗口内呈现逐渐上升的趋势。序列早期出现显著增长，随后在前半段中等幅度上升，在后半段略有趋平。后半段出现一个显著峰值，达到均值以上约 1.5 个标准差；而窗口早期观察到一个深谷，约低于均值 1.8 个标准差。该序列与变量 6 和变量 3 强相关，表现出很强的正相关关系。
-```
 
 **ChatTS caption 原文**
 
-```text
 The overall trend is flat, with no significant changes in value throughout the time series. The global maximum, which is consistently around 0.01, is present throughout the entire window, indicating no specific peak position. There are no short-term fluctuations observed in either half of the window. In summary, the time series exhibits a steady trend with no notable peaks or fluctuations.
-```
 
 **ChatTS caption 中文翻译**
 
-```text
 整体趋势平稳，在整个时间序列中数值没有显著变化。全局最大值始终约为 0.01，贯穿整个窗口，表明没有特定的峰值位置。在窗口的任一半段都未观察到短期波动。总之，该时间序列表现出稳定趋势，没有明显峰值或波动。
-```
 
 **OpenTSLM Q3-format SFT caption 原文**
 
-```text
 The time series shows a flat trend with high volatility and no clear seasonality. The data starts with a significant downward movement early in the window, followed by an upward phase in the first half, and then another decline in the second half. A notable peak occurs in the second half, reaching about 13.1 standard deviations above the mean, while a smaller valley is observed in the first half, about 1.0 standard deviation below the mean. The series has moderate positive and negative correlations with variables 6 and 3, respectively.
-```
 
 **OpenTSLM Q3-format SFT caption 中文翻译**
 
-```text
 该时间序列呈现出平坦趋势，波动性较高，且没有明显季节性。数据在窗口早期出现显著下行，随后在前半段进入上行阶段，接着在后半段再次下降。后半段出现一个显著峰值，达到均值以上约 13.1 个标准差；而前半段观察到一个较小的谷值，约低于均值 1.0 个标准差。该序列分别与变量 6 和变量 3 存在中等程度的正相关和负相关。
-```
 
 **不同输入条件下的答案 / 评分**
 
@@ -90,19 +74,15 @@ The time series shows a flat trend with high volatility and no clear seasonality
 
 > 注：该字段在源 artifact 中已经像是从中间开始保存的片段，当前报告不再二次裁剪；无法从现有文件恢复更早的前文。
 
-```text
 dly without a clear sustained trend, though the ending is slightly higher than the start. Overall, it looks mostly flat with minor noise rather than steadily increasing or decreasing.
 
 Final answer: D
-```
 
 **`numbers_cot` 中文翻译**
 
-```text
 没有明确的持续趋势，尽管结尾略高于起点。整体来看，它基本持平，只有轻微噪声，而不是持续上升或下降。
 
 最终答案：D
-```
 
 
 **Case 分析**

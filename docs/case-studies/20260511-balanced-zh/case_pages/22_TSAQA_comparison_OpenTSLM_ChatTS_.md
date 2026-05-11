@@ -13,37 +13,29 @@
 
 **题干原文**
 
-```text
 Does time series 1 have greater variability, measured by coefficient of variation, than time series 2, while both series show some level of persistence in short-term autocorrelations and frequent cyclic peaks and troughs?
 Respond ONLY with the letter of the correct choice (T or F).
 
 Choices:
 T: True.
 F: False.
-```
 
 **题干中文翻译**
 
-```text
 时间序列 1 的变异性（以变异系数衡量）是否大于时间序列 2，同时两个序列在短期自相关中都表现出一定程度的持续性，并且频繁出现周期性峰值和谷值？
 仅用正确选项的字母（T 或 F）作答。
 
 选项：
 T：正确。
 F：错误。
-```
 
 **背景信息原文**
 
-```text
 ["A numerical sequence of heart rate measurements (beats per minute) derived from sliding 32-second windows of photoplethysmogram (PPG) and electrocardiogram (ECG) signals, where each value reflects the estimated heart rate over its respective window.", "A time series of daily birth counts in the United States."]
-```
 
 **背景信息中文翻译**
 
-```text
 ["由光电容积脉搏波（PPG）和心电图（ECG）信号的滑动 32 秒窗口得出的心率测量数值序列（每分钟心跳次数），其中每个值反映其对应窗口内的估计心率。", "美国每日出生人数的时间序列。"]
-```
 - 选项：
 无固定选项；题目要求按指定格式直接生成答案。
 - 正确答案：`F`
@@ -52,21 +44,17 @@ F：错误。
 
 **可用 caption 样本 原文**
 
-```text
 1. Noisy with std around 0.52.
 2. The time series is showing sin periodic fluctuation: the amplitude of the periodic fluctuation is 2.5 between point 0 and point 410. Each fluctuation period is approximately 79.3 points, thus the overall fluctuation is low frequency.
 3. Keep steady from 0.31 to 1.05.
 4. No local characteristics found.
-```
 
 **可用 caption 样本 中文翻译**
 
-```text
 1. 噪声较大，标准差约为 0.52。
 2. 该时间序列表现出正弦周期性波动：在点 0 到点 410 之间，周期性波动的振幅为 2.5。每个波动周期约为 79.3 个点，因此整体波动为低频。
 3. 从 0.31 到 1.05 保持稳定。
 4. 未发现局部特征。
-```
 
 **不同输入条件下的答案 / 评分**
 
