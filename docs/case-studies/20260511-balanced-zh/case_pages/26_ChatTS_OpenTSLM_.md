@@ -9,8 +9,17 @@
 
 **QA 问题**
 
-- 原文：Is the given time series likely to have an anomaly?
-- 中文翻译：给定的时间序列是否可能存在异常？
+**题干原文**
+
+```text
+Is the given time series likely to have an anomaly?
+```
+
+**题干中文翻译**
+
+```text
+给定的时间序列是否可能存在异常？
+```
 - 选项：
 - A: No
   中文：否
@@ -24,19 +33,27 @@
 
 **OpenTSLM caption 原文**
 
+```text
 The time series shows a downward trend early in the window followed by an upward movement in the first half and a stronger upward trend in the second half. There is a moderate seasonal pattern with a period of about 10 time units. The overall net change is a significant increase of over 40%. A notable peak occurs in the first half, reaching about 1.5 standard deviations above the mean, while a deep valley is observed early in the window, about 1.8 standard deviations below the mean. The data exhibits strong positive correlation with variable 2 and moderate positive correlation with variable 3.
+```
 
 **OpenTSLM caption 中文翻译**
 
-时间序列在窗口前期呈下降趋势，随后在前半段出现上升，在后半段则呈现更强的上升趋势。存在一个中等程度的季节性模式，周期约为 10 个时间单位。整体净变化为显著上升，超过 40%。前半段出现一个明显峰值，约高于均值 1.5 个标准差；而在窗口前期观察到一个深谷，约低于均值 1.8 个标准差。数据与变量 2 呈强正相关，与变量 3 呈中等正相关。
+```text
+该时间序列在窗口早期呈下降趋势，随后在前半段出现上行走势，并在后半段呈现更强的上升趋势。存在中等程度的季节性模式，周期约为 10 个时间单位。整体净变化为显著增加，增幅超过 40%。前半段出现一个显著峰值，达到均值以上约 1.5 个标准差；而窗口早期观察到一个深谷，约低于均值 1.8 个标准差。数据与变量 2 表现出强正相关，与变量 3 表现出中等正相关。
+```
 
 **ChatTS caption 原文**
 
+```text
 The overall trend is increasing. The global maximum, 11.65, occurs at point 127, which is in the last third of the 128-point window. Short-term fluctuations, characterized by the standard deviation of noise (~3.0), are more pronounced in the first half of the window compared to the second half, where the trend stabilizes.
+```
 
 **ChatTS caption 中文翻译**
 
-整体趋势是上升的。全局最大值 11.65 出现在点 127，位于 128 点窗口的后三分之一。由噪声标准差（约 3.0）所表征的短期波动，在窗口的前半段比后半段更明显；后半段趋势趋于稳定。
+```text
+整体趋势是上升的。全局最大值 11.65 出现在点 127，位于 128 点窗口的后三分之一。由噪声标准差（约 3.0）表征的短期波动，在窗口前半部分比后半部分更明显，而后半部分的趋势趋于稳定。
+```
 
 **不同输入条件下的答案 / 评分**
 
