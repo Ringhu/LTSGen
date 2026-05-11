@@ -1,0 +1,1054 @@
+dataset,task,metric,description_zh,count,eligible_n,rate
+TSAQA,anomaly_detection,opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,24,166,0.14457831325301204
+TSAQA,anomaly_detection,chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,25,166,0.15060240963855423
+TSAQA,anomaly_detection,both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,14,166,0.08433734939759036
+TSAQA,anomaly_detection,three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,41,166,0.2469879518072289
+TSAQA,anomaly_detection,both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,9,166,0.05421686746987952
+TSAQA,anomaly_detection,all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,166,0.0
+TSAQA,anomaly_detection,meta_only_right,meta_only 不看时序也答对,91,166,0.5481927710843374
+TSAQA,anomaly_detection,meta_only_right_numbers_wrong,meta_only 对、numbers 错,38,166,0.2289156626506024
+TSAQA,anomaly_detection,meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,14,166,0.08433734939759036
+TSAQA,anomaly_detection,opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,4,166,0.024096385542168676
+TSAQA,anomaly_detection,opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,7,166,0.04216867469879518
+TSAQA,anomaly_detection,chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,6,166,0.03614457831325301
+TSAQA,anomaly_detection,chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,9,166,0.05421686746987952
+TSAQA,anomaly_detection,opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,28,166,0.1686746987951807
+TSAQA,anomaly_detection,opentslm_caption_help,OpenTSLM caption-only 救回 numbers,22,166,0.13253012048192772
+TSAQA,anomaly_detection,chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,32,166,0.1927710843373494
+TSAQA,anomaly_detection,chatts_caption_help,ChatTS caption-only 救回 numbers,26,166,0.1566265060240964
+TSAQA,characterization,opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,30,166,0.18072289156626506
+TSAQA,characterization,chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,35,166,0.21084337349397592
+TSAQA,characterization,both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,35,166,0.21084337349397592
+TSAQA,characterization,three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,15,166,0.09036144578313253
+TSAQA,characterization,both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,21,166,0.12650602409638553
+TSAQA,characterization,all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,166,0.0
+TSAQA,characterization,meta_only_right,meta_only 不看时序也答对,121,166,0.7289156626506024
+TSAQA,characterization,meta_only_right_numbers_wrong,meta_only 对、numbers 错,16,166,0.0963855421686747
+TSAQA,characterization,meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,2,166,0.012048192771084338
+TSAQA,characterization,opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,34,166,0.20481927710843373
+TSAQA,characterization,opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,7,166,0.04216867469879518
+TSAQA,characterization,chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,37,166,0.22289156626506024
+TSAQA,characterization,chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,8,166,0.04819277108433735
+TSAQA,characterization,opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,59,166,0.35542168674698793
+TSAQA,characterization,opentslm_caption_help,OpenTSLM caption-only 救回 numbers,8,166,0.04819277108433735
+TSAQA,characterization,chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,63,166,0.3795180722891566
+TSAQA,characterization,chatts_caption_help,ChatTS caption-only 救回 numbers,9,166,0.05421686746987952
+TSAQA,classification,opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,46,166,0.27710843373493976
+TSAQA,classification,chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,19,166,0.1144578313253012
+TSAQA,classification,both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,4,166,0.024096385542168676
+TSAQA,classification,three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,39,166,0.23493975903614459
+TSAQA,classification,both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,14,166,0.08433734939759036
+TSAQA,classification,all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,166,0.0
+TSAQA,classification,meta_only_right,meta_only 不看时序也答对,87,166,0.5240963855421686
+TSAQA,classification,meta_only_right_numbers_wrong,meta_only 对、numbers 错,30,166,0.18072289156626506
+TSAQA,classification,meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,5,166,0.030120481927710843
+TSAQA,classification,opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,19,166,0.1144578313253012
+TSAQA,classification,opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,26,166,0.1566265060240964
+TSAQA,classification,chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,20,166,0.12048192771084337
+TSAQA,classification,chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,29,166,0.1746987951807229
+TSAQA,classification,opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,30,166,0.18072289156626506
+TSAQA,classification,opentslm_caption_help,OpenTSLM caption-only 救回 numbers,26,166,0.1566265060240964
+TSAQA,classification,chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,13,166,0.0783132530120482
+TSAQA,classification,chatts_caption_help,ChatTS caption-only 救回 numbers,39,166,0.23493975903614459
+TSAQA,comparison,opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,12,166,0.07228915662650602
+TSAQA,comparison,chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,13,166,0.0783132530120482
+TSAQA,comparison,both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,46,166,0.27710843373493976
+TSAQA,comparison,three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,21,166,0.12650602409638553
+TSAQA,comparison,both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,31,166,0.18674698795180722
+TSAQA,comparison,all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,166,0.0
+TSAQA,comparison,meta_only_right,meta_only 不看时序也答对,98,166,0.5903614457831325
+TSAQA,comparison,meta_only_right_numbers_wrong,meta_only 对、numbers 错,15,166,0.09036144578313253
+TSAQA,comparison,meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,2,166,0.012048192771084338
+TSAQA,comparison,opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,25,166,0.15060240963855423
+TSAQA,comparison,opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,10,166,0.060240963855421686
+TSAQA,comparison,chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,22,166,0.13253012048192772
+TSAQA,comparison,chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,13,166,0.0783132530120482
+TSAQA,comparison,opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,55,166,0.3313253012048193
+TSAQA,comparison,opentslm_caption_help,OpenTSLM caption-only 救回 numbers,11,166,0.06626506024096386
+TSAQA,comparison,chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,53,166,0.3192771084337349
+TSAQA,comparison,chatts_caption_help,ChatTS caption-only 救回 numbers,16,166,0.0963855421686747
+TSAQA,data_transformation,opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,10,166,0.060240963855421686
+TSAQA,data_transformation,chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,9,166,0.05421686746987952
+TSAQA,data_transformation,both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,45,166,0.2710843373493976
+TSAQA,data_transformation,three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,53,166,0.3192771084337349
+TSAQA,data_transformation,both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,44,166,0.26506024096385544
+TSAQA,data_transformation,all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,166,0.0
+TSAQA,data_transformation,meta_only_right,meta_only 不看时序也答对,60,166,0.3614457831325301
+TSAQA,data_transformation,meta_only_right_numbers_wrong,meta_only 对、numbers 错,10,166,0.060240963855421686
+TSAQA,data_transformation,meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,1,166,0.006024096385542169
+TSAQA,data_transformation,opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,12,166,0.07228915662650602
+TSAQA,data_transformation,opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,5,166,0.030120481927710843
+TSAQA,data_transformation,chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,11,166,0.06626506024096386
+TSAQA,data_transformation,chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,10,166,0.060240963855421686
+TSAQA,data_transformation,opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,52,166,0.3132530120481928
+TSAQA,data_transformation,opentslm_caption_help,OpenTSLM caption-only 救回 numbers,5,166,0.030120481927710843
+TSAQA,data_transformation,chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,54,166,0.3253012048192771
+TSAQA,data_transformation,chatts_caption_help,ChatTS caption-only 救回 numbers,8,166,0.04819277108433735
+TSAQA,temporal_relationship,opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,23,166,0.13855421686746988
+TSAQA,temporal_relationship,chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,32,166,0.1927710843373494
+TSAQA,temporal_relationship,both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,44,166,0.26506024096385544
+TSAQA,temporal_relationship,three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,47,166,0.28313253012048195
+TSAQA,temporal_relationship,both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,16,166,0.0963855421686747
+TSAQA,temporal_relationship,all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,166,0.0
+TSAQA,temporal_relationship,meta_only_right,meta_only 不看时序也答对,42,166,0.25301204819277107
+TSAQA,temporal_relationship,meta_only_right_numbers_wrong,meta_only 对、numbers 错,11,166,0.06626506024096386
+TSAQA,temporal_relationship,meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,4,166,0.024096385542168676
+TSAQA,temporal_relationship,opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,19,166,0.1144578313253012
+TSAQA,temporal_relationship,opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,8,166,0.04819277108433735
+TSAQA,temporal_relationship,chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,13,166,0.0783132530120482
+TSAQA,temporal_relationship,chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,13,166,0.0783132530120482
+TSAQA,temporal_relationship,opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,59,166,0.35542168674698793
+TSAQA,temporal_relationship,opentslm_caption_help,OpenTSLM caption-only 救回 numbers,11,166,0.06626506024096386
+TSAQA,temporal_relationship,chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,66,166,0.39759036144578314
+TSAQA,temporal_relationship,chatts_caption_help,ChatTS caption-only 救回 numbers,13,166,0.0783132530120482
+TSShapeQA-OOD,EXTREMA_POS,opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,105,267,0.39325842696629215
+TSShapeQA-OOD,EXTREMA_POS,chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,27,267,0.10112359550561797
+TSShapeQA-OOD,EXTREMA_POS,both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,11,267,0.04119850187265917
+TSShapeQA-OOD,EXTREMA_POS,three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,62,267,0.23220973782771537
+TSShapeQA-OOD,EXTREMA_POS,both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,73,267,0.27340823970037453
+TSShapeQA-OOD,EXTREMA_POS,all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,267,0.0
+TSShapeQA-OOD,EXTREMA_POS,meta_only_right,meta_only 不看时序也答对,80,267,0.299625468164794
+TSShapeQA-OOD,EXTREMA_POS,meta_only_right_numbers_wrong,meta_only 对、numbers 错,11,267,0.04119850187265917
+TSShapeQA-OOD,EXTREMA_POS,meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,267,0.0
+TSShapeQA-OOD,EXTREMA_POS,opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,29,267,0.10861423220973783
+TSShapeQA-OOD,EXTREMA_POS,opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,12,267,0.0449438202247191
+TSShapeQA-OOD,EXTREMA_POS,chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,28,267,0.10486891385767791
+TSShapeQA-OOD,EXTREMA_POS,chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,49,267,0.18352059925093633
+TSShapeQA-OOD,EXTREMA_POS,opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,64,267,0.2397003745318352
+TSShapeQA-OOD,EXTREMA_POS,opentslm_caption_help,OpenTSLM caption-only 救回 numbers,15,267,0.056179775280898875
+TSShapeQA-OOD,EXTREMA_POS,chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,33,267,0.12359550561797752
+TSShapeQA-OOD,EXTREMA_POS,chatts_caption_help,ChatTS caption-only 救回 numbers,59,267,0.2209737827715356
+TSShapeQA-OOD,TREND,opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,82,267,0.30711610486891383
+TSShapeQA-OOD,TREND,chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,28,267,0.10486891385767791
+TSShapeQA-OOD,TREND,both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,66,267,0.24719101123595505
+TSShapeQA-OOD,TREND,three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,58,267,0.21722846441947566
+TSShapeQA-OOD,TREND,both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,124,267,0.46441947565543074
+TSShapeQA-OOD,TREND,all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,267,0.0
+TSShapeQA-OOD,TREND,meta_only_right,meta_only 不看时序也答对,66,267,0.24719101123595505
+TSShapeQA-OOD,TREND,meta_only_right_numbers_wrong,meta_only 对、numbers 错,12,267,0.0449438202247191
+TSShapeQA-OOD,TREND,meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,267,0.0
+TSShapeQA-OOD,TREND,opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,58,267,0.21722846441947566
+TSShapeQA-OOD,TREND,opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,31,267,0.11610486891385768
+TSShapeQA-OOD,TREND,chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,66,267,0.24719101123595505
+TSShapeQA-OOD,TREND,chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,51,267,0.19101123595505617
+TSShapeQA-OOD,TREND,opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,108,267,0.4044943820224719
+TSShapeQA-OOD,TREND,opentslm_caption_help,OpenTSLM caption-only 救回 numbers,30,267,0.11235955056179775
+TSShapeQA-OOD,TREND,chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,78,267,0.29213483146067415
+TSShapeQA-OOD,TREND,chatts_caption_help,ChatTS caption-only 救回 numbers,59,267,0.2209737827715356
+TSShapeQA-OOD,VOLATILITY_REGION,opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,91,266,0.34210526315789475
+TSShapeQA-OOD,VOLATILITY_REGION,chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,68,266,0.2556390977443609
+TSShapeQA-OOD,VOLATILITY_REGION,both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,45,266,0.16917293233082706
+TSShapeQA-OOD,VOLATILITY_REGION,three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,12,266,0.045112781954887216
+TSShapeQA-OOD,VOLATILITY_REGION,both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,57,266,0.21428571428571427
+TSShapeQA-OOD,VOLATILITY_REGION,all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,266,0.0
+TSShapeQA-OOD,VOLATILITY_REGION,meta_only_right,meta_only 不看时序也答对,122,266,0.45864661654135336
+TSShapeQA-OOD,VOLATILITY_REGION,meta_only_right_numbers_wrong,meta_only 对、numbers 错,13,266,0.04887218045112782
+TSShapeQA-OOD,VOLATILITY_REGION,meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,266,0.0
+TSShapeQA-OOD,VOLATILITY_REGION,opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,46,266,0.17293233082706766
+TSShapeQA-OOD,VOLATILITY_REGION,opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,17,266,0.06390977443609022
+TSShapeQA-OOD,VOLATILITY_REGION,chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,90,266,0.3383458646616541
+TSShapeQA-OOD,VOLATILITY_REGION,chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,81,266,0.30451127819548873
+TSShapeQA-OOD,VOLATILITY_REGION,opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,81,266,0.30451127819548873
+TSShapeQA-OOD,VOLATILITY_REGION,opentslm_caption_help,OpenTSLM caption-only 救回 numbers,33,266,0.12406015037593984
+TSShapeQA-OOD,VOLATILITY_REGION,chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,94,266,0.3533834586466165
+TSShapeQA-OOD,VOLATILITY_REGION,chatts_caption_help,ChatTS caption-only 救回 numbers,81,266,0.30451127819548873
+TimeSeriesExam,Anolmaly Detection,opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,23,89,0.25842696629213485
+TimeSeriesExam,Anolmaly Detection,chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,3,89,0.033707865168539325
+TimeSeriesExam,Anolmaly Detection,both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,14,89,0.15730337078651685
+TimeSeriesExam,Anolmaly Detection,three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,25,89,0.2808988764044944
+TimeSeriesExam,Anolmaly Detection,meta_only_right,meta_only 不看时序也答对,34,89,0.38202247191011235
+TimeSeriesExam,Anolmaly Detection,meta_only_right_numbers_wrong,meta_only 对、numbers 错,4,89,0.0449438202247191
+TimeSeriesExam,Anolmaly Detection,meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,2,89,0.02247191011235955
+TimeSeriesExam,Anolmaly Detection,opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,29,89,0.3258426966292135
+TimeSeriesExam,Anolmaly Detection,opentslm_caption_help,OpenTSLM caption-only 救回 numbers,2,89,0.02247191011235955
+TimeSeriesExam,Anolmaly Detection,chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,17,89,0.19101123595505617
+TimeSeriesExam,Anolmaly Detection,chatts_caption_help,ChatTS caption-only 救回 numbers,10,89,0.11235955056179775
+TimeSeriesExam,Noise Understanding,opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,19,74,0.25675675675675674
+TimeSeriesExam,Noise Understanding,chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,2,74,0.02702702702702703
+TimeSeriesExam,Noise Understanding,both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,10,74,0.13513513513513514
+TimeSeriesExam,Noise Understanding,three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,21,74,0.28378378378378377
+TimeSeriesExam,Noise Understanding,meta_only_right,meta_only 不看时序也答对,28,74,0.3783783783783784
+TimeSeriesExam,Noise Understanding,meta_only_right_numbers_wrong,meta_only 对、numbers 错,5,74,0.06756756756756757
+TimeSeriesExam,Noise Understanding,meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,4,74,0.05405405405405406
+TimeSeriesExam,Noise Understanding,opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,26,74,0.35135135135135137
+TimeSeriesExam,Noise Understanding,opentslm_caption_help,OpenTSLM caption-only 救回 numbers,2,74,0.02702702702702703
+TimeSeriesExam,Noise Understanding,chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,11,74,0.14864864864864866
+TimeSeriesExam,Noise Understanding,chatts_caption_help,ChatTS caption-only 救回 numbers,4,74,0.05405405405405406
+TimeSeriesExam,Pattern Recognition,opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,20,100,0.2
+TimeSeriesExam,Pattern Recognition,chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,17,100,0.17
+TimeSeriesExam,Pattern Recognition,both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,25,100,0.25
+TimeSeriesExam,Pattern Recognition,three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,11,100,0.11
+TimeSeriesExam,Pattern Recognition,meta_only_right,meta_only 不看时序也答对,41,100,0.41
+TimeSeriesExam,Pattern Recognition,meta_only_right_numbers_wrong,meta_only 对、numbers 错,5,100,0.05
+TimeSeriesExam,Pattern Recognition,meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,2,100,0.02
+TimeSeriesExam,Pattern Recognition,opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,40,100,0.4
+TimeSeriesExam,Pattern Recognition,opentslm_caption_help,OpenTSLM caption-only 救回 numbers,8,100,0.08
+TimeSeriesExam,Pattern Recognition,chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,39,100,0.39
+TimeSeriesExam,Pattern Recognition,chatts_caption_help,ChatTS caption-only 救回 numbers,10,100,0.1
+dataset_a,causal,opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,14,36,0.3888888888888889
+dataset_a,causal,chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,6,36,0.16666666666666666
+dataset_a,causal,both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,1,36,0.027777777777777776
+dataset_a,causal,three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,8,36,0.2222222222222222
+dataset_a,causal,both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,1,36,0.027777777777777776
+dataset_a,causal,all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,36,0.0
+dataset_a,causal,meta_only_right,meta_only 不看时序也答对,16,38,0.42105263157894735
+dataset_a,causal,meta_only_right_numbers_wrong,meta_only 对、numbers 错,7,38,0.18421052631578946
+dataset_a,causal,meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,2,38,0.05263157894736842
+dataset_a,causal,opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,3,36,0.08333333333333333
+dataset_a,causal,opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,4,36,0.1111111111111111
+dataset_a,causal,chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,1,37,0.02702702702702703
+dataset_a,causal,chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,5,37,0.13513513513513514
+dataset_a,causal,opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,8,36,0.2222222222222222
+dataset_a,causal,opentslm_caption_help,OpenTSLM caption-only 救回 numbers,5,36,0.1388888888888889
+dataset_a,causal,chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,4,37,0.10810810810810811
+dataset_a,causal,chatts_caption_help,ChatTS caption-only 救回 numbers,7,37,0.1891891891891892
+dataset_a,deductive,opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,23,0.043478260869565216
+dataset_a,deductive,chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,23,0.0
+dataset_a,deductive,both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,1,23,0.043478260869565216
+dataset_a,deductive,three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,21,23,0.9130434782608695
+dataset_a,deductive,both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,1,23,0.043478260869565216
+dataset_a,deductive,all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,23,0.0
+dataset_a,deductive,meta_only_right,meta_only 不看时序也答对,0,22,0.0
+dataset_a,deductive,meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,22,0.0
+dataset_a,deductive,meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,22,0.0
+dataset_a,deductive,opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,1,23,0.043478260869565216
+dataset_a,deductive,opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,23,0.0
+dataset_a,deductive,chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,1,22,0.045454545454545456
+dataset_a,deductive,chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,22,0.045454545454545456
+dataset_a,deductive,opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,1,23,0.043478260869565216
+dataset_a,deductive,opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,23,0.0
+dataset_a,deductive,chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,1,23,0.043478260869565216
+dataset_a,deductive,chatts_caption_help,ChatTS caption-only 救回 numbers,1,23,0.043478260869565216
+dataset_a,"local,local-inductive,noise",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"local,local-inductive,noise",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"local,local-inductive,noise",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"local,local-inductive,noise",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"local,local-inductive,noise",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"local,local-inductive,noise",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"local,local-inductive,noise",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"local,local-inductive,noise",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"local,local-inductive,noise",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"local,local-inductive,noise",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local,local-inductive,noise",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"local,local-inductive,noise",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local,local-inductive,noise",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"local,local-inductive,noise",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local,local-inductive,noise",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"local,local-inductive,noise",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local,local-inductive,noise",chatts_caption_help,ChatTS caption-only 救回 numbers,1,1,1.0
+dataset_a,"local,local-inductive,season,trend",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"local,local-inductive,season,trend",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"local,local-inductive,season,trend",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"local,local-inductive,season,trend",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"local,local-inductive,season,trend",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"local,local-inductive,season,trend",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"local,local-inductive,season,trend",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"local,local-inductive,season,trend",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"local,local-inductive,season,trend",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"local,local-inductive,season,trend",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local,local-inductive,season,trend",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"local,local-inductive,season,trend",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local,local-inductive,season,trend",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"local,local-inductive,season,trend",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local,local-inductive,season,trend",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"local,local-inductive,season,trend",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local,local-inductive,season,trend",chatts_caption_help,ChatTS caption-only 救回 numbers,1,1,1.0
+dataset_a,"local,local-inductive,trend,season",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"local,local-inductive,trend,season",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"local,local-inductive,trend,season",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"local,local-inductive,trend,season",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"local,local-inductive,trend,season",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"local,local-inductive,trend,season",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"local,local-inductive,trend,season",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"local,local-inductive,trend,season",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"local,local-inductive,trend,season",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"local,local-inductive,trend,season",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local,local-inductive,trend,season",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"local,local-inductive,trend,season",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local,local-inductive,trend,season",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"local,local-inductive,trend,season",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local,local-inductive,trend,season",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"local,local-inductive,trend,season",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local,local-inductive,trend,season",chatts_caption_help,ChatTS caption-only 救回 numbers,1,1,1.0
+dataset_a,"local,noise,local-inductive,trend",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"local,noise,local-inductive,trend",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"local,noise,local-inductive,trend",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"local,noise,local-inductive,trend",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"local,noise,local-inductive,trend",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"local,noise,local-inductive,trend",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"local,noise,local-inductive,trend",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"local,noise,local-inductive,trend",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"local,noise,local-inductive,trend",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"local,noise,local-inductive,trend",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local,noise,local-inductive,trend",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"local,noise,local-inductive,trend",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local,noise,local-inductive,trend",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"local,noise,local-inductive,trend",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local,noise,local-inductive,trend",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"local,noise,local-inductive,trend",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local,noise,local-inductive,trend",chatts_caption_help,ChatTS caption-only 救回 numbers,0,1,0.0
+dataset_a,"local,noise,season",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,3,3,1.0
+dataset_a,"local,noise,season",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,3,0.0
+dataset_a,"local,noise,season",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,3,0.0
+dataset_a,"local,noise,season",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,3,0.0
+dataset_a,"local,noise,season",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,3,0.0
+dataset_a,"local,noise,season",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,3,0.0
+dataset_a,"local,noise,season",meta_only_right,meta_only 不看时序也答对,0,3,0.0
+dataset_a,"local,noise,season",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,3,0.0
+dataset_a,"local,noise,season",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,3,0.0
+dataset_a,"local,noise,season",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,3,0.0
+dataset_a,"local,noise,season",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,3,0.0
+dataset_a,"local,noise,season",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,3,0.0
+dataset_a,"local,noise,season",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,3,3,1.0
+dataset_a,"local,noise,season",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,3,0.0
+dataset_a,"local,noise,season",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,3,0.0
+dataset_a,"local,noise,season",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,3,0.0
+dataset_a,"local,noise,season",chatts_caption_help,ChatTS caption-only 救回 numbers,3,3,1.0
+dataset_a,"local,noise,trend",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"local,noise,trend",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"local,noise,trend",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"local,noise,trend",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"local,noise,trend",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"local,noise,trend",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"local,noise,trend",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"local,noise,trend",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"local,noise,trend",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"local,noise,trend",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local,noise,trend",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"local,noise,trend",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local,noise,trend",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"local,noise,trend",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local,noise,trend",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"local,noise,trend",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local,noise,trend",chatts_caption_help,ChatTS caption-only 救回 numbers,1,1,1.0
+dataset_a,"local,season,local-inductive,trend",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"local,season,local-inductive,trend",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"local,season,local-inductive,trend",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"local,season,local-inductive,trend",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"local,season,local-inductive,trend",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"local,season,local-inductive,trend",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"local,season,local-inductive,trend",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"local,season,local-inductive,trend",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"local,season,local-inductive,trend",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"local,season,local-inductive,trend",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local,season,local-inductive,trend",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"local,season,local-inductive,trend",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local,season,local-inductive,trend",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"local,season,local-inductive,trend",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local,season,local-inductive,trend",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"local,season,local-inductive,trend",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local,season,local-inductive,trend",chatts_caption_help,ChatTS caption-only 救回 numbers,1,1,1.0
+dataset_a,"local,trend,noise,season",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"local,trend,noise,season",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"local,trend,noise,season",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"local,trend,noise,season",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"local,trend,noise,season",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"local,trend,noise,season",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"local,trend,noise,season",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"local,trend,noise,season",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"local,trend,noise,season",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"local,trend,noise,season",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local,trend,noise,season",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"local,trend,noise,season",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local,trend,noise,season",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"local,trend,noise,season",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local,trend,noise,season",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"local,trend,noise,season",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local,trend,noise,season",chatts_caption_help,ChatTS caption-only 救回 numbers,1,1,1.0
+dataset_a,"local,trend,season",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,2,0.5
+dataset_a,"local,trend,season",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,2,0.0
+dataset_a,"local,trend,season",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,1,2,0.5
+dataset_a,"local,trend,season",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,2,0.0
+dataset_a,"local,trend,season",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,2,0.0
+dataset_a,"local,trend,season",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,2,0.0
+dataset_a,"local,trend,season",meta_only_right,meta_only 不看时序也答对,0,2,0.0
+dataset_a,"local,trend,season",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,2,0.0
+dataset_a,"local,trend,season",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,2,0.0
+dataset_a,"local,trend,season",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,1,2,0.5
+dataset_a,"local,trend,season",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,2,0.0
+dataset_a,"local,trend,season",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,2,0.0
+dataset_a,"local,trend,season",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,0,2,0.0
+dataset_a,"local,trend,season",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,2,2,1.0
+dataset_a,"local,trend,season",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,2,0.0
+dataset_a,"local,trend,season",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,1,2,0.5
+dataset_a,"local,trend,season",chatts_caption_help,ChatTS caption-only 救回 numbers,0,2,0.0
+dataset_a,"local-inductive,local,noise",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"local-inductive,local,noise",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"local-inductive,local,noise",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"local-inductive,local,noise",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"local-inductive,local,noise",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"local-inductive,local,noise",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"local-inductive,local,noise",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"local-inductive,local,noise",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"local-inductive,local,noise",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"local-inductive,local,noise",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local-inductive,local,noise",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"local-inductive,local,noise",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local-inductive,local,noise",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"local-inductive,local,noise",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local-inductive,local,noise",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"local-inductive,local,noise",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local-inductive,local,noise",chatts_caption_help,ChatTS caption-only 救回 numbers,1,1,1.0
+dataset_a,"local-inductive,local,season,noise",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"local-inductive,local,season,noise",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"local-inductive,local,season,noise",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"local-inductive,local,season,noise",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"local-inductive,local,season,noise",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"local-inductive,local,season,noise",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"local-inductive,local,season,noise",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"local-inductive,local,season,noise",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"local-inductive,local,season,noise",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"local-inductive,local,season,noise",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local-inductive,local,season,noise",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"local-inductive,local,season,noise",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local-inductive,local,season,noise",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"local-inductive,local,season,noise",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local-inductive,local,season,noise",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"local-inductive,local,season,noise",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local-inductive,local,season,noise",chatts_caption_help,ChatTS caption-only 救回 numbers,1,1,1.0
+dataset_a,"local-inductive,noise,trend",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,0,1,0.0
+dataset_a,"local-inductive,noise,trend",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"local-inductive,noise,trend",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"local-inductive,noise,trend",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,1,1,1.0
+dataset_a,"local-inductive,noise,trend",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"local-inductive,noise,trend",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"local-inductive,noise,trend",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"local-inductive,noise,trend",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"local-inductive,noise,trend",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"local-inductive,noise,trend",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local-inductive,noise,trend",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"local-inductive,noise,trend",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local-inductive,noise,trend",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"local-inductive,noise,trend",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local-inductive,noise,trend",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"local-inductive,noise,trend",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local-inductive,noise,trend",chatts_caption_help,ChatTS caption-only 救回 numbers,0,1,0.0
+dataset_a,"local-inductive,season,noise,local",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"local-inductive,season,noise,local",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"local-inductive,season,noise,local",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"local-inductive,season,noise,local",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"local-inductive,season,noise,local",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"local-inductive,season,noise,local",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"local-inductive,season,noise,local",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"local-inductive,season,noise,local",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"local-inductive,season,noise,local",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"local-inductive,season,noise,local",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local-inductive,season,noise,local",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"local-inductive,season,noise,local",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local-inductive,season,noise,local",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"local-inductive,season,noise,local",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local-inductive,season,noise,local",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"local-inductive,season,noise,local",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local-inductive,season,noise,local",chatts_caption_help,ChatTS caption-only 救回 numbers,0,1,0.0
+dataset_a,"local-inductive,season,noise,trend",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"local-inductive,season,noise,trend",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"local-inductive,season,noise,trend",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"local-inductive,season,noise,trend",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"local-inductive,season,noise,trend",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"local-inductive,season,noise,trend",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"local-inductive,season,noise,trend",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"local-inductive,season,noise,trend",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"local-inductive,season,noise,trend",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"local-inductive,season,noise,trend",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local-inductive,season,noise,trend",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"local-inductive,season,noise,trend",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local-inductive,season,noise,trend",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"local-inductive,season,noise,trend",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local-inductive,season,noise,trend",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"local-inductive,season,noise,trend",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local-inductive,season,noise,trend",chatts_caption_help,ChatTS caption-only 救回 numbers,1,1,1.0
+dataset_a,"local-inductive,trend,local",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,0,2,0.0
+dataset_a,"local-inductive,trend,local",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,2,0.0
+dataset_a,"local-inductive,trend,local",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,2,0.0
+dataset_a,"local-inductive,trend,local",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,2,2,1.0
+dataset_a,"local-inductive,trend,local",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,1,2,0.5
+dataset_a,"local-inductive,trend,local",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,2,0.0
+dataset_a,"local-inductive,trend,local",meta_only_right,meta_only 不看时序也答对,0,2,0.0
+dataset_a,"local-inductive,trend,local",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,2,0.0
+dataset_a,"local-inductive,trend,local",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,2,0.0
+dataset_a,"local-inductive,trend,local",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,2,0.0
+dataset_a,"local-inductive,trend,local",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,1,2,0.5
+dataset_a,"local-inductive,trend,local",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,2,0.0
+dataset_a,"local-inductive,trend,local",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,0,2,0.0
+dataset_a,"local-inductive,trend,local",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,2,0.0
+dataset_a,"local-inductive,trend,local",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,2,0.0
+dataset_a,"local-inductive,trend,local",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,1,2,0.5
+dataset_a,"local-inductive,trend,local",chatts_caption_help,ChatTS caption-only 救回 numbers,0,2,0.0
+dataset_a,"local-inductive,trend,local,noise",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,0,1,0.0
+dataset_a,"local-inductive,trend,local,noise",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"local-inductive,trend,local,noise",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"local-inductive,trend,local,noise",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,1,1,1.0
+dataset_a,"local-inductive,trend,local,noise",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"local-inductive,trend,local,noise",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"local-inductive,trend,local,noise",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"local-inductive,trend,local,noise",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"local-inductive,trend,local,noise",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"local-inductive,trend,local,noise",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local-inductive,trend,local,noise",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"local-inductive,trend,local,noise",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local-inductive,trend,local,noise",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"local-inductive,trend,local,noise",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local-inductive,trend,local,noise",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"local-inductive,trend,local,noise",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local-inductive,trend,local,noise",chatts_caption_help,ChatTS caption-only 救回 numbers,0,1,0.0
+dataset_a,"local-inductive,trend,noise,local",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"local-inductive,trend,noise,local",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"local-inductive,trend,noise,local",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"local-inductive,trend,noise,local",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"local-inductive,trend,noise,local",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"local-inductive,trend,noise,local",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"local-inductive,trend,noise,local",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"local-inductive,trend,noise,local",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"local-inductive,trend,noise,local",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"local-inductive,trend,noise,local",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local-inductive,trend,noise,local",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"local-inductive,trend,noise,local",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"local-inductive,trend,noise,local",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"local-inductive,trend,noise,local",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local-inductive,trend,noise,local",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"local-inductive,trend,noise,local",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"local-inductive,trend,noise,local",chatts_caption_help,ChatTS caption-only 救回 numbers,1,1,1.0
+dataset_a,"noise,local,season",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,0,1,0.0
+dataset_a,"noise,local,season",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"noise,local,season",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"noise,local,season",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,1,1,1.0
+dataset_a,"noise,local,season",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"noise,local,season",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"noise,local,season",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"noise,local,season",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"noise,local,season",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"noise,local,season",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"noise,local,season",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"noise,local,season",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"noise,local,season",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"noise,local,season",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"noise,local,season",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"noise,local,season",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"noise,local,season",chatts_caption_help,ChatTS caption-only 救回 numbers,0,1,0.0
+dataset_a,"noise,local,season,local-inductive",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"noise,local,season,local-inductive",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"noise,local,season,local-inductive",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"noise,local,season,local-inductive",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"noise,local,season,local-inductive",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"noise,local,season,local-inductive",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"noise,local,season,local-inductive",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"noise,local,season,local-inductive",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"noise,local,season,local-inductive",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"noise,local,season,local-inductive",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"noise,local,season,local-inductive",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"noise,local,season,local-inductive",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"noise,local,season,local-inductive",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"noise,local,season,local-inductive",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"noise,local,season,local-inductive",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"noise,local,season,local-inductive",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"noise,local,season,local-inductive",chatts_caption_help,ChatTS caption-only 救回 numbers,1,1,1.0
+dataset_a,"noise,local,trend",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,0,1,0.0
+dataset_a,"noise,local,trend",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"noise,local,trend",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"noise,local,trend",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,1,1,1.0
+dataset_a,"noise,local,trend",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"noise,local,trend",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"noise,local,trend",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"noise,local,trend",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"noise,local,trend",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"noise,local,trend",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"noise,local,trend",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"noise,local,trend",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"noise,local,trend",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"noise,local,trend",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"noise,local,trend",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"noise,local,trend",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"noise,local,trend",chatts_caption_help,ChatTS caption-only 救回 numbers,0,1,0.0
+dataset_a,"noise,local-inductive,local",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,0,1,0.0
+dataset_a,"noise,local-inductive,local",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"noise,local-inductive,local",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"noise,local-inductive,local",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,1,1,1.0
+dataset_a,"noise,local-inductive,local",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"noise,local-inductive,local",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"noise,local-inductive,local",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"noise,local-inductive,local",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"noise,local-inductive,local",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"noise,local-inductive,local",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"noise,local-inductive,local",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"noise,local-inductive,local",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"noise,local-inductive,local",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"noise,local-inductive,local",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"noise,local-inductive,local",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"noise,local-inductive,local",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"noise,local-inductive,local",chatts_caption_help,ChatTS caption-only 救回 numbers,0,1,0.0
+dataset_a,"noise,local-inductive,trend",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,0,1,0.0
+dataset_a,"noise,local-inductive,trend",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"noise,local-inductive,trend",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"noise,local-inductive,trend",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,1,1,1.0
+dataset_a,"noise,local-inductive,trend",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"noise,local-inductive,trend",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"noise,local-inductive,trend",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"noise,local-inductive,trend",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"noise,local-inductive,trend",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"noise,local-inductive,trend",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"noise,local-inductive,trend",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"noise,local-inductive,trend",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"noise,local-inductive,trend",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"noise,local-inductive,trend",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"noise,local-inductive,trend",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"noise,local-inductive,trend",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"noise,local-inductive,trend",chatts_caption_help,ChatTS caption-only 救回 numbers,0,1,0.0
+dataset_a,"noise,season,local,trend",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,0,1,0.0
+dataset_a,"noise,season,local,trend",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"noise,season,local,trend",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"noise,season,local,trend",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,1,1,1.0
+dataset_a,"noise,season,local,trend",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"noise,season,local,trend",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"noise,season,local,trend",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"noise,season,local,trend",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"noise,season,local,trend",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"noise,season,local,trend",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"noise,season,local,trend",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"noise,season,local,trend",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"noise,season,local,trend",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"noise,season,local,trend",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"noise,season,local,trend",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"noise,season,local,trend",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"noise,season,local,trend",chatts_caption_help,ChatTS caption-only 救回 numbers,0,1,0.0
+dataset_a,"noise,season,trend",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,0,1,0.0
+dataset_a,"noise,season,trend",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"noise,season,trend",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,1,1,1.0
+dataset_a,"noise,season,trend",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"noise,season,trend",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"noise,season,trend",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"noise,season,trend",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"noise,season,trend",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"noise,season,trend",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"noise,season,trend",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"noise,season,trend",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"noise,season,trend",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,1,1,1.0
+dataset_a,"noise,season,trend",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"noise,season,trend",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,1,1,1.0
+dataset_a,"noise,season,trend",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"noise,season,trend",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,1,1,1.0
+dataset_a,"noise,season,trend",chatts_caption_help,ChatTS caption-only 救回 numbers,0,1,0.0
+dataset_a,"noise,season,trend,local-inductive",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,2,0.5
+dataset_a,"noise,season,trend,local-inductive",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,2,0.0
+dataset_a,"noise,season,trend,local-inductive",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,2,0.0
+dataset_a,"noise,season,trend,local-inductive",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,1,2,0.5
+dataset_a,"noise,season,trend,local-inductive",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,1,2,0.5
+dataset_a,"noise,season,trend,local-inductive",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,2,0.0
+dataset_a,"noise,season,trend,local-inductive",meta_only_right,meta_only 不看时序也答对,0,2,0.0
+dataset_a,"noise,season,trend,local-inductive",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,2,0.0
+dataset_a,"noise,season,trend,local-inductive",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,2,0.0
+dataset_a,"noise,season,trend,local-inductive",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,2,0.0
+dataset_a,"noise,season,trend,local-inductive",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,1,2,0.5
+dataset_a,"noise,season,trend,local-inductive",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,2,0.0
+dataset_a,"noise,season,trend,local-inductive",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,2,0.5
+dataset_a,"noise,season,trend,local-inductive",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,2,0.0
+dataset_a,"noise,season,trend,local-inductive",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,2,0.0
+dataset_a,"noise,season,trend,local-inductive",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,2,0.0
+dataset_a,"noise,season,trend,local-inductive",chatts_caption_help,ChatTS caption-only 救回 numbers,0,2,0.0
+dataset_a,"noise,trend,local",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"noise,trend,local",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"noise,trend,local",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"noise,trend,local",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"noise,trend,local",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"noise,trend,local",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"noise,trend,local",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"noise,trend,local",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"noise,trend,local",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"noise,trend,local",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"noise,trend,local",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"noise,trend,local",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"noise,trend,local",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"noise,trend,local",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"noise,trend,local",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"noise,trend,local",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"noise,trend,local",chatts_caption_help,ChatTS caption-only 救回 numbers,1,1,1.0
+dataset_a,"noise,trend,local,local-inductive",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"noise,trend,local,local-inductive",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"noise,trend,local,local-inductive",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"noise,trend,local,local-inductive",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"noise,trend,local,local-inductive",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"noise,trend,local,local-inductive",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"noise,trend,local,local-inductive",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"noise,trend,local,local-inductive",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"noise,trend,local,local-inductive",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"noise,trend,local,local-inductive",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"noise,trend,local,local-inductive",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"noise,trend,local,local-inductive",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"noise,trend,local,local-inductive",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"noise,trend,local,local-inductive",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"noise,trend,local,local-inductive",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"noise,trend,local,local-inductive",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"noise,trend,local,local-inductive",chatts_caption_help,ChatTS caption-only 救回 numbers,1,1,1.0
+dataset_a,"noise,trend,season",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,0,1,0.0
+dataset_a,"noise,trend,season",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"noise,trend,season",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"noise,trend,season",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,1,1,1.0
+dataset_a,"noise,trend,season",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"noise,trend,season",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"noise,trend,season",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"noise,trend,season",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"noise,trend,season",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"noise,trend,season",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"noise,trend,season",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"noise,trend,season",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"noise,trend,season",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"noise,trend,season",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"noise,trend,season",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"noise,trend,season",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"noise,trend,season",chatts_caption_help,ChatTS caption-only 救回 numbers,0,1,0.0
+dataset_a,"season,local,noise,local-inductive",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"season,local,noise,local-inductive",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"season,local,noise,local-inductive",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"season,local,noise,local-inductive",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"season,local,noise,local-inductive",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"season,local,noise,local-inductive",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"season,local,noise,local-inductive",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"season,local,noise,local-inductive",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"season,local,noise,local-inductive",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"season,local,noise,local-inductive",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"season,local,noise,local-inductive",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"season,local,noise,local-inductive",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"season,local,noise,local-inductive",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"season,local,noise,local-inductive",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"season,local,noise,local-inductive",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"season,local,noise,local-inductive",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"season,local,noise,local-inductive",chatts_caption_help,ChatTS caption-only 救回 numbers,0,1,0.0
+dataset_a,"season,local,noise,trend",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,0,1,0.0
+dataset_a,"season,local,noise,trend",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"season,local,noise,trend",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"season,local,noise,trend",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,1,1,1.0
+dataset_a,"season,local,noise,trend",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"season,local,noise,trend",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"season,local,noise,trend",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"season,local,noise,trend",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"season,local,noise,trend",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"season,local,noise,trend",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"season,local,noise,trend",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"season,local,noise,trend",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"season,local,noise,trend",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"season,local,noise,trend",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"season,local,noise,trend",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"season,local,noise,trend",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"season,local,noise,trend",chatts_caption_help,ChatTS caption-only 救回 numbers,0,1,0.0
+dataset_a,"season,local-inductive,local",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"season,local-inductive,local",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"season,local-inductive,local",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"season,local-inductive,local",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"season,local-inductive,local",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"season,local-inductive,local",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"season,local-inductive,local",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"season,local-inductive,local",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"season,local-inductive,local",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"season,local-inductive,local",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"season,local-inductive,local",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"season,local-inductive,local",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"season,local-inductive,local",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"season,local-inductive,local",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"season,local-inductive,local",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"season,local-inductive,local",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"season,local-inductive,local",chatts_caption_help,ChatTS caption-only 救回 numbers,1,1,1.0
+dataset_a,"season,local-inductive,local,noise",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,0,1,0.0
+dataset_a,"season,local-inductive,local,noise",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"season,local-inductive,local,noise",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"season,local-inductive,local,noise",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,1,1,1.0
+dataset_a,"season,local-inductive,local,noise",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"season,local-inductive,local,noise",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"season,local-inductive,local,noise",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"season,local-inductive,local,noise",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"season,local-inductive,local,noise",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"season,local-inductive,local,noise",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"season,local-inductive,local,noise",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"season,local-inductive,local,noise",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"season,local-inductive,local,noise",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"season,local-inductive,local,noise",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"season,local-inductive,local,noise",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"season,local-inductive,local,noise",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"season,local-inductive,local,noise",chatts_caption_help,ChatTS caption-only 救回 numbers,0,1,0.0
+dataset_a,"season,local-inductive,noise",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"season,local-inductive,noise",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"season,local-inductive,noise",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"season,local-inductive,noise",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"season,local-inductive,noise",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"season,local-inductive,noise",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"season,local-inductive,noise",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"season,local-inductive,noise",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"season,local-inductive,noise",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"season,local-inductive,noise",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"season,local-inductive,noise",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"season,local-inductive,noise",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"season,local-inductive,noise",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"season,local-inductive,noise",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"season,local-inductive,noise",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"season,local-inductive,noise",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"season,local-inductive,noise",chatts_caption_help,ChatTS caption-only 救回 numbers,1,1,1.0
+dataset_a,"season,noise,local,local-inductive",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,0,1,0.0
+dataset_a,"season,noise,local,local-inductive",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"season,noise,local,local-inductive",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"season,noise,local,local-inductive",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,1,1,1.0
+dataset_a,"season,noise,local,local-inductive",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"season,noise,local,local-inductive",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"season,noise,local,local-inductive",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"season,noise,local,local-inductive",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"season,noise,local,local-inductive",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"season,noise,local,local-inductive",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"season,noise,local,local-inductive",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"season,noise,local,local-inductive",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"season,noise,local,local-inductive",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"season,noise,local,local-inductive",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"season,noise,local,local-inductive",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"season,noise,local,local-inductive",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"season,noise,local,local-inductive",chatts_caption_help,ChatTS caption-only 救回 numbers,0,1,0.0
+dataset_a,"season,noise,trend",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"season,noise,trend",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"season,noise,trend",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"season,noise,trend",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"season,noise,trend",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"season,noise,trend",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"season,noise,trend",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"season,noise,trend",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"season,noise,trend",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"season,noise,trend",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"season,noise,trend",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"season,noise,trend",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"season,noise,trend",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"season,noise,trend",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"season,noise,trend",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"season,noise,trend",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"season,noise,trend",chatts_caption_help,ChatTS caption-only 救回 numbers,1,1,1.0
+dataset_a,"season,trend,local",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,0,1,0.0
+dataset_a,"season,trend,local",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"season,trend,local",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"season,trend,local",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,1,1,1.0
+dataset_a,"season,trend,local",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"season,trend,local",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"season,trend,local",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"season,trend,local",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"season,trend,local",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"season,trend,local",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"season,trend,local",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"season,trend,local",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"season,trend,local",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"season,trend,local",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"season,trend,local",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"season,trend,local",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"season,trend,local",chatts_caption_help,ChatTS caption-only 救回 numbers,0,1,0.0
+dataset_a,"season,trend,noise,local",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,0,1,0.0
+dataset_a,"season,trend,noise,local",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"season,trend,noise,local",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"season,trend,noise,local",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,1,1,1.0
+dataset_a,"season,trend,noise,local",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"season,trend,noise,local",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"season,trend,noise,local",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"season,trend,noise,local",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"season,trend,noise,local",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"season,trend,noise,local",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"season,trend,noise,local",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"season,trend,noise,local",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"season,trend,noise,local",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"season,trend,noise,local",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"season,trend,noise,local",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"season,trend,noise,local",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"season,trend,noise,local",chatts_caption_help,ChatTS caption-only 救回 numbers,0,1,0.0
+dataset_a,"trend,local,local-inductive",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,0,1,0.0
+dataset_a,"trend,local,local-inductive",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"trend,local,local-inductive",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,1,1,1.0
+dataset_a,"trend,local,local-inductive",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"trend,local,local-inductive",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"trend,local,local-inductive",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"trend,local,local-inductive",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"trend,local,local-inductive",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"trend,local,local-inductive",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"trend,local,local-inductive",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,1,1,1.0
+dataset_a,"trend,local,local-inductive",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"trend,local,local-inductive",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"trend,local,local-inductive",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"trend,local,local-inductive",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,1,1,1.0
+dataset_a,"trend,local,local-inductive",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"trend,local,local-inductive",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"trend,local,local-inductive",chatts_caption_help,ChatTS caption-only 救回 numbers,0,1,0.0
+dataset_a,"trend,local,local-inductive,noise",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"trend,local,local-inductive,noise",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"trend,local,local-inductive,noise",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"trend,local,local-inductive,noise",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"trend,local,local-inductive,noise",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"trend,local,local-inductive,noise",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"trend,local,local-inductive,noise",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"trend,local,local-inductive,noise",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"trend,local,local-inductive,noise",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"trend,local,local-inductive,noise",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"trend,local,local-inductive,noise",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"trend,local,local-inductive,noise",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"trend,local,local-inductive,noise",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"trend,local,local-inductive,noise",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"trend,local,local-inductive,noise",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"trend,local,local-inductive,noise",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"trend,local,local-inductive,noise",chatts_caption_help,ChatTS caption-only 救回 numbers,1,1,1.0
+dataset_a,"trend,local,noise",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,0,1,0.0
+dataset_a,"trend,local,noise",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"trend,local,noise",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"trend,local,noise",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,1,1,1.0
+dataset_a,"trend,local,noise",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"trend,local,noise",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"trend,local,noise",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"trend,local,noise",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"trend,local,noise",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"trend,local,noise",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"trend,local,noise",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"trend,local,noise",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"trend,local,noise",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"trend,local,noise",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"trend,local,noise",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"trend,local,noise",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"trend,local,noise",chatts_caption_help,ChatTS caption-only 救回 numbers,0,1,0.0
+dataset_a,"trend,local,season",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,2,2,1.0
+dataset_a,"trend,local,season",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,2,0.0
+dataset_a,"trend,local,season",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,2,0.0
+dataset_a,"trend,local,season",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,2,0.0
+dataset_a,"trend,local,season",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,2,0.0
+dataset_a,"trend,local,season",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,2,0.0
+dataset_a,"trend,local,season",meta_only_right,meta_only 不看时序也答对,0,2,0.0
+dataset_a,"trend,local,season",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,2,0.0
+dataset_a,"trend,local,season",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,2,0.0
+dataset_a,"trend,local,season",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,2,0.0
+dataset_a,"trend,local,season",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,2,0.0
+dataset_a,"trend,local,season",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,2,0.0
+dataset_a,"trend,local,season",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,2,0.5
+dataset_a,"trend,local,season",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,1,2,0.5
+dataset_a,"trend,local,season",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,2,0.0
+dataset_a,"trend,local,season",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,2,0.0
+dataset_a,"trend,local,season",chatts_caption_help,ChatTS caption-only 救回 numbers,2,2,1.0
+dataset_a,"trend,local,season,noise",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"trend,local,season,noise",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"trend,local,season,noise",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"trend,local,season,noise",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"trend,local,season,noise",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"trend,local,season,noise",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"trend,local,season,noise",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"trend,local,season,noise",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"trend,local,season,noise",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"trend,local,season,noise",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"trend,local,season,noise",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"trend,local,season,noise",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"trend,local,season,noise",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"trend,local,season,noise",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"trend,local,season,noise",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"trend,local,season,noise",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"trend,local,season,noise",chatts_caption_help,ChatTS caption-only 救回 numbers,1,1,1.0
+dataset_a,"trend,local-inductive,noise",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"trend,local-inductive,noise",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"trend,local-inductive,noise",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"trend,local-inductive,noise",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"trend,local-inductive,noise",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"trend,local-inductive,noise",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"trend,local-inductive,noise",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"trend,local-inductive,noise",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"trend,local-inductive,noise",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"trend,local-inductive,noise",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"trend,local-inductive,noise",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"trend,local-inductive,noise",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"trend,local-inductive,noise",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"trend,local-inductive,noise",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"trend,local-inductive,noise",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"trend,local-inductive,noise",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"trend,local-inductive,noise",chatts_caption_help,ChatTS caption-only 救回 numbers,1,1,1.0
+dataset_a,"trend,local-inductive,season,local",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"trend,local-inductive,season,local",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"trend,local-inductive,season,local",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"trend,local-inductive,season,local",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"trend,local-inductive,season,local",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"trend,local-inductive,season,local",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"trend,local-inductive,season,local",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"trend,local-inductive,season,local",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"trend,local-inductive,season,local",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"trend,local-inductive,season,local",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"trend,local-inductive,season,local",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"trend,local-inductive,season,local",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"trend,local-inductive,season,local",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"trend,local-inductive,season,local",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"trend,local-inductive,season,local",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"trend,local-inductive,season,local",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"trend,local-inductive,season,local",chatts_caption_help,ChatTS caption-only 救回 numbers,1,1,1.0
+dataset_a,"trend,noise,local",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,0,1,0.0
+dataset_a,"trend,noise,local",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"trend,noise,local",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"trend,noise,local",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,1,1,1.0
+dataset_a,"trend,noise,local",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"trend,noise,local",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"trend,noise,local",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"trend,noise,local",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"trend,noise,local",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"trend,noise,local",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"trend,noise,local",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"trend,noise,local",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"trend,noise,local",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"trend,noise,local",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"trend,noise,local",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"trend,noise,local",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"trend,noise,local",chatts_caption_help,ChatTS caption-only 救回 numbers,0,1,0.0
+dataset_a,"trend,noise,season",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,2,2,1.0
+dataset_a,"trend,noise,season",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,2,0.0
+dataset_a,"trend,noise,season",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,2,0.0
+dataset_a,"trend,noise,season",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,2,0.0
+dataset_a,"trend,noise,season",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,2,0.0
+dataset_a,"trend,noise,season",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,2,0.0
+dataset_a,"trend,noise,season",meta_only_right,meta_only 不看时序也答对,0,2,0.0
+dataset_a,"trend,noise,season",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,2,0.0
+dataset_a,"trend,noise,season",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,2,0.0
+dataset_a,"trend,noise,season",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,2,0.0
+dataset_a,"trend,noise,season",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,2,0.0
+dataset_a,"trend,noise,season",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,2,0.0
+dataset_a,"trend,noise,season",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,2,2,1.0
+dataset_a,"trend,noise,season",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,2,0.0
+dataset_a,"trend,noise,season",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,2,0.0
+dataset_a,"trend,noise,season",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,2,0.0
+dataset_a,"trend,noise,season",chatts_caption_help,ChatTS caption-only 救回 numbers,2,2,1.0
+dataset_a,"trend,season,local",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,0,1,0.0
+dataset_a,"trend,season,local",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"trend,season,local",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"trend,season,local",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,1,1,1.0
+dataset_a,"trend,season,local",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"trend,season,local",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"trend,season,local",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"trend,season,local",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"trend,season,local",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"trend,season,local",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"trend,season,local",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"trend,season,local",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"trend,season,local",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"trend,season,local",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"trend,season,local",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"trend,season,local",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"trend,season,local",chatts_caption_help,ChatTS caption-only 救回 numbers,0,1,0.0
+dataset_a,"trend,season,noise",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"trend,season,noise",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"trend,season,noise",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"trend,season,noise",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"trend,season,noise",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"trend,season,noise",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"trend,season,noise",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"trend,season,noise",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"trend,season,noise",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"trend,season,noise",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,1,1,1.0
+dataset_a,"trend,season,noise",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"trend,season,noise",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"trend,season,noise",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,1,1,1.0
+dataset_a,"trend,season,noise",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,1,1,1.0
+dataset_a,"trend,season,noise",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"trend,season,noise",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"trend,season,noise",chatts_caption_help,ChatTS caption-only 救回 numbers,1,1,1.0
+dataset_a,"trend,season,noise,local-inductive",opentslm_wrong_chatts_right,OpenTSLM caption 错、ChatTS caption 对,1,1,1.0
+dataset_a,"trend,season,noise,local-inductive",chatts_wrong_opentslm_right,ChatTS caption 错、OpenTSLM caption 对,0,1,0.0
+dataset_a,"trend,season,noise,local-inductive",both_caption_wrong_numbers_right,两个 caption 都错、numbers 对,0,1,0.0
+dataset_a,"trend,season,noise,local-inductive",three_core_all_wrong,numbers / OpenTSLM caption / ChatTS caption 三者都错,0,1,0.0
+dataset_a,"trend,season,noise,local-inductive",both_caption_wrong_tool_right,两个 caption 都错、tool-agent 对,0,1,0.0
+dataset_a,"trend,season,noise,local-inductive",all_non_tool_wrong_tool_right,非 tool 条件全错、tool-agent 对,0,1,0.0
+dataset_a,"trend,season,noise,local-inductive",meta_only_right,meta_only 不看时序也答对,0,1,0.0
+dataset_a,"trend,season,noise,local-inductive",meta_only_right_numbers_wrong,meta_only 对、numbers 错,0,1,0.0
+dataset_a,"trend,season,noise,local-inductive",meta_only_right_all_ts_wrong,meta_only 对、所有时序输入条件错,0,1,0.0
+dataset_a,"trend,season,noise,local-inductive",opentslm_caption_plus_harm,OpenTSLM caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"trend,season,noise,local-inductive",opentslm_caption_plus_help,OpenTSLM caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"trend,season,noise,local-inductive",chatts_caption_plus_harm,ChatTS caption+numbers 伤害 numbers,0,1,0.0
+dataset_a,"trend,season,noise,local-inductive",chatts_caption_plus_help,ChatTS caption+numbers 救回 numbers,0,1,0.0
+dataset_a,"trend,season,noise,local-inductive",opentslm_caption_harm,OpenTSLM caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"trend,season,noise,local-inductive",opentslm_caption_help,OpenTSLM caption-only 救回 numbers,0,1,0.0
+dataset_a,"trend,season,noise,local-inductive",chatts_caption_harm,ChatTS caption-only 弱于 numbers 的逐样本伤害,0,1,0.0
+dataset_a,"trend,season,noise,local-inductive",chatts_caption_help,ChatTS caption-only 救回 numbers,0,1,0.0
