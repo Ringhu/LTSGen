@@ -926,6 +926,27 @@ def render_report(maps: dict[str, Any], translations: dict[str, Any], figure_nam
     return "\n".join(lines) + "\n"
 
 
+def to_notion_markdown(report: str) -> str:
+    """Convert GitHub details blocks to a flat Notion-friendly heading layout."""
+    out: list[str] = []
+    for line in report.splitlines():
+        stripped = line.strip()
+        if stripped == "<details>" or stripped == "</details>":
+            continue
+        match = re.fullmatch(r"<summary>(.*)</summary>", stripped)
+        if match:
+            title = match.group(1).strip()
+            if title.startswith("📈 Case"):
+                out.append(f"## {title}")
+            elif title.startswith(("🖼", "❓", "📝", "🧪", "🔎")):
+                out.append(f"### {title}")
+            else:
+                out.append(f"### {title}")
+            continue
+        out.append(line)
+    return "\n".join(out) + "\n"
+
+
 def main() -> None:
     setup_matplotlib()
     OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -967,7 +988,7 @@ def main() -> None:
 
     report = render_report(maps, translations, figure_names, stats_figs)
     REPORT.write_text(report, encoding="utf-8")
-    NOTION_REPORT.write_text(report, encoding="utf-8")
+    NOTION_REPORT.write_text(to_notion_markdown(report), encoding="utf-8")
     write_json(
         MANIFEST,
         {

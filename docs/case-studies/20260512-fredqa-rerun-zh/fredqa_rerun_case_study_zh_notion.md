@@ -73,8 +73,7 @@
 
 下面每个 case 都包含时序图、原始 QA 与中文翻译、OpenTSLM/ChatTS 生成 caption 与中文翻译、六种输入条件下的 `gpt-5.4` 回答，以及对应分析。
 
-<details>
-<summary>📈 Case 01：FREDQA `1079` | OpenTSLM 错、ChatTS 对</summary>
+## 📈 Case 01：FREDQA `1079` | OpenTSLM 错、ChatTS 对
 
 ### 基本信息
 
@@ -96,15 +95,12 @@
 | 1 | (CXUCHGASSETLB0101M/CPIAUCSL)*100, (U.S. $/Index 1982-1984=100)*100, Annual | 40 | 2300.51 | 5828.28 | 2035.66@11 | 14747.9@37 | 162.972 |
 | 2 | (CXUCHGLIABLB0101M/CPIAUCSL)*100, (U.S. $/Index 1982-1984=100)*100, Annual | 40 | 1155.55 | 2299.94 | 1077.14@1 | 11319@19 | 88.4598 |
 
-<details>
-<summary>🖼 时序图</summary>
+### 🖼 时序图
 
 ![FREDQA 1079](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-rerun-zh/figures/fredqa_1079.png)
 
-</details>
 
-<details>
-<summary>❓ QA 问题与中文翻译</summary>
+### ❓ QA 问题与中文翻译
 
 **题干原文**
 
@@ -133,10 +129,8 @@
 
 > 首先，计算 2020 年比率：2020 年资产变化（9516.88）除以 2020 年负债变化（8132.71）等于约 1.17。接着，计算 2022 年比率：2022 年资产变化（4469.19）除以 2022 年负债变化（4963.68）等于约 0.90。该比率从约 1.17 降至约 0.90，意味着资产变化从比负债变化高 17% 变为低 10%。这一变化支持这样的因果推断：意外通胀相对于负债增长削弱了资产增长——这与研究中关于意外通胀会不同地影响家庭资产负债表不同组成部分（资产 vs. 负债）的结论一致。选项 B 正确反映了比率变化以及将通胀事件与资产-负债关系改变联系起来的因果逻辑。
 
-</details>
 
-<details>
-<summary>📝 生成的 caption 与中文翻译</summary>
+### 📝 生成的 caption 与中文翻译
 
 #### 变量 1：(CXUCHGASSETLB0101M/CPIAUCSL)*100, (U.S. $/Index 1982-1984=100)*100, Annual
 
@@ -174,10 +168,8 @@
 
 > 总体趋势是上升的。全局最大值出现在第 23 个点（窗口的中间三分之一）。短期波动在窗口前半段更为明显，其中第 15-17 点之间的尖峰以及第 23-27 点之间的快速下降位于该区域。
 
-</details>
 
-<details>
-<summary>🧪 下游 QA 模型答案 / 评分</summary>
+### 🧪 下游 QA 模型答案 / 评分
 
 表中所有预测都是同一个辅助 QA 模型 `gpt-5.4` 的输出；六行只改变输入证据形式。
 
@@ -190,21 +182,16 @@
 | 题目 + ChatTS caption (`chatts_caption`) | `B` | `B` | ✓ 正确 | B |
 | 题目 + ChatTS caption + 数值 (`chatts_caption_plus`) | `A` | `B` | ✗ 错误 | A |
 
-</details>
 
-<details>
-<summary>🔎 Case 分析</summary>
+### 🔎 Case 分析
 
 - **答案格局**：`meta_only=A✗, numbers=B✓, opentslm_caption=A✗, opentslm_caption_plus=B✓, chatts_caption=B✓, chatts_caption_plus=A✗`。
 - **关键问题**：OpenTSLM 把两条序列都写成稳定上升，弱化了 2022 年资产变化相对负债变化下降这一局部比值证据；ChatTS 至少保留了资产先升后降、负债峰值位置等局部形态，因此 caption-only 能答对。
 - **对训练失败的含义**：这类 case 显示，当前 caption 训练更像是在学习通用趋势/峰谷/波动模板，而不是学习“下游 QA 所需的证据提取”。FREDQA 的正确答案经常依赖指定日期、指定窗口、比值、差值、反事实外推或领域机制；这些信息如果没有被 caption 明确保留，下游 GPT 即使很强也只能依赖题干先验或被错误摘要带偏。
 
-</details>
 
-</details>
 
-<details>
-<summary>📈 Case 02：FREDQA `1145` | OpenTSLM 错、ChatTS 对，但 caption+numbers 不稳</summary>
+## 📈 Case 02：FREDQA `1145` | OpenTSLM 错、ChatTS 对，但 caption+numbers 不稳
 
 ### 基本信息
 
@@ -227,15 +214,12 @@
 | 2 | LNS11300060-83.1, %-83.1, Monthly, Seasonally Adjusted  | 90 | -1.4 | 0.4 | -3.3@27 | 0.8@78 | 0.0218241 |
 | 3 | LNS11324230-40.2, %-40.2, Monthly, Seasonally Adjusted  | 90 | -0.7 | -2.2 | -2.2@89 | 0.3@18 | -0.023649 |
 
-<details>
-<summary>🖼 时序图</summary>
+### 🖼 时序图
 
 ![FREDQA 1145](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-rerun-zh/figures/fredqa_1145.png)
 
-</details>
 
-<details>
-<summary>❓ QA 问题与中文翻译</summary>
+### ❓ QA 问题与中文翻译
 
 **题干原文**
 
@@ -272,10 +256,8 @@
 
 > 首先，我们利用数据识别 2022 年 12 月的 LFPR 差距：20–24 岁组比 2020 年 1 月低 1.7 个百分点，55 岁以上组比 2020 年 1 月低 1.4 个百分点，25–54 岁组比 2020 年 1 月低 0.7 个百分点。因果因素将育儿中断与较年轻工人（20–24 岁）联系起来，将提前退休与较年长工人（55 岁以上）联系起来。由于 20–24 岁组的差距比 55 岁以上组大 0.3 个百分点，这支持了育儿中断具有更强因果影响的结论。选项 A 不正确，因为 55 岁以上组的差距更小，而不是更大。选项 C 不正确，因为 1.4–1.7 个百分点的差距对劳动力动态而言是有意义的。选项 D 不正确，因为 25–54 岁组较小的差距表明退休（针对较年长工人的因素）影响很小。
 
-</details>
 
-<details>
-<summary>📝 生成的 caption 与中文翻译</summary>
+### 📝 生成的 caption 与中文翻译
 
 #### 变量 1：LNS11300036-73.0, %-73.0, Monthly, Seasonally Adjusted 
 
@@ -331,10 +313,8 @@
 
 > （源 artifact 未提供该字段。）
 
-</details>
 
-<details>
-<summary>🧪 下游 QA 模型答案 / 评分</summary>
+### 🧪 下游 QA 模型答案 / 评分
 
 表中所有预测都是同一个辅助 QA 模型 `gpt-5.4` 的输出；六行只改变输入证据形式。
 
@@ -347,21 +327,16 @@
 | 题目 + ChatTS caption (`chatts_caption`) | `B` | `B` | ✓ 正确 | B |
 | 题目 + ChatTS caption + 数值 (`chatts_caption_plus`) | `A` | `B` | ✗ 错误 | A |
 
-</details>
 
-<details>
-<summary>🔎 Case 分析</summary>
+### 🔎 Case 分析
 
 - **答案格局**：`meta_only=A✗, numbers=A✗, opentslm_caption=A✗, opentslm_caption_plus=B✓, chatts_caption=B✓, chatts_caption_plus=A✗`。
 - **关键问题**：题目要求比较 2022 年 12 月相对 2020 年 1 月的缺口。ChatTS 的单独 caption 捕捉了年轻组和年长组不同恢复形态，OpenTSLM 的通用趋势描述不足；但加入数值后 ChatTS+numbers 又答错，说明下游模型融合 caption 与数值时并不单调。
 - **对训练失败的含义**：这类 case 显示，当前 caption 训练更像是在学习通用趋势/峰谷/波动模板，而不是学习“下游 QA 所需的证据提取”。FREDQA 的正确答案经常依赖指定日期、指定窗口、比值、差值、反事实外推或领域机制；这些信息如果没有被 caption 明确保留，下游 GPT 即使很强也只能依赖题干先验或被错误摘要带偏。
 
-</details>
 
-</details>
 
-<details>
-<summary>📈 Case 03：FREDQA `325` | OpenTSLM 对、ChatTS 错</summary>
+## 📈 Case 03：FREDQA `325` | OpenTSLM 对、ChatTS 错
 
 ### 基本信息
 
@@ -383,15 +358,12 @@
 | 1 | 3-Month Moving Average of Unweighted Median Hourly Wage Growth: Overall, Percent Change from Year Ago, Monthly, Not Seasonally Adjusted  | 306 | 4.9 | 6 | 1.6@145 | 6.7@294 | -0.00270412 |
 | 2 | 12-Month Moving Average of Unweighted Median Hourly Wage Growth: Overall, Percent Change from Year Ago, Monthly, Not Seasonally Adjusted  | 306 | 4.7 | 6.3 | 1.7@154 | 6.4@303 | -0.00369093 |
 
-<details>
-<summary>🖼 时序图</summary>
+### 🖼 时序图
 
 ![FREDQA 325](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-rerun-zh/figures/fredqa_325.png)
 
-</details>
 
-<details>
-<summary>❓ QA 问题与中文翻译</summary>
+### ❓ QA 问题与中文翻译
 
 **题干原文**
 
@@ -420,10 +392,8 @@
 
 > （源 artifact 未提供该字段。）
 
-</details>
 
-<details>
-<summary>📝 生成的 caption 与中文翻译</summary>
+### 📝 生成的 caption 与中文翻译
 
 #### 变量 1：3-Month Moving Average of Unweighted Median Hourly Wage Growth: Overall, Percent Change from Year Ago, Monthly, Not Seasonally Adjusted 
 
@@ -461,10 +431,8 @@
 
 > 总体趋势是上升的。全局最大值（6.3）出现在窗口后三分之一处（位置约 306）。短期波动在前半部分（位置 1-153）更为明显，其中出现了两次显著下降，相比之下后半部分（位置 154-306）更平稳。这表明前半部分具有更大的短期波动。
 
-</details>
 
-<details>
-<summary>🧪 下游 QA 模型答案 / 评分</summary>
+### 🧪 下游 QA 模型答案 / 评分
 
 表中所有预测都是同一个辅助 QA 模型 `gpt-5.4` 的输出；六行只改变输入证据形式。
 
@@ -477,21 +445,16 @@
 | 题目 + ChatTS caption (`chatts_caption`) | `D` | `B` | ✗ 错误 | D |
 | 题目 + ChatTS caption + 数值 (`chatts_caption_plus`) | `D` | `B` | ✗ 错误 | D |
 
-</details>
 
-<details>
-<summary>🔎 Case 分析</summary>
+### 🔎 Case 分析
 
 - **答案格局**：`meta_only=B✓, numbers=B✓, opentslm_caption=B✓, opentslm_caption_plus=B✓, chatts_caption=D✗, chatts_caption_plus=D✗`。
 - **关键问题**：这是反例：ChatTS 把两个移动平均都概括成 increasing，并把全局最大值放在末尾，容易诱导模型选择持续加速；OpenTSLM 虽然也有噪声，但保留了下降/回落的动量信号。
 - **对训练失败的含义**：这类 case 显示，当前 caption 训练更像是在学习通用趋势/峰谷/波动模板，而不是学习“下游 QA 所需的证据提取”。FREDQA 的正确答案经常依赖指定日期、指定窗口、比值、差值、反事实外推或领域机制；这些信息如果没有被 caption 明确保留，下游 GPT 即使很强也只能依赖题干先验或被错误摘要带偏。
 
-</details>
 
-</details>
 
-<details>
-<summary>📈 Case 04：FREDQA `1141` | OpenTSLM/数值对、ChatTS 错</summary>
+## 📈 Case 04：FREDQA `1141` | OpenTSLM/数值对、ChatTS 错
 
 ### 基本信息
 
@@ -514,15 +477,12 @@
 | 2 | Consumer Price Index for All Urban Consumers: All Items in U.S. City Average, Percent Change from Year Ago, Monthly, Seasonally Adjusted  | 121 | 1.6841 | 6.3403 | -0.2299@24 | 8.9993@113 | 0.0447715 |
 | 3 | Consumer Price Index for All Urban Consumers: All Items Less Food and Energy in U.S. City Average, Percent Change from Year Ago, Monthly, Seasonally Adjusted  | 121 | 1.9098 | 5.5391 | 1.1837@89 | 6.6329@116 | 0.0268265 |
 
-<details>
-<summary>🖼 时序图</summary>
+### 🖼 时序图
 
 ![FREDQA 1141](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-rerun-zh/figures/fredqa_1141.png)
 
-</details>
 
-<details>
-<summary>❓ QA 问题与中文翻译</summary>
+### ❓ QA 问题与中文翻译
 
 **题干原文**
 
@@ -557,10 +517,8 @@
 > - 2021 年 1 月（衰退后）：|2.3458 (sticky) - 2.9652 (all items less food/energy)| = 0.6194 个百分点。
 > 差异增加了约 0.17 个百分点，表明一致性降低。由于 COVID-19 衰退是这两个时期之间唯一主要的供需冲击，因此数据支持这样的因果推断：这次衰退降低了这两个核心通胀指标之间的一致性。选项 A 正确反映了这一点。
 
-</details>
 
-<details>
-<summary>📝 生成的 caption 与中文翻译</summary>
+### 📝 生成的 caption 与中文翻译
 
 #### 变量 1：Sticky Price Consumer Price Index, Percent Change from Year Ago, Monthly, Seasonally Adjusted 
 
@@ -616,10 +574,8 @@
 
 > 总体趋势是上升的。全局最大值（6.63）出现在第 101 个点，位于 121 点窗口的最后三分之一。第一半段的短期波动更大（幅度约 0.6），而第二半段更小（幅度约 0.2）。
 
-</details>
 
-<details>
-<summary>🧪 下游 QA 模型答案 / 评分</summary>
+### 🧪 下游 QA 模型答案 / 评分
 
 表中所有预测都是同一个辅助 QA 模型 `gpt-5.4` 的输出；六行只改变输入证据形式。
 
@@ -632,21 +588,16 @@
 | 题目 + ChatTS caption (`chatts_caption`) | `B` | `A` | ✗ 错误 | B |
 | 题目 + ChatTS caption + 数值 (`chatts_caption_plus`) | `B` | `A` | ✗ 错误 | B |
 
-</details>
 
-<details>
-<summary>🔎 Case 分析</summary>
+### 🔎 Case 分析
 
 - **答案格局**：`meta_only=C✗, numbers=A✓, opentslm_caption=A✓, opentslm_caption_plus=A✓, chatts_caption=B✗, chatts_caption_plus=B✗`。
 - **关键问题**：正确答案依赖两个指定月份的绝对差。OpenTSLM+numbers 都能支持这个差值计算，ChatTS 把三个价格指标主要概括成 increasing/mixed，不能稳定表达指定月份之间的对齐程度。
 - **对训练失败的含义**：这类 case 显示，当前 caption 训练更像是在学习通用趋势/峰谷/波动模板，而不是学习“下游 QA 所需的证据提取”。FREDQA 的正确答案经常依赖指定日期、指定窗口、比值、差值、反事实外推或领域机制；这些信息如果没有被 caption 明确保留，下游 GPT 即使很强也只能依赖题干先验或被错误摘要带偏。
 
-</details>
 
-</details>
 
-<details>
-<summary>📈 Case 05：FREDQA `1028` | 两个 caption 都错，numbers 对</summary>
+## 📈 Case 05：FREDQA `1028` | 两个 caption 都错，numbers 对
 
 ### 基本信息
 
@@ -670,15 +621,12 @@
 | 3 | fruit | 641 | 1.0856 | 1.0238 | 0.7936@439 | 1.3167@362 | 3.36753e-06 |
 | 4 | newspaper | 641 | 1.5056 | 0.3173 | 0.3173@640 | 1.7483@173 | -0.00175494 |
 
-<details>
-<summary>🖼 时序图</summary>
+### 🖼 时序图
 
 ![FREDQA 1028](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-rerun-zh/figures/fredqa_1028.png)
 
-</details>
 
-<details>
-<summary>❓ QA 问题与中文翻译</summary>
+### ❓ QA 问题与中文翻译
 
 **题干原文**
 
@@ -707,10 +655,8 @@
 
 > 为了评估这些主张，使用公式计算百分比变化：(最终值 - 初始值) / 初始值 * 100。对于Newspaper，1995年1月的数值约为1.6，而2005年1月的数值约为1.2——这相当于下降了25%（≥20%），支持关于互联网影响的第一个主张。对于Tobacco，1990年1月的数值约为1.0，而2000年1月的数值约为1.2——这相当于增长了20%（&gt;15%），支持关于监管变化的第二个主张。数据与两个因果论点都一致：互联网减少了对印刷报纸的需求（降低了其工业贡献），而监管变化可能扩大了烟草生产或市场准入（增加了其贡献）。
 
-</details>
 
-<details>
-<summary>📝 生成的 caption 与中文翻译</summary>
+### 📝 生成的 caption 与中文翻译
 
 #### 变量 1：cheese
 
@@ -784,10 +730,8 @@
 
 > 总体趋势混合，包含多个区段：稳定（0–211）、上升（211–427）和下降（427–640）。全局最大值出现在点211，位于窗口中间三分之一（位置213–427）。短期波动在前半段更大（幅度约0.2），而后半段更小（幅度约0.0）。
 
-</details>
 
-<details>
-<summary>🧪 下游 QA 模型答案 / 评分</summary>
+### 🧪 下游 QA 模型答案 / 评分
 
 表中所有预测都是同一个辅助 QA 模型 `gpt-5.4` 的输出；六行只改变输入证据形式。
 
@@ -800,21 +744,16 @@
 | 题目 + ChatTS caption (`chatts_caption`) | `D` | `A` | ✗ 错误 | D |
 | 题目 + ChatTS caption + 数值 (`chatts_caption_plus`) | `B` | `A` | ✗ 错误 | B |
 
-</details>
 
-<details>
-<summary>🔎 Case 分析</summary>
+### 🔎 Case 分析
 
 - **答案格局**：`meta_only=D✗, numbers=A✓, opentslm_caption=B✗, opentslm_caption_plus=B✗, chatts_caption=D✗, chatts_caption_plus=B✗`。
 - **关键问题**：题目要求按指定年份计算百分比变化。两个 caption 都给出大量趋势、季节性、峰谷摘要，但没有可靠保留 1995/2005 与 1990/2000 的精确变化，因此 caption-only 错；直接数值能答对。
 - **对训练失败的含义**：这类 case 显示，当前 caption 训练更像是在学习通用趋势/峰谷/波动模板，而不是学习“下游 QA 所需的证据提取”。FREDQA 的正确答案经常依赖指定日期、指定窗口、比值、差值、反事实外推或领域机制；这些信息如果没有被 caption 明确保留，下游 GPT 即使很强也只能依赖题干先验或被错误摘要带偏。
 
-</details>
 
-</details>
 
-<details>
-<summary>📈 Case 06：FREDQA `1087` | 两个 caption 都错，numbers 对</summary>
+## 📈 Case 06：FREDQA `1087` | 两个 caption 都错，numbers 对
 
 ### 基本信息
 
@@ -837,15 +776,12 @@
 | 2 | Personal Consumption Expenditures: Chain-type Price Index, Percent Change from Year Ago, Quarterly, Seasonally Adjusted | 22 | 1.3894 | 2.4682 | 0.5431@3 | 6.9182@11 | 0.0953232 |
 | 3 | Gross Domestic Product: Chain-type Price Index, Percent Change from Year Ago, Quarterly, Seasonally Adjusted | 22 | 1.5694 | 2.4528 | 0.7664@3 | 7.7619@11 | 0.0742591 |
 
-<details>
-<summary>🖼 时序图</summary>
+### 🖼 时序图
 
 ![FREDQA 1087](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-rerun-zh/figures/fredqa_1087.png)
 
-</details>
 
-<details>
-<summary>❓ QA 问题与中文翻译</summary>
+### ❓ QA 问题与中文翻译
 
 **题干原文**
 
@@ -882,10 +818,8 @@
 > - Personal Consumption Expenditures Price Index (timeseries2): (4.0389 + 4.6249 + 5.8385 + 6.6236 + 6.9182) / 5 ≈ 5.61%
 > 排序为 Gross Domestic Product Price Index &gt; Gross domestic purchases index &gt; Personal Consumption Expenditures Price Index。这与这些指标的覆盖范围一致：Gross Domestic Product Price Index 包括面向全球市场的国内生产商品（不在其他指数中），其通胀可能高于消费者进口商品（包含在 PCEPI 中但不在 GDPPI 中）。Gross domestic purchases index 将企业/政府进口加入 PCEPI 的消费者范围，因此位居中间——这与企业/政府进口相对于面向全球市场的国内生产的中等通胀相一致。
 
-</details>
 
-<details>
-<summary>📝 生成的 caption 与中文翻译</summary>
+### 📝 生成的 caption 与中文翻译
 
 #### 变量 1：Gross domestic purchases (chain-type price index), Percent Change from Year Ago, Quarterly, Seasonally Adjusted
 
@@ -941,10 +875,8 @@
 
 > 整体趋势平稳，没有明显方向。全局最大值为 7.76，出现在第 9 个点，位于 22 点窗口的前三分之一。窗口前半段（点 1–11）相比后半段（点 12–22）表现出更大的短期波动。总之，趋势平稳，峰值在前三分之一，前半段波动更大。
 
-</details>
 
-<details>
-<summary>🧪 下游 QA 模型答案 / 评分</summary>
+### 🧪 下游 QA 模型答案 / 评分
 
 表中所有预测都是同一个辅助 QA 模型 `gpt-5.4` 的输出；六行只改变输入证据形式。
 
@@ -957,21 +889,16 @@
 | 题目 + ChatTS caption (`chatts_caption`) | `C` | `A` | ✗ 错误 | C |
 | 题目 + ChatTS caption + 数值 (`chatts_caption_plus`) | `C` | `A` | ✗ 错误 | C |
 
-</details>
 
-<details>
-<summary>🔎 Case 分析</summary>
+### 🔎 Case 分析
 
 - **答案格局**：`meta_only=C✗, numbers=A✓, opentslm_caption=C✗, opentslm_caption_plus=C✗, chatts_caption=C✗, chatts_caption_plus=C✗`。
 - **关键问题**：这类问题需要对指定窗口求平均并排序。caption 的全局趋势描述会遮蔽 Q2 2021 到 Q2 2022 的局部均值关系，说明 FREDQA 中很多“领域解释题”首先还是数值抽取题。
 - **对训练失败的含义**：这类 case 显示，当前 caption 训练更像是在学习通用趋势/峰谷/波动模板，而不是学习“下游 QA 所需的证据提取”。FREDQA 的正确答案经常依赖指定日期、指定窗口、比值、差值、反事实外推或领域机制；这些信息如果没有被 caption 明确保留，下游 GPT 即使很强也只能依赖题干先验或被错误摘要带偏。
 
-</details>
 
-</details>
 
-<details>
-<summary>📈 Case 07：FREDQA `884` | 六种条件全错</summary>
+## 📈 Case 07：FREDQA `884` | 六种条件全错
 
 ### 基本信息
 
@@ -992,15 +919,12 @@
 | ---: | --- | ---: | ---: | ---: | --- | --- | ---: |
 | 1 | (IRA/CUUS0000SA0)*100, (Bil. of $/Index 1982-1984=100)*100, Semiannual, Not Seasonally Adjusted  | 80 | 536.249 | 1942.92 | 536.249@0 | 2232.06@73 | 12.477 |
 
-<details>
-<summary>🖼 时序图</summary>
+### 🖼 时序图
 
 ![FREDQA 884](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-rerun-zh/figures/fredqa_884.png)
 
-</details>
 
-<details>
-<summary>❓ QA 问题与中文翻译</summary>
+### ❓ QA 问题与中文翻译
 
 **题干原文**
 
@@ -1029,10 +953,8 @@
 
 > 首先，计算疫情前的半年增长率：IRA 余额在 2018 年 7 月为 1,692.68 十亿美元，在 2019 年 7 月为 1,745.67 十亿美元，2 个期间增加了 52.99 十亿美元。平均半年增长为 52.99 / 2 = 26.50 十亿美元。接下来，将这一趋势从 2019 年 7 月（1,745.67 十亿美元）外推到 2021 年 1 月（之后 3 个期间）：1,745.67 +（26.50 * 3）= 1,825.17 十亿美元。实际的 2021 年 1 月余额为 2,232.06 十亿美元。反事实数值大约低 407 十亿美元，因为疫情导致的支出减少（提高了储蓄）和临时税收优惠——这些因素在假设情景中不存在——推动了比 2019 年前趋势更快的增长。这证实了反事实余额会远低于实际值。
 
-</details>
 
-<details>
-<summary>📝 生成的 caption 与中文翻译</summary>
+### 📝 生成的 caption 与中文翻译
 
 #### 变量 1：(IRA/CUUS0000SA0)*100, (Bil. of $/Index 1982-1984=100)*100, Semiannual, Not Seasonally Adjusted 
 
@@ -1052,10 +974,8 @@
 
 > 整体趋势是上升的。全局最大值（2232.12）出现在窗口的后三分之一（位置 54–79）。短期波动在前半段（位置 1–37）更为明显，其中出现了两个幅度分别为 491.93 和 265.44 的突然增加，而后半段则显示出更平滑的上升，仅有一个幅度为 355.44 的峰值。答案：上升；后三分之一；前半段。
 
-</details>
 
-<details>
-<summary>🧪 下游 QA 模型答案 / 评分</summary>
+### 🧪 下游 QA 模型答案 / 评分
 
 表中所有预测都是同一个辅助 QA 模型 `gpt-5.4` 的输出；六行只改变输入证据形式。
 
@@ -1068,21 +988,16 @@
 | 题目 + ChatTS caption (`chatts_caption`) | `B` | `A` | ✗ 错误 | B |
 | 题目 + ChatTS caption + 数值 (`chatts_caption_plus`) | `B` | `A` | ✗ 错误 | B |
 
-</details>
 
-<details>
-<summary>🔎 Case 分析</summary>
+### 🔎 Case 分析
 
 - **答案格局**：`meta_only=B✗, numbers=B✗, opentslm_caption=B✗, opentslm_caption_plus=B✗, chatts_caption=B✗, chatts_caption_plus=B✗`。
 - **关键问题**：题目需要用 2018-07 到 2019-07 的半年度平均增长率外推到 2021-01。caption 的全局 upward trend 和 last-third maximum 信息不足以执行反事实公式，数值条件也没有让 QA 模型稳定完成多步计算。
 - **对训练失败的含义**：这类 case 显示，当前 caption 训练更像是在学习通用趋势/峰谷/波动模板，而不是学习“下游 QA 所需的证据提取”。FREDQA 的正确答案经常依赖指定日期、指定窗口、比值、差值、反事实外推或领域机制；这些信息如果没有被 caption 明确保留，下游 GPT 即使很强也只能依赖题干先验或被错误摘要带偏。
 
-</details>
 
-</details>
 
-<details>
-<summary>📈 Case 08：FREDQA `560` | 六种条件全错</summary>
+## 📈 Case 08：FREDQA `560` | 六种条件全错
 
 ### 基本信息
 
@@ -1103,15 +1018,12 @@
 | ---: | --- | ---: | ---: | ---: | --- | --- | ---: |
 | 1 | Failures of all Institutions for the United States and Other Areas, Number of Institutions, Annual, Not Seasonally Adjusted  | 80 | 9 | 24 | 0@71 | 530@55 | 0.918671 |
 
-<details>
-<summary>🖼 时序图</summary>
+### 🖼 时序图
 
 ![FREDQA 560](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-rerun-zh/figures/fredqa_560.png)
 
-</details>
 
-<details>
-<summary>❓ QA 问题与中文翻译</summary>
+### ❓ QA 问题与中文翻译
 
 **题干原文**
 
@@ -1140,10 +1052,8 @@
 
 > （源 artifact 未提供该字段。）
 
-</details>
 
-<details>
-<summary>📝 生成的 caption 与中文翻译</summary>
+### 📝 生成的 caption 与中文翻译
 
 #### 变量 1：Failures of all Institutions for the United States and Other Areas, Number of Institutions, Annual, Not Seasonally Adjusted 
 
@@ -1163,10 +1073,8 @@
 
 > 总体趋势平稳，时间序列从约9.02开始，到24.04结束。全局最大值530.0（位于第54个点）出现在窗口的中间三分之一（第41-59个点）。短期波动在前半段更为明显（例如第2-4个点之间的尖峰），相比之下后半段（在第54个点之后呈现逐渐下降）。答案：平稳趋势；中间三分之一；前半段。
 
-</details>
 
-<details>
-<summary>🧪 下游 QA 模型答案 / 评分</summary>
+### 🧪 下游 QA 模型答案 / 评分
 
 表中所有预测都是同一个辅助 QA 模型 `gpt-5.4` 的输出；六行只改变输入证据形式。
 
@@ -1179,21 +1087,16 @@
 | 题目 + ChatTS caption (`chatts_caption`) | `C` | `B` | ✗ 错误 | C |
 | 题目 + ChatTS caption + 数值 (`chatts_caption_plus`) | `C` | `B` | ✗ 错误 | C |
 
-</details>
 
-<details>
-<summary>🔎 Case 分析</summary>
+### 🔎 Case 分析
 
 - **答案格局**：`meta_only=C✗, numbers=C✗, opentslm_caption=C✗, opentslm_caption_plus=C✗, chatts_caption=C✗, chatts_caption_plus=C✗`。
 - **关键问题**：模型全部选择了表面上合理但并非标准答案的选项，说明该题不是单纯读峰值，还要求把 1980s S&amp;L crisis 与之后更严格资本充足率规则联系起来；caption 没有编码制度性解释。
 - **对训练失败的含义**：这类 case 显示，当前 caption 训练更像是在学习通用趋势/峰谷/波动模板，而不是学习“下游 QA 所需的证据提取”。FREDQA 的正确答案经常依赖指定日期、指定窗口、比值、差值、反事实外推或领域机制；这些信息如果没有被 caption 明确保留，下游 GPT 即使很强也只能依赖题干先验或被错误摘要带偏。
 
-</details>
 
-</details>
 
-<details>
-<summary>📈 Case 09：FREDQA `850` | meta-only 对，数值和多数 caption 反而错</summary>
+## 📈 Case 09：FREDQA `850` | meta-only 对，数值和多数 caption 反而错
 
 ### 基本信息
 
@@ -1217,15 +1120,12 @@
 | 3 | Consumer Price Index for All Urban Consumers: Household Furnishings and Operations in U.S. City Average, Index Apr 2020=100, Monthly, Seasonally Adjusted  | 50 | 100 | 117.511 | 100@0 | 119.695@36 | 0.464982 |
 | 4 | Consumer Price Index for All Urban Consumers: Household Energy in U.S. City Average, Index Apr 2020=100, Monthly, Seasonally Adjusted | 50 | 100 | 132.86 | 99.6696@1 | 135.217@33 | 0.824406 |
 
-<details>
-<summary>🖼 时序图</summary>
+### 🖼 时序图
 
 ![FREDQA 850](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-rerun-zh/figures/fredqa_850.png)
 
-</details>
 
-<details>
-<summary>❓ QA 问题与中文翻译</summary>
+### ❓ QA 问题与中文翻译
 
 **题干原文**
 
@@ -1254,10 +1154,8 @@
 
 > 首先，计算2024年4月实际的总住房CPI：(122.4544 × 0.8) + [(119.7488 + 117.7026 + 133.0186)/3 × 0.2] = 97.96 + 24.70 = 122.66，表示相对于2020年4月增长了22.66%。接下来，计算反事实情景下的总住房CPI（能源固定为106.2866）：(122.4544 × 0.8) + [(119.7488 + 117.7026 + 106.2866)/3 × 0.2] = 97.96 + 22.92 = 120.88，表示增长了20.88%。差值为22.66% − 20.88% ≈ 低1.8个百分点。
 
-</details>
 
-<details>
-<summary>📝 生成的 caption 与中文翻译</summary>
+### 📝 生成的 caption 与中文翻译
 
 #### 变量 1：Consumer Price Index for All Urban Consumers: Shelter in U.S. City Average, Index Apr 2020=100, Monthly, Seasonally Adjusted 
 
@@ -1331,10 +1229,8 @@
 
 > 整体趋势是上升的。全局最大值135.22出现在点29，位于50点窗口的前三分之一处。短期波动在窗口的后半段更为明显，其中时间序列在点26到35之间从约125.75突然上升到132.86。答案：上升；前三分之一；后半段。
 
-</details>
 
-<details>
-<summary>🧪 下游 QA 模型答案 / 评分</summary>
+### 🧪 下游 QA 模型答案 / 评分
 
 表中所有预测都是同一个辅助 QA 模型 `gpt-5.4` 的输出；六行只改变输入证据形式。
 
@@ -1347,21 +1243,16 @@
 | 题目 + ChatTS caption (`chatts_caption`) | `A` | `B` | ✗ 错误 | A |
 | 题目 + ChatTS caption + 数值 (`chatts_caption_plus`) | `B` | `B` | ✓ 正确 | B |
 
-</details>
 
-<details>
-<summary>🔎 Case 分析</summary>
+### 🔎 Case 分析
 
 - **答案格局**：`meta_only=B✓, numbers=A✗, opentslm_caption=A✗, opentslm_caption_plus=A✗, chatts_caption=A✗, chatts_caption_plus=B✓`。
 - **关键问题**：题目选项与权重公式本身已经强烈约束答案，meta-only 能直接答对；加入数值或通用 caption 后模型被局部价格走势干扰，只有 ChatTS+numbers 恢复正确。这类样本说明高 meta-only 准确率不能等价为时序理解成功。
 - **对训练失败的含义**：这类 case 显示，当前 caption 训练更像是在学习通用趋势/峰谷/波动模板，而不是学习“下游 QA 所需的证据提取”。FREDQA 的正确答案经常依赖指定日期、指定窗口、比值、差值、反事实外推或领域机制；这些信息如果没有被 caption 明确保留，下游 GPT 即使很强也只能依赖题干先验或被错误摘要带偏。
 
-</details>
 
-</details>
 
-<details>
-<summary>📈 Case 10：FREDQA `481` | meta-only 错，数值/caption 全部救回</summary>
+## 📈 Case 10：FREDQA `481` | meta-only 错，数值/caption 全部救回
 
 ### 基本信息
 
@@ -1384,15 +1275,12 @@
 | 2 | Public Transit Ridership, Percent Change, Monthly, Not Seasonally Adjusted  | 61 | 0.4909 | -0.6018 | -14.6704@34 | 16.3636@38 | -0.0185047 |
 | 3 | Vehicle Miles Traveled, Percent Change, Monthly, Not Seasonally Adjusted  | 61 | -7.0598 | -8.3761 | -9.6498@8 | 18.8941@50 | -0.0130504 |
 
-<details>
-<summary>🖼 时序图</summary>
+### 🖼 时序图
 
 ![FREDQA 481](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-rerun-zh/figures/fredqa_481.png)
 
-</details>
 
-<details>
-<summary>❓ QA 问题与中文翻译</summary>
+### ❓ QA 问题与中文翻译
 
 **题干原文**
 
@@ -1421,10 +1309,8 @@
 
 > （源 artifact 未提供该字段。）
 
-</details>
 
-<details>
-<summary>📝 生成的 caption 与中文翻译</summary>
+### 📝 生成的 caption 与中文翻译
 
 #### 变量 1：US Regular Conventional Gas Price, Percent Change, Monthly, Not Seasonally Adjusted 
 
@@ -1480,10 +1366,8 @@
 
 > 趋势平稳。全局最大值位于窗口前 1/3。短期波动在窗口前半段更为明显。
 
-</details>
 
-<details>
-<summary>🧪 下游 QA 模型答案 / 评分</summary>
+### 🧪 下游 QA 模型答案 / 评分
 
 表中所有预测都是同一个辅助 QA 模型 `gpt-5.4` 的输出；六行只改变输入证据形式。
 
@@ -1496,21 +1380,16 @@
 | 题目 + ChatTS caption (`chatts_caption`) | `A` | `A` | ✓ 正确 | A |
 | 题目 + ChatTS caption + 数值 (`chatts_caption_plus`) | `A` | `A` | ✓ 正确 | A |
 
-</details>
 
-<details>
-<summary>🔎 Case 分析</summary>
+### 🔎 Case 分析
 
 - **答案格局**：`meta_only=C✗, numbers=A✓, opentslm_caption=A✓, opentslm_caption_plus=A✓, chatts_caption=A✓, chatts_caption_plus=A✓`。
 - **关键问题**：没有时序证据时模型选错背景因素；加入数值或 caption 后都能定位春夏出行需求这一解释。这是少数 caption 真正提供有效证据的正例。
 - **对训练失败的含义**：这类 case 显示，当前 caption 训练更像是在学习通用趋势/峰谷/波动模板，而不是学习“下游 QA 所需的证据提取”。FREDQA 的正确答案经常依赖指定日期、指定窗口、比值、差值、反事实外推或领域机制；这些信息如果没有被 caption 明确保留，下游 GPT 即使很强也只能依赖题干先验或被错误摘要带偏。
 
-</details>
 
-</details>
 
-<details>
-<summary>📈 Case 11：FREDQA `1209` | meta-only 错，数值/caption 全部救回</summary>
+## 📈 Case 11：FREDQA `1209` | meta-only 错，数值/caption 全部救回
 
 ### 基本信息
 
@@ -1534,15 +1413,12 @@
 | 3 | Age-Adjusted Premature Death Rate for St. Louis city, MO, Rate per 100,000, Annual, Not Seasonally Adjusted  | 22 | 730 | 701.8 | 516.2@14 | 730@0 | -5.22592 |
 | 4 | Age-Adjusted Premature Death Rate for St. Louis County, MO, Rate per 100,000, Annual, Not Seasonally Adjusted  | 22 | 372.2 | 424.5 | 320.3@8 | 424.5@21 | 0.319819 |
 
-<details>
-<summary>🖼 时序图</summary>
+### 🖼 时序图
 
 ![FREDQA 1209](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-rerun-zh/figures/fredqa_1209.png)
 
-</details>
 
-<details>
-<summary>❓ QA 问题与中文翻译</summary>
+### ❓ QA 问题与中文翻译
 
 **题干原文**
 
@@ -1593,10 +1469,8 @@
 >
 > 粗率在衰退后从下降转为上升，但年龄调整率（控制了人口年龄构成）稳定下来。由于年龄调整消除了城市年龄结构变化带来的混杂因素，衰退对粗率的表面影响并不是真正的每个年龄组过早死亡增加——相反，它反映了圣路易斯市居民构成的变化。这支持选项B。
 
-</details>
 
-<details>
-<summary>📝 生成的 caption 与中文翻译</summary>
+### 📝 生成的 caption 与中文翻译
 
 #### 变量 1：Premature Death Rate for St. Louis County, MO, Rate per 100,000, Annual, Not Seasonally Adjusted 
 
@@ -1670,10 +1544,8 @@
 
 > 总体趋势是平坦的，数值起始和结束大约在372.20到424.50之间。全局最大值出现在最后一个点（第22个位置），位于窗口的后三分之一。短期波动在前半段（位置1-11）更为明显，其中出现了快速下降和回升。因此，答案是：平坦趋势，全局最大值在后三分之一，前半段波动更大。
 
-</details>
 
-<details>
-<summary>🧪 下游 QA 模型答案 / 评分</summary>
+### 🧪 下游 QA 模型答案 / 评分
 
 表中所有预测都是同一个辅助 QA 模型 `gpt-5.4` 的输出；六行只改变输入证据形式。
 
@@ -1686,21 +1558,16 @@
 | 题目 + ChatTS caption (`chatts_caption`) | `B` | `B` | ✓ 正确 | B |
 | 题目 + ChatTS caption + 数值 (`chatts_caption_plus`) | `B` | `B` | ✓ 正确 | B |
 
-</details>
 
-<details>
-<summary>🔎 Case 分析</summary>
+### 🔎 Case 分析
 
 - **答案格局**：`meta_only=C✗, numbers=B✓, opentslm_caption=B✓, opentslm_caption_plus=B✓, chatts_caption=B✓, chatts_caption_plus=B✓`。
 - **关键问题**：题目需要比较两个阶段的平均年变化，并理解 age-adjustment 的含义。时序证据能把 meta-only 从错误方向拉回，说明部分干预型 FREDQA 确实受益于数据证据。
 - **对训练失败的含义**：这类 case 显示，当前 caption 训练更像是在学习通用趋势/峰谷/波动模板，而不是学习“下游 QA 所需的证据提取”。FREDQA 的正确答案经常依赖指定日期、指定窗口、比值、差值、反事实外推或领域机制；这些信息如果没有被 caption 明确保留，下游 GPT 即使很强也只能依赖题干先验或被错误摘要带偏。
 
-</details>
 
-</details>
 
-<details>
-<summary>📈 Case 12：FREDQA `811` | caption-only 对，caption+numbers 反而错</summary>
+## 📈 Case 12：FREDQA `811` | caption-only 对，caption+numbers 反而错
 
 ### 基本信息
 
@@ -1722,15 +1589,12 @@
 | 1 | Net migration for the United States | 12 | 1.83573e+06 | 4.77403e+06 | 1.55605e+06@1 | 8.85995e+06@7 | 370971 |
 | 2 | Net migration for Mexico | 12 | -409085 | -300000 | -2.29647e+06@7 | -300000@11 | -8972.23 |
 
-<details>
-<summary>🖼 时序图</summary>
+### 🖼 时序图
 
 ![FREDQA 811](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-rerun-zh/figures/fredqa_811.png)
 
-</details>
 
-<details>
-<summary>❓ QA 问题与中文翻译</summary>
+### ❓ QA 问题与中文翻译
 
 **题干原文**
 
@@ -1759,10 +1623,8 @@
 
 > 首先，通过延续 1962 年到 1992 年每年 5.3% 的增长率，计算反事实的 1997 年美国净迁移：4,463,754 * (1 + 0.053)^5 ≈ 5,777,629。接下来，计算 1992 年墨西哥净迁移与美国净迁移的比率：-2,018,533 / 4,463,754 ≈ -0.452。将这一比率应用于反事实的美国数值，得到墨西哥反事实的 1997 年净迁移：5,777,629 * (-0.452) ≈ -2,612,644。与实际的 1997 年墨西哥净迁移（-2,296,470）相比：实际值减去反事实值等于约 316,174，即高约 320,000。反事实地说，如果美国的激增（由非墨西哥移民推动）没有发生，墨西哥的净迁移将会遵循镜像比率并变得更负（更低）。由于这一激增是非墨西哥来源，墨西哥的实际净迁移比反事实情形更不负（更高）。
 
-</details>
 
-<details>
-<summary>📝 生成的 caption 与中文翻译</summary>
+### 📝 生成的 caption 与中文翻译
 
 #### 变量 1：Net migration for the United States
 
@@ -1800,10 +1662,8 @@
 
 > 整体趋势是平稳的。全局最大值出现在第 9 个点，位于 12 点窗口的前四分之一。窗口前半段（第 1-6 个点）出现了显著的向下尖峰，振幅为 1,570,538.74，而后半段（第 7-12 个点）变化很小。因此，前半段具有更大的短期波动。
 
-</details>
 
-<details>
-<summary>🧪 下游 QA 模型答案 / 评分</summary>
+### 🧪 下游 QA 模型答案 / 评分
 
 表中所有预测都是同一个辅助 QA 模型 `gpt-5.4` 的输出；六行只改变输入证据形式。
 
@@ -1816,18 +1676,14 @@
 | 题目 + ChatTS caption (`chatts_caption`) | `A` | `A` | ✓ 正确 | A |
 | 题目 + ChatTS caption + 数值 (`chatts_caption_plus`) | `B` | `A` | ✗ 错误 | B |
 
-</details>
 
-<details>
-<summary>🔎 Case 分析</summary>
+### 🔎 Case 分析
 
 - **答案格局**：`meta_only=B✗, numbers=B✗, opentslm_caption=A✓, opentslm_caption_plus=D✗, chatts_caption=A✓, chatts_caption_plus=B✗`。
 - **关键问题**：OpenTSLM 和 ChatTS caption-only 都能答对，但加上数值后又失败，说明下游模型面对长题干、反事实增长率和原始数值时会出现证据整合不稳定；caption 有时像筛选后的线索，numbers 则增加了干扰。
 - **对训练失败的含义**：这类 case 显示，当前 caption 训练更像是在学习通用趋势/峰谷/波动模板，而不是学习“下游 QA 所需的证据提取”。FREDQA 的正确答案经常依赖指定日期、指定窗口、比值、差值、反事实外推或领域机制；这些信息如果没有被 caption 明确保留，下游 GPT 即使很强也只能依赖题干先验或被错误摘要带偏。
 
-</details>
 
-</details>
 
 ## 全局 Case Study 分析
 
