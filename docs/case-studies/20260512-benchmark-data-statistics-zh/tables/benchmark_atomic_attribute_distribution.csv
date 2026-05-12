@@ -1,0 +1,33 @@
+benchmark,atomic_attribute,n_samples_with_attribute,pct_of_samples
+TSShapeQA-OOD,EXTREMA_POS,267,0.3337
+TSShapeQA-OOD,TREND,267,0.3337
+TSShapeQA-OOD,VOLATILITY_REGION,266,0.3325
+TSAQA,classification,166,0.1667
+TSAQA,anomaly_detection,166,0.1667
+TSAQA,characterization,166,0.1667
+TSAQA,temporal_relationship,166,0.1667
+TSAQA,comparison,166,0.1667
+TSAQA,data_transformation,166,0.1667
+TimeSeriesExam,Pattern Recognition,100,0.3802
+TimeSeriesExam,Anolmaly Detection,89,0.3384
+TimeSeriesExam,Noise Understanding,74,0.2814
+dataset_a,causal,92,0.7863
+dataset_a,deductive,43,0.3675
+dataset_a,noise,42,0.359
+dataset_a,local,42,0.359
+dataset_a,trend,41,0.3504
+dataset_a,season,37,0.3162
+dataset_a,local-inductive,30,0.2564
+dataset_a_raw_multivar,local-cluster-inductive,27,0.6429
+dataset_a_raw_multivar,local-correlation-inductive,27,0.6429
+dataset_a_raw_multivar,shape-cluster-inductive,15,0.3571
+dataset_a_raw_multivar,shape-correlation-inductive,15,0.3571
+FREDQA,Abductive Reasoning,274,0.4536
+FREDQA,Inductive Reasoning,157,0.2599
+FREDQA,Analogical Reasoning,152,0.2517
+FREDQA,Causal Reasoning - Interventional,118,0.1954
+FREDQA,Causal Reasoning - Counterfactual,103,0.1705
+FREDQA,Causal Reasoning - Associational,84,0.1391
+FREDQA,Deductive Reasoning,69,0.1142
+FREDQA,Comparative or Analogical Reasoning,1,0.0017
+FREDQA,Analytical Reasoning,1,0.0017
