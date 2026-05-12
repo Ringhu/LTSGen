@@ -1,0 +1,148 @@
+{
+  "source_dir": "/home/cris/Research/LTSGEN/.research/fredqa-rerun-20260511",
+  "report": "/home/cris/Research/LTSGEN/docs/case-studies/20260512-fredqa-rerun-zh/fredqa_rerun_case_study_zh.md",
+  "notion_report": "/home/cris/Research/LTSGEN/docs/case-studies/20260512-fredqa-rerun-zh/fredqa_rerun_case_study_zh_notion.md",
+  "github_branch": "fredqa-rerun-zh-20260512",
+  "github_raw_base": "https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-rerun-zh/figures",
+  "selected_cases": [
+    {
+      "idx": "1079",
+      "tag": "OpenTSLM 错、ChatTS 对",
+      "focus": "家庭资产/负债变化率在通胀冲击前后的比值变化",
+      "why": "OpenTSLM 把两条序列都写成稳定上升，弱化了 2022 年资产变化相对负债变化下降这一局部比值证据；ChatTS 至少保留了资产先升后降、负债峰值位置等局部形态，因此 caption-only 能答对。"
+    },
+    {
+      "idx": "1145",
+      "tag": "OpenTSLM 错、ChatTS 对，但 caption+numbers 不稳",
+      "focus": "疫情后不同年龄组劳动参与率缺口比较",
+      "why": "题目要求比较 2022 年 12 月相对 2020 年 1 月的缺口。ChatTS 的单独 caption 捕捉了年轻组和年长组不同恢复形态，OpenTSLM 的通用趋势描述不足；但加入数值后 ChatTS+numbers 又答错，说明下游模型融合 caption 与数值时并不单调。"
+    },
+    {
+      "idx": "325",
+      "tag": "OpenTSLM 对、ChatTS 错",
+      "focus": "3 月移动平均与 12 月移动平均的工资增长动量",
+      "why": "这是反例：ChatTS 把两个移动平均都概括成 increasing，并把全局最大值放在末尾，容易诱导模型选择持续加速；OpenTSLM 虽然也有噪声，但保留了下降/回落的动量信号。"
+    },
+    {
+      "idx": "1141",
+      "tag": "OpenTSLM/数值对、ChatTS 错",
+      "focus": "疫情冲击前后 sticky CPI 与 core CPI 的差距变化",
+      "why": "正确答案依赖两个指定月份的绝对差。OpenTSLM+numbers 都能支持这个差值计算，ChatTS 把三个价格指标主要概括成 increasing/mixed，不能稳定表达指定月份之间的对齐程度。"
+    },
+    {
+      "idx": "1028",
+      "tag": "两个 caption 都错，numbers 对",
+      "focus": "报纸与烟草工业贡献的两条因果 claim 同时验证",
+      "why": "题目要求按指定年份计算百分比变化。两个 caption 都给出大量趋势、季节性、峰谷摘要，但没有可靠保留 1995/2005 与 1990/2000 的精确变化，因此 caption-only 错；直接数值能答对。"
+    },
+    {
+      "idx": "1087",
+      "tag": "两个 caption 都错，numbers 对",
+      "focus": "GDP price index、gross domestic purchases、PCE price index 的平均通胀排序",
+      "why": "这类问题需要对指定窗口求平均并排序。caption 的全局趋势描述会遮蔽 Q2 2021 到 Q2 2022 的局部均值关系，说明 FREDQA 中很多“领域解释题”首先还是数值抽取题。"
+    },
+    {
+      "idx": "884",
+      "tag": "六种条件全错",
+      "focus": "IRA 余额的疫情反事实外推",
+      "why": "题目需要用 2018-07 到 2019-07 的半年度平均增长率外推到 2021-01。caption 的全局 upward trend 和 last-third maximum 信息不足以执行反事实公式，数值条件也没有让 QA 模型稳定完成多步计算。"
+    },
+    {
+      "idx": "560",
+      "tag": "六种条件全错",
+      "focus": "FDIC 机构倒闭峰值与监管解释",
+      "why": "模型全部选择了表面上合理但并非标准答案的选项，说明该题不是单纯读峰值，还要求把 1980s S&L crisis 与之后更严格资本充足率规则联系起来；caption 没有编码制度性解释。"
+    },
+    {
+      "idx": "850",
+      "tag": "meta-only 对，数值和多数 caption 反而错",
+      "focus": "住房相关 CPI 加权指数在能源价格反事实下的四年增长差",
+      "why": "题目选项与权重公式本身已经强烈约束答案，meta-only 能直接答对；加入数值或通用 caption 后模型被局部价格走势干扰，只有 ChatTS+numbers 恢复正确。这类样本说明高 meta-only 准确率不能等价为时序理解成功。"
+    },
+    {
+      "idx": "481",
+      "tag": "meta-only 错，数值/caption 全部救回",
+      "focus": "油价、公交客流、车辆里程在 2015 年 3 月的替代效应解释",
+      "why": "没有时序证据时模型选错背景因素；加入数值或 caption 后都能定位春夏出行需求这一解释。这是少数 caption 真正提供有效证据的正例。"
+    },
+    {
+      "idx": "1209",
+      "tag": "meta-only 错，数值/caption 全部救回",
+      "focus": "圣路易斯 premature death crude rate 与 age-adjusted rate 的衰退前后变化",
+      "why": "题目需要比较两个阶段的平均年变化，并理解 age-adjustment 的含义。时序证据能把 meta-only 从错误方向拉回，说明部分干预型 FREDQA 确实受益于数据证据。"
+    },
+    {
+      "idx": "811",
+      "tag": "caption-only 对，caption+numbers 反而错",
+      "focus": "美墨净迁移镜像关系的反事实计算",
+      "why": "OpenTSLM 和 ChatTS caption-only 都能答对，但加上数值后又失败，说明下游模型面对长题干、反事实增长率和原始数值时会出现证据整合不稳定；caption 有时像筛选后的线索，numbers 则增加了干扰。"
+    }
+  ],
+  "figures": {
+    "overall": "fredqa_overall_accuracy.png",
+    "attribute": "fredqa_by_attribute_accuracy.png",
+    "nvars": "fredqa_by_nvars_accuracy.png",
+    "1079": "fredqa_1079.png",
+    "1145": "fredqa_1145.png",
+    "325": "fredqa_325.png",
+    "1141": "fredqa_1141.png",
+    "1028": "fredqa_1028.png",
+    "1087": "fredqa_1087.png",
+    "884": "fredqa_884.png",
+    "560": "fredqa_560.png",
+    "850": "fredqa_850.png",
+    "481": "fredqa_481.png",
+    "1209": "fredqa_1209.png",
+    "811": "fredqa_811.png"
+  },
+  "counts": {
+    "qa": 604,
+    "per_var": 1393,
+    "op": 1393,
+    "chatts": 1393,
+    "pred": 3624
+  },
+  "summary_accuracy": {
+    "meta_only": {
+      "correct": 489,
+      "n": 604,
+      "accuracy": 0.8096026490066225
+    },
+    "numbers": {
+      "correct": 496,
+      "n": 604,
+      "accuracy": 0.8211920529801324
+    },
+    "opentslm_caption": {
+      "correct": 487,
+      "n": 604,
+      "accuracy": 0.8062913907284768
+    },
+    "opentslm_caption_plus": {
+      "correct": 497,
+      "n": 604,
+      "accuracy": 0.8228476821192053
+    },
+    "chatts_caption": {
+      "correct": 495,
+      "n": 604,
+      "accuracy": 0.8195364238410596
+    },
+    "chatts_caption_plus": {
+      "correct": 491,
+      "n": 604,
+      "accuracy": 0.8129139072847682
+    }
+  },
+  "summary_patterns": {
+    "opentslm_right_chatts_wrong": 16,
+    "numbers_rescue_meta_wrong": 27,
+    "chatts_rescue_meta_wrong": 24,
+    "opentslm_rescue_meta_wrong": 16,
+    "meta_numbers_captions_all_wrong": 79,
+    "both_caption_wrong_numbers_right": 13,
+    "opentslm_wrong_chatts_right": 24,
+    "caption_and_numbers_wrong_meta_right": 1,
+    "meta_only_succeeds_when_ts_inputs_fail": 1
+  }
+}
