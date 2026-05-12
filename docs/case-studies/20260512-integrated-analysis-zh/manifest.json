@@ -13,6 +13,7 @@
     "figures/fig_caption_delta_vs_numbers.png",
     "figures/fig_caption_help_harm.png",
     "figures/fig_fredqa_overall_vs_hard_subset.png",
+    "figures/fig_meta_hard_subset_condition_change.png",
     "figures/fig_benchmark_structure.png",
     "figures/fig_domain_multivar_deltas.png"
   ],
@@ -27,10 +28,13 @@
     "tables/multivar_summary.csv",
     "tables/caption_help_harm_summary.csv",
     "tables/fredqa_overall_vs_hard_subset.csv",
+    "tables/meta_hard_subset_condition_deltas.csv",
+    "tables/meta_hard_subset_summary_wide.csv",
     "tables/benchmark_structure_summary.csv"
   ],
   "scripts": [
-    "scripts/plot_integrated_analysis_figures.py"
+    "scripts/plot_integrated_analysis_figures.py",
+    "scripts/analyze_meta_hard_subset.py"
   ],
   "source_reports": [
     "docs/case-studies/20260511-balanced-zh/balanced_case_study_zh_notion.md",

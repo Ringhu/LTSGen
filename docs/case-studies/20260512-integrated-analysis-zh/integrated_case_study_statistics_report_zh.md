@@ -14,7 +14,9 @@
 
 5. **FREDQA 的总体 80%+ accuracy 不能直接解释为时序理解。** FREDQA meta-only 已经达到 489/604 = 80.96%。过滤掉 meta-only 能答对的样本后，hard subset 只有 115 题，numbers 只救回 27/115，OpenTSLM caption 16/115，ChatTS caption 24/115。这说明 FREDQA 的总准确率主要受题干、选项和领域先验影响。
 
-6. **多变量和真领域题的规模不小，但不能和“领域外壳”混淆。** 当前纳入统计的 2822 题中，多变量输入 666 题，占 23.6%；真正需要跨序列推理 600 题，占 21.3%；需要领域知识 688 题，占 24.4%；domain_shell 1467 题，占 52.0%。因此，后续分析必须分开汇报“披领域外壳的通用形态题”和“确实需要领域机制的题”。
+6. **meta-only hard subset 应作为跨 benchmark 的固定诊断口径。** 过滤掉 meta-only 能答对的题后，FREDQA 从 80%+ collapse 到 13.9%–23.5%；TSAQA hard subset 中 caption-only 只有 27% 左右；TSShapeQA-OOD 中 OpenTSLM caption 从 33.5% 降到 23.9%，但 ChatTS caption 从 52.9% 升到 59.8%。这说明不同 benchmark 的 caption 表现必须先剥离题干/选项先验再解释。
+
+7. **多变量和真领域题的规模不小，但不能和“领域外壳”混淆。** 当前纳入统计的 2822 题中，多变量输入 666 题，占 23.6%；真正需要跨序列推理 600 题，占 21.3%；需要领域知识 688 题，占 24.4%；domain_shell 1467 题，占 52.0%。因此，后续分析必须分开汇报“披领域外壳的通用形态题”和“确实需要领域机制的题”。
 
 ## 2. 全局统计分析
 
@@ -84,6 +86,34 @@ FREDQA hard-subset 评测的关键价值不是“又多了一张总体准确率�
 **解释。** FREDQA 的很多题目包含强领域背景、选项排除线索或常识先验。只有过滤 meta-only 后，才能看出模型是否真的使用了时序证据。
 
 **含义。** 以后 FREDQA 不应只报告 overall accuracy。更有诊断价值的是 hard subset、按变量数、按问题类型，以及 help/harm vs numbers。
+
+### 2.4 去除 meta-only 可答对样本后的全面评估
+
+这个评估把 FREDQA hard subset 的口径推广到其他 benchmark：先过滤 `meta_only_correct = 1` 的题，只保留 meta-only 答错的样本，再统计其他输入条件在这些样本上的表现。它回答的问题不是“模型总体能答对多少”，而是“当题干、选项和领域先验不够时，某种 evidence interface 能救回多少”。
+
+![Meta-only hard subset condition change](figures/fig_meta_hard_subset_condition_change.png)
+
+图左是 hard subset 上的 accuracy 或 open score；图右是 hard subset 相对 overall 的变化。右图越红，说明原总体成绩越依赖 meta-only easy cases；如果变蓝，说明该条件反而更擅长处理 meta-only 答不出的题。
+
+| Benchmark | hard subset | 指标 | numbers | OpenTSLM caption | OpenTSLM cap+num | ChatTS caption | ChatTS cap+num | 统计意义 |
+| --- | ---: | --- | ---: | ---: | ---: | ---: | ---: | --- |
+| FREDQA | 115 / 604 | accuracy | 23.5% | 13.9% | 21.7% | 20.9% | 19.1% | 总体 80%+ 主要来自 meta prior；真正需要证据的题上所有条件都弱 |
+| TSAQA | 497 / 996 | accuracy | 53.9% | 27.6% | 49.5% | 27.0% | 52.1% | numbers 仍是最稳证据；caption-only 只能救回约四分之一 |
+| TSShapeQA-OOD | 532 / 800 | accuracy | 39.7% | 23.9% | 37.4% | 59.8% | 57.5% | ChatTS caption 在 meta-hard 题上更强，OpenTSLM caption 更弱 |
+| TimeSeriesExam | 160 / 263 | accuracy | 55.6% | 23.1% | NA | 39.4% | NA | caption-only 明显落后于 raw numbers |
+| dataset_a | 100 / 116 | open score | 0.489 | 0.258 | 0.426 | 0.640 | 0.652 | ChatTS 在开放题 hard subset 上仍保留优势 |
+| dataset_a_raw_multivar | 42 / 42 | open score | 0.620 | 0.491 | 0.623 | 0.561 | 0.616 | `correct@0.8` 口径下 meta-only 没有答对题，因此 hard subset 等于全集 |
+
+**统计项含义。**
+
+- `meta_correct_rate` 表示不用时间序列证据、只看题干/选项/领域先验能答对的比例；它越高，benchmark 越容易被 shortcut 抬高。
+- `hard subset` 表示 meta-only 答错的样本集合；在 binary QA 中，其他条件在这个集合上的 accuracy 就是 rescue rate。
+- `delta_hard_minus_overall` 表示剥离 easy prior 后某条件下降多少。FREDQA 的 numbers 下降 58.6 pp，OpenTSLM caption 下降 66.7 pp，说明总体 accuracy 严重混入 meta-only easy cases。
+- 对 `dataset_a` 和 `dataset_a_raw_multivar`，主指标是 evaluator mean score；过滤仍按 `meta_only_correct` 或 `correct@0.8` 做，因此 hard score 表示“meta-only 未过正确阈值时的平均回答质量”。
+
+**关键观察。** FREDQA 是最典型的 shortcut benchmark：meta-only 答对 489/604 题，过滤后所有 evidence 条件都只剩 13.9%–23.5%。TSAQA 和 TimeSeriesExam 的下降更温和，但 hard subset 中 caption-only 仍明显低于 numbers。TSShapeQA-OOD 是重要反例：ChatTS caption 在 hard subset 上从 52.9% 升到 59.8%，说明它答对的不是 meta-only easy cases，而是更依赖真实形态描述的样本；OpenTSLM caption 则从 33.5% 降到 23.9%，更像弱 prior 或低事实性摘要。
+
+**含义。** 之后所有 benchmark 都应同时报告 overall 和 meta-hard subset。overall 用来描述用户可见性能，meta-hard subset 用来判断模型是否真的使用时序证据。尤其是 caption 模式，不能只看整体准确率：OpenTSLM 在 TSShapeQA-OOD 的 caption-only 整体 33.5% 已经低，hard subset 后进一步降到 23.9%；ChatTS 则相反，hard subset 后更高，说明两个 captioner 的错误机制完全不同。
 
 ## 3. Caption factuality audit
 
@@ -5877,6 +5907,7 @@ The overall trend is decreasing. The global maximum occurs at the start of the s
 | 自由文本 caption 会丢失 raw numbers 中可答题的信息 | TSShapeQA 两个 caption 都错、numbers 对 15.2%；TSAQA 18.9%；TimeSeriesExam 18.6% |
 | caption+numbers 不是稳定优于 numbers | 多数 benchmark 的 cap+num 相对 numbers 为负或接近 0，只有 dataset_a ChatTS 是明显正例 |
 | FREDQA overall accuracy 受 meta-only shortcut 强烈影响 | meta-only 80.96%；hard subset 中 numbers 只有 23.48%，caption-only 更低 |
+| meta-hard subset 能揭示 captioner 差异 | TSShapeQA-OOD 去除 meta-only 正确题后，OpenTSLM caption 为 23.9%，ChatTS caption 为 59.8% |
 | 领域题必须区分 domain_shell 和真正领域知识 | 2822 题中 domain_shell 52.0%，domain_knowledge_required 24.4% |
 | 多变量题需要结构化跨变量 evidence，而不是单序列 caption 堆叠 | TSAQA cross-series numbers 76.7%，caption-only 约 52%；dataset_a_raw_multivar cap+num 仅打平 numbers |
 
@@ -5904,11 +5935,42 @@ The overall trend is decreasing. The global maximum occurs at the start of the s
 
 6. **Oracle caption upper bound。** 用 GT-derived structured caption 给下游 QA，估计 caption paradigm 的理论上限。如果 oracle caption 很高，瓶颈在 captioner；如果仍低，瓶颈在 interface 或 downstream reasoning。
 
-## 8. OpenTSLM 与 ChatTS 训练数据规模对比
+## 8. 去除 meta-only 可答对题后的全面评估
+
+本节是 2.4 的可复核版本，给出完整统计表。计算口径是：对每个 benchmark 先找出 `meta_only_correct = 0` 的样本，再统计各输入条件的 hard subset 表现和相对 overall 的变化。binary QA 使用 accuracy；开放回答使用 evaluator mean score，但过滤仍按 `meta_only_correct` 或 `correct@0.8`。
+
+| Benchmark | metric | meta correct | hard subset | numbers overall -> hard | OpenTSLM caption overall -> hard | OpenTSLM cap+num overall -> hard | ChatTS caption overall -> hard | ChatTS cap+num overall -> hard |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| FREDQA | accuracy | 489/604 = 81.0% | 115 | 82.1% -> 23.5% | 80.6% -> 13.9% | 82.3% -> 21.7% | 82.0% -> 20.9% | 81.3% -> 19.1% |
+| TSAQA | accuracy | 499/996 = 50.1% | 497 | 65.0% -> 53.9% | 44.9% -> 27.6% | 59.9% -> 49.5% | 46.1% -> 27.0% | 60.4% -> 52.1% |
+| TSShapeQA-OOD | accuracy | 268/800 = 33.5% | 532 | 55.4% -> 39.7% | 33.5% -> 23.9% | 46.2% -> 37.4% | 52.9% -> 59.8% | 53.2% -> 57.5% |
+| TimeSeriesExam | accuracy | 103/263 = 39.2% | 160 | 67.7% -> 55.6% | 36.1% -> 23.1% | NA | 51.3% -> 39.4% | NA |
+| dataset_a | open score | 16/116 = 13.8% | 100 | 0.520 -> 0.489 | 0.317 -> 0.258 | 0.469 -> 0.426 | 0.652 -> 0.640 | 0.670 -> 0.652 |
+| dataset_a_raw_multivar | open score | 0/42 = 0.0% | 42 | 0.620 -> 0.620 | 0.491 -> 0.491 | 0.623 -> 0.623 | 0.561 -> 0.561 | 0.616 -> 0.616 |
+
+**逐 benchmark 解读。**
+
+- **FREDQA**：hard subset 只有 115/604，说明 81.0% 的题 meta-only 已经能答对。过滤后 numbers 只救回 27 题，ChatTS caption 24 题，OpenTSLM caption 16 题。这里的核心结论是：FREDQA overall 不应作为时序证据使用能力的主指标。
+- **TSAQA**：meta-only 失败题接近一半。numbers hard accuracy 为 53.9%，ChatTS cap+num 为 52.1%，OpenTSLM cap+num 为 49.5%，caption-only 只有 27% 左右。这里说明 raw numbers 仍是最强证据，caption-only 丢信息明显。
+- **TSShapeQA-OOD**：hard subset 占 66.5%。OpenTSLM caption-only hard accuracy 为 23.9%，比 overall 低 9.6 pp；ChatTS caption-only hard accuracy 为 59.8%，比 overall 高 6.9 pp。这是最能区分两个 captioner 的结果：ChatTS 的成功更集中在需要真实形态证据的题上，OpenTSLM 则没有。
+- **TimeSeriesExam**：numbers 从 67.7% 降到 55.6%，仍明显高于 ChatTS caption 39.4% 和 OpenTSLM caption 23.1%。这说明考试型题目中，caption-only 不能替代原始数值。
+- **dataset_a**：meta-only 正确率很低，hard subset 覆盖 100/116。ChatTS caption 和 ChatTS cap+num 在 hard subset 上仍有 0.640 / 0.652 mean score，说明 ChatTS 的任务化描述在开放题中有持续收益；OpenTSLM caption hard score 只有 0.258。
+- **dataset_a_raw_multivar**：`correct@0.8` 下 meta-only 没有答对样本，所以 hard subset 等于全集。这个结果不能证明过滤带来的变化，但能说明在更难的多变量开放题上，所有条件都没有达到严格正确阈值；mean score 层面 cap+num 基本贴近 numbers。
+
+**与 case study 的关系。** 这个 hard-subset 评估解释了为什么单个 case 中经常出现“meta-only 也能答对”或“caption 看似有用但总体不涨”：如果 benchmark 中 easy-prior 样本比例很高，overall accuracy 会掩盖 evidence interface 的真实贡献。去掉 meta-only 正确题后，FREDQA 的证据能力 collapse，而 TSShapeQA-OOD 的 ChatTS caption 反而上升，说明需要按 benchmark 分开判断 shortcut 和 caption 质量。
+
+完整输出文件：
+
+- `tables/meta_hard_subset_condition_deltas.csv`：逐 benchmark、逐 condition 的 overall/hard/变化 long table。
+- `tables/meta_hard_subset_summary_wide.csv`：宽表摘要，适合快速查数。
+- `figures/fig_meta_hard_subset_condition_change.png`：hard subset 表现和相对 overall 变化可视化。
+- `scripts/analyze_meta_hard_subset.py`：可复现脚本。
+
+## 9. OpenTSLM 与 ChatTS 训练数据规模对比
 
 本节统计的是 caption / QA 训练样本的规模，不是原始时间点数量。一个样本对应一条 JSONL 训练记录，通常包含一个时间序列窗口、caption 或 QA 文本，以及 metadata。
 
-### 8.1 OpenTSLM/LTSGen mixed 训练数据
+### 9.1 OpenTSLM/LTSGen mixed 训练数据
 
 按 `ablation_vars1_mixed` winner checkpoint 实际使用的 LTSGen/OpenTSLM mixed caption 数据口径，训练集为 **55,550**，验证集为 **6,234**，测试集为 **1,171**。另外有一个独立均衡 eval split，规模为 **1,471**。
 
@@ -5942,7 +6004,7 @@ The overall trend is decreasing. The global maximum occurs at the start of the s
 
 这里的关键点是，最终训练使用的是 `mixed/train.jsonl` 这一组数据，而不是本地 `gen_tst_dataset/opentslm/` 下所有窗口长度版本和中间 split 的总和。后者加起来有 **199,590** 行，但包含多个中间导出版本，不能当作 `ablation_vars1_mixed` 的最终训练规模。
 
-### 8.2 ChatTS 公开训练数据规模
+### 9.2 ChatTS 公开训练数据规模
 
 ChatTS VLDB 论文 Table 1 给出的训练数据规模是 **154,852** 个样本。论文同时说明，ChatTS 基于 `Qwen2.5-14B-Instruct`，采用两阶段 fine-tuning：large-scale alignment training 和 supervised fine-tuning，并且训练序列长度覆盖 **64 到 1024**。
 
@@ -5976,7 +6038,7 @@ HF README 说明了这些 config 的含义，并给出推荐训练策略：Stage
 | Stage 1 training script | <https://raw.githubusercontent.com/xiezhe-24/ChatTS-Training/main/scripts/full/train_stage1.sh> |
 | Stage 2 training script | <https://raw.githubusercontent.com/xiezhe-24/ChatTS-Training/main/scripts/full/train_stage2.sh> |
 
-### 8.3 对比结论
+### 9.3 对比结论
 
 | 模型 / 项目 | 论文或最终训练口径 | released data pool 口径 |
 | --- | ---: | ---: |
