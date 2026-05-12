@@ -42,6 +42,12 @@
 
 ### 3.1 输入条件总览
 
+![Input condition performance heatmap](figures/fig_condition_performance_heatmap.png)
+
+![Caption delta vs numbers](figures/fig_caption_delta_vs_numbers.png)
+
+上面两张图的读法是：第一张把各 benchmark 的输入条件表现放在同一张 heatmap 里，颜色越深表示准确率或 open score 越高；第二张只看相对 `numbers` 的变化，0 线以上表示 caption 条件超过 raw numbers，0 线以下表示 caption 条件弱于 raw numbers。
+
 | Benchmark | 指标 | meta_only | numbers | OpenTSLM caption | OpenTSLM cap+num | ChatTS caption | ChatTS cap+num | numbers 相对 meta | 最优 cap+num 相对 numbers | 统计意义 |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
 | FREDQA | accuracy | 0.810 | 0.821 | 0.806 | 0.823 | 0.820 | 0.813 | +0.012 | +0.002 | 总体很高，但 numbers 只比 meta 多 1.2 pp，说明强语言先验存在 |
@@ -60,6 +66,10 @@
 口径说明：3.1 的 `numbers` 使用综合统计表中的 canonical baseline；3.2 的 help/harm 是逐题配对统计，在 TSShapeQA-OOD 和 TSAQA 上会使用与对应 caption run 匹配的 numbers baseline。因此个别净效应和 3.1 中的总体准确率差值不会完全一一相等，3.2 更适合解释“同一题上 caption 加入后救回还是伤害”。
 
 ### 3.2 Caption help/harm
+
+![Caption help and harm](figures/fig_caption_help_harm.png)
+
+这张图把 `help` 和 `harm` 放在同一条水平轴上：右侧绿色表示 caption+numbers 救回了 numbers 错的样本，左侧红色表示 caption+numbers 把 numbers 对的样本带错。它比单个 accuracy 更适合判断 caption 是否稳定提供净收益。
 
 | Dataset | 条件 | help | harm | 净效应 | 背后意义 |
 | --- | --- | ---: | ---: | ---: | --- |
@@ -81,6 +91,10 @@
 ### 3.3 FREDQA hard subset
 
 FREDQA rerun 的关键价值不是“又多了一张 FREDQA 表”，而是把 Full Eval 中缺失的 FREDQA multi-condition eval 补上，并证明总体 accuracy 会被 meta-only shortcut 掩盖。
+
+![FREDQA overall vs hard subset](figures/fig_fredqa_overall_vs_hard_subset.png)
+
+这张图把 FREDQA 的 overall accuracy 和过滤掉 meta-only 可答对样本后的 hard subset 放在同一组柱子里。overall 看起来所有条件都在 80% 左右，但 hard subset 下降到 14%–23%，说明总体表主要被题干、选项和领域先验抬高。
 
 | 统计口径 | n | numbers | OpenTSLM caption | OpenTSLM cap+num | ChatTS caption | ChatTS cap+num | 统计意义 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
@@ -133,6 +147,10 @@ FREDQA rerun 的关键价值不是“又多了一张 FREDQA 表”，而是把 F
 
 ### 5.1 Benchmark 结构
 
+![Benchmark structure summary](figures/fig_benchmark_structure.png)
+
+这张图把“多变量输入/多变量推理”和“领域知识层级”分开画。它强调两个口径差异：不是所有多序列输入都需要跨序列推理，也不是所有带领域名词的问题都是真领域知识题。
+
 | 统计项 | n | 占全部 2822 题比例 | 意义 |
 | --- | ---: | ---: | --- |
 | multivariate input | 666 | 23.6% | 题目输入包含多条时间序列 |
@@ -149,6 +167,10 @@ FREDQA rerun 的关键价值不是“又多了一张 FREDQA 表”，而是把 F
 **含义。** 后续报告应固定使用三层领域标签：domain_shell、domain_context_needed、domain_knowledge_required。真正回答“领域知识是否有用”的，只应主要看 domain_knowledge_required。
 
 ### 5.2 真领域题表现
+
+![Domain and multivariate subset deltas](figures/fig_domain_multivar_deltas.png)
+
+这张图同时画出两个增量：蓝色是 `numbers - meta_only`，表示原始时序数值是否真的带来额外证据；橙色是最好的 `caption+numbers - numbers`，表示 caption 在已有 raw numbers 之外是否还能提供稳定增益。
 
 | Benchmark / subset | 指标 | meta_only | numbers | OpenTSLM cap+num | ChatTS cap+num | numbers 相对 meta | cap+num 相对 numbers | 解释 |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |

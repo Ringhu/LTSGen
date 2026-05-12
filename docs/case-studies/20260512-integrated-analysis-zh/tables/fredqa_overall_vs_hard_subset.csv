@@ -1,0 +1,11 @@
+subset,n,condition,score
+overall,604,numbers,0.8212
+overall,604,opentslm_caption,0.8063
+overall,604,opentslm_caption_plus,0.8228
+overall,604,chatts_caption,0.8195
+overall,604,chatts_caption_plus,0.8129
+meta_only_wrong_hard_subset,115,numbers,0.2348
+meta_only_wrong_hard_subset,115,opentslm_caption,0.1391
+meta_only_wrong_hard_subset,115,opentslm_caption_plus,0.2174
+meta_only_wrong_hard_subset,115,chatts_caption,0.2087
+meta_only_wrong_hard_subset,115,chatts_caption_plus,0.1913
