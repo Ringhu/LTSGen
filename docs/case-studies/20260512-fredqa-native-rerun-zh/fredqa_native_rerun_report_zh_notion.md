@@ -21,15 +21,54 @@
 
 ## 统计图
 
-![总体准确率](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-native-rerun-zh/figures/fredqa_native_overall_accuracy.png)
-
-![过滤 meta-only 后准确率](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-native-rerun-zh/figures/fredqa_native_meta_wrong_accuracy.png)
+![去掉 meta-only 后原生多变量救回率](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-native-rerun-zh/figures/fredqa_native_hard_subset_rescue.png)
 
 ![按变量数准确率](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-native-rerun-zh/figures/fredqa_native_by_nvars_accuracy.png)
 
 ![按问题类型准确率](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-native-rerun-zh/figures/fredqa_native_by_attribute_accuracy.png)
 
-## 总体准确率
+## 核心统计：去掉 meta-only 可答对题后，原生多变量能答对多少
+
+过滤规则：先去掉 `meta_only` 能答对的题，只保留 `meta_only` 答错的 `119` 个 hard cases。下面统计的是在这些题上，原生多变量 caption 条件到底能救回多少。
+
+| 统计口径 | 条件 | 答对/剩余题数 | 比例 | 含义 |
+| --- | --- | ---: | ---: | --- |
+| OpenTSLM 原生多变量 caption | `opentslm_native_caption` | 19/119 | 15.97% | 只给原生多变量 caption；衡量 OpenTSLM native caption 本身能否提供足够证据。 |
+| OpenTSLM 原生多变量 caption + 数值 | `opentslm_native_caption_plus` | 27/119 | 22.69% | 原生 caption 和 raw numbers 混合；衡量 caption 是否能辅助数值输入。 |
+| ChatTS 原生多变量 caption | `chatts_native_caption` | 24/119 | 20.17% | ChatTS 多 `&lt;ts&gt;` prompt 的 caption-only 效果。 |
+| ChatTS 原生多变量 caption + 数值 | `chatts_native_caption_plus` | 34/119 | 28.57% | ChatTS 原生 caption 与 raw numbers 混合后的效果；这是 hard subset 中最强条件。 |
+| 任一原生多变量 caption-only 能答对 | `opentslm_native_caption ∪ chatts_native_caption` | 31/119 | 26.05% | 表示只要换成两个原生多变量 captioner 之一，最多能救回多少 meta-only 错题。 |
+| 任一原生多变量 caption+numbers 能答对 | `opentslm_native_caption_plus ∪ chatts_native_caption_plus` | 39/119 | 32.77% | 表示原生多变量 caption 与数值联合时的可救回上限。 |
+
+**直接结论**：在 `119` 个 meta-only 答错题里，OpenTSLM 原生多变量 caption-only 能答对 `19` 题（15.97%），ChatTS 原生多变量 caption-only 能答对 `24` 题（20.17%）。如果允许 caption + raw numbers，ChatTS native 条件最高，能答对 `34/119`（28.57%）。
+
+| 交集/差集口径 | 数量 | 占 hard subset 比例 | 含义 |
+| --- | ---: | ---: | --- |
+| 两个原生 caption-only 都答对 | 12 | 10.08% | 两种 captioner 在同一 hard case 上都提供了足够证据。 |
+| 只有 OpenTSLM native caption-only 答对 | 7 | 5.88% | OpenTSLM 原生多变量相对 ChatTS 的独有正例。 |
+| 只有 ChatTS native caption-only 答对 | 12 | 10.08% | ChatTS 原生多变量相对 OpenTSLM 的独有正例。 |
+| 两个原生 caption-only 都答错 | 88 | 73.95% | caption-only 仍不能解决的主要失败池。 |
+| 两个原生 caption+numbers 都答对 | 22 | 18.49% | 加上 raw numbers 后两种原生 caption 条件都能答对。 |
+| 两个原生 caption+numbers 都答错 | 80 | 67.23% | 即使给原生 caption 和 raw numbers 也不能解决的 hard cases。 |
+
+## 辅助对照：hard subset 上八种输入条件的准确率
+
+这一表保留所有输入条件，便于和 `numbers`、逐变量 caption 对照；主结论仍以上一节原生多变量救回率为准。
+
+| 输入条件 | 正确/总数 | Accuracy | 相对 meta_only | 相对 numbers | 统计含义 |
+| --- | ---: | ---: | ---: | ---: | --- |
+| 只给题目和选项 (`meta_only`) | 0/119 | 0.00% | +0.00 pp | -23.53 pp | 只看题干、选项和领域先验；不代表模型读懂时间序列。 |
+| 题目 + 原始数值序列 (`numbers`) | 28/119 | 23.53% | +23.53 pp | +0.00 pp | 直接给原始数值后的参照；若仍低，说明长数值输入本身也难以稳定计算。 |
+| 题目 + OpenTSLM 修正逐变量 caption (`opentslm_fixed_caption`) | 21/119 | 17.65% | +17.65 pp | -5.88 pp | 修正 shape 后的逐变量 OpenTSLM caption；检验旧 per-variable 方案本身是否有效。 |
+| 题目 + OpenTSLM 修正逐变量 caption + 数值 (`opentslm_fixed_caption_plus`) | 29/119 | 24.37% | +24.37 pp | +0.84 pp | 逐变量 caption 与数值混合；检验 caption 是否能辅助 raw numbers。 |
+| 题目 + OpenTSLM 原生多变量 caption (`opentslm_native_caption`) | 19/119 | 15.97% | +15.97 pp | -7.56 pp | OpenTSLM 原生多变量 checkpoint 一次性生成 caption；检验跨变量摘要是否更好。 |
+| 题目 + OpenTSLM 原生多变量 caption + 数值 (`opentslm_native_caption_plus`) | 27/119 | 22.69% | +22.69 pp | -0.84 pp | OpenTSLM 原生多变量 caption 与数值混合；检验证据融合是否单调。 |
+| 题目 + ChatTS 原生多变量 caption (`chatts_native_caption`) | 24/119 | 20.17% | +20.17 pp | -3.36 pp | ChatTS 在一个 prompt 中放多个 `&lt;ts&gt;` token；检验其多序列提示能力。 |
+| 题目 + ChatTS 原生多变量 caption + 数值 (`chatts_native_caption_plus`) | 34/119 | 28.57% | +28.57 pp | +5.04 pp | ChatTS 原生多变量 caption 与数值混合；检验 ChatTS 线索是否会被 numbers 干扰。 |
+
+## 辅助对照：全量 604 题准确率
+
+全量准确率会被题干和选项先验抬高，因为 `meta_only` 单独就能答对大量问题；这里仅作为背景，不作为主要结论。
 
 | 输入条件 | 正确/总数 | Accuracy | 相对 meta_only | 相对 numbers | 统计含义 |
 | --- | ---: | ---: | ---: | ---: | --- |
@@ -42,22 +81,7 @@
 | 题目 + ChatTS 原生多变量 caption (`chatts_native_caption`) | 488/604 | 80.79% | +0.50 pp | -1.16 pp | ChatTS 在一个 prompt 中放多个 `&lt;ts&gt;` token；检验其多序列提示能力。 |
 | 题目 + ChatTS 原生多变量 caption + 数值 (`chatts_native_caption_plus`) | 504/604 | 83.44% | +3.15 pp | +1.49 pp | ChatTS 原生多变量 caption 与数值混合；检验 ChatTS 线索是否会被 numbers 干扰。 |
 
-**直接对比**：OpenTSLM 修正逐变量 caption 为 `80.46%`，OpenTSLM 原生多变量 caption 为 `81.13%`，差值 `+0.66 pp`。ChatTS 原生多变量 caption 为 `80.79%`。
-
-## 过滤 meta-only 可答对样本后的准确率
-
-过滤规则：只保留 `meta_only` 答错的样本，剩余 `119` 个 case。这个子集更接近“时序证据是否真的有用”。
-
-| 输入条件 | 正确/总数 | Accuracy | 相对 meta_only | 相对 numbers | 统计含义 |
-| --- | ---: | ---: | ---: | ---: | --- |
-| 只给题目和选项 (`meta_only`) | 0/119 | 0.00% | +0.00 pp | -23.53 pp | 只看题干、选项和领域先验；不代表模型读懂时间序列。 |
-| 题目 + 原始数值序列 (`numbers`) | 28/119 | 23.53% | +23.53 pp | +0.00 pp | 直接给原始数值后的参照；若仍低，说明长数值输入本身也难以稳定计算。 |
-| 题目 + OpenTSLM 修正逐变量 caption (`opentslm_fixed_caption`) | 21/119 | 17.65% | +17.65 pp | -5.88 pp | 修正 shape 后的逐变量 OpenTSLM caption；检验旧 per-variable 方案本身是否有效。 |
-| 题目 + OpenTSLM 修正逐变量 caption + 数值 (`opentslm_fixed_caption_plus`) | 29/119 | 24.37% | +24.37 pp | +0.84 pp | 逐变量 caption 与数值混合；检验 caption 是否能辅助 raw numbers。 |
-| 题目 + OpenTSLM 原生多变量 caption (`opentslm_native_caption`) | 19/119 | 15.97% | +15.97 pp | -7.56 pp | OpenTSLM 原生多变量 checkpoint 一次性生成 caption；检验跨变量摘要是否更好。 |
-| 题目 + OpenTSLM 原生多变量 caption + 数值 (`opentslm_native_caption_plus`) | 27/119 | 22.69% | +22.69 pp | -0.84 pp | OpenTSLM 原生多变量 caption 与数值混合；检验证据融合是否单调。 |
-| 题目 + ChatTS 原生多变量 caption (`chatts_native_caption`) | 24/119 | 20.17% | +20.17 pp | -3.36 pp | ChatTS 在一个 prompt 中放多个 `&lt;ts&gt;` token；检验其多序列提示能力。 |
-| 题目 + ChatTS 原生多变量 caption + 数值 (`chatts_native_caption_plus`) | 34/119 | 28.57% | +28.57 pp | +5.04 pp | ChatTS 原生多变量 caption 与数值混合；检验 ChatTS 线索是否会被 numbers 干扰。 |
+全量下 OpenTSLM 修正逐变量 caption 为 `80.46%`，OpenTSLM 原生多变量 caption 为 `81.13%`，差值 `+0.66 pp`。ChatTS 原生多变量 caption 为 `80.79%`。
 
 ## 关键错误/救回模式
 
@@ -1385,7 +1409,7 @@
 
 3. **ChatTS 的多变量输入应理解为多 token prompt 支持。** 它可以一次输入多个时间序列 token，但这不等价于已经专门训练成 FREDQA 式多变量证据抽取器。因此结果若优于 OpenTSLM，也更可能来自保守、简洁的形态描述，而不是完整领域推理。
 
-4. **对导师讨论最重要的是 hard subset。** FREDQA 总体准确率会被题干和选项先验抬高；过滤掉 meta-only 已答对样本后，numbers、fixed caption、native caption、ChatTS caption 的差距更能说明各输入形式是否真正提供时序证据。
+4. **对导师讨论最重要的是 hard subset 的救回率，而不是全量准确率。** 过滤掉 meta-only 已答对样本后，只剩 `119` 个真正需要时序证据的题；OpenTSLM native caption-only 只能救回 `19` 题，ChatTS native caption-only 只能救回 `24` 题，任一原生 caption-only 最多救回 `31` 题。这说明原生多变量输入有价值，但覆盖面很有限。
 
 5. **下一步不应只继续换 captioner。** 更直接的改进是 task-aware evidence schema：从题目抽取日期/窗口/变量关系，用工具或训练目标显式生成指定值、差值、比值、均值、排序、反事实中间量，再让 LLM 做解释和选项匹配。
 
