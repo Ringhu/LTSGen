@@ -3,6 +3,8 @@
   "notion_report": "docs/case-studies/20260512-integrated-analysis-zh/integrated_case_study_statistics_report_zh_notion.md",
   "github_branch": "fredqa-rerun-zh-20260512",
   "github_report": "https://github.com/Ringhu/LTSGen/blob/fredqa-rerun-zh-20260512/docs/case-studies/20260512-integrated-analysis-zh/integrated_case_study_statistics_report_zh.md",
+  "notion_page": "https://www.notion.so/35ebf55f0c06816e88cee1856dab0a77",
+  "notion_sync_record": "docs/case-studies/20260512-integrated-analysis-zh/notion_sync_20260512.json",
   "github_raw_base": "https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-integrated-analysis-zh",
   "figures": [
     "figures/caption_factuality_hit_rate_heatmap.png",
