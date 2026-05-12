@@ -5903,3 +5903,86 @@ The overall trend is decreasing. The global maximum occurs at the start of the s
 5. **Generation failure × QA failure join。** 把 OpenTSLM 的 token collapse / number dump / premature stop 标记与 QA outcome 合并，分清工程生成失败和方法性事实错误。
 
 6. **Oracle caption upper bound。** 用 GT-derived structured caption 给下游 QA，估计 caption paradigm 的理论上限。如果 oracle caption 很高，瓶颈在 captioner；如果仍低，瓶颈在 interface 或 downstream reasoning。
+
+## 8. OpenTSLM 与 ChatTS 训练数据规模对比
+
+本节统计的是 caption / QA 训练样本的规模，不是原始时间点数量。一个样本对应一条 JSONL 训练记录，通常包含一个时间序列窗口、caption 或 QA 文本，以及 metadata。
+
+### 8.1 OpenTSLM/LTSGen mixed 训练数据
+
+按 `ablation_vars1_mixed` winner checkpoint 实际使用的 LTSGen/OpenTSLM mixed caption 数据口径，训练集为 **55,550**，验证集为 **6,234**，测试集为 **1,171**。另外有一个独立均衡 eval split，规模为 **1,471**。
+
+| 项目 | 路径 |
+| --- | --- |
+| mixed 数据目录 | `/cluster/home/user1/hulining/TSDataset/LTSGen/gen_tst_dataset/opentslm/` |
+| winner checkpoint | `/cluster1/user1/hulining/opentslm_checkpoints/Qwen3_4B/OpenTSLMFlamingo/ablation_vars1_mixed/stage2_captioning/` |
+
+**OpenTSLM mixed split 按任务拆分：**
+
+| 任务 | train | validation | test |
+| --- | ---: | ---: | ---: |
+| forecasting | 7,617 | 840 | 840 |
+| anomaly | 1,072 | 131 | 131 |
+| classification | 46,861 | 5,263 | 200 |
+| **合计** | **55,550** | **6,234** | **1,171** |
+
+**OpenTSLM mixed train 按数据源拆分：**
+
+| 来源 | train 样本数 |
+| --- | ---: |
+| UCR2018 | 46,861 |
+| electricity | 2,624 |
+| traffic | 2,592 |
+| ETT | 1,084 |
+| NAB | 1,072 |
+| FRED | 939 |
+| weather | 328 |
+| exchange_rate | 46 |
+| illness | 4 |
+
+这里的关键点是，最终训练使用的是 `mixed/train.jsonl` 这一组数据，而不是本地 `gen_tst_dataset/opentslm/` 下所有窗口长度版本和中间 split 的总和。后者加起来有 **199,590** 行，但包含多个中间导出版本，不能当作 `ablation_vars1_mixed` 的最终训练规模。
+
+### 8.2 ChatTS 公开训练数据规模
+
+ChatTS VLDB 论文 Table 1 给出的训练数据规模是 **154,852** 个样本。论文同时说明，ChatTS 基于 `Qwen2.5-14B-Instruct`，采用两阶段 fine-tuning：large-scale alignment training 和 supervised fine-tuning，并且训练序列长度覆盖 **64 到 1024**。
+
+| 阶段 | 数据集 | 样本数 |
+| --- | --- | ---: |
+| Alignment | UTS | 35,000 |
+| Alignment | MTS-Shape | 35,000 |
+| Alignment | MTS-Local | 35,000 |
+| SFT | TSEvol | 44,802 |
+| SFT | Instruct Follow | 5,050 |
+| **合计** |  | **154,852** |
+
+来源：ChatTS VLDB 论文 Table 1：<https://www.vldb.org/pvldb/vol18/p2385-xie.pdf>
+
+官方 HuggingFace 当前发布的数据池更大，HF datasets-server 显示总计 **262,295 rows**。这个口径包含两个 alignment 变体和 dev split，因此不能和论文 Table 1 简单当作同一个训练口径。
+
+| HF config | rows |
+| --- | ---: |
+| `align_256` | 105,035 |
+| `align_random` | 105,085 |
+| `sft` | 44,802 |
+| `ift` | 6,373 |
+| `dev` | 1,000 |
+| **合计** | **262,295** |
+
+HF README 说明了这些 config 的含义，并给出推荐训练策略：Stage 1 混合 `align_256` 与 `ift`，Stage 2 混合 `sft`、`ift` 与 `align_random`。训练脚本也对应这一设置。
+
+| 资料 | 链接 |
+| --- | --- |
+| ChatTS training dataset | <https://huggingface.co/datasets/ChatTSRepo/ChatTS-Training-Dataset/blob/main/README.md> |
+| Stage 1 training script | <https://raw.githubusercontent.com/xiezhe-24/ChatTS-Training/main/scripts/full/train_stage1.sh> |
+| Stage 2 training script | <https://raw.githubusercontent.com/xiezhe-24/ChatTS-Training/main/scripts/full/train_stage2.sh> |
+
+### 8.3 对比结论
+
+| 模型 / 项目 | 论文或最终训练口径 | released data pool 口径 |
+| --- | ---: | ---: |
+| OpenTSLM/LTSGen mixed | 55,550 train / 6,234 val / 1,171 test | 本地所有中间 JSONL 共 199,590 行，但不是最终训练集规模 |
+| ChatTS | 154,852 samples, paper Table 1 | HF released pool 262,295 rows |
+
+按论文或最终训练口径比较，ChatTS 的公开训练数据规模约为 OpenTSLM/LTSGen mixed train 的 **2.8 倍**，即 `154,852 / 55,550`。如果按 HuggingFace released data pool 口径比较，则约为 **4.7 倍**，即 `262,295 / 55,550`。
+
+这个差异不只是数量差异，也是数据结构差异。OpenTSLM/LTSGen mixed train 高度偏向 UCR classification，46,861/55,550 个训练样本来自 UCR2018；ChatTS 则显式构造了 alignment、multivariate correlation、local fluctuation、TSEvol reasoning 和 instruction-following 等数据类型。因此，当前 case study 中观察到的 OpenTSLM caption 泛化、周期幻觉和跨变量绑定不足，不能只解释为模型架构问题，也和训练数据的规模、任务组成、以及是否显式覆盖多变量/推理/指令跟随能力有关。
