@@ -1,0 +1,7 @@
+dataset,captioner,n_items,n_with_caption,n_with_series,n_scored_items,caption_coverage,series_coverage,scored_item_coverage
+TSAQA-caption-source,chatts,1000,1000,1000,1000,1.0,1.0,1.0
+TSAQA-caption-source,opentslm,1000,1000,1000,1000,1.0,1.0,1.0
+TSShapeQA-OOD,chatts,800,800,800,800,1.0,1.0,1.0
+TSShapeQA-OOD,opentslm,800,763,800,763,0.95375,1.0,0.95375
+dataset_a,chatts,117,117,117,117,1.0,1.0,1.0
+dataset_a,opentslm,117,111,117,111,0.9487179487179487,1.0,0.9487179487179487

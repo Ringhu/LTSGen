@@ -1,0 +1,27 @@
+{
+  "report": "docs/case-studies/20260512-integrated-analysis-zh/integrated_case_study_statistics_report_zh.md",
+  "notion_report": "docs/case-studies/20260512-integrated-analysis-zh/integrated_case_study_statistics_report_zh_notion.md",
+  "github_branch": "fredqa-rerun-zh-20260512",
+  "github_report": "https://github.com/Ringhu/LTSGen/blob/fredqa-rerun-zh-20260512/docs/case-studies/20260512-integrated-analysis-zh/integrated_case_study_statistics_report_zh.md",
+  "github_raw_base": "https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-integrated-analysis-zh",
+  "figures": [
+    "figures/caption_factuality_hit_rate_heatmap.png",
+    "figures/caption_factuality_miss_type_distribution.png"
+  ],
+  "tables": [
+    "tables/caption_factuality_full_coverage.csv",
+    "tables/caption_factuality_full_per_slot.csv",
+    "tables/caption_factuality_full_miss_types.csv",
+    "tables/overall_condition_deltas.csv",
+    "tables/domain_condition_deltas.csv",
+    "tables/multivar_condition_deltas.csv",
+    "tables/domain_level_summary.csv",
+    "tables/multivar_summary.csv"
+  ],
+  "source_reports": [
+    "docs/case-studies/20260511-balanced-zh/balanced_case_study_zh_notion.md",
+    "docs/case-studies/20260511-full-eval-statistics/full_eval_statistics_report_zh.md",
+    "docs/case-studies/20260512-fredqa-rerun-zh/fredqa_rerun_case_study_zh.md"
+  ],
+  "logical_relation": "Balanced case study discovers phenomena; full-eval statistics validates their distribution; FREDQA rerun fills the FREDQA multi-condition eval gap; factuality and multivar/domain analyses provide mechanism-level decomposition."
+}
