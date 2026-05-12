@@ -18,10 +18,10 @@
       "why": "题目要求比较 2022 年 12 月相对 2020 年 1 月的缺口。ChatTS 的单独 caption 捕捉了年轻组和年长组不同恢复形态，OpenTSLM 的通用趋势描述不足；但加入数值后 ChatTS+numbers 又答错，说明下游模型融合 caption 与数值时并不单调。"
     },
     {
-      "idx": "325",
-      "tag": "OpenTSLM 对、ChatTS 错",
-      "focus": "3 月移动平均与 12 月移动平均的工资增长动量",
-      "why": "这是反例：ChatTS 把两个移动平均都概括成 increasing，并把全局最大值放在末尾，容易诱导模型选择持续加速；OpenTSLM 虽然也有噪声，但保留了下降/回落的动量信号。"
+      "idx": "997",
+      "tag": "meta-only 错，只有 OpenTSLM caption 对",
+      "focus": "大银行与小银行信用卡逾期率在 2007 到 2020 年的反转",
+      "why": "这个 case 去掉了 meta-only 已能答对的语言先验样本。题目要求比较两类银行逾期率从 2007Q1 到 2020Q1 的方向反转，并把它映射到客户筛选机制。只有 OpenTSLM caption-only 答对，说明少数情况下 OpenTSLM 的跨变量趋势摘要能提供有效线索；但 numbers 和 caption+numbers 都错，也说明该线索没有稳定转化为可计算证据。"
     },
     {
       "idx": "1141",
@@ -54,10 +54,10 @@
       "why": "模型全部选择了表面上合理但并非标准答案的选项，说明该题不是单纯读峰值，还要求把 1980s S&L crisis 与之后更严格资本充足率规则联系起来；caption 没有编码制度性解释。"
     },
     {
-      "idx": "850",
-      "tag": "meta-only 对，数值和多数 caption 反而错",
-      "focus": "住房相关 CPI 加权指数在能源价格反事实下的四年增长差",
-      "why": "题目选项与权重公式本身已经强烈约束答案，meta-only 能直接答对；加入数值或通用 caption 后模型被局部价格走势干扰，只有 ChatTS+numbers 恢复正确。这类样本说明高 meta-only 准确率不能等价为时序理解成功。"
+      "idx": "964",
+      "tag": "meta-only 错，只有 ChatTS caption 对",
+      "focus": "雷曼兄弟倒闭前后 PPI 的即时百分比变化",
+      "why": "这个 case 需要比较 2008 年 8 月和 9 月 PPI 的短期变化。ChatTS 的简洁趋势摘要让 caption-only 条件答对，但 OpenTSLM、numbers 和两个 caption+numbers 条件都答错，说明即使直接给数值，长题干中的局部月份定位和百分比变化也没有被稳定执行。"
     },
     {
       "idx": "481",
@@ -80,17 +80,20 @@
   ],
   "figures": {
     "overall": "fredqa_overall_accuracy.png",
+    "hard_overall": "fredqa_meta_wrong_accuracy.png",
     "attribute": "fredqa_by_attribute_accuracy.png",
     "nvars": "fredqa_by_nvars_accuracy.png",
+    "hard_attribute": "fredqa_meta_wrong_by_attribute_accuracy.png",
+    "hard_nvars": "fredqa_meta_wrong_by_nvars_accuracy.png",
     "1079": "fredqa_1079.png",
     "1145": "fredqa_1145.png",
-    "325": "fredqa_325.png",
+    "997": "fredqa_997.png",
     "1141": "fredqa_1141.png",
     "1028": "fredqa_1028.png",
     "1087": "fredqa_1087.png",
     "884": "fredqa_884.png",
     "560": "fredqa_560.png",
-    "850": "fredqa_850.png",
+    "964": "fredqa_964.png",
     "481": "fredqa_481.png",
     "1209": "fredqa_1209.png",
     "811": "fredqa_811.png"
@@ -144,5 +147,431 @@
     "opentslm_wrong_chatts_right": 24,
     "caption_and_numbers_wrong_meta_right": 1,
     "meta_only_succeeds_when_ts_inputs_fail": 1
+  },
+  "meta_only_filtered_accuracy": {
+    "meta_only": {
+      "correct": 0,
+      "n": 115,
+      "accuracy": 0.0
+    },
+    "numbers": {
+      "correct": 27,
+      "n": 115,
+      "accuracy": 0.23478260869565218
+    },
+    "opentslm_caption": {
+      "correct": 16,
+      "n": 115,
+      "accuracy": 0.1391304347826087
+    },
+    "opentslm_caption_plus": {
+      "correct": 25,
+      "n": 115,
+      "accuracy": 0.21739130434782608
+    },
+    "chatts_caption": {
+      "correct": 24,
+      "n": 115,
+      "accuracy": 0.20869565217391303
+    },
+    "chatts_caption_plus": {
+      "correct": 22,
+      "n": 115,
+      "accuracy": 0.19130434782608696
+    }
+  },
+  "meta_only_filtered_counts": {
+    "excluded_meta_correct": 489,
+    "remaining_meta_wrong": 115,
+    "all_nonmeta_wrong": 74,
+    "any_nonmeta_right": 41
+  },
+  "meta_only_filtered_by_nvars": {
+    "1": {
+      "meta_only": {
+        "correct": 0,
+        "n": 23,
+        "accuracy": 0.0
+      },
+      "numbers": {
+        "correct": 1,
+        "n": 23,
+        "accuracy": 0.043478260869565216
+      },
+      "opentslm_caption": {
+        "correct": 1,
+        "n": 23,
+        "accuracy": 0.043478260869565216
+      },
+      "opentslm_caption_plus": {
+        "correct": 0,
+        "n": 23,
+        "accuracy": 0.0
+      },
+      "chatts_caption": {
+        "correct": 2,
+        "n": 23,
+        "accuracy": 0.08695652173913043
+      },
+      "chatts_caption_plus": {
+        "correct": 1,
+        "n": 23,
+        "accuracy": 0.043478260869565216
+      }
+    },
+    "2": {
+      "meta_only": {
+        "correct": 0,
+        "n": 42,
+        "accuracy": 0.0
+      },
+      "numbers": {
+        "correct": 13,
+        "n": 42,
+        "accuracy": 0.30952380952380953
+      },
+      "opentslm_caption": {
+        "correct": 10,
+        "n": 42,
+        "accuracy": 0.23809523809523808
+      },
+      "opentslm_caption_plus": {
+        "correct": 12,
+        "n": 42,
+        "accuracy": 0.2857142857142857
+      },
+      "chatts_caption": {
+        "correct": 13,
+        "n": 42,
+        "accuracy": 0.30952380952380953
+      },
+      "chatts_caption_plus": {
+        "correct": 11,
+        "n": 42,
+        "accuracy": 0.2619047619047619
+      }
+    },
+    "3": {
+      "meta_only": {
+        "correct": 0,
+        "n": 32,
+        "accuracy": 0.0
+      },
+      "numbers": {
+        "correct": 7,
+        "n": 32,
+        "accuracy": 0.21875
+      },
+      "opentslm_caption": {
+        "correct": 4,
+        "n": 32,
+        "accuracy": 0.125
+      },
+      "opentslm_caption_plus": {
+        "correct": 9,
+        "n": 32,
+        "accuracy": 0.28125
+      },
+      "chatts_caption": {
+        "correct": 7,
+        "n": 32,
+        "accuracy": 0.21875
+      },
+      "chatts_caption_plus": {
+        "correct": 7,
+        "n": 32,
+        "accuracy": 0.21875
+      }
+    },
+    "4": {
+      "meta_only": {
+        "correct": 0,
+        "n": 14,
+        "accuracy": 0.0
+      },
+      "numbers": {
+        "correct": 6,
+        "n": 14,
+        "accuracy": 0.42857142857142855
+      },
+      "opentslm_caption": {
+        "correct": 1,
+        "n": 14,
+        "accuracy": 0.07142857142857142
+      },
+      "opentslm_caption_plus": {
+        "correct": 4,
+        "n": 14,
+        "accuracy": 0.2857142857142857
+      },
+      "chatts_caption": {
+        "correct": 2,
+        "n": 14,
+        "accuracy": 0.14285714285714285
+      },
+      "chatts_caption_plus": {
+        "correct": 3,
+        "n": 14,
+        "accuracy": 0.21428571428571427
+      }
+    },
+    "5": {
+      "meta_only": {
+        "correct": 0,
+        "n": 4,
+        "accuracy": 0.0
+      },
+      "numbers": {
+        "correct": 0,
+        "n": 4,
+        "accuracy": 0.0
+      },
+      "opentslm_caption": {
+        "correct": 0,
+        "n": 4,
+        "accuracy": 0.0
+      },
+      "opentslm_caption_plus": {
+        "correct": 0,
+        "n": 4,
+        "accuracy": 0.0
+      },
+      "chatts_caption": {
+        "correct": 0,
+        "n": 4,
+        "accuracy": 0.0
+      },
+      "chatts_caption_plus": {
+        "correct": 0,
+        "n": 4,
+        "accuracy": 0.0
+      }
+    }
+  },
+  "meta_only_filtered_by_attribute": {
+    "Abductive Reasoning": {
+      "meta_only": {
+        "correct": 0,
+        "n": 42,
+        "accuracy": 0.0
+      },
+      "numbers": {
+        "correct": 7,
+        "n": 42,
+        "accuracy": 0.16666666666666666
+      },
+      "opentslm_caption": {
+        "correct": 2,
+        "n": 42,
+        "accuracy": 0.047619047619047616
+      },
+      "opentslm_caption_plus": {
+        "correct": 6,
+        "n": 42,
+        "accuracy": 0.14285714285714285
+      },
+      "chatts_caption": {
+        "correct": 4,
+        "n": 42,
+        "accuracy": 0.09523809523809523
+      },
+      "chatts_caption_plus": {
+        "correct": 6,
+        "n": 42,
+        "accuracy": 0.14285714285714285
+      }
+    },
+    "Causal Reasoning - Counterfactual": {
+      "meta_only": {
+        "correct": 0,
+        "n": 33,
+        "accuracy": 0.0
+      },
+      "numbers": {
+        "correct": 7,
+        "n": 33,
+        "accuracy": 0.21212121212121213
+      },
+      "opentslm_caption": {
+        "correct": 6,
+        "n": 33,
+        "accuracy": 0.18181818181818182
+      },
+      "opentslm_caption_plus": {
+        "correct": 6,
+        "n": 33,
+        "accuracy": 0.18181818181818182
+      },
+      "chatts_caption": {
+        "correct": 9,
+        "n": 33,
+        "accuracy": 0.2727272727272727
+      },
+      "chatts_caption_plus": {
+        "correct": 7,
+        "n": 33,
+        "accuracy": 0.21212121212121213
+      }
+    },
+    "Analogical Reasoning": {
+      "meta_only": {
+        "correct": 0,
+        "n": 31,
+        "accuracy": 0.0
+      },
+      "numbers": {
+        "correct": 4,
+        "n": 31,
+        "accuracy": 0.12903225806451613
+      },
+      "opentslm_caption": {
+        "correct": 1,
+        "n": 31,
+        "accuracy": 0.03225806451612903
+      },
+      "opentslm_caption_plus": {
+        "correct": 3,
+        "n": 31,
+        "accuracy": 0.0967741935483871
+      },
+      "chatts_caption": {
+        "correct": 2,
+        "n": 31,
+        "accuracy": 0.06451612903225806
+      },
+      "chatts_caption_plus": {
+        "correct": 3,
+        "n": 31,
+        "accuracy": 0.0967741935483871
+      }
+    },
+    "Inductive Reasoning": {
+      "meta_only": {
+        "correct": 0,
+        "n": 31,
+        "accuracy": 0.0
+      },
+      "numbers": {
+        "correct": 8,
+        "n": 31,
+        "accuracy": 0.25806451612903225
+      },
+      "opentslm_caption": {
+        "correct": 3,
+        "n": 31,
+        "accuracy": 0.0967741935483871
+      },
+      "opentslm_caption_plus": {
+        "correct": 7,
+        "n": 31,
+        "accuracy": 0.22580645161290322
+      },
+      "chatts_caption": {
+        "correct": 5,
+        "n": 31,
+        "accuracy": 0.16129032258064516
+      },
+      "chatts_caption_plus": {
+        "correct": 7,
+        "n": 31,
+        "accuracy": 0.22580645161290322
+      }
+    },
+    "Deductive Reasoning": {
+      "meta_only": {
+        "correct": 0,
+        "n": 16,
+        "accuracy": 0.0
+      },
+      "numbers": {
+        "correct": 4,
+        "n": 16,
+        "accuracy": 0.25
+      },
+      "opentslm_caption": {
+        "correct": 3,
+        "n": 16,
+        "accuracy": 0.1875
+      },
+      "opentslm_caption_plus": {
+        "correct": 4,
+        "n": 16,
+        "accuracy": 0.25
+      },
+      "chatts_caption": {
+        "correct": 3,
+        "n": 16,
+        "accuracy": 0.1875
+      },
+      "chatts_caption_plus": {
+        "correct": 4,
+        "n": 16,
+        "accuracy": 0.25
+      }
+    },
+    "Causal Reasoning - Interventional": {
+      "meta_only": {
+        "correct": 0,
+        "n": 15,
+        "accuracy": 0.0
+      },
+      "numbers": {
+        "correct": 8,
+        "n": 15,
+        "accuracy": 0.5333333333333333
+      },
+      "opentslm_caption": {
+        "correct": 4,
+        "n": 15,
+        "accuracy": 0.26666666666666666
+      },
+      "opentslm_caption_plus": {
+        "correct": 7,
+        "n": 15,
+        "accuracy": 0.4666666666666667
+      },
+      "chatts_caption": {
+        "correct": 6,
+        "n": 15,
+        "accuracy": 0.4
+      },
+      "chatts_caption_plus": {
+        "correct": 4,
+        "n": 15,
+        "accuracy": 0.26666666666666666
+      }
+    },
+    "Causal Reasoning - Associational": {
+      "meta_only": {
+        "correct": 0,
+        "n": 10,
+        "accuracy": 0.0
+      },
+      "numbers": {
+        "correct": 2,
+        "n": 10,
+        "accuracy": 0.2
+      },
+      "opentslm_caption": {
+        "correct": 2,
+        "n": 10,
+        "accuracy": 0.2
+      },
+      "opentslm_caption_plus": {
+        "correct": 3,
+        "n": 10,
+        "accuracy": 0.3
+      },
+      "chatts_caption": {
+        "correct": 3,
+        "n": 10,
+        "accuracy": 0.3
+      },
+      "chatts_caption_plus": {
+        "correct": 2,
+        "n": 10,
+        "accuracy": 0.2
+      }
+    }
   }
 }

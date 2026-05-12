@@ -15,9 +15,15 @@
 
 ![总体准确率](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-rerun-zh/figures/fredqa_overall_accuracy.png)
 
+![过滤 meta-only 答对样本后的准确率](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-rerun-zh/figures/fredqa_meta_wrong_accuracy.png)
+
 ![按问题类型准确率](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-rerun-zh/figures/fredqa_by_attribute_accuracy.png)
 
 ![按变量数准确率](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-rerun-zh/figures/fredqa_by_nvars_accuracy.png)
+
+![过滤 meta-only 答对样本后按问题类型准确率](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-rerun-zh/figures/fredqa_meta_wrong_by_attribute_accuracy.png)
+
+![过滤 meta-only 答对样本后按变量数准确率](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-rerun-zh/figures/fredqa_meta_wrong_by_nvars_accuracy.png)
 
 ## 总体准确率
 
@@ -31,6 +37,45 @@
 | 题目 + ChatTS caption + 数值 | 491/604 | 81.29% | +0.33 pp | -0.83 pp | 低于 ChatTS caption-only，说明加入数值并不保证单调提升。 |
 
 **直接结论**：最高条件是 `opentslm_caption_plus`，准确率 82.28%，但只比 `meta_only` 高 1.32 个百分点。`opentslm_caption` 单独低于 `meta_only`，说明当前 OpenTSLM caption 作为下游 QA 证据并不可靠；`ChatTS caption` 更高，但加入数值后也会下降，说明 evidence fusion 本身不稳定。
+
+## 过滤 meta-only 可答对样本后的准确率
+
+过滤规则：只保留 `meta_only` 答错的样本，即排除 `489` 个题干/选项/领域先验已经能答对的 case，剩余 `115` 个 harder subset。这个统计更接近“模型是否真的从时序证据中获益”。
+
+| 输入条件 | 正确/总数 | Accuracy | 相对 meta_only | 相对 numbers | 统计含义 |
+| --- | ---: | ---: | ---: | ---: | --- |
+| 只给题目和选项 | 0/115 | 0.00% | +0.00 pp | -23.48 pp | 过滤条件本身，因此为 0；该子集排除了题干和选项先验已能解出的样本。 |
+| 题目 + 原始数值序列 | 27/115 | 23.48% | +23.48 pp | +0.00 pp | 直接读原始数值后只救回 27/115，说明长数值输入远不是可靠 oracle。 |
+| 题目 + OpenTSLM caption | 16/115 | 13.91% | +13.91 pp | -9.57 pp | 只救回 16/115，低于 ChatTS，也低于 numbers；OpenTSLM caption 单独证据更弱。 |
+| 题目 + OpenTSLM caption + 数值 | 25/115 | 21.74% | +21.74 pp | -1.74 pp | 25/115，接近 numbers 但仍低；caption+numbers 只能救回少数样本。 |
+| 题目 + ChatTS caption | 24/115 | 20.87% | +20.87 pp | -2.61 pp | 24/115，是 caption-only 条件中最高，但仍只有约 21%。 |
+| 题目 + ChatTS caption + 数值 | 22/115 | 19.13% | +19.13 pp | -4.35 pp | 22/115，低于 ChatTS caption-only，继续显示混合输入不单调。 |
+
+**直接结论**：去掉 meta-only 已能答对的 `489` 个样本后，所有非 meta 输入的准确率都大幅下降；`numbers` 只救回 `27/115`，`OpenTSLM caption` 只救回 `16/115`，`ChatTS caption` 只救回 `24/115`。这说明原始 80%+ 总体准确率主要来自语言先验，而不是稳定的时序证据读取。
+
+在 harder subset 中，所有非 meta 条件都答错的样本仍有 `74/115`；至少一种时序/文本证据形式能救回的样本只有 `41/115`。这组数比总体 accuracy 更能说明当前训练为什么失败。
+
+## 过滤 meta-only 后按变量数分类
+
+| 变量数 | meta-only 错样本数 | numbers | OpenTSLM cap | OpenTSLM cap+num | ChatTS cap | ChatTS cap+num | 统计解读 |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| 1 | 23 | 4.35% | 4.35% | 0.00% | 8.70% | 4.35% | 单变量 hard case 几乎全灭，说明难点通常是局部日期/公式/领域机制，而不是变量数量。 |
+| 2 | 42 | 30.95% | 23.81% | 28.57% | 30.95% | 26.19% | 二变量是最能被 numbers/ChatTS 救回的一组，但也只有约 31%。 |
+| 3 | 32 | 21.88% | 12.50% | 28.12% | 21.88% | 21.88% | OpenTSLM caption-only 明显偏弱，caption+numbers 才接近 numbers。 |
+| 4 | 14 | 42.86% | 7.14% | 28.57% | 14.29% | 21.43% | numbers 达到 42.86%，但 caption-only 很低，说明多变量精确计算不应压缩成泛化摘要。 |
+| 5 | 4 | 0.00% | 0.00% | 0.00% | 0.00% | 0.00% | 样本数只有 4，所有非 meta 条件均为 0，暂不做强结论。 |
+
+## 过滤 meta-only 后按问题类型分类
+
+| 问题类型 | meta-only 错样本数 | numbers | OpenTSLM cap | OpenTSLM cap+num | ChatTS cap | ChatTS cap+num | 统计解读 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| 溯因推理 (`Abductive Reasoning`) | 42 | 16.67% | 4.76% | 14.29% | 9.52% | 14.29% | hard 子集里 caption 救回率很低，说明背景解释题没有被通用形态摘要充分支持。 |
+| 因果推理：反事实型 (`Causal Reasoning - Counterfactual`) | 33 | 21.21% | 18.18% | 18.18% | 27.27% | 21.21% | ChatTS caption-only 最高但仍只有 27.27%，反事实计算仍是主要难点。 |
+| 类比推理 (`Analogical Reasoning`) | 31 | 12.90% | 3.23% | 9.68% | 6.45% | 9.68% | 几乎全灭，类比题在去掉语言先验后最能暴露证据组织失败。 |
+| 归纳推理 (`Inductive Reasoning`) | 31 | 25.81% | 9.68% | 22.58% | 16.13% | 22.58% | numbers 和 caption+numbers 有一定救回，但 caption-only 不足。 |
+| 演绎推理 (`Deductive Reasoning`) | 16 | 25.00% | 18.75% | 25.00% | 18.75% | 25.00% | 各条件都只有 18.75%–25%，规则执行和符号推理仍不稳定。 |
+| 因果推理：干预型 (`Causal Reasoning - Interventional`) | 15 | 53.33% | 26.67% | 46.67% | 40.00% | 26.67% | numbers 最高 53.33%，说明指定事件前后的数值证据确实关键。 |
+| 因果推理：关联型 (`Causal Reasoning - Associational`) | 10 | 20.00% | 20.00% | 30.00% | 30.00% | 20.00% | 样本少，但 caption+numbers 和 ChatTS caption 略高，说明关联型仍有少量可救空间。 |
 
 ## 关键错误模式
 
@@ -71,7 +116,7 @@
 
 ## Case Study
 
-下面每个 case 都包含时序图、原始 QA 与中文翻译、OpenTSLM/ChatTS 生成 caption 与中文翻译、六种输入条件下的 `gpt-5.4` 回答，以及对应分析。
+下面每个 case 都包含时序图、原始 QA 与中文翻译、OpenTSLM/ChatTS 生成 caption 与中文翻译、六种输入条件下的 `gpt-5.4` 回答，以及对应分析。本节已去掉 `meta_only` 已经答对的 case，所有展示样本都属于 `meta_only` 答错的 harder subset。
 
 ## 📈 Case 01：FREDQA `1079` | OpenTSLM 错、ChatTS 对
 
@@ -336,100 +381,100 @@
 
 
 
-## 📈 Case 03：FREDQA `325` | OpenTSLM 对、ChatTS 错
+## 📈 Case 03：FREDQA `997` | meta-only 错，只有 OpenTSLM caption 对
 
 ### 基本信息
 
 | 字段 | 内容 |
 | --- | --- |
 | 数据集 | `FREDQA` |
-| Case ID | `fredqa::325` |
-| FREDQA 原始 idx | `325` |
-| 变量数 / 序列长度 | `2` / `[306, 306]` |
-| 问题类型 | `Inductive Reasoning`, `Analogical Reasoning` |
-| 正确答案 | `B` |
-| 失败/对比模式 | OpenTSLM 对、ChatTS 错 |
-| 本 case 关注点 | 3 月移动平均与 12 月移动平均的工资增长动量 |
+| Case ID | `fredqa::997` |
+| FREDQA 原始 idx | `997` |
+| 变量数 / 序列长度 | `2` / `[137, 137]` |
+| 问题类型 | `Causal Reasoning - Associational` |
+| 正确答案 | `A` |
+| 失败/对比模式 | meta-only 错，只有 OpenTSLM caption 对 |
+| 本 case 关注点 | 大银行与小银行信用卡逾期率在 2007 到 2020 年的反转 |
 
 变量摘要：
 
 | 变量 | 指标名 | n | start | end | min@idx | max@idx | slope |
 | ---: | --- | ---: | ---: | ---: | --- | --- | ---: |
-| 1 | 3-Month Moving Average of Unweighted Median Hourly Wage Growth: Overall, Percent Change from Year Ago, Monthly, Not Seasonally Adjusted  | 306 | 4.9 | 6 | 1.6@145 | 6.7@294 | -0.00270412 |
-| 2 | 12-Month Moving Average of Unweighted Median Hourly Wage Growth: Overall, Percent Change from Year Ago, Monthly, Not Seasonally Adjusted  | 306 | 4.7 | 6.3 | 1.7@154 | 6.4@303 | -0.00369093 |
+| 1 | bank 1 100 | 137 | 5.94 | 2.99 | 1.41@121 | 6.71@72 | -0.0239858 |
+| 2 | bank out of 100 | 137 | 4.65 | 7.01 | 2.88@99 | 8.16@131 | 0.0110376 |
 
 ### 🖼 时序图
 
-![FREDQA 325](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-rerun-zh/figures/fredqa_325.png)
+![FREDQA 997](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-rerun-zh/figures/fredqa_997.png)
 
 
 ### ❓ QA 问题与中文翻译
 
 **题干原文**
 
-> You are a time series analysis expert. In a Labor Market system, there are 2 metrics: 3-Month Moving Average of Unweighted Median Hourly Wage Growth: Overall, Percent Change from Year Ago&lt;ts&gt;&lt;ts/&gt;; 12-Month Moving Average of Unweighted Median Hourly Wage Growth: Overall, Percent Change from Year Ago&lt;ts&gt;&lt;ts/&gt;. Using monthly data from December 1997 to May 2023, compute the difference between the 3-month moving average and the 12-month moving average for April 2020 and for July 2021. Based on these differences, which statement best describes the relative momentum of wage growth in these periods?
+> You are a time series analysis expert. In a credit card market, there are 2 metrics: Credit card delinquency rate for the largest 100 banks (percentage of total balances, where a higher value indicates more customers failing to repay on time)&lt;ts&gt;&lt;ts/&gt;; Credit card delinquency rate for smaller banks (same definition)&lt;ts&gt;&lt;ts/&gt;. The data is quarterly from January 1991 to January 2025. In 2007Q1 (pre-2008 financial crisis), the largest 100 banks had a 4.0% delinquency rate and smaller banks had a 3.46% rate. By 2020Q1 (post-2008 crisis and 2020 recession), the largest 100 banks had a 1.9% rate and smaller banks had a 7.04% rate. Which causal claim is most consistent with the associational pattern between bank size category and delinquency rate changes over this period?
 
 **题干中文翻译**
 
-> 你是一位时间序列分析专家。在一个劳动力市场系统中，有 2 个指标：未加权中位数小时工资增长的 3 个月移动平均：总体，较上年同期百分比变化&lt;ts&gt;&lt;ts/&gt;；未加权中位数小时工资增长的 12 个月移动平均：总体，较上年同期百分比变化&lt;ts&gt;&lt;ts/&gt;。使用 1997 年 12 月到 2023 年 5 月的月度数据，计算 2020 年 4 月和 2021 年 7 月 3 个月移动平均与 12 个月移动平均之间的差值。基于这些差值，哪一项陈述最能描述这些时期工资增长的相对动量？
+> 你是一位时间序列分析专家。在信用卡市场中，有 2 个指标：最大 100 家银行的信用卡拖欠率（总余额的百分比，数值越高表示更多客户未能按时还款）&lt;ts&gt;&lt;ts/&gt;；规模较小银行的信用卡拖欠率（定义相同）&lt;ts&gt;&lt;ts/&gt;。数据为季度数据，时间范围从 1991 年 1 月到 2025 年 1 月。2007Q1（2008 年金融危机前），最大 100 家银行的拖欠率为 4.0%，规模较小银行的拖欠率为 3.46%。到 2020Q1（2008 年危机后和 2020 年衰退之后），最大 100 家银行的拖欠率为 1.9%，规模较小银行的拖欠率为 7.04%。在这段时期内，银行规模类别与拖欠率变化之间的关联模式，最符合哪一项因果主张？
 
 **选项**
 
 | 选项 | 原文 | 中文翻译 |
 | --- | --- | --- |
-| `A` | Wage growth was decelerating in both periods relative to the preceding trend | 工资增长相对于前一趋势在这两个时期都在减速 |
-| `B` | Wage growth was decelerating in April 2020 but accelerating in July 2021 | 工资增长在 2020 年 4 月减速，但在 2021 年 7 月加速 |
-| `C` | Wage growth was accelerating in April 2020 but decelerating in July 2021 | 工资增长在 2020 年 4 月加速，但在 2021 年 7 月减速 |
-| `D` | Wage growth was accelerating in both periods relative to the preceding trend | 工资增长相对于前一趋势在这两个时期都在加速 |
+| `A` | Between 2007 and 2020, larger banks increased the minimum credit score required for new cardholders by 20%, while smaller banks decreased theirs by 15%. | 在 2007 年到 2020 年之间，大型银行将新持卡人的最低信用评分要求提高了 20%，而小型银行将其降低了 15%。 |
+| `B` | Smaller banks reduced their customer service staffing by 30% between 2007 and 2020, making it harder for borrowers to resolve payment issues. | 规模较小的银行在 2007 年到 2020 年之间将客户服务人员减少了 30%，使借款人更难解决还款问题。 |
+| `C` | The Federal Reserve’s 2010 regulation capped credit card late fees at $25 for all banks, reducing delinquency incentives equally across size categories. | 美联储 2010 年的法规将所有银行的信用卡滞纳金上限设为 25 美元，从而对不同规模类别的拖欠激励产生了同等程度的降低。 |
+| `D` | Larger banks launched mobile apps for bill payments in 2015, while smaller banks did not adopt digital tools until 2022. | 大型银行在 2015 年推出了用于账单支付的移动应用，而小型银行直到 2022 年才采用数字工具。 |
 
-**正确答案**：`B`
+**正确答案**：`A`
 
 **标准解释原文**
 
-> （源 artifact 未提供该字段。）
+> First, compare the given rates to identify the pattern: in 2007Q1, the largest 100 banks (4.0%) had a higher delinquency rate than smaller banks (3.46%). By 2020Q1, this reversed—largest banks (1.9%) had a much lower rate than smaller banks (7.04%). Option A directly links this reversal to customer selection: larger banks tightening credit approval (higher minimum credit scores) would reduce high-risk borrowers (lowering their delinquency rate), while smaller banks relaxing approval (lower minimum scores) would increase high-risk borrowers (raising their rate). This aligns with the message’s question about whether smaller banks became worse at customer selection. Option B fails to explain why larger banks’ rates dropped. Option C is inconsistent because it claims equal effects across banks, but trends diverged. Option D’s timeline (mobile apps starting in 2015) does not fully explain the 2007–2020 trend or the magnitude of smaller banks’ rate increase.
 
 **标准解释中文翻译**
 
-> （源 artifact 未提供该字段。）
+> 首先，将给定的比率进行比较以识别模式：在 2007Q1，最大 100 家银行（4.0%）的拖欠率高于规模较小银行（3.46%）。到 2020Q1，这一关系反转了——大型银行（1.9%）的比率明显低于小型银行（7.04%）。选项 A 直接将这一反转与客户筛选联系起来：大型银行收紧信贷审批（提高最低信用评分）会减少高风险借款人（从而降低拖欠率），而小型银行放宽审批（降低最低评分）会增加高风险借款人（从而提高拖欠率）。这与题目关于规模较小银行是否在客户筛选方面变差的问题相吻合。选项 B 不能解释为什么大型银行的比率下降。选项 C 不一致，因为它声称对所有银行的影响相同，但趋势却分化了。选项 D 的时间线（2015 年开始使用移动应用）并不能充分解释 2007—2020 年的趋势，也不能解释小型银行比率上升的幅度。
 
 
 ### 📝 生成的 caption 与中文翻译
 
-#### 变量 1：3-Month Moving Average of Unweighted Median Hourly Wage Growth: Overall, Percent Change from Year Ago, Monthly, Not Seasonally Adjusted 
+#### 变量 1：bank 1 100
 
 **OpenTSLM caption 原文**
 
-> The time series shows a downward trend with medium volatility over the five-month period, beginning with a moderate upward phase in the early part of the window, followed by a significant decline in the second half. A notable peak occurs in the second half, reaching about 2.1 standard deviations above the mean, while a smaller valley is observed early in the window, about 1.2 standard deviations below the mean. The overall net change is a decline of approximately 12.7%.
+> The time series shows a steady upward trend with low volatility and a strong seasonal pattern repeating every 12 months. The data starts with a moderate increase in the early part of the window, followed by a more pronounced rise in the first half, and a slightly smaller but still positive growth in the second half. A notable peak occurs late in the window, reaching about 1.2 standard deviations above the mean, while a deep valley is observed early on, reaching about 1.8 standard deviations below the mean. The series is strongly correlated with two other variables, indicating a consistent relationship over time.
 
 **OpenTSLM caption 中文翻译**
 
-> 该时间序列在五个月期间呈下降趋势，波动中等，开始于窗口前半部分的适度上升阶段，随后在后半部分显著下降。一个显著峰值出现在后半部分，约为均值上方 2.1 个标准差，而一个较小的谷值出现在窗口前半部分，约为均值下方 1.2 个标准差。总体净变化约为下降 12.7%。
+> 该时间序列显示出稳定上升趋势，波动较低，并具有每 12 个月重复一次的强季节性模式。数据在窗口前期开始时略有上升，随后在前半段出现更明显的上升，而在后半段增长略小但仍为正。窗口后期出现一个显著峰值，约为均值以上 1.2 个标准差，而在前期观察到一个深谷，约为均值以下 1.8 个标准差。该序列与另外两个变量具有很强的相关性，表明其随时间保持一致的关系。
 
 **ChatTS caption 原文**
 
-> The overall trend is increasing. The global maximum (6.13) occurs in the last third of the window (position 306). Short-term fluctuations are larger in the second half of the window, with a sudden increase of 1.62 between points 282-292.
+> The overall trend is decreasing. The global maximum occurs around point 73 (middle third of the window). Short-term fluctuations are larger in the first half (amplitude ~2.5) compared to the second half (amplitude ~1.7).
 
 **ChatTS caption 中文翻译**
 
-> 总体趋势是上升的。全局最大值（6.13）出现在窗口后三分之一处（位置 306）。短期波动在窗口后半部分更大，点 282-292 之间出现了 1.62 的突然上升。
+> 总体趋势是下降的。全局最大值大约出现在第 73 个点附近（窗口的中间三分之一）。前半段的短期波动更大（振幅约为 2.5），而后半段更小（振幅约为 1.7）。
 
-#### 变量 2：12-Month Moving Average of Unweighted Median Hourly Wage Growth: Overall, Percent Change from Year Ago, Monthly, Not Seasonally Adjusted 
+#### 变量 2：bank out of 100
 
 **OpenTSLM caption 原文**
 
-> The time series shows a downward trend with medium volatility over the five-month period, starting with a moderate upward phase in the early part of the window, followed by a significant decline in the second half. A notable peak occurs in the second half, reaching about 1.5 standard deviations above the mean, while a deep valley is observed around the middle, approximately 2.0 standard deviations below the mean. The overall net change is a decline of about 12.7%.
+> The time series shows a steady upward trend with low volatility and a strong seasonal pattern repeating every 18 periods. The data starts with a moderate increase in the early part of the window, followed by a more pronounced rise in the first half, and a significant surge in the second half. A notable peak occurs late in the window, reaching about 1.5 standard deviations above the mean. The series is strongly correlated with two other variables, indicating a positive relationship.
 
 **OpenTSLM caption 中文翻译**
 
-> 该时间序列在五个月期间呈下降趋势，波动中等，开始于窗口前半部分的适度上升阶段，随后在后半部分显著下降。一个显著峰值出现在后半部分，约为均值上方 1.5 个标准差，而一个较深的谷值出现在窗口中部，约为均值下方 2.0 个标准差。总体净变化约为下降 12.7%。
+> 该时间序列显示出稳定上升趋势，波动较低，并具有每 18 个周期重复一次的强季节性模式。数据在窗口前期开始时略有上升，随后在前半段出现更明显的上升，而在后半段出现显著跃升。窗口后期出现一个显著峰值，约为均值以上 1.5 个标准差。该序列与另外两个变量具有很强的相关性，表明其存在正向关系。
 
 **ChatTS caption 原文**
 
-> The overall trend is increasing. The global maximum (6.3) occurs in the last third of the window (position ~306). Short-term fluctuations are more pronounced in the first half (positions 1-153), where two significant drops occur, compared to the smoother second half (positions 154-306). This indicates that the first half has larger short-term fluctuations.
+> The overall trend is mixed, with an initial decrease followed by an increase. The global maximum occurs at point 136, which is in the last third of the 137-point window. Short-term fluctuations are more pronounced in the first half (amplitude ~1.8) compared to the second half (amplitude ~2.8).
 
 **ChatTS caption 中文翻译**
 
-> 总体趋势是上升的。全局最大值（6.3）出现在窗口后三分之一处（位置约 306）。短期波动在前半部分（位置 1-153）更为明显，其中出现了两次显著下降，相比之下后半部分（位置 154-306）更平稳。这表明前半部分具有更大的短期波动。
+> 总体趋势是混合的，先下降后上升。全局最大值出现在第 136 个点，位于 137 点窗口的最后三分之一。前半段的短期波动更明显（振幅约为 1.8），而后半段更大（振幅约为 2.8）。
 
 
 ### 🧪 下游 QA 模型答案 / 评分
@@ -438,18 +483,18 @@
 
 | 输入条件 | 预测答案 | Gold | 是否正确 | 模型原始输出 |
 | --- | --- | --- | --- | --- |
-| 只给题目和选项 (`meta_only`) | `B` | `B` | ✓ 正确 | B |
-| 题目 + 原始数值序列 (`numbers`) | `B` | `B` | ✓ 正确 | B |
-| 题目 + OpenTSLM caption (`opentslm_caption`) | `B` | `B` | ✓ 正确 | B |
-| 题目 + OpenTSLM caption + 数值 (`opentslm_caption_plus`) | `B` | `B` | ✓ 正确 | B |
-| 题目 + ChatTS caption (`chatts_caption`) | `D` | `B` | ✗ 错误 | D |
-| 题目 + ChatTS caption + 数值 (`chatts_caption_plus`) | `D` | `B` | ✗ 错误 | D |
+| 只给题目和选项 (`meta_only`) | `D` | `A` | ✗ 错误 | D |
+| 题目 + 原始数值序列 (`numbers`) | `D` | `A` | ✗ 错误 | D |
+| 题目 + OpenTSLM caption (`opentslm_caption`) | `A` | `A` | ✓ 正确 | A |
+| 题目 + OpenTSLM caption + 数值 (`opentslm_caption_plus`) | `D` | `A` | ✗ 错误 | D |
+| 题目 + ChatTS caption (`chatts_caption`) | `D` | `A` | ✗ 错误 | D |
+| 题目 + ChatTS caption + 数值 (`chatts_caption_plus`) | `D` | `A` | ✗ 错误 | D |
 
 
 ### 🔎 Case 分析
 
-- **答案格局**：`meta_only=B✓, numbers=B✓, opentslm_caption=B✓, opentslm_caption_plus=B✓, chatts_caption=D✗, chatts_caption_plus=D✗`。
-- **关键问题**：这是反例：ChatTS 把两个移动平均都概括成 increasing，并把全局最大值放在末尾，容易诱导模型选择持续加速；OpenTSLM 虽然也有噪声，但保留了下降/回落的动量信号。
+- **答案格局**：`meta_only=D✗, numbers=D✗, opentslm_caption=A✓, opentslm_caption_plus=D✗, chatts_caption=D✗, chatts_caption_plus=D✗`。
+- **关键问题**：这个 case 去掉了 meta-only 已能答对的语言先验样本。题目要求比较两类银行逾期率从 2007Q1 到 2020Q1 的方向反转，并把它映射到客户筛选机制。只有 OpenTSLM caption-only 答对，说明少数情况下 OpenTSLM 的跨变量趋势摘要能提供有效线索；但 numbers 和 caption+numbers 都错，也说明该线索没有稳定转化为可计算证据。
 - **对训练失败的含义**：这类 case 显示，当前 caption 训练更像是在学习通用趋势/峰谷/波动模板，而不是学习“下游 QA 所需的证据提取”。FREDQA 的正确答案经常依赖指定日期、指定窗口、比值、差值、反事实外推或领域机制；这些信息如果没有被 caption 明确保留，下游 GPT 即使很强也只能依赖题干先验或被错误摘要带偏。
 
 
@@ -1096,138 +1141,81 @@
 
 
 
-## 📈 Case 09：FREDQA `850` | meta-only 对，数值和多数 caption 反而错
+## 📈 Case 09：FREDQA `964` | meta-only 错，只有 ChatTS caption 对
 
 ### 基本信息
 
 | 字段 | 内容 |
 | --- | --- |
 | 数据集 | `FREDQA` |
-| Case ID | `fredqa::850` |
-| FREDQA 原始 idx | `850` |
-| 变量数 / 序列长度 | `4` / `[50, 50, 50, 50]` |
-| 问题类型 | `Causal Reasoning - Counterfactual` |
+| Case ID | `fredqa::964` |
+| FREDQA 原始 idx | `964` |
+| 变量数 / 序列长度 | `1` / `[426]` |
+| 问题类型 | `Causal Reasoning - Interventional` |
 | 正确答案 | `B` |
-| 失败/对比模式 | meta-only 对，数值和多数 caption 反而错 |
-| 本 case 关注点 | 住房相关 CPI 加权指数在能源价格反事实下的四年增长差 |
+| 失败/对比模式 | meta-only 错，只有 ChatTS caption 对 |
+| 本 case 关注点 | 雷曼兄弟倒闭前后 PPI 的即时百分比变化 |
 
 变量摘要：
 
 | 变量 | 指标名 | n | start | end | min@idx | max@idx | slope |
 | ---: | --- | ---: | ---: | ---: | --- | --- | ---: |
-| 1 | Consumer Price Index for All Urban Consumers: Shelter in U.S. City Average, Index Apr 2020=100, Monthly, Seasonally Adjusted  | 50 | 100 | 122.911 | 100@0 | 122.911@49 | 0.514334 |
-| 2 | Consumer Price Index for All Urban Consumers: Water and Sewer and Trash Collection Services in U.S. City Average, Index Apr 2020=100, Monthly, Seasonally Adjusted  | 50 | 100 | 119.673 | 100@0 | 119.749@48 | 0.418144 |
-| 3 | Consumer Price Index for All Urban Consumers: Household Furnishings and Operations in U.S. City Average, Index Apr 2020=100, Monthly, Seasonally Adjusted  | 50 | 100 | 117.511 | 100@0 | 119.695@36 | 0.464982 |
-| 4 | Consumer Price Index for All Urban Consumers: Household Energy in U.S. City Average, Index Apr 2020=100, Monthly, Seasonally Adjusted | 50 | 100 | 132.86 | 99.6696@1 | 135.217@33 | 0.824406 |
+| 1 | PPI | 426 | 100 | 224.866 | 100@0 | 237.3@357 | 0.278716 |
 
 ### 🖼 时序图
 
-![FREDQA 850](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-rerun-zh/figures/fredqa_850.png)
+![FREDQA 964](https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-rerun-zh/figures/fredqa_964.png)
 
 
 ### ❓ QA 问题与中文翻译
 
 **题干原文**
 
-> You are a time series analysis expert. In a U.S. urban consumer price index (CPI) system, there are 4 metrics: Shelter CPI (rent, owner's equivalent rent, lodging away from home, home insurance), monthly, seasonally adjusted, indexed to 100 in April 2020&lt;ts&gt;&lt;ts/&gt;; Services CPI (water, sewer, trash collection), monthly, seasonally adjusted, indexed to 100 in April 2020&lt;ts&gt;&lt;ts/&gt;; Furnishings and Operations CPI (furniture, appliances, housekeeping supplies), monthly, seasonally adjusted, indexed to 100 in April 2020&lt;ts&gt;&lt;ts/&gt;; Household Energy CPI (fuel oil, gas, electricity), monthly, seasonally adjusted, indexed to 100 in April 2020&lt;ts&gt;&lt;ts/&gt;. Shelter accounts for 36% of the overall CPI for urban consumers, while Services, Furnishings and Operations, and Household Energy together account for an additional 9%. A total housing-related CPI sub-index is calculated as 80% Shelter CPI plus 20% the average of the other three metrics. Data is available from April 2020 to May 2024. Suppose energy prices had remained at their April 2021 level (106.2866) for all months after May 2021. What would be the approximate difference in the four-year growth rate (April 2020 to April 2024) of the total housing-related CPI between this counterfactual scenario and the actual data?
+> You are a time series analysis expert. This is a metric called Producer Price Index (PPI)—which measures average changes in selling prices received by domestic producers for their output—collected from the Federal Reserve Economic Data (FRED) database &lt;ts&gt;&lt;ts/&gt;. The data is monthly from December 1989 to May 2025. The Lehman Brothers collapse on September 15, 2008, triggered a global financial crisis that disrupted commodity markets and supply chains. To evaluate the immediate causal impact of this event on producer prices, compare the PPI values for August 2008 (pre-collapse) and September 2008 (post-collapse). Which conclusion is most supported by the data and economic logic?
 
 **题干中文翻译**
 
-> 你是一名时间序列分析专家。在美国城市消费者价格指数（CPI）体系中，有4个指标：Shelter CPI（rent, owner's equivalent rent, lodging away from home, home insurance），monthly, seasonally adjusted, indexed to 100 in April 2020&lt;ts&gt;&lt;ts/&gt;；Services CPI（water, sewer, trash collection），monthly, seasonally adjusted, indexed to 100 in April 2020&lt;ts&gt;&lt;ts/&gt;；Furnishings and Operations CPI（furniture, appliances, housekeeping supplies），monthly, seasonally adjusted, indexed to 100 in April 2020&lt;ts&gt;&lt;ts/&gt;；Household Energy CPI（fuel oil, gas, electricity），monthly, seasonally adjusted, indexed to 100 in April 2020&lt;ts&gt;&lt;ts/&gt;。Shelter占整体城市消费者CPI的36%，而Services、Furnishings and Operations和Household Energy合计额外占9%。一个总的住房相关CPI子指数按80%的Shelter CPI加上其余三个指标平均值的20%计算。数据可从2020年4月到2024年5月获得。假设自2021年5月之后的所有月份，能源价格都保持在2021年4月的水平（106.2866）。那么，总住房相关CPI在四年增长率（2020年4月到2024年4月）方面，与实际数据相比，大约会相差多少？
+> 你是一名时间序列分析专家。这是一项称为生产者价格指数（PPI）的指标——它衡量国内生产者为其产出获得的销售价格平均变化——数据来自联邦储备经济数据（FRED）数据库 &lt;ts&gt;&lt;ts/&gt;。数据为月度数据，时间范围从1989年12月到2025年5月。雷曼兄弟于2008年9月15日倒闭，引发了一场全球金融危机，扰乱了大宗商品市场和供应链。为评估这一事件对生产者价格的直接因果影响，比较2008年8月（倒闭前）和2008年9月（倒闭后）的PPI值。哪一项结论最符合数据和经济逻辑？
 
 **选项**
 
 | 选项 | 原文 | 中文翻译 |
 | --- | --- | --- |
-| `A` | 0.5 percentage points lower | 低0.5个百分点 |
-| `B` | 1.8 percentage points lower | 低1.8个百分点 |
-| `C` | 3.2 percentage points lower | 低3.2个百分点 |
-| `D` | 5.1 percentage points lower | 低5.1个百分点 |
+| `A` | The collapse caused a 4.7% decrease in PPI, as reduced consumer demand lowered producer pricing power. | 倒闭导致PPI下降了4.7%，因为消费者需求减少降低了生产者的定价能力。 |
+| `B` | The collapse caused a 4.7% increase in PPI, as short-term disruptions raised the cost of raw materials for producers. | 倒闭导致PPI上升了4.7%，因为短期扰动提高了生产者原材料的成本。 |
+| `C` | The collapse had no immediate effect, as PPI remained unchanged between August and September 2008. | 倒闭没有立即影响，因为2008年8月和9月之间PPI保持不变。 |
+| `D` | The collapse caused a 9.2% increase in PPI, as producers passed on full costs of financial market turmoil to buyers. | 倒闭导致PPI上升了9.2%，因为生产者将金融市场动荡的全部成本转嫁给了买家。 |
 
 **正确答案**：`B`
 
 **标准解释原文**
 
-> First, calculate the actual total housing CPI for April 2024: (122.4544 × 0.8) + [(119.7488 + 117.7026 + 133.0186)/3 × 0.2] = 97.96 + 24.70 = 122.66, representing 22.66% growth from April 2020. Next, calculate the counterfactual total housing CPI (energy fixed at 106.2866): (122.4544 × 0.8) + [(119.7488 + 117.7026 + 106.2866)/3 × 0.2] = 97.96 + 22.92 = 120.88, representing 20.88% growth. The difference is 22.66% − 20.88% ≈ 1.8 percentage points lower in the counterfactual scenario.
+> First, calculate the percentage change in PPI: August 2008 = 182.7, September 2008 = 191.3. The change is (191.3 – 182.7)/182.7 ≈ 4.7%, ruling out A (decrease), C (no change), and D (9.2% increase). Causally, the Lehman collapse disrupted global supply chains and commodity markets, leading to short-term spikes in raw material costs (e.g., energy, metals) that producers passed on as higher prices. This aligns with the PPI increase and supports option B.
 
 **标准解释中文翻译**
 
-> 首先，计算2024年4月实际的总住房CPI：(122.4544 × 0.8) + [(119.7488 + 117.7026 + 133.0186)/3 × 0.2] = 97.96 + 24.70 = 122.66，表示相对于2020年4月增长了22.66%。接下来，计算反事实情景下的总住房CPI（能源固定为106.2866）：(122.4544 × 0.8) + [(119.7488 + 117.7026 + 106.2866)/3 × 0.2] = 97.96 + 22.92 = 120.88，表示增长了20.88%。差值为22.66% − 20.88% ≈ 低1.8个百分点。
+> 首先，计算PPI的百分比变化：2008年8月 = 182.7，2008年9月 = 191.3。变化为 (191.3 – 182.7)/182.7 ≈ 4.7%，排除了A（下降）、C（无变化）和D（9.2%上升）。从因果上看，雷曼倒闭扰乱了全球供应链和大宗商品市场，导致原材料成本（例如能源、金属）短期飙升，生产者将其以更高价格转嫁出去。这与PPI上升一致，并支持选项B。
 
 
 ### 📝 生成的 caption 与中文翻译
 
-#### 变量 1：Consumer Price Index for All Urban Consumers: Shelter in U.S. City Average, Index Apr 2020=100, Monthly, Seasonally Adjusted 
+#### 变量 1：PPI
 
 **OpenTSLM caption 原文**
 
-> The time series shows a steady upward trend with low volatility, beginning with a moderate increase in the early part of the window, followed by a more pronounced rise in the first half, and a slightly smaller increase in the second half. The data exhibits a strong seasonal pattern with a period of about 12 months. The overall growth over the time span is substantial, indicating a consistent upward movement throughout the period.
+> The time series shows a flat trend with low volatility and medium strength seasonality every 10 periods. There is a noticeable upward phase early in the window followed by a more pronounced upward movement in the first half, which is then followed by a significant downward shift in the second half. A peak occurs in the second half with a magnitude of about 1.5 standard deviations from the mean, while a valley is observed early in the window with a magnitude of about 1.7 standard deviations from the mean. The series exhibits strong positive correlation with variable A and moderate positive correlation with variable B.
 
 **OpenTSLM caption 中文翻译**
 
-> 时间序列显示出稳定上升的趋势且波动较低，开头阶段有中等幅度的上升，随后在前半段出现更明显的上升，而在后半段增幅略小。数据呈现出周期约为12个月的强季节性模式。整个时间跨度内的总体增长相当显著，表明在整个期间内持续向上移动。
+> 时间序列显示出平坦的趋势、较低的波动性，以及每10个周期一次的中等强度季节性。窗口前期有一个明显的上升阶段，随后在前半段出现更显著的上升运动，接着在后半段出现显著下降。后半段出现一个峰值，其幅度约为相对于均值1.5个标准差，而在窗口前期观察到一个谷值，其幅度约为相对于均值1.7个标准差。该序列与变量A呈强正相关，与变量B呈中等正相关。
 
 **ChatTS caption 原文**
 
-> The overall trend is increasing. The global maximum is in the last third of the window. Short-term fluctuations are larger in the first half of the window. This indicates an initial phase of more volatile growth followed by a smoother upward trajectory.
+> The overall trend is increasing. The global maximum is in the last third of the window. Short-term fluctuations are larger in the second half of the window.
 
 **ChatTS caption 中文翻译**
 
-> 整体趋势是上升的。全局最大值出现在窗口的最后三分之一处。短期波动在窗口的前半段更大。这表明最初阶段增长更为波动，随后转为更平滑的上升轨迹。
-
-#### 变量 2：Consumer Price Index for All Urban Consumers: Water and Sewer and Trash Collection Services in U.S. City Average, Index Apr 2020=100, Monthly, Seasonally Adjusted 
-
-**OpenTSLM caption 原文**
-
-> The time series shows a steady upward trend with low volatility, beginning with a moderate increase in the early part of the window, followed by a more pronounced rise in the first half, and a slightly smaller but still positive growth in the second half. The data exhibits a strong seasonal pattern with a period of about 12 months, and the overall growth over the time span is over 40%.
-
-**OpenTSLM caption 中文翻译**
-
-> 时间序列显示出稳定上升的趋势且波动较低，开头阶段有中等幅度的上升，随后在前半段出现更明显的上升，而在后半段增长略小但仍为正。数据呈现出周期约为12个月的强季节性模式，且整个时间跨度内的总体增长超过40%。
-
-**ChatTS caption 原文**
-
-> The overall trend is increasing. The global maximum is in the last third of the window. Short-term fluctuations are larger in the first half of the window.
-
-**ChatTS caption 中文翻译**
-
-> 整体趋势是上升的。全局最大值出现在窗口的最后三分之一处。短期波动在窗口的前半段更大。
-
-#### 变量 3：Consumer Price Index for All Urban Consumers: Household Furnishings and Operations in U.S. City Average, Index Apr 2020=100, Monthly, Seasonally Adjusted 
-
-**OpenTSLM caption 原文**
-
-> The time series shows a steady upward trend with low volatility, beginning with a moderate increase in the early part of the window, followed by a more pronounced rise in the first half, and a slightly smaller but still positive growth in the second half. The data exhibits a strong seasonal pattern with a period of about 12 months. The overall growth over the time span is substantial, indicating a consistent upward movement throughout the period.
-
-**OpenTSLM caption 中文翻译**
-
-> 时间序列显示出稳定上升的趋势且波动较低，开头阶段有中等幅度的上升，随后在前半段出现更明显的上升，而在后半段增幅略小。数据呈现出周期约为12个月的强季节性模式。整个时间跨度内的总体增长相当显著，表明在整个期间内持续向上移动。
-
-**ChatTS caption 原文**
-
-> The overall trend is increasing. The global maximum of 119.69 occurs at the end of the time series, positioned in the last third of the window. Short-term fluctuations are more pronounced in the second half of the time series, where the slope changes from a gradual increase to a steeper rise.
-
-**ChatTS caption 中文翻译**
-
-> 整体趋势是上升的。全局最大值119.69出现在时间序列末端，位于窗口的最后三分之一处。短期波动在时间序列的后半段更为明显，其中斜率从缓慢上升变为更陡峭的上升。
-
-#### 变量 4：Consumer Price Index for All Urban Consumers: Household Energy in U.S. City Average, Index Apr 2020=100, Monthly, Seasonally Adjusted
-
-**OpenTSLM caption 原文**
-
-> The time series shows a steady upward trend with low volatility, beginning with a moderate increase in the early part of the window, followed by a more pronounced rise in the first half, and a slightly smaller but still positive growth in the second half. The data exhibits a strong seasonal pattern with a period of about 12 months. The overall growth from start to finish is over 40%, indicating a consistent upward movement throughout the time span.
-
-**OpenTSLM caption 中文翻译**
-
-> 时间序列从开始到结束总体上呈上升趋势，波动较低，开头阶段有中等幅度的上升，随后在前半段出现更明显的上升，而在后半段增幅略小。数据呈现出周期约为12个月的强季节性模式，且从开始到结束的总体增长超过40%，表明在整个时间跨度内持续向上移动。
-
-**ChatTS caption 原文**
-
-> The overall trend is increasing. The global maximum of 135.22 occurs at point 29, which is in the first third of the 50-point window. Short-term fluctuations are more pronounced in the second half of the window, where the time series shows a sudden increase from around 125.75 to 132.86 between points 26 and 35. Answer: Up; first third; second half.
-
-**ChatTS caption 中文翻译**
-
-> 整体趋势是上升的。全局最大值135.22出现在点29，位于50点窗口的前三分之一处。短期波动在窗口的后半段更为明显，其中时间序列在点26到35之间从约125.75突然上升到132.86。答案：上升；前三分之一；后半段。
+> 整体趋势呈上升。全局最大值位于窗口的后三分之一处。短期波动在窗口后半段更大。
 
 
 ### 🧪 下游 QA 模型答案 / 评分
@@ -1236,18 +1224,18 @@
 
 | 输入条件 | 预测答案 | Gold | 是否正确 | 模型原始输出 |
 | --- | --- | --- | --- | --- |
-| 只给题目和选项 (`meta_only`) | `B` | `B` | ✓ 正确 | B |
+| 只给题目和选项 (`meta_only`) | `C` | `B` | ✗ 错误 | C |
 | 题目 + 原始数值序列 (`numbers`) | `A` | `B` | ✗ 错误 | A |
 | 题目 + OpenTSLM caption (`opentslm_caption`) | `A` | `B` | ✗ 错误 | A |
 | 题目 + OpenTSLM caption + 数值 (`opentslm_caption_plus`) | `A` | `B` | ✗ 错误 | A |
-| 题目 + ChatTS caption (`chatts_caption`) | `A` | `B` | ✗ 错误 | A |
-| 题目 + ChatTS caption + 数值 (`chatts_caption_plus`) | `B` | `B` | ✓ 正确 | B |
+| 题目 + ChatTS caption (`chatts_caption`) | `B` | `B` | ✓ 正确 | B |
+| 题目 + ChatTS caption + 数值 (`chatts_caption_plus`) | `A` | `B` | ✗ 错误 | A |
 
 
 ### 🔎 Case 分析
 
-- **答案格局**：`meta_only=B✓, numbers=A✗, opentslm_caption=A✗, opentslm_caption_plus=A✗, chatts_caption=A✗, chatts_caption_plus=B✓`。
-- **关键问题**：题目选项与权重公式本身已经强烈约束答案，meta-only 能直接答对；加入数值或通用 caption 后模型被局部价格走势干扰，只有 ChatTS+numbers 恢复正确。这类样本说明高 meta-only 准确率不能等价为时序理解成功。
+- **答案格局**：`meta_only=C✗, numbers=A✗, opentslm_caption=A✗, opentslm_caption_plus=A✗, chatts_caption=B✓, chatts_caption_plus=A✗`。
+- **关键问题**：这个 case 需要比较 2008 年 8 月和 9 月 PPI 的短期变化。ChatTS 的简洁趋势摘要让 caption-only 条件答对，但 OpenTSLM、numbers 和两个 caption+numbers 条件都答错，说明即使直接给数值，长题干中的局部月份定位和百分比变化也没有被稳定执行。
 - **对训练失败的含义**：这类 case 显示，当前 caption 训练更像是在学习通用趋势/峰谷/波动模板，而不是学习“下游 QA 所需的证据提取”。FREDQA 的正确答案经常依赖指定日期、指定窗口、比值、差值、反事实外推或领域机制；这些信息如果没有被 caption 明确保留，下游 GPT 即使很强也只能依赖题干先验或被错误摘要带偏。
 
 
@@ -1687,17 +1675,19 @@
 
 ## 全局 Case Study 分析
 
-1. **FREDQA 的高 `meta_only` 准确率说明它并不纯粹是时序读取任务。** `meta_only` 已经达到 80.96%，很多样本可以由题干、选项和领域常识先验直接排除。这意味着只看总体 QA accuracy 会高估模型从时间序列中提取证据的能力。
+1. **FREDQA 的高 `meta_only` 准确率说明它并不纯粹是时序读取任务。** `meta_only` 已经达到 80.96%，604 条中有 489 条可以由题干、选项和领域常识先验答对。这意味着只看总体 QA accuracy 会严重高估模型从时间序列中提取证据的能力。
 
-2. **当前 caption 训练失败的核心不是“语言不够流畅”，而是“证据不够任务化”。** OpenTSLM 和 ChatTS 大多能生成趋势、峰谷、波动、季节性等描述，但 FREDQA 经常需要指定月份/年份、窗口均值、比值、差值、反事实外推、干预前后比较，以及制度/宏观机制解释。通用 caption 没有保证这些证据被保留。
+2. **过滤掉 meta-only 可答对样本后，失败更明显。** 在剩余 115 个 harder subset 中，`numbers` 只有 23.48%，`OpenTSLM caption` 只有 13.91%，`ChatTS caption` 只有 20.87%。这说明原始总体表里看似还不错的 80%+，大部分不是 caption 或 numbers 的贡献。
 
-3. **OpenTSLM caption 的模板化问题更明显。** 多个 case 中 OpenTSLM 会重复生成 “steady upward trend / low volatility / strong seasonal pattern” 一类描述，即使问题真正需要局部日期计算。这会把 QA 模型从正确的局部证据带向全局形态概括。
+3. **当前 caption 训练失败的核心不是“语言不够流畅”，而是“证据不够任务化”。** OpenTSLM 和 ChatTS 大多能生成趋势、峰谷、波动、季节性等描述，但 FREDQA 经常需要指定月份/年份、窗口均值、比值、差值、反事实外推、干预前后比较，以及制度/宏观机制解释。通用 caption 没有保证这些证据被保留。
 
-4. **ChatTS 更简洁，但不是稳定上限。** ChatTS caption 在 `opentslm_wrong_chatts_right` 和 counterfactual 类型中有一些优势，但 `chatts_caption_plus` 低于 `chatts_caption`，说明一旦同时给数值，QA 模型可能重新加权证据并被干扰。
+4. **OpenTSLM caption 的模板化问题更明显。** 多个 case 中 OpenTSLM 会重复生成 “steady upward trend / low volatility / strong seasonal pattern” 一类描述，即使问题真正需要局部日期计算。这会把 QA 模型从正确的局部证据带向全局形态概括。
 
-5. **`numbers` 不是可靠 oracle。** `numbers` 只比 `meta_only` 高 1.16 个百分点，而且仍有大量反事实/公式化样本答错。这说明长数值输入本身并不会自动转化为正确计算；后续如果目标是可靠 QA，可能需要显式工具或结构化中间变量。
+5. **ChatTS 更简洁，但不是稳定上限。** ChatTS caption 在部分 counterfactual/interventional case 中能救回 meta-only，但 `chatts_caption_plus` 在 harder subset 中低于 `chatts_caption`，说明一旦同时给数值，QA 模型可能重新加权证据并被干扰。
 
-6. **对导师讨论最重要的结论**：目前训练路线没有失败在“caption 不能描述时序”，而是失败在“caption 没有按下游问题需要组织证据”。下一步应把 caption 目标从通用描述改成 task-aware evidence extraction，例如保留指定日期值、窗口统计、跨变量差/比值、反事实公式中间量，或让工具先计算这些中间量再交给 LLM 解释。
+6. **`numbers` 不是可靠 oracle。** 在 harder subset 中 `numbers` 也只有 23.48%，仍有 74 个样本所有非 meta 条件都答错。这说明长数值输入本身不会自动转化为正确计算；后续如果目标是可靠 QA，可能需要显式工具或结构化中间变量。
+
+7. **对导师讨论最重要的结论**：目前训练路线没有失败在“caption 不能描述时序”，而是失败在“caption 没有按下游问题需要组织证据”。下一步应把 caption 目标从通用描述改成 task-aware evidence extraction，例如保留指定日期值、窗口统计、跨变量差/比值、反事实公式中间量，或让工具先计算这些中间量再交给 LLM 解释。
 
 ## 建议下一步
 

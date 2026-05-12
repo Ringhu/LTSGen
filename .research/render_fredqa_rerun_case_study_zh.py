@@ -84,10 +84,10 @@ CASE_DEFS = [
         "why": "题目要求比较 2022 年 12 月相对 2020 年 1 月的缺口。ChatTS 的单独 caption 捕捉了年轻组和年长组不同恢复形态，OpenTSLM 的通用趋势描述不足；但加入数值后 ChatTS+numbers 又答错，说明下游模型融合 caption 与数值时并不单调。",
     },
     {
-        "idx": "325",
-        "tag": "OpenTSLM 对、ChatTS 错",
-        "focus": "3 月移动平均与 12 月移动平均的工资增长动量",
-        "why": "这是反例：ChatTS 把两个移动平均都概括成 increasing，并把全局最大值放在末尾，容易诱导模型选择持续加速；OpenTSLM 虽然也有噪声，但保留了下降/回落的动量信号。",
+        "idx": "997",
+        "tag": "meta-only 错，只有 OpenTSLM caption 对",
+        "focus": "大银行与小银行信用卡逾期率在 2007 到 2020 年的反转",
+        "why": "这个 case 去掉了 meta-only 已能答对的语言先验样本。题目要求比较两类银行逾期率从 2007Q1 到 2020Q1 的方向反转，并把它映射到客户筛选机制。只有 OpenTSLM caption-only 答对，说明少数情况下 OpenTSLM 的跨变量趋势摘要能提供有效线索；但 numbers 和 caption+numbers 都错，也说明该线索没有稳定转化为可计算证据。",
     },
     {
         "idx": "1141",
@@ -120,10 +120,10 @@ CASE_DEFS = [
         "why": "模型全部选择了表面上合理但并非标准答案的选项，说明该题不是单纯读峰值，还要求把 1980s S&L crisis 与之后更严格资本充足率规则联系起来；caption 没有编码制度性解释。",
     },
     {
-        "idx": "850",
-        "tag": "meta-only 对，数值和多数 caption 反而错",
-        "focus": "住房相关 CPI 加权指数在能源价格反事实下的四年增长差",
-        "why": "题目选项与权重公式本身已经强烈约束答案，meta-only 能直接答对；加入数值或通用 caption 后模型被局部价格走势干扰，只有 ChatTS+numbers 恢复正确。这类样本说明高 meta-only 准确率不能等价为时序理解成功。",
+        "idx": "964",
+        "tag": "meta-only 错，只有 ChatTS caption 对",
+        "focus": "雷曼兄弟倒闭前后 PPI 的即时百分比变化",
+        "why": "这个 case 需要比较 2008 年 8 月和 9 月 PPI 的短期变化。ChatTS 的简洁趋势摘要让 caption-only 条件答对，但 OpenTSLM、numbers 和两个 caption+numbers 条件都答错，说明即使直接给数值，长题干中的局部月份定位和百分比变化也没有被稳定执行。",
     },
     {
         "idx": "481",
@@ -390,6 +390,8 @@ def build_maps() -> dict[str, Any]:
     for rows in per_by_qa.values():
         rows.sort(key=lambda r: int(r["var_index"]))
 
+    derived = build_derived_statistics(pred, summary)
+
     return {
         "qa": {str(r["idx"]): r for r in qa_rows},
         "qa_rows": qa_rows,
@@ -399,6 +401,7 @@ def build_maps() -> dict[str, Any]:
         "pred": pred,
         "metrics": metrics,
         "summary": summary,
+        "derived": derived,
         "counts": {
             "qa": len(qa_rows),
             "per_var": len(per_var_rows),
@@ -406,6 +409,76 @@ def build_maps() -> dict[str, Any]:
             "chatts": len(ch_rows),
             "pred": len(pred_rows),
         },
+    }
+
+
+def summarize_subset(pred: dict[str, dict[str, dict[str, Any]]], ids: list[str]) -> dict[str, dict[str, Any]]:
+    out: dict[str, dict[str, Any]] = {}
+    n = len(ids)
+    for cond in CONDITIONS:
+        correct = sum(1 for idx in ids if bool(pred[idx][cond]["correct"]))
+        out[cond] = {"correct": correct, "n": n, "accuracy": correct / n if n else 0.0}
+    return out
+
+
+def summarize_subset_by_nvars(
+    pred: dict[str, dict[str, dict[str, Any]]], ids: list[str]
+) -> dict[str, dict[str, dict[str, Any]]]:
+    buckets: dict[str, list[str]] = {}
+    for idx in ids:
+        key = str(pred[idx]["meta_only"]["nvars"])
+        buckets.setdefault(key, []).append(idx)
+    return {key: summarize_subset(pred, bucket) for key, bucket in sorted(buckets.items(), key=lambda kv: int(kv[0]))}
+
+
+def summarize_subset_by_attribute(
+    pred: dict[str, dict[str, dict[str, Any]]], ids: list[str]
+) -> dict[str, dict[str, dict[str, Any]]]:
+    buckets: dict[str, list[str]] = {}
+    for idx in ids:
+        for attr in pred[idx]["meta_only"].get("attributes") or []:
+            if attr in ATTRIBUTE_ZH:
+                buckets.setdefault(attr, []).append(idx)
+    return dict(sorted(buckets.items(), key=lambda kv: len(kv[1]), reverse=True))
+
+
+def summarize_attribute_accuracies(
+    pred: dict[str, dict[str, dict[str, Any]]], attr_ids: dict[str, list[str]]
+) -> dict[str, dict[str, dict[str, Any]]]:
+    return {attr: summarize_subset(pred, ids) for attr, ids in attr_ids.items()}
+
+
+def build_derived_statistics(
+    pred: dict[str, dict[str, dict[str, Any]]], summary: dict[str, Any]
+) -> dict[str, Any]:
+    all_ids = sorted(pred)
+    meta_correct = [idx for idx in all_ids if bool(pred[idx]["meta_only"]["correct"])]
+    meta_wrong = [idx for idx in all_ids if not bool(pred[idx]["meta_only"]["correct"])]
+
+    hard = summarize_subset(pred, meta_wrong)
+    easy = summarize_subset(pred, meta_correct)
+    hard_by_nvars = summarize_subset_by_nvars(pred, meta_wrong)
+    hard_attr_ids = summarize_subset_by_attribute(pred, meta_wrong)
+    hard_by_attribute = summarize_attribute_accuracies(pred, hard_attr_ids)
+
+    exact_signatures: Counter[tuple[str, ...]] = Counter()
+    for idx in meta_wrong:
+        exact_signatures[tuple(cond for cond in CONDITIONS[1:] if bool(pred[idx][cond]["correct"]))] += 1
+
+    hard_nonmeta_all_wrong = exact_signatures[()]
+    hard_any_nonmeta_right = len(meta_wrong) - hard_nonmeta_all_wrong
+    return {
+        "meta_correct_ids": meta_correct,
+        "meta_wrong_ids": meta_wrong,
+        "hard_accuracy": hard,
+        "easy_accuracy": easy,
+        "hard_by_nvars": hard_by_nvars,
+        "hard_by_attribute": hard_by_attribute,
+        "hard_nonmeta_all_wrong": hard_nonmeta_all_wrong,
+        "hard_any_nonmeta_right": hard_any_nonmeta_right,
+        "hard_exact_signatures": [
+            {"conditions": list(k), "count": v} for k, v in exact_signatures.most_common()
+        ],
     }
 
 
@@ -463,22 +536,23 @@ def plot_case(case_def: dict[str, str], maps: dict[str, Any]) -> str:
     return fname
 
 
-def plot_overall(maps: dict[str, Any]) -> str:
+def plot_accuracy_bars(
+    metrics: dict[str, dict[str, Any]], fname: str, title: str, ylim: tuple[float, float]
+) -> str:
     setup_matplotlib()
-    metrics = maps["summary"]["accuracy"]
     labels = [CONDITION_ZH[c] for c in CONDITIONS]
     vals = [metrics[c]["accuracy"] * 100 for c in CONDITIONS]
-    fname = "fredqa_overall_accuracy.png"
     path = FIG_DIR / fname
     fig, ax = plt.subplots(figsize=(11, 4.2))
     bars = ax.bar(range(len(vals)), vals, color=["#4c78a8", "#59a14f", "#f28e2b", "#e15759", "#76b7b2", "#b07aa1"])
-    ax.set_ylim(60, 88)
+    ax.set_ylim(*ylim)
     ax.set_ylabel("Accuracy (%)")
-    ax.set_title("FREDQA 本轮重跑：六种输入条件总体准确率")
+    ax.set_title(title)
     ax.set_xticks(range(len(vals)), labels, rotation=18, ha="right")
     ax.grid(axis="y", alpha=0.25)
     for b, v in zip(bars, vals):
-        ax.text(b.get_x() + b.get_width() / 2, v + 0.45, f"{v:.2f}%", ha="center", va="bottom", fontsize=8)
+        offset = 0.45 if ylim[1] > 50 else 0.7
+        ax.text(b.get_x() + b.get_width() / 2, v + offset, f"{v:.2f}%", ha="center", va="bottom", fontsize=8)
     fig.tight_layout()
     FIG_DIR.mkdir(parents=True, exist_ok=True)
     fig.savefig(path, bbox_inches="tight")
@@ -486,18 +560,29 @@ def plot_overall(maps: dict[str, Any]) -> str:
     return fname
 
 
-def plot_heatmap(data: dict[str, Any], rows: list[str], title: str, fname: str) -> str:
+def plot_overall(maps: dict[str, Any]) -> str:
+    return plot_accuracy_bars(
+        maps["summary"]["accuracy"],
+        "fredqa_overall_accuracy.png",
+        "FREDQA 本轮重跑：六种输入条件总体准确率",
+        (60, 88),
+    )
+
+
+def plot_heatmap(
+    data: dict[str, Any], rows: list[str], title: str, fname: str, vmin: float = 60, vmax: float = 95
+) -> str:
     setup_matplotlib()
     vals = np.asarray([[data[r][c]["accuracy"] * 100 for c in CONDITIONS] for r in rows], dtype=float)
     fig, ax = plt.subplots(figsize=(12, max(3.8, 0.55 * len(rows) + 2.2)))
-    im = ax.imshow(vals, cmap="YlGnBu", vmin=60, vmax=95, aspect="auto")
+    im = ax.imshow(vals, cmap="YlGnBu", vmin=vmin, vmax=vmax, aspect="auto")
     ax.set_xticks(range(len(CONDITIONS)), [CONDITION_ZH[c] for c in CONDITIONS], rotation=20, ha="right")
     row_labels = [ATTRIBUTE_ZH.get(r, f"{r} 变量") for r in rows]
     ax.set_yticks(range(len(rows)), row_labels)
     ax.set_title(title)
     for i in range(vals.shape[0]):
         for j in range(vals.shape[1]):
-            color = "white" if vals[i, j] > 83 else "#222222"
+            color = "white" if vals[i, j] > (vmin + vmax) / 2 else "#222222"
             ax.text(j, i, f"{vals[i, j]:.1f}", ha="center", va="center", fontsize=8, color=color)
     cbar = fig.colorbar(im, ax=ax, fraction=0.025, pad=0.02)
     cbar.set_label("Accuracy (%)")
@@ -554,6 +639,122 @@ def render_accuracy_table(summary: dict[str, Any]) -> list[str]:
                     pp(row["accuracy"] - meta),
                     pp(row["accuracy"] - numbers),
                     table_cell(meanings[cond]),
+                ]
+            )
+            + " |"
+        )
+    return lines
+
+
+def render_accuracy_table_from_metrics(
+    metrics: dict[str, dict[str, Any]],
+    *,
+    baseline_cond: str,
+    compare_cond: str,
+    meanings: dict[str, str],
+) -> list[str]:
+    lines = [
+        f"| 输入条件 | 正确/总数 | Accuracy | 相对 {baseline_cond} | 相对 {compare_cond} | 统计含义 |",
+        "| --- | ---: | ---: | ---: | ---: | --- |",
+    ]
+    baseline = metrics[baseline_cond]["accuracy"]
+    compare = metrics[compare_cond]["accuracy"]
+    for cond in CONDITIONS:
+        row = metrics[cond]
+        lines.append(
+            "| "
+            + " | ".join(
+                [
+                    table_cell(CONDITION_ZH[cond]),
+                    f"{row['correct']}/{row['n']}",
+                    pct(row["accuracy"]),
+                    pp(row["accuracy"] - baseline),
+                    pp(row["accuracy"] - compare),
+                    table_cell(meanings.get(cond, "")),
+                ]
+            )
+            + " |"
+        )
+    return lines
+
+
+def render_hard_subset_table(derived: dict[str, Any]) -> list[str]:
+    meanings = {
+        "meta_only": "过滤条件本身，因此为 0；该子集排除了题干和选项先验已能解出的样本。",
+        "numbers": "直接读原始数值后只救回 27/115，说明长数值输入远不是可靠 oracle。",
+        "opentslm_caption": "只救回 16/115，低于 ChatTS，也低于 numbers；OpenTSLM caption 单独证据更弱。",
+        "opentslm_caption_plus": "25/115，接近 numbers 但仍低；caption+numbers 只能救回少数样本。",
+        "chatts_caption": "24/115，是 caption-only 条件中最高，但仍只有约 21%。",
+        "chatts_caption_plus": "22/115，低于 ChatTS caption-only，继续显示混合输入不单调。",
+    }
+    return render_accuracy_table_from_metrics(
+        derived["hard_accuracy"],
+        baseline_cond="meta_only",
+        compare_cond="numbers",
+        meanings=meanings,
+    )
+
+
+def render_hard_nvars_table(derived: dict[str, Any]) -> list[str]:
+    lines = [
+        "| 变量数 | meta-only 错样本数 | numbers | OpenTSLM cap | OpenTSLM cap+num | ChatTS cap | ChatTS cap+num | 统计解读 |",
+        "| ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |",
+    ]
+    notes = {
+        "1": "单变量 hard case 几乎全灭，说明难点通常是局部日期/公式/领域机制，而不是变量数量。",
+        "2": "二变量是最能被 numbers/ChatTS 救回的一组，但也只有约 31%。",
+        "3": "OpenTSLM caption-only 明显偏弱，caption+numbers 才接近 numbers。",
+        "4": "numbers 达到 42.86%，但 caption-only 很低，说明多变量精确计算不应压缩成泛化摘要。",
+        "5": "样本数只有 4，所有非 meta 条件均为 0，暂不做强结论。",
+    }
+    for nvars in sorted(derived["hard_by_nvars"], key=lambda x: int(x)):
+        rows = derived["hard_by_nvars"][nvars]
+        lines.append(
+            "| "
+            + " | ".join(
+                [
+                    nvars,
+                    str(rows["meta_only"]["n"]),
+                    pct(rows["numbers"]["accuracy"]),
+                    pct(rows["opentslm_caption"]["accuracy"]),
+                    pct(rows["opentslm_caption_plus"]["accuracy"]),
+                    pct(rows["chatts_caption"]["accuracy"]),
+                    pct(rows["chatts_caption_plus"]["accuracy"]),
+                    table_cell(notes.get(nvars, "")),
+                ]
+            )
+            + " |"
+        )
+    return lines
+
+
+def render_hard_attribute_table(derived: dict[str, Any]) -> list[str]:
+    lines = [
+        "| 问题类型 | meta-only 错样本数 | numbers | OpenTSLM cap | OpenTSLM cap+num | ChatTS cap | ChatTS cap+num | 统计解读 |",
+        "| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |",
+    ]
+    notes = {
+        "Abductive Reasoning": "hard 子集里 caption 救回率很低，说明背景解释题没有被通用形态摘要充分支持。",
+        "Analogical Reasoning": "几乎全灭，类比题在去掉语言先验后最能暴露证据组织失败。",
+        "Causal Reasoning - Associational": "样本少，但 caption+numbers 和 ChatTS caption 略高，说明关联型仍有少量可救空间。",
+        "Causal Reasoning - Counterfactual": "ChatTS caption-only 最高但仍只有 27.27%，反事实计算仍是主要难点。",
+        "Causal Reasoning - Interventional": "numbers 最高 53.33%，说明指定事件前后的数值证据确实关键。",
+        "Deductive Reasoning": "各条件都只有 18.75%–25%，规则执行和符号推理仍不稳定。",
+        "Inductive Reasoning": "numbers 和 caption+numbers 有一定救回，但 caption-only 不足。",
+    }
+    for attr, rows in derived["hard_by_attribute"].items():
+        lines.append(
+            "| "
+            + " | ".join(
+                [
+                    table_cell(f"{ATTRIBUTE_ZH.get(attr, attr)} (`{attr}`)"),
+                    str(rows["meta_only"]["n"]),
+                    pct(rows["numbers"]["accuracy"]),
+                    pct(rows["opentslm_caption"]["accuracy"]),
+                    pct(rows["opentslm_caption_plus"]["accuracy"]),
+                    pct(rows["chatts_caption"]["accuracy"]),
+                    pct(rows["chatts_caption_plus"]["accuracy"]),
+                    table_cell(notes.get(attr, "")),
                 ]
             )
             + " |"
@@ -848,6 +1049,7 @@ def render_case(case_no: int, case_def: dict[str, str], maps: dict[str, Any], tr
 
 def render_report(maps: dict[str, Any], translations: dict[str, Any], figure_names: dict[str, str], stats_figs: dict[str, str]) -> str:
     summary = maps["summary"]
+    derived = maps["derived"]
     counts = maps["counts"]
     lines: list[str] = []
     lines.append("# FREDQA 重跑统计与 Case Study 中文报告")
@@ -868,9 +1070,15 @@ def render_report(maps: dict[str, Any], translations: dict[str, Any], figure_nam
     lines.append("")
     lines.append(f"![总体准确率]({GITHUB_RAW_BASE}/{stats_figs['overall']})")
     lines.append("")
+    lines.append(f"![过滤 meta-only 答对样本后的准确率]({GITHUB_RAW_BASE}/{stats_figs['hard_overall']})")
+    lines.append("")
     lines.append(f"![按问题类型准确率]({GITHUB_RAW_BASE}/{stats_figs['attribute']})")
     lines.append("")
     lines.append(f"![按变量数准确率]({GITHUB_RAW_BASE}/{stats_figs['nvars']})")
+    lines.append("")
+    lines.append(f"![过滤 meta-only 答对样本后按问题类型准确率]({GITHUB_RAW_BASE}/{stats_figs['hard_attribute']})")
+    lines.append("")
+    lines.append(f"![过滤 meta-only 答对样本后按变量数准确率]({GITHUB_RAW_BASE}/{stats_figs['hard_nvars']})")
     lines.append("")
 
     lines.append("## 总体准确率")
@@ -878,6 +1086,27 @@ def render_report(maps: dict[str, Any], translations: dict[str, Any], figure_nam
     lines.extend(render_accuracy_table(summary))
     lines.append("")
     lines.append("**直接结论**：最高条件是 `opentslm_caption_plus`，准确率 82.28%，但只比 `meta_only` 高 1.32 个百分点。`opentslm_caption` 单独低于 `meta_only`，说明当前 OpenTSLM caption 作为下游 QA 证据并不可靠；`ChatTS caption` 更高，但加入数值后也会下降，说明 evidence fusion 本身不稳定。")
+    lines.append("")
+
+    lines.append("## 过滤 meta-only 可答对样本后的准确率")
+    lines.append("")
+    lines.append(f"过滤规则：只保留 `meta_only` 答错的样本，即排除 `{len(derived['meta_correct_ids'])}` 个题干/选项/领域先验已经能答对的 case，剩余 `{len(derived['meta_wrong_ids'])}` 个 harder subset。这个统计更接近“模型是否真的从时序证据中获益”。")
+    lines.append("")
+    lines.extend(render_hard_subset_table(derived))
+    lines.append("")
+    lines.append(f"**直接结论**：去掉 meta-only 已能答对的 `{len(derived['meta_correct_ids'])}` 个样本后，所有非 meta 输入的准确率都大幅下降；`numbers` 只救回 `{derived['hard_accuracy']['numbers']['correct']}/{derived['hard_accuracy']['numbers']['n']}`，`OpenTSLM caption` 只救回 `{derived['hard_accuracy']['opentslm_caption']['correct']}/{derived['hard_accuracy']['opentslm_caption']['n']}`，`ChatTS caption` 只救回 `{derived['hard_accuracy']['chatts_caption']['correct']}/{derived['hard_accuracy']['chatts_caption']['n']}`。这说明原始 80%+ 总体准确率主要来自语言先验，而不是稳定的时序证据读取。")
+    lines.append("")
+    lines.append(f"在 harder subset 中，所有非 meta 条件都答错的样本仍有 `{derived['hard_nonmeta_all_wrong']}/{len(derived['meta_wrong_ids'])}`；至少一种时序/文本证据形式能救回的样本只有 `{derived['hard_any_nonmeta_right']}/{len(derived['meta_wrong_ids'])}`。这组数比总体 accuracy 更能说明当前训练为什么失败。")
+    lines.append("")
+
+    lines.append("## 过滤 meta-only 后按变量数分类")
+    lines.append("")
+    lines.extend(render_hard_nvars_table(derived))
+    lines.append("")
+
+    lines.append("## 过滤 meta-only 后按问题类型分类")
+    lines.append("")
+    lines.extend(render_hard_attribute_table(derived))
     lines.append("")
 
     lines.append("## 关键错误模式")
@@ -897,24 +1126,26 @@ def render_report(maps: dict[str, Any], translations: dict[str, Any], figure_nam
 
     lines.append("## Case Study")
     lines.append("")
-    lines.append("下面每个 case 都包含时序图、原始 QA 与中文翻译、OpenTSLM/ChatTS 生成 caption 与中文翻译、六种输入条件下的 `gpt-5.4` 回答，以及对应分析。")
+    lines.append("下面每个 case 都包含时序图、原始 QA 与中文翻译、OpenTSLM/ChatTS 生成 caption 与中文翻译、六种输入条件下的 `gpt-5.4` 回答，以及对应分析。本节已去掉 `meta_only` 已经答对的 case，所有展示样本都属于 `meta_only` 答错的 harder subset。")
     lines.append("")
     for i, case_def in enumerate(CASE_DEFS, 1):
         lines.extend(render_case(i, case_def, maps, translations[case_def["idx"]], figure_names[case_def["idx"]]))
 
     lines.append("## 全局 Case Study 分析")
     lines.append("")
-    lines.append("1. **FREDQA 的高 `meta_only` 准确率说明它并不纯粹是时序读取任务。** `meta_only` 已经达到 80.96%，很多样本可以由题干、选项和领域常识先验直接排除。这意味着只看总体 QA accuracy 会高估模型从时间序列中提取证据的能力。")
+    lines.append("1. **FREDQA 的高 `meta_only` 准确率说明它并不纯粹是时序读取任务。** `meta_only` 已经达到 80.96%，604 条中有 489 条可以由题干、选项和领域常识先验答对。这意味着只看总体 QA accuracy 会严重高估模型从时间序列中提取证据的能力。")
     lines.append("")
-    lines.append("2. **当前 caption 训练失败的核心不是“语言不够流畅”，而是“证据不够任务化”。** OpenTSLM 和 ChatTS 大多能生成趋势、峰谷、波动、季节性等描述，但 FREDQA 经常需要指定月份/年份、窗口均值、比值、差值、反事实外推、干预前后比较，以及制度/宏观机制解释。通用 caption 没有保证这些证据被保留。")
+    lines.append("2. **过滤掉 meta-only 可答对样本后，失败更明显。** 在剩余 115 个 harder subset 中，`numbers` 只有 23.48%，`OpenTSLM caption` 只有 13.91%，`ChatTS caption` 只有 20.87%。这说明原始总体表里看似还不错的 80%+，大部分不是 caption 或 numbers 的贡献。")
     lines.append("")
-    lines.append("3. **OpenTSLM caption 的模板化问题更明显。** 多个 case 中 OpenTSLM 会重复生成 “steady upward trend / low volatility / strong seasonal pattern” 一类描述，即使问题真正需要局部日期计算。这会把 QA 模型从正确的局部证据带向全局形态概括。")
+    lines.append("3. **当前 caption 训练失败的核心不是“语言不够流畅”，而是“证据不够任务化”。** OpenTSLM 和 ChatTS 大多能生成趋势、峰谷、波动、季节性等描述，但 FREDQA 经常需要指定月份/年份、窗口均值、比值、差值、反事实外推、干预前后比较，以及制度/宏观机制解释。通用 caption 没有保证这些证据被保留。")
     lines.append("")
-    lines.append("4. **ChatTS 更简洁，但不是稳定上限。** ChatTS caption 在 `opentslm_wrong_chatts_right` 和 counterfactual 类型中有一些优势，但 `chatts_caption_plus` 低于 `chatts_caption`，说明一旦同时给数值，QA 模型可能重新加权证据并被干扰。")
+    lines.append("4. **OpenTSLM caption 的模板化问题更明显。** 多个 case 中 OpenTSLM 会重复生成 “steady upward trend / low volatility / strong seasonal pattern” 一类描述，即使问题真正需要局部日期计算。这会把 QA 模型从正确的局部证据带向全局形态概括。")
     lines.append("")
-    lines.append("5. **`numbers` 不是可靠 oracle。** `numbers` 只比 `meta_only` 高 1.16 个百分点，而且仍有大量反事实/公式化样本答错。这说明长数值输入本身并不会自动转化为正确计算；后续如果目标是可靠 QA，可能需要显式工具或结构化中间变量。")
+    lines.append("5. **ChatTS 更简洁，但不是稳定上限。** ChatTS caption 在部分 counterfactual/interventional case 中能救回 meta-only，但 `chatts_caption_plus` 在 harder subset 中低于 `chatts_caption`，说明一旦同时给数值，QA 模型可能重新加权证据并被干扰。")
     lines.append("")
-    lines.append("6. **对导师讨论最重要的结论**：目前训练路线没有失败在“caption 不能描述时序”，而是失败在“caption 没有按下游问题需要组织证据”。下一步应把 caption 目标从通用描述改成 task-aware evidence extraction，例如保留指定日期值、窗口统计、跨变量差/比值、反事实公式中间量，或让工具先计算这些中间量再交给 LLM 解释。")
+    lines.append("6. **`numbers` 不是可靠 oracle。** 在 harder subset 中 `numbers` 也只有 23.48%，仍有 74 个样本所有非 meta 条件都答错。这说明长数值输入本身不会自动转化为正确计算；后续如果目标是可靠 QA，可能需要显式工具或结构化中间变量。")
+    lines.append("")
+    lines.append("7. **对导师讨论最重要的结论**：目前训练路线没有失败在“caption 不能描述时序”，而是失败在“caption 没有按下游问题需要组织证据”。下一步应把 caption 目标从通用描述改成 task-aware evidence extraction，例如保留指定日期值、窗口统计、跨变量差/比值、反事实公式中间量，或让工具先计算这些中间量再交给 LLM 解释。")
     lines.append("")
     lines.append("## 建议下一步")
     lines.append("")
@@ -959,6 +1190,12 @@ def main() -> None:
 
     stats_figs = {
         "overall": plot_overall(maps),
+        "hard_overall": plot_accuracy_bars(
+            maps["derived"]["hard_accuracy"],
+            "fredqa_meta_wrong_accuracy.png",
+            "FREDQA harder subset：过滤 meta-only 答对样本后的准确率",
+            (0, 35),
+        ),
         "attribute": plot_heatmap(
             maps["summary"]["top_attributes"],
             sorted(
@@ -974,6 +1211,22 @@ def main() -> None:
             sorted(maps["summary"]["by_nvars"], key=lambda x: int(x)),
             "FREDQA 本轮重跑：按变量数的准确率",
             "fredqa_by_nvars_accuracy.png",
+        ),
+        "hard_attribute": plot_heatmap(
+            maps["derived"]["hard_by_attribute"],
+            list(maps["derived"]["hard_by_attribute"].keys()),
+            "FREDQA harder subset：过滤 meta-only 后按问题类型的准确率",
+            "fredqa_meta_wrong_by_attribute_accuracy.png",
+            vmin=0,
+            vmax=60,
+        ),
+        "hard_nvars": plot_heatmap(
+            maps["derived"]["hard_by_nvars"],
+            sorted(maps["derived"]["hard_by_nvars"], key=lambda x: int(x)),
+            "FREDQA harder subset：过滤 meta-only 后按变量数的准确率",
+            "fredqa_meta_wrong_by_nvars_accuracy.png",
+            vmin=0,
+            vmax=60,
         ),
     }
     figure_names = {case["idx"]: plot_case(case, maps) for case in CASE_DEFS}
@@ -1002,6 +1255,15 @@ def main() -> None:
             "counts": maps["counts"],
             "summary_accuracy": maps["summary"]["accuracy"],
             "summary_patterns": maps["summary"]["patterns"],
+            "meta_only_filtered_accuracy": maps["derived"]["hard_accuracy"],
+            "meta_only_filtered_counts": {
+                "excluded_meta_correct": len(maps["derived"]["meta_correct_ids"]),
+                "remaining_meta_wrong": len(maps["derived"]["meta_wrong_ids"]),
+                "all_nonmeta_wrong": maps["derived"]["hard_nonmeta_all_wrong"],
+                "any_nonmeta_right": maps["derived"]["hard_any_nonmeta_right"],
+            },
+            "meta_only_filtered_by_nvars": maps["derived"]["hard_by_nvars"],
+            "meta_only_filtered_by_attribute": maps["derived"]["hard_by_attribute"],
         },
     )
     print(f"[done] wrote {REPORT}")
