@@ -1,0 +1,205 @@
+{
+  "overall": {
+    "field_exact": {
+      "n": 1860,
+      "accuracy": 0.8968
+    },
+    "caption_exact": {
+      "n": 1860,
+      "accuracy": 0.8968
+    },
+    "answer_label_correct": {
+      "n": 1860,
+      "accuracy": 0.8968
+    },
+    "answer_letter_correct": {
+      "n": 1860,
+      "accuracy": 0.8968
+    }
+  },
+  "by_split": {
+    "dev": {
+      "n": 264,
+      "field_exact": 0.8788,
+      "caption_exact": 0.8788,
+      "answer_label_correct": 0.8788,
+      "answer_letter_correct": 0.8788
+    },
+    "test": {
+      "n": 90,
+      "field_exact": 0.8222,
+      "caption_exact": 0.8222,
+      "answer_label_correct": 0.8222,
+      "answer_letter_correct": 0.8222
+    },
+    "tiny_overfit": {
+      "n": 96,
+      "field_exact": 0.8958,
+      "caption_exact": 0.8958,
+      "answer_label_correct": 0.8958,
+      "answer_letter_correct": 0.8958
+    },
+    "train": {
+      "n": 1410,
+      "field_exact": 0.905,
+      "caption_exact": 0.905,
+      "answer_label_correct": 0.905,
+      "answer_letter_correct": 0.905
+    }
+  },
+  "by_domain": {
+    "citylearn_real": {
+      "n": 660,
+      "field_exact": 0.9758,
+      "caption_exact": 0.9758,
+      "answer_label_correct": 0.9758,
+      "answer_letter_correct": 0.9758
+    },
+    "grid2op_real": {
+      "n": 672,
+      "field_exact": 1.0,
+      "caption_exact": 1.0,
+      "answer_label_correct": 1.0,
+      "answer_letter_correct": 1.0
+    },
+    "grid2op_real_cf": {
+      "n": 528,
+      "field_exact": 0.6667,
+      "caption_exact": 0.6667,
+      "answer_label_correct": 0.6667,
+      "answer_letter_correct": 0.6667
+    }
+  },
+  "by_task_family": {
+    "building_load_value_slot": {
+      "n": 330,
+      "field_exact": 1.0,
+      "caption_exact": 1.0,
+      "answer_label_correct": 1.0,
+      "answer_letter_correct": 1.0
+    },
+    "cf_delta_max_rho_value_slot": {
+      "n": 264,
+      "field_exact": 0.3333,
+      "caption_exact": 0.3333,
+      "answer_label_correct": 0.3333,
+      "answer_letter_correct": 0.3333
+    },
+    "cf_intervention_max_rho_value_slot": {
+      "n": 264,
+      "field_exact": 1.0,
+      "caption_exact": 1.0,
+      "answer_label_correct": 1.0,
+      "answer_letter_correct": 1.0
+    },
+    "generator_average_value_slot": {
+      "n": 144,
+      "field_exact": 1.0,
+      "caption_exact": 1.0,
+      "answer_label_correct": 1.0,
+      "answer_letter_correct": 1.0
+    },
+    "load_average_value_slot": {
+      "n": 144,
+      "field_exact": 1.0,
+      "caption_exact": 1.0,
+      "answer_label_correct": 1.0,
+      "answer_letter_correct": 1.0
+    },
+    "outdoor_temperature_value_slot": {
+      "n": 198,
+      "field_exact": 1.0,
+      "caption_exact": 1.0,
+      "answer_label_correct": 1.0,
+      "answer_letter_correct": 1.0
+    },
+    "quarter_net_electricity_mean_value_slot": {
+      "n": 132,
+      "field_exact": 0.8788,
+      "caption_exact": 0.8788,
+      "answer_label_correct": 0.8788,
+      "answer_letter_correct": 0.8788
+    },
+    "quarter_total_load_mean_value_slot": {
+      "n": 192,
+      "field_exact": 1.0,
+      "caption_exact": 1.0,
+      "answer_label_correct": 1.0,
+      "answer_letter_correct": 1.0
+    },
+    "rho_value_slot": {
+      "n": 192,
+      "field_exact": 1.0,
+      "caption_exact": 1.0,
+      "answer_label_correct": 1.0,
+      "answer_letter_correct": 1.0
+    }
+  },
+  "missing_prediction_count": 0,
+  "by_target_key": {
+    "slot_avg_gen_p": {
+      "n": 144,
+      "accuracy": 1.0
+    },
+    "slot_avg_load_p": {
+      "n": 144,
+      "accuracy": 1.0
+    },
+    "slot_building": {
+      "n": 330,
+      "accuracy": 1.0
+    },
+    "slot_delta_max_rho": {
+      "n": 264,
+      "accuracy": 0.3333
+    },
+    "slot_factual_max_rho": {
+      "n": 264,
+      "accuracy": 0.3333
+    },
+    "slot_generator": {
+      "n": 144,
+      "accuracy": 1.0
+    },
+    "slot_intervention_max_rho": {
+      "n": 528,
+      "accuracy": 0.6667
+    },
+    "slot_line": {
+      "n": 192,
+      "accuracy": 1.0
+    },
+    "slot_load": {
+      "n": 144,
+      "accuracy": 1.0
+    },
+    "slot_local_t": {
+      "n": 1248,
+      "accuracy": 0.859
+    },
+    "slot_mean_net_electricity_without_storage": {
+      "n": 132,
+      "accuracy": 0.8788
+    },
+    "slot_mean_total_load": {
+      "n": 192,
+      "accuracy": 1.0
+    },
+    "slot_non_shiftable_load": {
+      "n": 330,
+      "accuracy": 1.0
+    },
+    "slot_outdoor_dry_bulb_temperature": {
+      "n": 198,
+      "accuracy": 1.0
+    },
+    "slot_quarter": {
+      "n": 324,
+      "accuracy": 0.9506
+    },
+    "slot_rho": {
+      "n": 192,
+      "accuracy": 1.0
+    }
+  }
+}

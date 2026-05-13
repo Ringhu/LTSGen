@@ -233,6 +233,10 @@ Current structured evidence data:
 - expanded data: `.research/qcc-v0-20260513/expanded_v1/qcc_v0_expanded_dataset.jsonl`
 - expanded capacity report:
   `.research/qcc-v0-20260513/expanded_v1/capacity_report.json`
+- leakage-controlled expanded data:
+  `.research/qcc-v0-20260513/expanded_v1_group/qcc_v0_expanded_group_dataset.jsonl`
+- expanded paraphrase augmentation:
+  `.research/qcc-v0-20260513/expanded_v1_group_paraphrase/qcc_v0_expanded_group_paraphrase_dataset.jsonl`
 
 Build result:
 - 156 examples across Grid2Op observation, Grid2Op counterfactual, and
@@ -269,6 +273,23 @@ Deterministic evaluator baselines:
   confuses some counterfactual intervention-max-rho questions with delta
   queries. The same planner trained on the 470-item expanded train split reaches
   1.0000 on dev/tiny/train.
+- expanded_v1 group split: records are split by `trace_path` for observation
+  examples and `pair_path` for counterfactual examples. Current split is
+  train/dev/test/tiny = 470/88/30/32 with 0 train-family/dev/test group leakage.
+  `tiny_overfit` is treated as a training-family split, not a heldout split.
+- expanded_v1 group paraphrase: each original item has two deterministic
+  paraphrases plus the original item, giving 1860 examples with split
+  train/dev/test/tiny = 1410/264/90/96. Trace-rule extraction stays at 1.0000.
+- expanded paraphrase planner result: training only on original train templates
+  and evaluating on the 1860-example paraphrase set gives 0.8968 field/answer
+  exact overall and 0.8222 on test, mainly from `cf_delta_max_rho_value_slot`
+  paraphrases confused with direct intervention `max_rho` reads. Training on
+  the paraphrase-augmented train split brings the executor-assisted planner back
+  to 1.0000.
+- no-trace structured smoke: text/metadata-only regressors fail exact evidence
+  recovery (`field_exact` = 0.0000, `answer_letter` = 0.0016; no-question =
+  0.0000). This is an expected negative diagnostic: exact QCC evidence requires
+  trace access via an executor/tool or a real TS encoder.
 
 Interpretation:
 - QCC-v0 targets are now structured and verifiable: target fields and target
@@ -286,9 +307,16 @@ Interpretation:
   largely a data sparsity issue for the template-style planner. It still should
   not be presented as a final learned captioner result because the executor
   remains deterministic and trace reading is not learned.
+- The group-split/paraphrase results show that paraphrase augmentation is
+  load-bearing for counterfactual operator disambiguation. The 1.0000
+  executor-assisted planner result should be described as a pipeline smoke, not
+  as a trained TS captioner.
+- The no-trace smoke is useful because it rules out a degenerate text-only
+  solution for exact numeric evidence. The next learned method must include
+  trace/tool access or a TS encoder path.
 - Do not over-interpret dev metrics yet; some Grid2Op task families have small
-  dev counts. Use tiny-overfit first, then expand data if task-level dev metrics
-  are unstable.
+  dev counts, and CityLearn has only one local trace in the strict group split.
+  A stronger CityLearn heldout split needs another local trace/window source.
 
 ## Implementation Paths
 
@@ -300,6 +328,9 @@ Current scripts:
 - `scripts/generate/build_citylearn_slot_qa.py`
 - `scripts/generate/assess_qcc_v0_expansion_capacity.py`
 - `scripts/generate/build_qcc_v0_expanded_slot_qa.py`
+- `scripts/generate/build_qcc_v0_group_split.py`
+- `scripts/generate/build_qcc_v0_paraphrase_eval.py`
+- `scripts/train/train_qcc_v0_structured_smoke.py`
 - `scripts/eval/eval_medium_horizon_simqa_pilot.py`
 
 Current tracker:
@@ -401,11 +432,13 @@ Use narrower claims:
 
 The immediate next experiment is to strengthen QCC-v0 before moving to SCL:
 
-1. Add paraphrase augmentation to expanded_v1 QCC-v0 training/eval and rerun the
-   planner smoke.
-2. If the expanded paraphrase gate passes, replace the current planner-only
-   smoke with an actual learned QCC component or LLM extractor over the expanded
-   structured target.
+1. Add another CityLearn local trace/window source, or another simulator domain,
+   so the strict group split has a real CityLearn heldout set instead of keeping
+   CityLearn only in train/tiny.
+2. Replace the current planner-only smoke with an actual learned QCC component
+   or LLM extractor over the expanded structured target. The learned component
+   should either call a trace executor/tool or consume a TS encoder output; the
+   no-trace smoke shows text/metadata alone is insufficient.
 3. Only after QCC-v0 is stable beyond exact templates, move to SCL /
    hard-negative training.
 

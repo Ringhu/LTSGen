@@ -260,3 +260,55 @@ Interpretation:
   operator confusion was mostly a data sparsity issue, not a schema or executor
   issue. It still does not constitute a final learned captioner result because
   trace reading is deterministic.
+
+## Group Split + Training Pipeline Smoke
+
+Scripts:
+- `scripts/generate/build_qcc_v0_group_split.py`
+- `scripts/generate/build_qcc_v0_paraphrase_eval.py`
+- `scripts/train/train_qcc_v0_structured_smoke.py`
+- `scripts/eval/run_qcc_v0_learned_planner.py`
+
+Group split:
+- output: `expanded_v1_group/qcc_v0_expanded_group_dataset.jsonl`
+- split: train 470 / dev 88 / test 30 / tiny_overfit 32
+- group policy: `trace_path` for observation records and `pair_path` for
+  counterfactual records
+- leakage group count across train-family/dev/test: 0
+- limitation: CityLearn has only one local trace in `expanded_v1`, so strict
+  trace-level splitting keeps CityLearn in train/tiny only. A real CityLearn
+  heldout split needs another local trace/window source.
+
+Paraphrase augmentation:
+- standard expanded output:
+  `expanded_v1_paraphrase/qcc_v0_expanded_paraphrase_dataset.jsonl`
+- group-split output:
+  `expanded_v1_group_paraphrase/qcc_v0_expanded_group_paraphrase_dataset.jsonl`
+- each original item gets 2 deterministic paraphrases plus the original item
+- total examples: 1860
+- group-paraphrase split: train 1410 / dev 264 / test 90 / tiny_overfit 96
+- trace-rule extractor remains 1.0000 on both 1860-example paraphrase outputs.
+
+Training smoke results:
+
+| Condition | Data | Train | Eval | Field exact | Answer letter |
+| --- | --- | --- | --- | ---: | ---: |
+| `learned_planner_train` | group split | train 470 | all 620 | 1.0000 | 1.0000 |
+| `learned_planner_original_train` | group paraphrase | original train 470 | all 1860 | 0.8968 | 0.8968 |
+| `learned_planner_train` | group paraphrase | paraphrase train 1410 | all 1860 | 1.0000 | 1.0000 |
+| `structured_smoke_train` | group split | train 470 | all 620 | 0.0000 | 0.0016 |
+| `structured_smoke_no_question` | group split | train 470, no question | all 620 | 0.0000 | 0.0000 |
+
+Interpretation:
+- The executor-assisted training path now runs end-to-end under group split:
+  train learned planner -> generate structured fields/captions -> evaluate exact
+  evidence/answer.
+- Paraphrase augmentation is load-bearing. Training on original templates and
+  evaluating on paraphrased questions drops to 0.8968 overall, mainly because
+  `cf_delta_max_rho_value_slot` paraphrases are confused with direct
+  intervention max-rho reads. Training with the deterministic paraphrases brings
+  the same pipeline back to 1.0000.
+- The pure structured smoke without trace access fails almost completely. It can
+  learn operator labels, but it cannot recover exact numeric evidence by
+  regressing from text/metadata alone. This is the expected diagnostic: QCC must
+  either read the trace through an executor/tool or use a real TS encoder.

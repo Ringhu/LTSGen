@@ -79,6 +79,41 @@ def build_rows(rows: list[dict[str, Any]], *, source_split: str, variants: int) 
     return out
 
 
+def build_augmented_rows(
+    rows: list[dict[str, Any]],
+    *,
+    splits: set[str],
+    variants: int,
+    include_original: bool,
+) -> list[dict[str, Any]]:
+    out: list[dict[str, Any]] = []
+    if include_original:
+        for row in rows:
+            if row["split"] not in splits:
+                continue
+            original = dict(row)
+            original["source_id"] = row["id"]
+            original["original_question"] = row["question"]
+            original["paraphrase_variant"] = 0
+            original["is_paraphrase"] = False
+            out.append(original)
+    for row in rows:
+        if row["split"] not in splits:
+            continue
+        templates = PARAPHRASES[row["task_family"]]
+        for variant_idx, make_question in enumerate(templates[:variants]):
+            new_row = dict(row)
+            new_row["id"] = f"{row['id']}::paraphrase_v{variant_idx + 1}"
+            new_row["source_id"] = row["id"]
+            new_row["original_question"] = row["question"]
+            new_row["question"] = make_question(row["target_fields"])
+            new_row["input"] = {**row.get("input", {}), "question": new_row["question"]}
+            new_row["paraphrase_variant"] = variant_idx + 1
+            new_row["is_paraphrase"] = True
+            out.append(new_row)
+    return out
+
+
 def report(rows: list[dict[str, Any]]) -> dict[str, Any]:
     from collections import Counter
 
@@ -101,11 +136,24 @@ def main() -> None:
     parser.add_argument("--data", required=True)
     parser.add_argument("--out_dir", required=True)
     parser.add_argument("--source_split", default="dev")
+    parser.add_argument("--splits", nargs="+", default=None)
     parser.add_argument("--variants", type=int, default=2)
     parser.add_argument("--output_name", default="qcc_v0_paraphrase_eval.jsonl")
+    parser.add_argument("--augment", action="store_true")
+    parser.add_argument("--include_original", action="store_true")
     args = parser.parse_args()
 
-    rows = build_rows(load_jsonl(Path(args.data)), source_split=args.source_split, variants=args.variants)
+    source_rows = load_jsonl(Path(args.data))
+    if args.augment:
+        splits = set(args.splits or [args.source_split])
+        rows = build_augmented_rows(
+            source_rows,
+            splits=splits,
+            variants=args.variants,
+            include_original=args.include_original,
+        )
+    else:
+        rows = build_rows(source_rows, source_split=args.source_split, variants=args.variants)
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     write_jsonl(out_dir / args.output_name, rows)

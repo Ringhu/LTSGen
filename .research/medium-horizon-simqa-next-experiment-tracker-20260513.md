@@ -21,6 +21,9 @@
 | NEXT-R015 | M6 | Learned QCC-v0 planner smoke | TF-IDF/logreg operator planner + deterministic executor | train on tiny_overfit, eval all splits | operator acc, field exact, answer letter | MUST | DONE | 32-example tiny-overfit gate passed. Operator/field/caption/answer all 1.0 on tiny/dev/train, but this is template-style smoke with rule executor, not final learned captioner. |
 | NEXT-R016 | M6 | QCC-v0 paraphrase robustness smoke | train on original tiny templates, eval paraphrased dev | 48 paraphrases | operator acc, field exact, answer letter, failure family | MUST | DONE | Overall field/answer = 0.9583; trace-rule upper bound = 1.0. Only failures are 2 cf_delta paraphrases misclassified as intervention-max-rho. |
 | NEXT-R017 | M6 | Expand Grid2Op+CityLearn QCC data | reuse existing trace/pair files, no new rollout | expanded_v1 | capacity, schema, trace-rule, planner | MUST | DONE | Capacity = 620 items. Built 620 structured examples: Grid2Op obs 224, Grid2Op cf 176, CityLearn 220; train/dev/tiny = 470/118/32. Trace-rule = 1.0. Tiny planner = 0.9823 overall with cf intervention/delta confusion; train planner = 1.0. |
+| NEXT-R018 | M6 | Group split expanded_v1 | split by trace/pair group to avoid overlapping-window leakage | expanded_v1_group | group leakage, split balance | MUST | DONE | Built train/dev/test/tiny = 470/88/30/32. Observation groups use `trace_path`; counterfactual groups use `pair_path`; train-family/dev/test group leakage = 0. CityLearn has only one local trace, so strict split keeps CityLearn in train/tiny only. |
+| NEXT-R019 | M6 | Expanded paraphrase augmentation | two deterministic paraphrases plus original item | expanded_v1_group_paraphrase | trace-rule, split balance | MUST | DONE | Built 1860 examples, train/dev/test/tiny = 1410/264/90/96. Trace-rule extractor remains 1.0 on all paraphrased records. |
+| NEXT-R020 | M6 | Expanded training pipeline smoke | executor-assisted planner and no-trace structured smoke | group and group_paraphrase | field exact, answer letter, failure family | MUST | DONE | Executor-assisted planner reaches 1.0 on group split and paraphrase-augmented train. Original-template train on paraphrase eval drops to 0.8968 overall / 0.8222 test, mainly cf_delta confusion. No-trace structured smoke fails exact evidence: field 0.0, answer 0.0016; no-question answer 0.0. |
 
 ## Addendum 2026-05-13
 - Built Grid2Op counterfactual v3 compact with selected full 1024-step paired
@@ -58,19 +61,35 @@ discussion. CityLearn now passes a 72-item expanded feasibility gate over
 512/1024/2048 windows, and a Chinese CityLearn case study has been generated.
 The CityLearn result should still be described as second-simulator feasibility,
 not a full benchmark: tasks are slot-value oriented and come from one packaged
-dataset. QCC-v0 now has a verified structured-evidence dataset, an evaluator
-with oracle/metadata-only/question-only sanity baselines, and a trace-reading
-rule extractor that reaches 1.0 without reading gold target fields. A learned
-TF-IDF/logreg operator planner trained on 32 tiny examples also reaches 1.0 when
-paired with the deterministic trace executor. This passes the QCC-v0 smoke gate
-but is not paper-level method evidence because current questions are
-template-style and trace reading is rule-based. Paraphrase robustness smoke gets
-0.9583 overall but exposes counterfactual delta/operator confusion. Next work
-expanded both Grid2Op and CityLearn from existing local traces to 620 QCC-v0
-examples, raising Grid2Op counterfactual coverage from 12 to 176 items. This
-removes the immediate counterfactual data sparsity bottleneck for template-style
-operator planning: the planner reaches 1.0 when trained on the 470-item expanded
-train split. Next work should add paraphrase augmentation on expanded_v1 and
-then rerun the paraphrase robustness gate before SCL. Do not download larger
-simulator data to the local SSD; use A100/3090 storage for real simulator
-environments and traces.
+dataset.
+
+QCC-v0 now has a verified structured-evidence dataset, an evaluator with
+oracle/metadata-only/question-only sanity baselines, and a trace-reading rule
+extractor that reaches 1.0 without reading gold target fields. Expanded_v1
+contains 620 examples: Grid2Op observation 224, Grid2Op counterfactual 176, and
+CityLearn 220. A group split now assigns records by `trace_path` or `pair_path`,
+giving train/dev/test/tiny = 470/88/30/32 with 0 train-family/dev/test group
+leakage. The strict group split exposes one limitation: current CityLearn data
+comes from one local trace, so CityLearn heldout evaluation needs another trace
+source.
+
+Expanded paraphrase augmentation is complete. The group-paraphrase dataset has
+1860 examples with train/dev/test/tiny = 1410/264/90/96, and the trace-rule
+extractor remains exact. The executor-assisted planner reaches 1.0 when trained
+on either the 470 original train records for the group split or the 1410
+paraphrase-augmented train records for the group-paraphrase split. Training only
+on original templates and evaluating on the paraphrased set drops to 0.8968
+overall and 0.8222 on test, mainly because `cf_delta_max_rho_value_slot`
+paraphrases are confused with direct intervention `max_rho` reads. This makes
+paraphrase augmentation a real part of the pipeline, not cosmetic data
+expansion.
+
+The pure text/metadata structured smoke fails exact numeric evidence recovery
+(`field_exact` = 0.0, `answer_letter` = 0.0016; no-question = 0.0). This is an
+expected negative diagnostic: a usable QCC model must read the trace through an
+executor/tool or a TS encoder, not infer exact values from text alone. The
+current executor-assisted 1.0 is a pipeline smoke, not a final learned captioner
+result. Next work should add a proper CityLearn heldout trace and replace the
+planner-only smoke with an actual learned QCC component or LLM extractor before
+SCL. Do not download larger simulator data to the local SSD; use A100/3090
+storage for real simulator environments and traces.
