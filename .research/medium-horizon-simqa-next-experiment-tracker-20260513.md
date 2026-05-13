@@ -15,6 +15,7 @@
 | NEXT-R009 | M6 | QCC-v0 full run | QCC vs task-agnostic | real-v1 test | QA, slot F1, unsupported rate | MUST | TODO | 3 seeds after stable |
 | NEXT-R010 | M7 | SCL hard-negative ablation | QCC vs QCC+SCL | real-v1 test | QA, factuality, rejection acc | NICE | TODO | promote only if useful |
 | NEXT-R011 | M1/M4 | CityLearn second-simulator feasibility | packaged CityLearn trace + slot QA | 512/1024/2048 windows, 8192 export | trace sanity, meta/oracle, prompt chars | MUST | DONE | CityLearn 2.5.0 on 3090; exported 2048/8192 traces. Expanded v2 has 72 items, balanced A/B/C/D, meta 0.2361, generic 0.2500, oracle 1.0, sampled-128 0.4583. |
+| NEXT-R012 | M6 | QCC-v0 dataset build | Grid2Op + CityLearn slot QA to structured evidence targets | train/dev/tiny_overfit | target recomputation, schema gate | MUST | DONE | 156 examples; 0 duplicate IDs; 0 missing fields; 0 trace recomputation failures; split train/dev/tiny=100/24/32. |
 
 ## Addendum 2026-05-13
 - Built Grid2Op counterfactual v3 compact with selected full 1024-step paired
@@ -49,9 +50,10 @@
 ## Current Gate
 Grid2Op context-card protocol is clean enough for case studies and Grid2Op-only
 discussion. CityLearn now passes a 72-item expanded feasibility gate over
-512/1024/2048 windows. The CityLearn result should still be described as
-second-simulator feasibility, not a full benchmark: tasks are slot-value
-oriented and come from one packaged dataset. Next work should add a Chinese
-CityLearn case study and then start QCC-v0 overfit/slot-prediction checks. Do
-not download larger simulator data to the local SSD; use A100/3090 storage for
-real simulator environments and traces.
+512/1024/2048 windows, and a Chinese CityLearn case study has been generated.
+The CityLearn result should still be described as second-simulator feasibility,
+not a full benchmark: tasks are slot-value oriented and come from one packaged
+dataset. QCC-v0 now has a verified structured-evidence dataset; next work should
+run the tiny overfit/slot-prediction gate before any SCL training. Do not
+download larger simulator data to the local SSD; use A100/3090 storage for real
+simulator environments and traces.

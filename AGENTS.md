@@ -222,6 +222,29 @@ Interpretation:
 - The result supports the evidence-caption upper-bound claim and motivates
   QCC-v0 training.
 
+### QCC-v0 Dataset
+
+Active method contract:
+- `.research/research-contract-qcc-v0-20260513.md`
+
+Current structured evidence data:
+- `.research/qcc-v0-20260513/qcc_v0_dataset.jsonl`
+- sanity report: `.research/qcc-v0-20260513/sanity_report.json`
+
+Build result:
+- 156 examples across Grid2Op observation, Grid2Op counterfactual, and
+  CityLearn
+- split: train 100 / dev 24 / tiny_overfit 32
+- 0 duplicate IDs, 0 missing fields, 0 trace recomputation failures
+- schema gate passed
+
+Interpretation:
+- QCC-v0 targets are now structured and verifiable: target fields and target
+  captions are recomputed from traces, not trusted as free-form text.
+- Do not over-interpret dev metrics yet; some Grid2Op task families have small
+  dev counts. Use tiny-overfit first, then expand data if task-level dev metrics
+  are unstable.
+
 ## Implementation Paths
 
 Current scripts:
@@ -332,11 +355,9 @@ Use narrower claims:
 The immediate next experiment is to move from validated simulator gates to
 method training:
 
-1. Define the exact QCC-v0 target format: slot extraction, evidence caption, or
-   both.
-2. Run QCC-v0 overfit/slot-prediction checks on the validated Grid2Op and
+1. Run QCC-v0 overfit/slot-prediction checks on the validated Grid2Op and
    CityLearn slot QA.
-3. Only after QCC-v0 learns the oracle evidence target, move to SCL /
+2. Only after QCC-v0 learns the oracle evidence target, move to SCL /
    hard-negative training.
 
 Do not start SCL or broader training until QCC-v0 passes a small overfit gate.
