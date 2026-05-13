@@ -1,41 +1,41 @@
-# Grid2Op Medium-Horizon Case Study
+# Grid2Op 中等长度时序 QA 案例分析
 
-This report visualizes selected Grid2Op simulator-derived TS-QA cases. Ground truth is computed from trace arrays or paired factual/counterfactual traces. LLMs are only evaluated as answerers; they do not define the correct answer.
+这份报告展示当前 Grid2Op simulator-derived（仿真器派生）TS-QA pilot 中选出的代表性案例。所有 ground truth（真值）都来自轨迹数组或 factual/counterfactual（事实/反事实）配对轨迹，LLM 只作为答题模型参与评估，不参与定义正确答案。
 
-## Coverage
+## 覆盖范围
 
-| Dimension | Value |
+| 维度 | 内容 |
 | --- | --- |
-| Environment | `rte_case14_realistic` |
-| Horizons | `512`, `1024`, `2048` in the benchmark; selected cases use `512/1024` |
-| Observation cases | 3 |
-| Counterfactual cases | 2 |
-| Methods shown | `meta_only`, `generic_caption`, `oracle_evidence_caption`, sampled numeric prompts |
+| 环境 | `rte_case14_realistic` |
+| 窗口长度 | 评测集覆盖 `512`、`1024`、`2048`；本报告选取的案例使用 `512/1024` |
+| 单轨迹观测案例 | 3 |
+| factual/counterfactual（事实/反事实）配对案例 | 2 |
+| 展示方法 | `meta_only`、`generic_caption`、`oracle_evidence_caption`、sampled numbers prompt（采样数值提示文本） |
 
-## Takeaways
+## 主要观察
 
-- Observation/localization and aggregation cases show the largest gap: oracle evidence is short and correct, while sampled numeric prompts are long and often wrong.
-- Counterfactual cases are useful for verifiability and threshold analysis, but current numeric prompts can solve many of them when the relevant facts are explicit in the sampled table.
-- Case-level visualizations make the intended evidence clear: peak location, window average, first-vs-last quarter mean, and factual/counterfactual post-intervention max-rho.
+- 单轨迹的定位题和聚合题差距最大：oracle evidence caption（oracle 证据说明文本）很短且答对，而 sampled numbers prompt（采样数值提示文本）更长却经常答错。
+- counterfactual（反事实）案例更适合展示 verifiability（可验证性）和阈值判断；当采样表中刚好包含关键事实时，当前 sampled numbers prompt（采样数值提示文本）也可能答对。
+- 逐案例可视化能清楚说明题目真正需要的 evidence（证据）：峰值位置、窗口平均值、第一段/最后一段均值，以及 factual/counterfactual（事实/反事实）干预后的 max-rho 对比。
 
-## Cases
+## 案例
 
 <details>
-<summary>Case 01: Peak quarter localization: sampled numbers miss the late line-loading peak</summary>
+<summary>案例 01：峰值位置定位：sampled numbers（采样数值）错过后段线路负载峰值</summary>
 
 ### 基本信息
 
 | 字段 | 内容 |
 | --- | --- |
-| Case ID | `simqa::grid2op_real::rte_case14_realistic_trace_2048_nooverflow::h1024::s0::peak_rho_quarter` |
-| Source | `observation` |
-| Horizon | `1024` |
-| Task family | `peak_rho_quarter` |
-| Correct answer | `A` |
-| Answer label | `fourth` |
-| GT source | `trace_array` |
+| 案例 ID | `simqa::grid2op_real::rte_case14_realistic_trace_2048_nooverflow::h1024::s0::peak_rho_quarter` |
+| 数据来源 | 单条观测轨迹 (`observation`) |
+| 窗口长度 | `1024` |
+| 任务类型 | 最大线路负载率所在窗口段 (`peak_rho_quarter`) |
+| 正确答案 | `A` |
+| 正确答案标签 | `第四段` |
+| ground truth（真值）来源 | `trace_array` / 仿真器轨迹 |
 
-关键结论：This is the cleanest localization failure. The true peak line loading is on line 4 at local t=806, in the fourth quarter. Generic caption lacks the event location, and all sampled-numbers budgets answer the wrong quarter despite much longer prompts.
+关键结论：这是最清楚的定位失败样例。真实最大线路负载率出现在第 4 条线路、局部时间步 t=806，属于窗口第四段。generic caption（通用说明文本）没有给出事件位置，sampled numbers prompt（采样数值提示文本）虽然更长，但 32/64/128 三个采样预算都选错了窗口段。
 
 <details>
 <summary>时序图</summary>
@@ -47,35 +47,35 @@ This report visualizes selected Grid2Op simulator-derived TS-QA cases. Ground tr
 <details>
 <summary>QA 问题</summary>
 
-**Question**
+**问题**
 
-Which quarter of this Grid2Op trace window contains the maximum line loading?
+这个 Grid2Op 轨迹窗口中，最大线路负载率出现在第几个窗口段？
 
-**Options**
+**选项**
 
-- A. the fourth quarter of the trace window
-- B. the first quarter of the trace window
-- C. the second quarter of the trace window
-- D. the third quarter of the trace window
+- A. 轨迹窗口第四段
+- B. 轨迹窗口第一段
+- C. 轨迹窗口第二段
+- D. 轨迹窗口第三段
 
-**Correct answer**: `A` - A. the fourth quarter of the trace window
+**正确答案**：`A` - A. 轨迹窗口第四段
 
 </details>
 
 <details>
-<summary>Captions / Evidence</summary>
+<summary>caption（说明文本）与 evidence（证据）</summary>
 
-**Generic caption**
+**generic caption（通用说明文本）**
 
-This Grid2Op power-grid trace window contains line loading, load, generator, and power-flow variables over 1024 steps.
+这个 Grid2Op 电网轨迹窗口包含 1024 个时间步上的线路负载率、负载、发电机和潮流变量。
 
-**Oracle evidence caption**
+**oracle evidence caption（oracle 证据说明文本）**
 
-The maximum line loading rho is 0.999 on line 4 at local t=806 (global t=806), which falls in the fourth quarter of the trace window.
+最大线路负载率 rho 为 0.999，出现在第 4 条线路、局部时间步 t=806（全局 t=806），属于第四段（后 1/4）。
 
-**Verification facts**
+**可验证事实**
 
-| Fact | Value |
+| 验证字段 | 数值 |
 | --- | --- |
 | `peak_rho` | `0.9990` |
 | `peak_local_t` | `806` |
@@ -88,42 +88,42 @@ The maximum line loading rho is 0.999 on line 4 at local t=806 (global t=806), w
 <details>
 <summary>模型回答</summary>
 
-| 输入条件 | 预测 | 正确性 | Prompt chars | 选项文本 |
-| --- | --- | --- | ---: | --- |
-| `meta_only` | `D` | ✗ | 382 | D. the third quarter of the trace window |
-| `generic_caption` | `C` | ✗ | 521 | C. the second quarter of the trace window |
-| `oracle_evidence_caption` | `A` | ✓ | 533 | A. the fourth quarter of the trace window |
-| `numbers_sampled_32` | `D` | ✗ | 12813 | D. the third quarter of the trace window |
-| `numbers_sampled_64` | `D` | ✗ | 25044 | D. the third quarter of the trace window |
-| `numbers_sampled_128` | `D` | ✗ | 49498 | D. the third quarter of the trace window |
+| 输入条件 | 原始条件名 | 预测 | 正确性 | Prompt 字符数 | 选项文本 |
+| --- | --- | --- | --- | ---: | --- |
+| 仅元信息 | `meta_only` | `D` | 错误 | 382 | D. 轨迹窗口第三段 |
+| generic caption（通用说明文本） | `generic_caption` | `C` | 错误 | 521 | C. 轨迹窗口第二段 |
+| oracle evidence caption（oracle 证据说明文本） | `oracle_evidence_caption` | `A` | 正确 | 533 | A. 轨迹窗口第四段 |
+| sampled numbers（采样数值）32 行 | `numbers_sampled_32` | `D` | 错误 | 12813 | D. 轨迹窗口第三段 |
+| sampled numbers（采样数值）64 行 | `numbers_sampled_64` | `D` | 错误 | 25044 | D. 轨迹窗口第三段 |
+| sampled numbers（采样数值）128 行 | `numbers_sampled_128` | `D` | 错误 | 49498 | D. 轨迹窗口第三段 |
 
 </details>
 
 <details>
-<summary>Case 分析</summary>
+<summary>案例分析</summary>
 
-This is the cleanest localization failure. The true peak line loading is on line 4 at local t=806, in the fourth quarter. Generic caption lacks the event location, and all sampled-numbers budgets answer the wrong quarter despite much longer prompts.
+这是最清楚的定位失败样例。真实最大线路负载率出现在第 4 条线路、局部时间步 t=806，属于窗口第四段。generic caption（通用说明文本）没有给出事件位置，sampled numbers prompt（采样数值提示文本）虽然更长，但 32/64/128 三个采样预算都选错了窗口段。
 
 </details>
 
 </details>
 
 <details>
-<summary>Case 02: Average load aggregation: seeing sampled rows is not enough for window-level averages</summary>
+<summary>案例 02：平均负载聚合：只看采样行不足以恢复窗口级均值</summary>
 
 ### 基本信息
 
 | 字段 | 内容 |
 | --- | --- |
-| Case ID | `simqa::grid2op_real::rte_case14_realistic_trace_1024::h512::s0::max_avg_load` |
-| Source | `observation` |
-| Horizon | `512` |
-| Task family | `max_avg_load` |
-| Correct answer | `A` |
-| Answer label | `load 1` |
-| GT source | `trace_array` |
+| 案例 ID | `simqa::grid2op_real::rte_case14_realistic_trace_1024::h512::s0::max_avg_load` |
+| 数据来源 | 单条观测轨迹 (`observation`) |
+| 窗口长度 | `512` |
+| 任务类型 | 窗口平均负载最大者 (`max_avg_load`) |
+| 正确答案 | `A` |
+| 正确答案标签 | `负载 1` |
+| ground truth（真值）来源 | `trace_array` / 仿真器轨迹 |
 
-关键结论：This case stresses aggregation over the whole window. The correct evidence is the window-average active power of load 1. Generic caption and all sampled numeric prompts choose a distractor, showing that raw sampled rows do not reliably substitute for the requested statistic.
+关键结论：这个样例考察整段窗口上的聚合统计。正确证据是负载 1 的窗口平均有功功率最高。generic caption（通用说明文本）和所有 sampled numbers（采样数值）条件都选择了干扰项，说明采样数值行不能稳定替代题目真正需要的窗口级统计量。
 
 <details>
 <summary>时序图</summary>
@@ -135,35 +135,35 @@ This is the cleanest localization failure. The true peak line loading is on line
 <details>
 <summary>QA 问题</summary>
 
-**Question**
+**问题**
 
-Which load has the highest average active power in this Grid2Op trace window?
+这个 Grid2Op 轨迹窗口中，哪个负载的平均有功功率最高？
 
-**Options**
+**选项**
 
-- A. load 1
-- B. load 2
-- C. load 5
-- D. load 0
+- A. 负载 1
+- B. 负载 2
+- C. 负载 5
+- D. 负载 0
 
-**Correct answer**: `A` - A. load 1
+**正确答案**：`A` - A. 负载 1
 
 </details>
 
 <details>
-<summary>Captions / Evidence</summary>
+<summary>caption（说明文本）与 evidence（证据）</summary>
 
-**Generic caption**
+**generic caption（通用说明文本）**
 
-This Grid2Op power-grid trace window contains line loading, load, generator, and power-flow variables over 512 steps.
+这个 Grid2Op 电网轨迹窗口包含 512 个时间步上的线路负载率、负载、发电机和潮流变量。
 
-**Oracle evidence caption**
+**oracle evidence caption（oracle 证据说明文本）**
 
-Load 1 has the largest average active power over the window: 85.189.
+负载 1 在该窗口中的平均有功功率最高，为 85.189。
 
-**Verification facts**
+**可验证事实**
 
-| Fact | Value |
+| 验证字段 | 数值 |
 | --- | --- |
 | `max_avg_load` | `1` |
 | `avg_load_p` | `85.1891` |
@@ -173,42 +173,42 @@ Load 1 has the largest average active power over the window: 85.189.
 <details>
 <summary>模型回答</summary>
 
-| 输入条件 | 预测 | 正确性 | Prompt chars | 选项文本 |
-| --- | --- | --- | ---: | --- |
-| `meta_only` | `D` | ✗ | 255 | D. load 0 |
-| `generic_caption` | `D` | ✗ | 393 | D. load 0 |
-| `oracle_evidence_caption` | `A` | ✓ | 341 | A. load 1 |
-| `numbers_sampled_32` | `B` | ✗ | 12668 | B. load 2 |
-| `numbers_sampled_64` | `B` | ✗ | 24875 | B. load 2 |
-| `numbers_sampled_128` | `B` | ✗ | 49298 | B. load 2 |
+| 输入条件 | 原始条件名 | 预测 | 正确性 | Prompt 字符数 | 选项文本 |
+| --- | --- | --- | --- | ---: | --- |
+| 仅元信息 | `meta_only` | `D` | 错误 | 255 | D. 负载 0 |
+| generic caption（通用说明文本） | `generic_caption` | `D` | 错误 | 393 | D. 负载 0 |
+| oracle evidence caption（oracle 证据说明文本） | `oracle_evidence_caption` | `A` | 正确 | 341 | A. 负载 1 |
+| sampled numbers（采样数值）32 行 | `numbers_sampled_32` | `B` | 错误 | 12668 | B. 负载 2 |
+| sampled numbers（采样数值）64 行 | `numbers_sampled_64` | `B` | 错误 | 24875 | B. 负载 2 |
+| sampled numbers（采样数值）128 行 | `numbers_sampled_128` | `B` | 错误 | 49298 | B. 负载 2 |
 
 </details>
 
 <details>
-<summary>Case 分析</summary>
+<summary>案例分析</summary>
 
-This case stresses aggregation over the whole window. The correct evidence is the window-average active power of load 1. Generic caption and all sampled numeric prompts choose a distractor, showing that raw sampled rows do not reliably substitute for the requested statistic.
+这个样例考察整段窗口上的聚合统计。正确证据是负载 1 的窗口平均有功功率最高。generic caption（通用说明文本）和所有 sampled numbers（采样数值）条件都选择了干扰项，说明采样数值行不能稳定替代题目真正需要的窗口级统计量。
 
 </details>
 
 </details>
 
 <details>
-<summary>Case 03: Trend control case: numeric samples can solve simple aggregate trend questions</summary>
+<summary>案例 03：趋势控制样例：简单聚合趋势下 sampled numbers（采样数值）可以答对</summary>
 
 ### 基本信息
 
 | 字段 | 内容 |
 | --- | --- |
-| Case ID | `simqa::grid2op_real::rte_case14_realistic_trace_2048_nooverflow::h1024::s0::total_load_trend` |
-| Source | `observation` |
-| Horizon | `1024` |
-| Task family | `total_load_trend` |
-| Correct answer | `B` |
-| Answer label | `higher` |
-| GT source | `trace_array` |
+| 案例 ID | `simqa::grid2op_real::rte_case14_realistic_trace_2048_nooverflow::h1024::s0::total_load_trend` |
+| 数据来源 | 单条观测轨迹 (`observation`) |
+| 窗口长度 | `1024` |
+| 任务类型 | 前后窗口总负荷趋势 (`total_load_trend`) |
+| 正确答案 | `B` |
+| 正确答案标签 | `更高` |
+| ground truth（真值）来源 | `trace_array` / 仿真器轨迹 |
 
-关键结论：This is a control case. Sampled numbers solve the trend question, while generic caption still fails. It prevents overclaiming: numeric prompting does not always fail; the observed weakness is concentrated in localization and aggregation-heavy evidence.
+关键结论：这是一个控制样例。sampled numbers（采样数值）能答对简单的前后段均值趋势问题，但 generic caption（通用说明文本）仍然失败。它提醒我们不要过度声称 raw numbers（原始数值）总是失败；当前观察到的弱点主要集中在定位、聚合和需要精确证据的任务上。
 
 <details>
 <summary>时序图</summary>
@@ -220,35 +220,35 @@ This case stresses aggregation over the whole window. The correct evidence is th
 <details>
 <summary>QA 问题</summary>
 
-**Question**
+**问题**
 
-Compared with the first quarter, how does mean total load in the last quarter change?
+与第一段相比，最后一段的平均总负荷如何变化？
 
-**Options**
+**选项**
 
-- A. lower than the first quarter
-- B. higher than the first quarter
-- C. roughly unchanged from the first quarter
-- D. not determinable from the trace window
+- A. 低于第一段
+- B. 高于第一段
+- C. 与第一段大致不变
+- D. 无法仅从该轨迹窗口判断
 
-**Correct answer**: `B` - B. higher than the first quarter
+**正确答案**：`B` - B. 高于第一段
 
 </details>
 
 <details>
-<summary>Captions / Evidence</summary>
+<summary>caption（说明文本）与 evidence（证据）</summary>
 
-**Generic caption**
+**generic caption（通用说明文本）**
 
-This Grid2Op power-grid trace window contains line loading, load, generator, and power-flow variables over 1024 steps.
+这个 Grid2Op 电网轨迹窗口包含 1024 个时间步上的线路负载率、负载、发电机和潮流变量。
 
-**Oracle evidence caption**
+**oracle evidence caption（oracle 证据说明文本）**
 
-Mean total load is 229.773 in the first quarter and 263.650 in the last quarter, so the last quarter is higher than the first quarter.
+第一段的平均总负荷为 229.773，最后一段为 263.650，因此最后一段高于第一段。
 
-**Verification facts**
+**可验证事实**
 
-| Fact | Value |
+| 验证字段 | 数值 |
 | --- | --- |
 | `first_quarter_mean_total_load` | `229.7730` |
 | `last_quarter_mean_total_load` | `263.6496` |
@@ -258,42 +258,42 @@ Mean total load is 229.773 in the first quarter and 263.650 in the last quarter,
 <details>
 <summary>模型回答</summary>
 
-| 输入条件 | 预测 | 正确性 | Prompt chars | 选项文本 |
-| --- | --- | --- | ---: | --- |
-| `meta_only` | `A` | ✗ | 375 | A. lower than the first quarter |
-| `generic_caption` | `C` | ✗ | 514 | C. roughly unchanged from the first quarter |
-| `oracle_evidence_caption` | `B` | ✓ | 527 | B. higher than the first quarter |
-| `numbers_sampled_32` | `B` | ✓ | 12806 | B. higher than the first quarter |
-| `numbers_sampled_64` | `B` | ✓ | 25037 | B. higher than the first quarter |
-| `numbers_sampled_128` | `B` | ✓ | 49491 | B. higher than the first quarter |
+| 输入条件 | 原始条件名 | 预测 | 正确性 | Prompt 字符数 | 选项文本 |
+| --- | --- | --- | --- | ---: | --- |
+| 仅元信息 | `meta_only` | `A` | 错误 | 375 | A. 低于第一段 |
+| generic caption（通用说明文本） | `generic_caption` | `C` | 错误 | 514 | C. 与第一段大致不变 |
+| oracle evidence caption（oracle 证据说明文本） | `oracle_evidence_caption` | `B` | 正确 | 527 | B. 高于第一段 |
+| sampled numbers（采样数值）32 行 | `numbers_sampled_32` | `B` | 正确 | 12806 | B. 高于第一段 |
+| sampled numbers（采样数值）64 行 | `numbers_sampled_64` | `B` | 正确 | 25037 | B. 高于第一段 |
+| sampled numbers（采样数值）128 行 | `numbers_sampled_128` | `B` | 正确 | 49491 | B. 高于第一段 |
 
 </details>
 
 <details>
-<summary>Case 分析</summary>
+<summary>案例分析</summary>
 
-This is a control case. Sampled numbers solve the trend question, while generic caption still fails. It prevents overclaiming: numeric prompting does not always fail; the observed weakness is concentrated in localization and aggregation-heavy evidence.
+这是一个控制样例。sampled numbers（采样数值）能答对简单的前后段均值趋势问题，但 generic caption（通用说明文本）仍然失败。它提醒我们不要过度声称 raw numbers（原始数值）总是失败；当前观察到的弱点主要集中在定位、聚合和需要精确证据的任务上。
 
 </details>
 
 </details>
 
 <details>
-<summary>Case 04: Counterfactual threshold: a small intervention crosses the overload boundary</summary>
+<summary>案例 04：反事实阈值：小幅干预刚好跨过过载边界</summary>
 
 ### 基本信息
 
 | 字段 | 内容 |
 | --- | --- |
-| Case ID | `simqa::grid2op_real_cf::h1024_t128_line0::cf_intervention_overload_severity` |
-| Source | `counterfactual` |
-| Horizon | `1024` |
-| Task family | `cf_intervention_overload_severity` |
-| Correct answer | `B` |
-| Answer label | `overload` |
-| GT source | `trace_array` |
+| 案例 ID | `simqa::grid2op_real_cf::h1024_t128_line0::cf_intervention_overload_severity` |
+| 数据来源 | factual/counterfactual（事实/反事实）配对轨迹 (`counterfactual`) |
+| 窗口长度 | `1024` |
+| 任务类型 | 断线干预后的过载严重度 (`cf_intervention_overload_severity`) |
+| 正确答案 | `B` |
+| 正确答案标签 | `过载` |
+| ground truth（真值）来源 | `trace_array` / 仿真器轨迹 |
 
-关键结论：Disconnecting line 0 barely changes max-rho but pushes the post-intervention peak to 1.024, just over the 1.00 overload threshold. Low-budget sampled numbers miss this boundary; the oracle evidence states the threshold-relevant fact directly.
+关键结论：断开第 0 条线路只带来很小的 max-rho 变化，但 intervention（干预）后的峰值达到 1.024，刚好超过 1.00 过载阈值。低采样预算的 sampled numbers（采样数值）漏掉了这个边界事实；oracle evidence caption（oracle 证据说明文本）直接给出与阈值判断相关的数值。
 
 <details>
 <summary>时序图</summary>
@@ -305,35 +305,35 @@ This is a control case. Sampled numbers solve the trend question, while generic 
 <details>
 <summary>QA 问题</summary>
 
-**Question**
+**问题**
 
-After disconnecting line 0 at t=128, what is the worst overload severity later in the rollout?
+在 t=128 断开第 0 条线路后，后续 rollout 中最严重的过载程度是什么？
 
-**Options**
+**选项**
 
-- A. a severe overload above 1.20
-- B. an overload above 1.00 but not above 1.20
-- C. no overload above 1.00
-- D. not determinable from the paired traces
+- A. 严重过载，超过 1.20
+- B. 发生过载，超过 1.00 但不超过 1.20
+- C. 没有超过 1.00 的过载
+- D. 无法仅从配对轨迹判断
 
-**Correct answer**: `B` - B. an overload above 1.00 but not above 1.20
+**正确答案**：`B` - B. 发生过载，超过 1.00 但不超过 1.20
 
 </details>
 
 <details>
-<summary>Captions / Evidence</summary>
+<summary>caption（说明文本）与 evidence（证据）</summary>
 
-**Generic caption**
+**generic caption（通用说明文本）**
 
-This paired Grid2Op trace contains a factual rollout and a counterfactual rollout with one power line disconnected during the episode.
+这组 Grid2Op 配对轨迹包含一条事实 rollout，以及一条在 episode 中断开某条输电线路的反事实 rollout。
 
-**Oracle evidence caption**
+**oracle evidence caption（oracle 证据说明文本）**
 
-After the intervention, the largest post-intervention max-rho is 1.024. That corresponds to an overload above 1.00 but not above 1.20.
+干预后，后续最大 max-rho 为 1.024，对应超过 1.00 但不超过 1.20 的过载。
 
-**Verification facts**
+**可验证事实**
 
-| Fact | Value |
+| 验证字段 | 数值 |
 | --- | --- |
 | `paired_steps` | `1024` |
 | `post_intervention_steps` | `895` |
@@ -355,44 +355,44 @@ After the intervention, the largest post-intervention max-rho is 1.024. That cor
 <details>
 <summary>模型回答</summary>
 
-| 输入条件 | 预测 | 正确性 | Prompt chars | 选项文本 |
-| --- | --- | --- | ---: | --- |
-| `meta_only` | `D` | ✗ | 382 | D. not determinable from the paired traces |
-| `generic_caption` | `B` | ✓ | 537 | B. an overload above 1.00 but not above 1.20 |
-| `oracle_evidence_caption` | `B` | ✓ | 534 | B. an overload above 1.00 but not above 1.20 |
-| `numbers_sampled_32` | `C` | ✗ | 7926 | C. no overload above 1.00 |
-| `numbers_sampled_64` | `C` | ✗ | 15220 | C. no overload above 1.00 |
-| `numbers_sampled_128` | `B` | ✓ | 29807 | B. an overload above 1.00 but not above 1.20 |
-| `numbers_sampled_256` | `B` | ✓ | 58981 | B. an overload above 1.00 but not above 1.20 |
-| `numbers_sampled_512` | `B` | ✓ | 117328 | B. an overload above 1.00 but not above 1.20 |
+| 输入条件 | 原始条件名 | 预测 | 正确性 | Prompt 字符数 | 选项文本 |
+| --- | --- | --- | --- | ---: | --- |
+| 仅元信息 | `meta_only` | `D` | 错误 | 382 | D. 无法仅从配对轨迹判断 |
+| generic caption（通用说明文本） | `generic_caption` | `B` | 正确 | 537 | B. 发生过载，超过 1.00 但不超过 1.20 |
+| oracle evidence caption（oracle 证据说明文本） | `oracle_evidence_caption` | `B` | 正确 | 534 | B. 发生过载，超过 1.00 但不超过 1.20 |
+| sampled numbers（采样数值）32 行 | `numbers_sampled_32` | `C` | 错误 | 7926 | C. 没有超过 1.00 的过载 |
+| sampled numbers（采样数值）64 行 | `numbers_sampled_64` | `C` | 错误 | 15220 | C. 没有超过 1.00 的过载 |
+| sampled numbers（采样数值）128 行 | `numbers_sampled_128` | `B` | 正确 | 29807 | B. 发生过载，超过 1.00 但不超过 1.20 |
+| sampled numbers（采样数值）256 行 | `numbers_sampled_256` | `B` | 正确 | 58981 | B. 发生过载，超过 1.00 但不超过 1.20 |
+| sampled numbers（采样数值）512 行 | `numbers_sampled_512` | `B` | 正确 | 117328 | B. 发生过载，超过 1.00 但不超过 1.20 |
 
 </details>
 
 <details>
-<summary>Case 分析</summary>
+<summary>案例分析</summary>
 
-Disconnecting line 0 barely changes max-rho but pushes the post-intervention peak to 1.024, just over the 1.00 overload threshold. Low-budget sampled numbers miss this boundary; the oracle evidence states the threshold-relevant fact directly.
+断开第 0 条线路只带来很小的 max-rho 变化，但 intervention（干预）后的峰值达到 1.024，刚好超过 1.00 过载阈值。低采样预算的 sampled numbers（采样数值）漏掉了这个边界事实；oracle evidence caption（oracle 证据说明文本）直接给出与阈值判断相关的数值。
 
 </details>
 
 </details>
 
 <details>
-<summary>Case 05: Counterfactual direction: paired traces require comparing factual and intervention peaks</summary>
+<summary>案例 05：反事实方向：必须比较事实轨迹和干预轨迹的峰值</summary>
 
 ### 基本信息
 
 | 字段 | 内容 |
 | --- | --- |
-| Case ID | `simqa::grid2op_real_cf::h1024_t128_line5::cf_peak_rho_direction` |
-| Source | `counterfactual` |
-| Horizon | `1024` |
-| Task family | `cf_peak_rho_direction` |
-| Correct answer | `C` |
-| Answer label | `increase` |
-| GT source | `trace_array` |
+| 案例 ID | `simqa::grid2op_real_cf::h1024_t128_line5::cf_peak_rho_direction` |
+| 数据来源 | factual/counterfactual（事实/反事实）配对轨迹 (`counterfactual`) |
+| 窗口长度 | `1024` |
+| 任务类型 | 断线干预后的峰值方向变化 (`cf_peak_rho_direction`) |
+| 正确答案 | `C` |
+| 正确答案标签 | `上升` |
+| ground truth（真值）来源 | `trace_array` / 仿真器轨迹 |
 
-关键结论：Line 5 is a mild intervention: the post-peak max-rho rises from 0.999 to 1.138. The question requires paired factual/counterfactual comparison with a stated tolerance. Generic caption fails because it never provides the paired outcome facts.
+关键结论：断开第 5 条线路后，intervention（干预）后的峰值 max-rho 从 factual trace（事实轨迹）的 0.999 上升到 1.138。题目要求在 0.05 容忍阈值下比较 factual/counterfactual（事实/反事实）配对结果。generic caption（通用说明文本）失败的原因是它没有提供两条轨迹的配对结果事实。
 
 <details>
 <summary>时序图</summary>
@@ -404,35 +404,35 @@ Disconnecting line 0 barely changes max-rho but pushes the post-intervention pea
 <details>
 <summary>QA 问题</summary>
 
-**Question**
+**问题**
 
-Using a 0.05 max-rho tolerance, if line 5 is disconnected at t=128, how does the post-intervention peak maximum line loading compare with the factual rollout?
+以 0.05 的 max-rho 容忍阈值判断：如果在 t=128 断开第 5 条线路，干预后的峰值最大线路负载率相对事实 rollout 如何变化？
 
-**Options**
+**选项**
 
-- A. it decreases by at least 0.05 max-rho relative to the factual rollout
-- B. it changes by less than 0.05 max-rho relative to the factual rollout
-- C. it increases by at least 0.05 max-rho relative to the factual rollout
-- D. it cannot be determined from the paired traces
+- A. 相对事实 rollout 至少下降 0.05 max-rho
+- B. 相对事实 rollout 的变化小于 0.05 max-rho
+- C. 相对事实 rollout 至少上升 0.05 max-rho
+- D. 无法仅从配对轨迹判断
 
-**Correct answer**: `C` - C. it increases by at least 0.05 max-rho relative to the factual rollout
+**正确答案**：`C` - C. 相对事实 rollout 至少上升 0.05 max-rho
 
 </details>
 
 <details>
-<summary>Captions / Evidence</summary>
+<summary>caption（说明文本）与 evidence（证据）</summary>
 
-**Generic caption**
+**generic caption（通用说明文本）**
 
-This paired Grid2Op trace contains a factual rollout and a counterfactual rollout with one power line disconnected during the episode.
+这组 Grid2Op 配对轨迹包含一条事实 rollout，以及一条在 episode 中断开某条输电线路的反事实 rollout。
 
-**Oracle evidence caption**
+**oracle evidence caption（oracle 证据说明文本）**
 
-In the factual rollout, the post-intervention peak max-rho is 0.999; after disconnecting line 5 at t=128, it is 1.138. The difference is +0.139; with a 0.05 tolerance, it increases by at least 0.05 max-rho relative to the factual rollout.
+事实 rollout 中，干预后峰值 max-rho 为 0.999；在 t=128 断开第 5 条线路后，该值变为 1.138。差值为 +0.139；以 0.05 为容忍阈值，它相对事实 rollout 至少上升 0.05 max-rho。
 
-**Verification facts**
+**可验证事实**
 
-| Fact | Value |
+| 验证字段 | 数值 |
 | --- | --- |
 | `paired_steps` | `1024` |
 | `post_intervention_steps` | `895` |
@@ -456,23 +456,23 @@ In the factual rollout, the post-intervention peak max-rho is 0.999; after disco
 <details>
 <summary>模型回答</summary>
 
-| 输入条件 | 预测 | 正确性 | Prompt chars | 选项文本 |
-| --- | --- | --- | ---: | --- |
-| `meta_only` | `A` | ✗ | 568 | A. it decreases by at least 0.05 max-rho relative to the factual rollout |
-| `generic_caption` | `B` | ✗ | 723 | B. it changes by less than 0.05 max-rho relative to the factual rollout |
-| `oracle_evidence_caption` | `C` | ✓ | 824 | C. it increases by at least 0.05 max-rho relative to the factual rollout |
-| `numbers_sampled_32` | `C` | ✓ | 8112 | C. it increases by at least 0.05 max-rho relative to the factual rollout |
-| `numbers_sampled_64` | `C` | ✓ | 15406 | C. it increases by at least 0.05 max-rho relative to the factual rollout |
-| `numbers_sampled_128` | `B` | ✗ | 29993 | B. it changes by less than 0.05 max-rho relative to the factual rollout |
-| `numbers_sampled_256` | `C` | ✓ | 59167 | C. it increases by at least 0.05 max-rho relative to the factual rollout |
-| `numbers_sampled_512` | `C` | ✓ | 117514 | C. it increases by at least 0.05 max-rho relative to the factual rollout |
+| 输入条件 | 原始条件名 | 预测 | 正确性 | Prompt 字符数 | 选项文本 |
+| --- | --- | --- | --- | ---: | --- |
+| 仅元信息 | `meta_only` | `A` | 错误 | 568 | A. 相对事实 rollout 至少下降 0.05 max-rho |
+| generic caption（通用说明文本） | `generic_caption` | `B` | 错误 | 723 | B. 相对事实 rollout 的变化小于 0.05 max-rho |
+| oracle evidence caption（oracle 证据说明文本） | `oracle_evidence_caption` | `C` | 正确 | 824 | C. 相对事实 rollout 至少上升 0.05 max-rho |
+| sampled numbers（采样数值）32 行 | `numbers_sampled_32` | `C` | 正确 | 8112 | C. 相对事实 rollout 至少上升 0.05 max-rho |
+| sampled numbers（采样数值）64 行 | `numbers_sampled_64` | `C` | 正确 | 15406 | C. 相对事实 rollout 至少上升 0.05 max-rho |
+| sampled numbers（采样数值）128 行 | `numbers_sampled_128` | `B` | 错误 | 29993 | B. 相对事实 rollout 的变化小于 0.05 max-rho |
+| sampled numbers（采样数值）256 行 | `numbers_sampled_256` | `C` | 正确 | 59167 | C. 相对事实 rollout 至少上升 0.05 max-rho |
+| sampled numbers（采样数值）512 行 | `numbers_sampled_512` | `C` | 正确 | 117514 | C. 相对事实 rollout 至少上升 0.05 max-rho |
 
 </details>
 
 <details>
-<summary>Case 分析</summary>
+<summary>案例分析</summary>
 
-Line 5 is a mild intervention: the post-peak max-rho rises from 0.999 to 1.138. The question requires paired factual/counterfactual comparison with a stated tolerance. Generic caption fails because it never provides the paired outcome facts.
+断开第 5 条线路后，intervention（干预）后的峰值 max-rho 从 factual trace（事实轨迹）的 0.999 上升到 1.138。题目要求在 0.05 容忍阈值下比较 factual/counterfactual（事实/反事实）配对结果。generic caption（通用说明文本）失败的原因是它没有提供两条轨迹的配对结果事实。
 
 </details>
 
