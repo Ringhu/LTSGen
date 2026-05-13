@@ -155,6 +155,69 @@ Full raw-number prompt dry run:
 This supports treating `numbers_full` as a diagnostic, not the main large-scale
 condition.
 
+## Current Real-Simulator Results
+
+### Grid2Op
+
+Current clean Grid2Op artifacts:
+- Observation: `.research/real-grid2op-20260513/grid2op_real_v4_obs_slot/`
+- Counterfactual: `.research/real-grid2op-20260513/grid2op_real_cf_v6_slot/`
+- Chinese case study:
+  `docs/case-studies/20260513-grid2op/grid2op_case_study.md`
+
+Context-card protocol:
+- Use `domain_context_v3_grid2op_citylearn_slot_value_rules`.
+- Grid2Op questions must include background context explaining `line`, `rho`,
+  `line_status`, factual trace, intervention trace, and local/global time.
+- The final paper-facing Grid2Op QA uses slot-value options with globally
+  hash-balanced answer letters. Earlier no-context and label-style results are
+  superseded.
+
+Final clean Grid2Op result:
+- Observation, 72 items: meta 0.2361, generic 0.3056, oracle 1.0000,
+  sampled-32/64/128 = 0.3056 / 0.3889 / 0.4028.
+- Counterfactual, 12 items: meta 0.1667, generic 0.1667, oracle 1.0000,
+  sampled-32/64/128/256 = 0.5000 / 0.5000 / 0.5833 / 0.5833.
+
+Interpretation:
+- Grid2Op supports the main interface claim: short, question-conditioned
+  evidence captions are a reliable upper bound, while generic captions and
+  sampled numeric prompts are not enough.
+- Current counterfactual evidence is useful for verifiability and efficiency,
+  but its sample size is too small for a standalone CFQA contribution.
+
+### CityLearn
+
+Progress artifact:
+- `.research/real-citylearn-progress-20260513.md`
+
+Current clean CityLearn artifacts:
+- Data/results:
+  `.research/real-citylearn-20260513/citylearn_real_v2_slot/`
+- Source trace:
+  `.research/real-citylearn-20260513/citylearn_challenge_2022_phase_1_trace_2048.json`
+- Remote 8192 trace exists on 3090:
+  `/cluster/home/hulining/LTSGEN/.research/real-citylearn-20260513/citylearn_challenge_2022_phase_1_trace_8192.json`
+
+Expanded v2 setup:
+- 72 slot-value QA items
+- horizons covered: 512, 1024, 2048
+- task families: building load point values, quarter mean net electricity, and
+  outdoor temperature point values
+- answer letters A/B/C/D = 18/18/18/18
+
+Final clean CityLearn v2 result:
+- meta 0.2361, generic 0.2500, oracle 1.0000
+- sampled-32/64/128 = 0.3333 / 0.3889 / 0.4583
+- prompt chars: oracle about 1.4k, sampled-128 about 32.3k
+
+Interpretation:
+- CityLearn is now a valid second-simulator feasibility result.
+- It should not yet be presented as a full benchmark: it is one packaged
+  dataset and the task set is still slot-value oriented.
+- The result supports the evidence-caption upper-bound claim and motivates
+  QCC-v0 training.
+
 ## Implementation Paths
 
 Current scripts:
@@ -262,16 +325,15 @@ Use narrower claims:
 
 ## Next Action
 
-The immediate next experiment is to expand beyond the validated Grid2Op
-context-card protocol:
+The immediate next experiment is to move from validated simulator gates to
+method training:
 
-1. Expand CityLearn from the current 12-item feasibility smoke to 48-72
-   slot-value QA items over multiple windows.
-2. Re-check `meta_only`, especially for quarter aggregation tasks; do not use
-   the current CityLearn quarter task as paper-facing evidence until the leak
-   check passes.
-3. Add a Chinese CityLearn case study only after the expanded QA passes sanity.
-4. Only after Grid2Op + CityLearn both pass clean gates, start QCC-v0 training.
+1. Add a Chinese CityLearn case study with plotted trajectories.
+2. Define the exact QCC-v0 target format: slot extraction, evidence caption, or
+   both.
+3. Run QCC-v0 overfit/slot-prediction checks on the validated Grid2Op and
+   CityLearn slot QA.
+4. Only after QCC-v0 learns the oracle evidence target, move to SCL /
+   hard-negative training.
 
-Do not start QCC/SCL training until real-simulator data passes the same pilot
-gates that simulator-lite passed.
+Do not start SCL or broader training until QCC-v0 passes a small overfit gate.

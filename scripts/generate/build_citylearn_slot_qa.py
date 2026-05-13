@@ -58,6 +58,23 @@ def _distractors(value: float, gap: float, item_index: int) -> list[str]:
     return out[:3]
 
 
+def _quarter_distractors(value: float, observed_values: list[float], item_index: int) -> list[str]:
+    """Use neighboring empirical quarter means first, then numeric offsets."""
+    candidates: list[str] = []
+    for v in sorted(observed_values, key=lambda x: (abs(x - value), x)):
+        s = _fmt(v)
+        if s != _fmt(value) and s not in candidates:
+            candidates.append(s)
+        if len(candidates) == 3:
+            return candidates
+    for v in _distractors(value, 8.0, item_index):
+        if v != _fmt(value) and v not in candidates:
+            candidates.append(v)
+        if len(candidates) == 3:
+            return candidates
+    raise ValueError(f"Could not create quarter distractors for {value}")
+
+
 def _options(correct: str, distractors: list[str], key: str) -> tuple[list[str], str]:
     target = LETTERS[_stable_slot(key)]
     texts = {target: correct}
@@ -86,13 +103,27 @@ def _rebalance(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return [_set_answer_letter(row, targets[i]) for i, row in enumerate(rows)]
 
 
-def _base_record(trace: dict[str, Any], trace_path: str, task: str, question: str, answer_label: str, options: list[str], answer: str, caption: str, evidence: dict[str, Any]) -> dict[str, Any]:
+def _base_record(
+    trace: dict[str, Any],
+    trace_path: str,
+    task: str,
+    question: str,
+    answer_label: str,
+    options: list[str],
+    answer: str,
+    caption: str,
+    evidence: dict[str, Any],
+    *,
+    window_start: int,
+    window_end: int,
+    horizon: int,
+) -> dict[str, Any]:
     return {
         "domain": "citylearn_real",
         "source": "citylearn_packaged_dataset",
-        "horizon": int(trace["actual_horizon"]),
+        "horizon": horizon,
         "trace_path": trace_path,
-        "trace_window": {"start": 0, "end": int(trace["actual_horizon"])},
+        "trace_window": {"start": window_start, "end": window_end},
         "variables": [
             "building.non_shiftable_load",
             "building.solar_generation",
@@ -103,7 +134,10 @@ def _base_record(trace: dict[str, Any], trace_path: str, task: str, question: st
             "carbon_intensity",
             "totals.net_electricity_without_storage",
         ],
-        "id": f"simqa::citylearn_real::{Path(trace_path).stem}::{task}::{hashlib.sha1(question.encode()).hexdigest()[:10]}",
+        "id": (
+            f"simqa::citylearn_real::{Path(trace_path).stem}::h{horizon}::s{window_start}::"
+            f"{task}::{hashlib.sha1(question.encode()).hexdigest()[:10]}"
+        ),
         "task_family": task,
         "question": question,
         "options": options,
@@ -124,65 +158,100 @@ def _base_record(trace: dict[str, Any], trace_path: str, task: str, question: st
 
 
 def build_rows(trace: dict[str, Any], trace_path: str) -> list[dict[str, Any]]:
-    rows = trace["trace"]
-    n = len(rows)
+    all_rows = trace["trace"]
+    total_n = len(all_rows)
     out: list[dict[str, Any]] = []
 
-    for idx, local_t in enumerate([137, 511, 1023, 1535]):
-        building_id = (idx % int(trace["n_buildings"])) + 1
-        value = float(rows[local_t]["buildings"][building_id - 1]["non_shiftable_load"])
-        correct = _fmt(value)
-        question = f"At local_t={local_t}, what is non_shiftable_load for building {building_id}?"
-        options, answer = _options(correct, _distractors(value, 0.05, len(out)), question)
-        out.append(_base_record(
-            trace,
-            trace_path,
-            "building_load_value_slot",
-            question,
-            correct,
-            options,
-            answer,
-            f"At local_t={local_t}, non_shiftable_load for building {building_id} is {correct}.",
-            {"slot_local_t": local_t, "slot_building": building_id, "slot_non_shiftable_load": value},
-        ))
+    windows = [
+        (0, 512),
+        (384, 512),
+        (768, 512),
+        (0, 1024),
+        (1024, 1024),
+        (0, 2048),
+    ]
 
-    for quarter in range(4):
-        q = max(1, n // 4)
-        start = quarter * q
-        end = n if quarter == 3 else (quarter + 1) * q
-        values = [float(r["totals"]["net_electricity_without_storage"]) for r in rows[start:end]]
-        value = float(np.mean(values))
-        correct = _fmt(value)
-        question = f"What is the mean net_electricity_without_storage in quarter {quarter + 1} of this trace window?"
-        options, answer = _options(correct, _distractors(value, 5.0, len(out)), question)
-        out.append(_base_record(
-            trace,
-            trace_path,
-            "quarter_net_electricity_mean_value_slot",
-            question,
-            correct,
-            options,
-            answer,
-            f"The mean net_electricity_without_storage in quarter {quarter + 1} is {correct}.",
-            {"slot_quarter": quarter + 1, "slot_mean_net_electricity_without_storage": value},
-        ))
+    for window_index, (window_start, horizon) in enumerate(windows):
+        window_end = min(window_start + horizon, total_n)
+        if window_end - window_start != horizon:
+            continue
+        rows = all_rows[window_start:window_end]
 
-    for idx, local_t in enumerate([256, 768, 1280, 1792]):
-        value = float(rows[local_t]["weather"]["outdoor_dry_bulb_temperature"])
-        correct = _fmt(value)
-        question = f"At local_t={local_t}, what is outdoor_dry_bulb_temperature?"
-        options, answer = _options(correct, _distractors(value, 0.3, len(out)), question)
-        out.append(_base_record(
-            trace,
-            trace_path,
-            "outdoor_temperature_value_slot",
-            question,
-            correct,
-            options,
-            answer,
-            f"At local_t={local_t}, outdoor_dry_bulb_temperature is {correct}.",
-            {"slot_local_t": local_t, "slot_outdoor_dry_bulb_temperature": value},
-        ))
+        # Four point-value building load questions per window.
+        for j, frac in enumerate([0.13, 0.37, 0.61, 0.83]):
+            local_t = min(horizon - 1, int(round(frac * (horizon - 1))))
+            building_id = ((window_index + j) % int(trace["n_buildings"])) + 1
+            value = float(rows[local_t]["buildings"][building_id - 1]["non_shiftable_load"])
+            correct = _fmt(value)
+            question = f"At local_t={local_t}, what is non_shiftable_load for building {building_id}?"
+            options, answer = _options(correct, _distractors(value, 0.05, len(out)), f"{window_start}:{question}")
+            out.append(_base_record(
+                trace,
+                trace_path,
+                "building_load_value_slot",
+                question,
+                correct,
+                options,
+                answer,
+                f"At local_t={local_t}, non_shiftable_load for building {building_id} is {correct}.",
+                {"slot_local_t": local_t, "slot_building": building_id, "slot_non_shiftable_load": value},
+                window_start=window_start,
+                window_end=window_end,
+                horizon=horizon,
+            ))
+
+        # Four quarter aggregation questions per window.
+        q = max(1, horizon // 4)
+        quarter_means = []
+        for quarter in range(4):
+            start = quarter * q
+            end = horizon if quarter == 3 else (quarter + 1) * q
+            values = [float(r["totals"]["net_electricity_without_storage"]) for r in rows[start:end]]
+            quarter_means.append(float(np.mean(values)))
+        for quarter, value in enumerate(quarter_means):
+            correct = _fmt(value)
+            question = f"What is the mean net_electricity_without_storage in quarter {quarter + 1} of this trace window?"
+            options, answer = _options(
+                correct,
+                _quarter_distractors(value, quarter_means, len(out)),
+                f"{window_start}:{question}",
+            )
+            out.append(_base_record(
+                trace,
+                trace_path,
+                "quarter_net_electricity_mean_value_slot",
+                question,
+                correct,
+                options,
+                answer,
+                f"The mean net_electricity_without_storage in quarter {quarter + 1} is {correct}.",
+                {"slot_quarter": quarter + 1, "slot_mean_net_electricity_without_storage": value},
+                window_start=window_start,
+                window_end=window_end,
+                horizon=horizon,
+            ))
+
+        # Four point-value weather questions per window.
+        for j, frac in enumerate([0.17, 0.41, 0.69, 0.91]):
+            local_t = min(horizon - 1, int(round(frac * (horizon - 1))))
+            value = float(rows[local_t]["weather"]["outdoor_dry_bulb_temperature"])
+            correct = _fmt(value)
+            question = f"At local_t={local_t}, what is outdoor_dry_bulb_temperature?"
+            options, answer = _options(correct, _distractors(value, 0.3, len(out)), f"{window_start}:{question}")
+            out.append(_base_record(
+                trace,
+                trace_path,
+                "outdoor_temperature_value_slot",
+                question,
+                correct,
+                options,
+                answer,
+                f"At local_t={local_t}, outdoor_dry_bulb_temperature is {correct}.",
+                {"slot_local_t": local_t, "slot_outdoor_dry_bulb_temperature": value},
+                window_start=window_start,
+                window_end=window_end,
+                horizon=horizon,
+            ))
 
     return _rebalance(out)
 

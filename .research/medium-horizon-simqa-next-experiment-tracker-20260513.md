@@ -14,7 +14,7 @@
 | NEXT-R008 | M6 | QCC-v0 overfit check | slot predictor/template captioner | tiny train/dev | train loss, slot acc | MUST | TODO | do before full training |
 | NEXT-R009 | M6 | QCC-v0 full run | QCC vs task-agnostic | real-v1 test | QA, slot F1, unsupported rate | MUST | TODO | 3 seeds after stable |
 | NEXT-R010 | M7 | SCL hard-negative ablation | QCC vs QCC+SCL | real-v1 test | QA, factuality, rejection acc | NICE | TODO | promote only if useful |
-| NEXT-R011 | M1/M4 | CityLearn second-simulator feasibility | packaged CityLearn trace + slot QA | 2048 smoke, 8192 export | trace sanity, meta/oracle, prompt chars | MUST | DONE | CityLearn 2.5.0 on 3090; exported 2048/8192 traces; 12-item slot QA gate passed, but quarter task needs expansion before paper use |
+| NEXT-R011 | M1/M4 | CityLearn second-simulator feasibility | packaged CityLearn trace + slot QA | 512/1024/2048 windows, 8192 export | trace sanity, meta/oracle, prompt chars | MUST | DONE | CityLearn 2.5.0 on 3090; exported 2048/8192 traces. Expanded v2 has 72 items, balanced A/B/C/D, meta 0.2361, generic 0.2500, oracle 1.0, sampled-128 0.4583. |
 
 ## Addendum 2026-05-13
 - Built Grid2Op counterfactual v3 compact with selected full 1024-step paired
@@ -48,8 +48,10 @@
 
 ## Current Gate
 Grid2Op context-card protocol is clean enough for case studies and Grid2Op-only
-discussion. CityLearn is feasible as a second simulator source, but its current
-12-item QA is only a smoke test. Next benchmark work should expand CityLearn to
-48-72 items over multiple windows and re-check `meta_only`, especially for
-quarter aggregation. Do not download larger simulator data to the local SSD; use
-A100/3090 storage for real simulator environments and traces.
+discussion. CityLearn now passes a 72-item expanded feasibility gate over
+512/1024/2048 windows. The CityLearn result should still be described as
+second-simulator feasibility, not a full benchmark: tasks are slot-value
+oriented and come from one packaged dataset. Next work should add a Chinese
+CityLearn case study and then start QCC-v0 overfit/slot-prediction checks. Do
+not download larger simulator data to the local SSD; use A100/3090 storage for
+real simulator environments and traces.
