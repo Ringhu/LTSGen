@@ -10,6 +10,8 @@ question-conditioned evidence captioning.
 
 **Active pilot contract:** `./.research/research-contract-medium-horizon-simqa-20260512.md`
 
+**Active method contract:** `./.research/research-contract-qcc-v0-20260513.md`
+
 The older `./.research/research-contract-20260419.md` / ShapeShift-CPR plan is
 historical for the current workstream. Do not use it as the active route unless
 the user explicitly asks to resume that line.
