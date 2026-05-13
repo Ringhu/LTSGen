@@ -191,6 +191,7 @@ Interpretation:
   is still slot-value oriented and only covers one packaged CityLearn dataset.
 
 Next:
-- Add a Chinese CityLearn case study with plotted trajectories.
-- Then start QCC-v0 overfit/slot-prediction checks only after deciding the
-  exact training target format.
+- Chinese case study has been generated:
+  `docs/case-studies/20260513-citylearn/citylearn_case_study.md`
+- Next: start QCC-v0 overfit/slot-prediction checks after deciding the exact
+  training target format.

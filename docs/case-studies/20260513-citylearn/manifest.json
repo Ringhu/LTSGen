@@ -1,0 +1,218 @@
+{
+  "qa_path": ".research/real-citylearn-20260513/citylearn_real_v2_slot/citylearn_real_v2_slot.jsonl",
+  "prediction_path": ".research/real-citylearn-20260513/citylearn_real_v2_slot/core_sweep_context_v3/predictions.jsonl",
+  "metrics_path": ".research/real-citylearn-20260513/citylearn_real_v2_slot/core_sweep_context_v3/metrics.json",
+  "n_cases": 5,
+  "cases": [
+    {
+      "index": 1,
+      "title": "建筑负载单点读取：generic caption 和 sampled numbers 都可能错",
+      "tag": "失败样例",
+      "id": "simqa::citylearn_real::citylearn_challenge_2022_phase_1_trace_2048::h2048::s0::building_load_value_slot::bb71c3a00d",
+      "task_family": "building_load_value_slot",
+      "horizon": 2048,
+      "figure": "figures/01_building_load_value_slot_simqa_citylearn_real_citylearn_challenge_2022_phase_1_trace_2048_h2048_s0_building_load_va.png",
+      "answer": "D",
+      "predictions": {
+        "meta_only": {
+          "pred": "B",
+          "correct": false,
+          "prompt_chars": 1336
+        },
+        "generic_caption": {
+          "pred": "B",
+          "correct": false,
+          "prompt_chars": 1521
+        },
+        "oracle_evidence_caption": {
+          "pred": "D",
+          "correct": true,
+          "prompt_chars": 1413
+        },
+        "numbers_sampled_32": {
+          "pred": "B",
+          "correct": false,
+          "prompt_chars": 9262
+        },
+        "numbers_sampled_64": {
+          "pred": "D",
+          "correct": true,
+          "prompt_chars": 16975
+        },
+        "numbers_sampled_128": {
+          "pred": "B",
+          "correct": false,
+          "prompt_chars": 32397
+        }
+      }
+    },
+    {
+      "index": 2,
+      "title": "quarter 均值聚合：稀疏采样难以恢复窗口平均",
+      "tag": "聚合失败",
+      "id": "simqa::citylearn_real::citylearn_challenge_2022_phase_1_trace_2048::h1024::s0::quarter_net_electricity_mean_value_slot::5b839373e0",
+      "task_family": "quarter_net_electricity_mean_value_slot",
+      "horizon": 1024,
+      "figure": "figures/02_quarter_net_electricity_mean_value_slot_simqa_citylearn_real_citylearn_challenge_2022_phase_1_trace_2048_h1024_s0_quarter_net_elec.png",
+      "answer": "D",
+      "predictions": {
+        "meta_only": {
+          "pred": "A",
+          "correct": false,
+          "prompt_chars": 1376
+        },
+        "generic_caption": {
+          "pred": "A",
+          "correct": false,
+          "prompt_chars": 1561
+        },
+        "oracle_evidence_caption": {
+          "pred": "D",
+          "correct": true,
+          "prompt_chars": 1461
+        },
+        "numbers_sampled_32": {
+          "pred": "B",
+          "correct": false,
+          "prompt_chars": 9307
+        },
+        "numbers_sampled_64": {
+          "pred": "A",
+          "correct": false,
+          "prompt_chars": 16976
+        },
+        "numbers_sampled_128": {
+          "pred": "C",
+          "correct": false,
+          "prompt_chars": 32329
+        }
+      }
+    },
+    {
+      "index": 3,
+      "title": "户外温度定位：采样数值有时能答对，但仍比 evidence 冗长",
+      "tag": "对照样例",
+      "id": "simqa::citylearn_real::citylearn_challenge_2022_phase_1_trace_2048::h512::s0::outdoor_temperature_value_slot::e898d06e6b",
+      "task_family": "outdoor_temperature_value_slot",
+      "horizon": 512,
+      "figure": "figures/03_outdoor_temperature_value_slot_simqa_citylearn_real_citylearn_challenge_2022_phase_1_trace_2048_h512_s0_outdoor_temperatu.png",
+      "answer": "D",
+      "predictions": {
+        "meta_only": {
+          "pred": "B",
+          "correct": false,
+          "prompt_chars": 1330
+        },
+        "generic_caption": {
+          "pred": "A",
+          "correct": false,
+          "prompt_chars": 1515
+        },
+        "oracle_evidence_caption": {
+          "pred": "D",
+          "correct": true,
+          "prompt_chars": 1403
+        },
+        "numbers_sampled_32": {
+          "pred": "B",
+          "correct": false,
+          "prompt_chars": 9254
+        },
+        "numbers_sampled_64": {
+          "pred": "D",
+          "correct": true,
+          "prompt_chars": 16933
+        },
+        "numbers_sampled_128": {
+          "pred": "D",
+          "correct": true,
+          "prompt_chars": 32345
+        }
+      }
+    },
+    {
+      "index": 4,
+      "title": "2048 步窗口：oracle evidence 保持短而稳定",
+      "tag": "长窗口样例",
+      "id": "simqa::citylearn_real::citylearn_challenge_2022_phase_1_trace_2048::h2048::s0::outdoor_temperature_value_slot::c69d53d315",
+      "task_family": "outdoor_temperature_value_slot",
+      "horizon": 2048,
+      "figure": "figures/04_outdoor_temperature_value_slot_simqa_citylearn_real_citylearn_challenge_2022_phase_1_trace_2048_h2048_s0_outdoor_temperat.png",
+      "answer": "A",
+      "predictions": {
+        "meta_only": {
+          "pred": "B",
+          "correct": false,
+          "prompt_chars": 1331
+        },
+        "generic_caption": {
+          "pred": "B",
+          "correct": false,
+          "prompt_chars": 1516
+        },
+        "oracle_evidence_caption": {
+          "pred": "A",
+          "correct": true,
+          "prompt_chars": 1404
+        },
+        "numbers_sampled_32": {
+          "pred": "D",
+          "correct": false,
+          "prompt_chars": 9257
+        },
+        "numbers_sampled_64": {
+          "pred": "A",
+          "correct": true,
+          "prompt_chars": 16970
+        },
+        "numbers_sampled_128": {
+          "pred": "A",
+          "correct": true,
+          "prompt_chars": 32392
+        }
+      }
+    },
+    {
+      "index": 5,
+      "title": "控制样例：sampled numbers 可以答对，但成本显著更高",
+      "tag": "控制样例",
+      "id": "simqa::citylearn_real::citylearn_challenge_2022_phase_1_trace_2048::h512::s384::building_load_value_slot::f7364c22fc",
+      "task_family": "building_load_value_slot",
+      "horizon": 512,
+      "figure": "figures/05_building_load_value_slot_simqa_citylearn_real_citylearn_challenge_2022_phase_1_trace_2048_h512_s384_building_load_v.png",
+      "answer": "B",
+      "predictions": {
+        "meta_only": {
+          "pred": "D",
+          "correct": false,
+          "prompt_chars": 1335
+        },
+        "generic_caption": {
+          "pred": "A",
+          "correct": false,
+          "prompt_chars": 1520
+        },
+        "oracle_evidence_caption": {
+          "pred": "B",
+          "correct": true,
+          "prompt_chars": 1412
+        },
+        "numbers_sampled_32": {
+          "pred": "B",
+          "correct": true,
+          "prompt_chars": 9247
+        },
+        "numbers_sampled_64": {
+          "pred": "B",
+          "correct": true,
+          "prompt_chars": 16912
+        },
+        "numbers_sampled_128": {
+          "pred": "B",
+          "correct": true,
+          "prompt_chars": 32269
+        }
+      }
+    }
+  ]
+}

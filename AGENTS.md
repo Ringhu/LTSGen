@@ -194,6 +194,8 @@ Progress artifact:
 Current clean CityLearn artifacts:
 - Data/results:
   `.research/real-citylearn-20260513/citylearn_real_v2_slot/`
+- Chinese case study:
+  `docs/case-studies/20260513-citylearn/citylearn_case_study.md`
 - Source trace:
   `.research/real-citylearn-20260513/citylearn_challenge_2022_phase_1_trace_2048.json`
 - Remote 8192 trace exists on 3090:
@@ -328,12 +330,11 @@ Use narrower claims:
 The immediate next experiment is to move from validated simulator gates to
 method training:
 
-1. Add a Chinese CityLearn case study with plotted trajectories.
-2. Define the exact QCC-v0 target format: slot extraction, evidence caption, or
+1. Define the exact QCC-v0 target format: slot extraction, evidence caption, or
    both.
-3. Run QCC-v0 overfit/slot-prediction checks on the validated Grid2Op and
+2. Run QCC-v0 overfit/slot-prediction checks on the validated Grid2Op and
    CityLearn slot QA.
-4. Only after QCC-v0 learns the oracle evidence target, move to SCL /
+3. Only after QCC-v0 learns the oracle evidence target, move to SCL /
    hard-negative training.
 
 Do not start SCL or broader training until QCC-v0 passes a small overfit gate.
