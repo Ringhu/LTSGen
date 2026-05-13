@@ -252,6 +252,10 @@ Deterministic evaluator baselines:
   the 32-example `tiny_overfit` split reaches 1.0000 operator accuracy and
   1.0000 field/caption/answer accuracy on tiny/dev/train when paired with the
   deterministic trace executor.
+- paraphrase robustness smoke: learned planner trained only on the original
+  `tiny_overfit` question templates reaches 0.9583 operator/field/caption/
+  answer accuracy on 48 paraphrased dev questions; trace-rule upper bound stays
+  at 1.0000.
 
 Interpretation:
 - QCC-v0 targets are now structured and verifiable: target fields and target
@@ -261,6 +265,10 @@ Interpretation:
   should approximate without hard-coded task-specific rules.
 - The learned planner result is only a smoke: current question templates make
   operator planning easy, and numeric trace reading is still rule-based.
+- The paraphrase result shows limited template robustness, but the 2 failures
+  are both `cf_delta_max_rho_value_slot`: paraphrased "intervention minus
+  factual max_rho" questions were confused with direct intervention `max_rho`
+  extraction.
 - Do not over-interpret dev metrics yet; some Grid2Op task families have small
   dev counts. Use tiny-overfit first, then expand data if task-level dev metrics
   are unstable.
@@ -372,12 +380,14 @@ Use narrower claims:
 
 ## Next Action
 
-The immediate next experiment is to move from validated simulator gates to
-method training:
+The immediate next experiment is to strengthen QCC-v0 before moving to SCL:
 
-1. Run QCC-v0 overfit/slot-prediction checks on the validated Grid2Op and
-   CityLearn slot QA.
-2. Only after QCC-v0 learns the oracle evidence target, move to SCL /
+1. Expand Grid2Op counterfactual slot data so `cf_delta_max_rho_value_slot` and
+   `cf_intervention_max_rho_value_slot` are not tiny classes.
+2. Add paraphrase augmentation to QCC-v0 training/eval and rerun the learned
+   planner smoke.
+3. Only after QCC-v0 is stable beyond exact templates, move to SCL /
    hard-negative training.
 
-Do not start SCL or broader training until QCC-v0 passes a small overfit gate.
+Do not start SCL or broader training until QCC-v0 passes both the small overfit
+gate and the paraphrase/counterfactual disambiguation gate.

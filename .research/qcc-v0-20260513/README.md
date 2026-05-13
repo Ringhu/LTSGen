@@ -151,3 +151,42 @@ Interpretation:
 - Because current questions are template-style, dev generalization is easy.
   The next real method step should expand question paraphrases and train a
   less rule-dependent QCC model.
+
+## Paraphrase Robustness Smoke
+
+Scripts:
+- `scripts/generate/build_qcc_v0_paraphrase_eval.py`
+- `scripts/eval/run_qcc_v0_learned_planner.py`
+
+Data:
+- source split: `dev`
+- paraphrases per item: 2
+- total paraphrase eval items: 48
+- output: `paraphrase_eval_dev/qcc_v0_paraphrase_eval.jsonl`
+
+Trace-rule upper bound:
+
+| Condition | Field exact | Caption exact | Answer label | Answer letter |
+| --- | ---: | ---: | ---: | ---: |
+| `trace_rule_extractor` | 1.0000 | 1.0000 | 1.0000 | 1.0000 |
+
+Learned planner trained on original `tiny_overfit` templates:
+
+| Eval set | Operator acc | Field exact | Caption exact | Answer letter |
+| --- | ---: | ---: | ---: | ---: |
+| `dev_paraphrase` | 0.9583 | 0.9583 | 0.9583 | 0.9583 |
+
+Failure concentration:
+- All 2 failures are `cf_delta_max_rho_value_slot`.
+- The planner predicted `read_cf_intervention_max_rho` instead of
+  `delta_cf_max_rho` for the paraphrased counterfactual delta questions.
+
+Interpretation:
+- The planner is not just memorizing the original exact question templates:
+  it transfers to 46/48 paraphrased questions after training on only 32
+  original-template examples.
+- The weak spot is counterfactual operator disambiguation, especially
+  distinguishing "read intervention max_rho" from "intervention minus factual
+  max_rho".
+- This is still a smoke, not a final method result. The next data step should
+  expand counterfactual examples and include paraphrase augmentation in training.

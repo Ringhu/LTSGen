@@ -137,12 +137,14 @@ def predict_rows(model: Pipeline, rows: list[dict[str, Any]]) -> tuple[list[dict
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--data", required=True)
+    parser.add_argument("--eval_data", default=None)
     parser.add_argument("--train_split", default="tiny_overfit")
     parser.add_argument("--eval_splits", nargs="+", default=["tiny_overfit", "dev"])
     parser.add_argument("--out_dir", required=True)
     args = parser.parse_args()
 
     rows = load_jsonl(Path(args.data))
+    eval_source_rows = load_jsonl(Path(args.eval_data)) if args.eval_data else rows
     train_rows = [row for row in rows if row["split"] == args.train_split]
     if not train_rows:
         raise ValueError(f"No rows for train split {args.train_split}")
@@ -158,7 +160,7 @@ def main() -> None:
     }
     all_predictions = []
     for split in args.eval_splits:
-        eval_rows = [row for row in rows if row["split"] == split]
+        eval_rows = [row for row in eval_source_rows if row["split"] == split]
         preds, info = predict_rows(model, eval_rows)
         write_jsonl(out_dir / f"predictions_{split}.jsonl", preds)
         all_predictions.extend(preds)

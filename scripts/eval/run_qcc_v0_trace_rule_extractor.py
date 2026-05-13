@@ -54,29 +54,56 @@ def extract_fields(row: dict[str, Any]) -> dict[str, Any]:
     }
 
     if task == "rho_value_slot":
-        m = _match(r"At local_t=(\d+), what is rho for line (\d+)\?", question)
-        local_t = int(m.group(1))
-        line = int(m.group(2))
+        m = re.match(r"At local_t=(\d+), what is rho for line (\d+)\?", question)
+        if m:
+            local_t = int(m.group(1))
+            line = int(m.group(2))
+        elif m := re.match(r"Read line (\d+) rho at local step (\d+)\.", question):
+            line = int(m.group(1))
+            local_t = int(m.group(2))
+        elif m := re.match(r"For line (\d+), report rho when local_t equals (\d+)\.", question):
+            line = int(m.group(1))
+            local_t = int(m.group(2))
+        else:
+            raise ValueError(f"Could not parse question: {question}")
         rows = _load_trace_window(record)
         return {"slot_local_t": local_t, "slot_line": line, "slot_rho": float(rows[local_t]["rho"][line])}
 
     if task == "load_average_value_slot":
-        m = _match(r"What is the window-average load_p for load (\d+)\?", question)
-        load = int(m.group(1))
+        if m := re.match(r"What is the window-average load_p for load (\d+)\?", question):
+            load = int(m.group(1))
+        elif m := re.match(r"Across this window, what is the average load_p for load (\d+)\?", question):
+            load = int(m.group(1))
+        elif m := re.match(r"Compute mean active load_p for load (\d+) over the full trace window\.", question):
+            load = int(m.group(1))
+        else:
+            raise ValueError(f"Could not parse question: {question}")
         rows = _load_trace_window(record)
         value = sum(float(r["load_p"][load]) for r in rows) / len(rows)
         return {"slot_load": load, "slot_avg_load_p": value}
 
     if task == "generator_average_value_slot":
-        m = _match(r"What is the window-average gen_p for generator (\d+)\?", question)
-        gen = int(m.group(1))
+        if m := re.match(r"What is the window-average gen_p for generator (\d+)\?", question):
+            gen = int(m.group(1))
+        elif m := re.match(r"Across the full window, what is average gen_p for generator (\d+)\?", question):
+            gen = int(m.group(1))
+        elif m := re.match(r"Compute the mean generator output gen_p for generator (\d+) in this window\.", question):
+            gen = int(m.group(1))
+        else:
+            raise ValueError(f"Could not parse question: {question}")
         rows = _load_trace_window(record)
         value = sum(float(r["gen_p"][gen]) for r in rows) / len(rows)
         return {"slot_generator": gen, "slot_avg_gen_p": value}
 
     if task == "quarter_total_load_mean_value_slot":
-        m = _match(r"What is the mean total_load in quarter (\d+) of this trace window\?", question)
-        quarter = int(m.group(1))
+        if m := re.match(r"What is the mean total_load in quarter (\d+) of this trace window\?", question):
+            quarter = int(m.group(1))
+        elif m := re.match(r"Average total_load over quarter (\d+) of the selected window\.", question):
+            quarter = int(m.group(1))
+        elif m := re.match(r"What is the quarter-(\d+) mean of total load in this Grid2Op window\?", question):
+            quarter = int(m.group(1))
+        else:
+            raise ValueError(f"Could not parse question: {question}")
         rows = _load_trace_window(record)
         q = max(1, len(rows) // 4)
         start = (quarter - 1) * q
@@ -85,8 +112,14 @@ def extract_fields(row: dict[str, Any]) -> dict[str, Any]:
         return {"slot_quarter": quarter, "slot_mean_total_load": sum(values) / len(values)}
 
     if task == "cf_delta_max_rho_value_slot":
-        m = _match(r"At local_t=(\d+), what is intervention_max_rho minus factual_max_rho\?", question)
-        local_t = int(m.group(1))
+        if m := re.match(r"At local_t=(\d+), what is intervention_max_rho minus factual_max_rho\?", question):
+            local_t = int(m.group(1))
+        elif m := re.match(r"At local step (\d+), compute intervention max_rho minus factual max_rho\.", question):
+            local_t = int(m.group(1))
+        elif m := re.match(r"For local_t (\d+), what is the delta between intervention and factual max_rho\?", question):
+            local_t = int(m.group(1))
+        else:
+            raise ValueError(f"Could not parse question: {question}")
         factual, intervention = _load_pair(record)
         factual_max = max(float(x) for x in factual[local_t]["rho"])
         intervention_max = max(float(x) for x in intervention[local_t]["rho"])
@@ -98,15 +131,29 @@ def extract_fields(row: dict[str, Any]) -> dict[str, Any]:
         }
 
     if task == "cf_intervention_max_rho_value_slot":
-        m = _match(r"At local_t=(\d+), what is intervention_max_rho\?", question)
-        local_t = int(m.group(1))
+        if m := re.match(r"At local_t=(\d+), what is intervention_max_rho\?", question):
+            local_t = int(m.group(1))
+        elif m := re.match(r"In the intervention trace, read max_rho at local step (\d+)\.", question):
+            local_t = int(m.group(1))
+        elif m := re.match(r"What is max_rho in the counterfactual rollout when local_t is (\d+)\?", question):
+            local_t = int(m.group(1))
+        else:
+            raise ValueError(f"Could not parse question: {question}")
         _, intervention = _load_pair(record)
         return {"slot_local_t": local_t, "slot_intervention_max_rho": max(float(x) for x in intervention[local_t]["rho"])}
 
     if task == "building_load_value_slot":
-        m = _match(r"At local_t=(\d+), what is non_shiftable_load for building (\d+)\?", question)
-        local_t = int(m.group(1))
-        building = int(m.group(2))
+        if m := re.match(r"At local_t=(\d+), what is non_shiftable_load for building (\d+)\?", question):
+            local_t = int(m.group(1))
+            building = int(m.group(2))
+        elif m := re.match(r"At local step (\d+), read building (\d+) non_shiftable_load\.", question):
+            local_t = int(m.group(1))
+            building = int(m.group(2))
+        elif m := re.match(r"For building (\d+), what is non_shiftable_load at local_t (\d+)\?", question):
+            building = int(m.group(1))
+            local_t = int(m.group(2))
+        else:
+            raise ValueError(f"Could not parse question: {question}")
         rows = _load_trace_window(record)
         return {
             "slot_local_t": local_t,
@@ -115,8 +162,14 @@ def extract_fields(row: dict[str, Any]) -> dict[str, Any]:
         }
 
     if task == "quarter_net_electricity_mean_value_slot":
-        m = _match(r"What is the mean net_electricity_without_storage in quarter (\d+) of this trace window\?", question)
-        quarter = int(m.group(1))
+        if m := re.match(r"What is the mean net_electricity_without_storage in quarter (\d+) of this trace window\?", question):
+            quarter = int(m.group(1))
+        elif m := re.match(r"Average net_electricity_without_storage over quarter (\d+) of this CityLearn window\.", question):
+            quarter = int(m.group(1))
+        elif m := re.match(r"What is the quarter-(\d+) mean net electricity without storage\?", question):
+            quarter = int(m.group(1))
+        else:
+            raise ValueError(f"Could not parse question: {question}")
         rows = _load_trace_window(record)
         q = max(1, len(rows) // 4)
         start = (quarter - 1) * q
@@ -125,8 +178,14 @@ def extract_fields(row: dict[str, Any]) -> dict[str, Any]:
         return {"slot_quarter": quarter, "slot_mean_net_electricity_without_storage": sum(values) / len(values)}
 
     if task == "outdoor_temperature_value_slot":
-        m = _match(r"At local_t=(\d+), what is outdoor_dry_bulb_temperature\?", question)
-        local_t = int(m.group(1))
+        if m := re.match(r"At local_t=(\d+), what is outdoor_dry_bulb_temperature\?", question):
+            local_t = int(m.group(1))
+        elif m := re.match(r"Read outdoor dry-bulb temperature at local step (\d+)\.", question):
+            local_t = int(m.group(1))
+        elif m := re.match(r"What is the outdoor_dry_bulb_temperature when local_t is (\d+)\?", question):
+            local_t = int(m.group(1))
+        else:
+            raise ValueError(f"Could not parse question: {question}")
         rows = _load_trace_window(record)
         return {"slot_local_t": local_t, "slot_outdoor_dry_bulb_temperature": float(rows[local_t]["weather"]["outdoor_dry_bulb_temperature"])}
 
