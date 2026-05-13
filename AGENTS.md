@@ -238,9 +238,18 @@ Build result:
 - 0 duplicate IDs, 0 missing fields, 0 trace recomputation failures
 - schema gate passed
 
+Deterministic evaluator baselines:
+- oracle structured target: field/caption/answer = 1.0000
+- metadata-only slot baseline: field/caption/answer-label = 0.0000,
+  answer-letter = 0.2500
+- question-only selector baseline: field/caption/answer-label = 0.0000,
+  answer-letter = 0.2500. It recovers selector fields such as local time,
+  line/building/quarter, but not numeric evidence values.
+
 Interpretation:
 - QCC-v0 targets are now structured and verifiable: target fields and target
   captions are recomputed from traces, not trusted as free-form text.
+- The evaluator is ready for actual QCC-v0 overfit/model runs.
 - Do not over-interpret dev metrics yet; some Grid2Op task families have small
   dev counts. Use tiny-overfit first, then expand data if task-level dev metrics
   are unstable.

@@ -58,3 +58,37 @@ Current limitation:
 - Grid2Op load/generator and counterfactual dev counts are small. Future QCC-v0
   dev metrics should be interpreted per domain/task or after expanding the
   Grid2Op slot dataset.
+
+## Deterministic Evaluator Baselines
+
+Scripts:
+- `scripts/eval/eval_qcc_v0_outputs.py`
+- `scripts/eval/run_qcc_v0_deterministic_baselines.py`
+
+Outputs:
+- `deterministic_baselines/oracle_structured_target.jsonl`
+- `deterministic_baselines/metadata_only_slot.jsonl`
+- `deterministic_baselines/question_only_selectors.jsonl`
+
+Overall metrics:
+
+| Condition | Field exact | Caption exact | Answer label | Answer letter |
+| --- | ---: | ---: | ---: | ---: |
+| `oracle_structured_target` | 1.0000 | 1.0000 | 1.0000 | 1.0000 |
+| `metadata_only_slot` | 0.0000 | 0.0000 | 0.0000 | 0.2500 |
+| `question_only_selectors` | 0.0000 | 0.0000 | 0.0000 | 0.2500 |
+
+Interpretation:
+- The evaluator recovers the oracle upper bound exactly.
+- Metadata-only is at random answer-letter accuracy, so the structured target
+  is not solved by answer priors.
+- Question-only can recover selector fields such as `slot_local_t`,
+  `slot_line`, `slot_building`, and `slot_quarter`, but all numeric evidence
+  fields remain wrong. This is the intended sanity check: QCC must read trace
+  evidence, not only parse the question.
+
+Next:
+- Run an actual tiny-overfit QCC-v0 model or LLM extractor against the same
+  evaluator.
+- The contract success threshold for tiny overfit remains >=95% exact slot
+  accuracy and >=95% answer-letter accuracy on the 32-example tiny split.

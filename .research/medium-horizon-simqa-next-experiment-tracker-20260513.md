@@ -16,6 +16,7 @@
 | NEXT-R010 | M7 | SCL hard-negative ablation | QCC vs QCC+SCL | real-v1 test | QA, factuality, rejection acc | NICE | TODO | promote only if useful |
 | NEXT-R011 | M1/M4 | CityLearn second-simulator feasibility | packaged CityLearn trace + slot QA | 512/1024/2048 windows, 8192 export | trace sanity, meta/oracle, prompt chars | MUST | DONE | CityLearn 2.5.0 on 3090; exported 2048/8192 traces. Expanded v2 has 72 items, balanced A/B/C/D, meta 0.2361, generic 0.2500, oracle 1.0, sampled-128 0.4583. |
 | NEXT-R012 | M6 | QCC-v0 dataset build | Grid2Op + CityLearn slot QA to structured evidence targets | train/dev/tiny_overfit | target recomputation, schema gate | MUST | DONE | 156 examples; 0 duplicate IDs; 0 missing fields; 0 trace recomputation failures; split train/dev/tiny=100/24/32. |
+| NEXT-R013 | M6 | QCC-v0 evaluator baselines | oracle / metadata-only / question-only structured outputs | all splits | field exact, caption exact, answer label, answer letter | MUST | DONE | Oracle = 1.0 on all metrics; metadata-only answer-letter = 0.25; question-only answer-letter = 0.25 and numeric evidence fields = 0.0. |
 
 ## Addendum 2026-05-13
 - Built Grid2Op counterfactual v3 compact with selected full 1024-step paired
@@ -53,7 +54,8 @@ discussion. CityLearn now passes a 72-item expanded feasibility gate over
 512/1024/2048 windows, and a Chinese CityLearn case study has been generated.
 The CityLearn result should still be described as second-simulator feasibility,
 not a full benchmark: tasks are slot-value oriented and come from one packaged
-dataset. QCC-v0 now has a verified structured-evidence dataset; next work should
-run the tiny overfit/slot-prediction gate before any SCL training. Do not
-download larger simulator data to the local SSD; use A100/3090 storage for real
-simulator environments and traces.
+dataset. QCC-v0 now has a verified structured-evidence dataset and an evaluator
+with oracle/metadata-only/question-only sanity baselines. Next work should run
+an actual tiny overfit/slot-prediction model or LLM extractor before any SCL
+training. Do not download larger simulator data to the local SSD; use A100/3090
+storage for real simulator environments and traces.
