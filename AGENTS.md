@@ -245,11 +245,16 @@ Deterministic evaluator baselines:
 - question-only selector baseline: field/caption/answer-label = 0.0000,
   answer-letter = 0.2500. It recovers selector fields such as local time,
   line/building/quarter, but not numeric evidence values.
+- trace-rule extractor: field/caption/answer = 1.0000 without reading gold
+  `target_fields`; it parses question selectors and recomputes values from the
+  referenced trace.
 
 Interpretation:
 - QCC-v0 targets are now structured and verifiable: target fields and target
   captions are recomputed from traces, not trusted as free-form text.
 - The evaluator is ready for actual QCC-v0 overfit/model runs.
+- The trace-rule extractor defines the executable behavior that learned QCC-v0
+  should approximate without hard-coded task-specific rules.
 - Do not over-interpret dev metrics yet; some Grid2Op task families have small
   dev counts. Use tiny-overfit first, then expand data if task-level dev metrics
   are unstable.

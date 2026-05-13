@@ -92,3 +92,26 @@ Next:
   evaluator.
 - The contract success threshold for tiny overfit remains >=95% exact slot
   accuracy and >=95% answer-letter accuracy on the 32-example tiny split.
+
+## Trace-Rule Extractor Gate
+
+Script:
+- `scripts/eval/run_qcc_v0_trace_rule_extractor.py`
+
+Output:
+- `trace_rule_extractor/predictions.jsonl`
+- `trace_rule_extractor/eval/metrics.json`
+
+Overall metrics:
+
+| Condition | Field exact | Caption exact | Answer label | Answer letter |
+| --- | ---: | ---: | ---: | ---: |
+| `trace_rule_extractor` | 1.0000 | 1.0000 | 1.0000 | 1.0000 |
+
+Interpretation:
+- This extractor does not read gold `target_fields`.
+- It parses the question selectors, reads the referenced trace/pair, recomputes
+  the numeric evidence, and emits the QCC-v0 target schema.
+- This establishes that the QCC-v0 target is an executable evidence-extraction
+  behavior. The next learned model should approximate this behavior without
+  hard-coded task-specific rules.
