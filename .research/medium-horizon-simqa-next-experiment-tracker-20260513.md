@@ -20,6 +20,7 @@
 | NEXT-R014 | M6 | QCC-v0 trace-rule extractor | parse question selectors + read trace values | all splits | field exact, caption exact, answer label, answer letter | MUST | DONE | 1.0 on all metrics without reading gold target fields; confirms QCC target is executable evidence extraction. |
 | NEXT-R015 | M6 | Learned QCC-v0 planner smoke | TF-IDF/logreg operator planner + deterministic executor | train on tiny_overfit, eval all splits | operator acc, field exact, answer letter | MUST | DONE | 32-example tiny-overfit gate passed. Operator/field/caption/answer all 1.0 on tiny/dev/train, but this is template-style smoke with rule executor, not final learned captioner. |
 | NEXT-R016 | M6 | QCC-v0 paraphrase robustness smoke | train on original tiny templates, eval paraphrased dev | 48 paraphrases | operator acc, field exact, answer letter, failure family | MUST | DONE | Overall field/answer = 0.9583; trace-rule upper bound = 1.0. Only failures are 2 cf_delta paraphrases misclassified as intervention-max-rho. |
+| NEXT-R017 | M6 | Expand Grid2Op+CityLearn QCC data | reuse existing trace/pair files, no new rollout | expanded_v1 | capacity, schema, trace-rule, planner | MUST | DONE | Capacity = 620 items. Built 620 structured examples: Grid2Op obs 224, Grid2Op cf 176, CityLearn 220; train/dev/tiny = 470/118/32. Trace-rule = 1.0. Tiny planner = 0.9823 overall with cf intervention/delta confusion; train planner = 1.0. |
 
 ## Addendum 2026-05-13
 - Built Grid2Op counterfactual v3 compact with selected full 1024-step paired
@@ -65,6 +66,11 @@ paired with the deterministic trace executor. This passes the QCC-v0 smoke gate
 but is not paper-level method evidence because current questions are
 template-style and trace reading is rule-based. Paraphrase robustness smoke gets
 0.9583 overall but exposes counterfactual delta/operator confusion. Next work
-should expand counterfactual examples and include paraphrase augmentation in
-training before SCL. Do not download larger simulator data to the local SSD; use
-A100/3090 storage for real simulator environments and traces.
+expanded both Grid2Op and CityLearn from existing local traces to 620 QCC-v0
+examples, raising Grid2Op counterfactual coverage from 12 to 176 items. This
+removes the immediate counterfactual data sparsity bottleneck for template-style
+operator planning: the planner reaches 1.0 when trained on the 470-item expanded
+train split. Next work should add paraphrase augmentation on expanded_v1 and
+then rerun the paraphrase robustness gate before SCL. Do not download larger
+simulator data to the local SSD; use A100/3090 storage for real simulator
+environments and traces.

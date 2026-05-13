@@ -190,3 +190,73 @@ Interpretation:
   max_rho".
 - This is still a smoke, not a final method result. The next data step should
   expand counterfactual examples and include paraphrase augmentation in training.
+
+## Expanded v1 Data Scale-Up
+
+Scripts:
+- `scripts/generate/assess_qcc_v0_expansion_capacity.py`
+- `scripts/generate/build_qcc_v0_expanded_slot_qa.py`
+- `scripts/generate/build_qcc_v0_dataset.py`
+
+Capacity assessment:
+- output: `expanded_v1/capacity_report.json`
+- no new simulator rollout or remote trace copy was used
+- planned total from existing local trace/pair files: 620 slot QA items
+- Grid2Op observation: 224 planned items from 16 windows
+- Grid2Op counterfactual: 176 planned items from 11 usable paired traces
+- CityLearn: 220 planned items from 11 windows
+
+Expanded structured dataset:
+- slot QA: `expanded_v1/qcc_v0_expanded_slot_qa.jsonl`
+- QCC structured evidence: `expanded_v1/qcc_v0_expanded_dataset.jsonl`
+- total examples: 620
+- split: train 470 / dev 118 / tiny_overfit 32
+- duplicate IDs: 0
+- missing required fields: 0
+- trace recomputation failures: 0
+- answer letters: A/B/C/D = 155/155/155/155
+
+By domain:
+
+| Domain | Count |
+| --- | ---: |
+| `grid2op_real` | 224 |
+| `grid2op_real_cf` | 176 |
+| `citylearn_real` | 220 |
+
+By task family:
+
+| Task family | Count |
+| --- | ---: |
+| `rho_value_slot` | 64 |
+| `load_average_value_slot` | 48 |
+| `generator_average_value_slot` | 48 |
+| `quarter_total_load_mean_value_slot` | 64 |
+| `cf_delta_max_rho_value_slot` | 88 |
+| `cf_intervention_max_rho_value_slot` | 88 |
+| `building_load_value_slot` | 110 |
+| `quarter_net_electricity_mean_value_slot` | 44 |
+| `outdoor_temperature_value_slot` | 66 |
+
+Verification:
+
+| Condition | Train split | Field exact | Caption exact | Answer label | Answer letter |
+| --- | --- | ---: | ---: | ---: | ---: |
+| `trace_rule_extractor` | none | 1.0000 | 1.0000 | 1.0000 | 1.0000 |
+| `learned_planner_tiny` | 32 tiny examples | 0.9823 | 0.9823 | 0.9823 | 0.9823 |
+| `learned_planner_train` | 470 train examples | 1.0000 | 1.0000 | 1.0000 | 1.0000 |
+
+Interpretation:
+- The expanded dataset fixes the most important data bottleneck: Grid2Op
+  counterfactual evidence grows from 12 to 176 items, with 88 delta examples and
+  88 intervention-max-rho examples.
+- The trace-rule extractor remains exact on all 620 examples, so the expanded
+  target is still executable and verifiable.
+- The 32-example tiny planner still makes 11 counterfactual
+  `cf_intervention_max_rho_value_slot` mistakes, mostly confusing direct
+  intervention max-rho reads with delta queries. After training on the 470-item
+  expanded train split, the same planner reaches 1.0000 on dev/tiny/train.
+- This supports the practical conclusion that the earlier counterfactual
+  operator confusion was mostly a data sparsity issue, not a schema or executor
+  issue. It still does not constitute a final learned captioner result because
+  trace reading is deterministic.

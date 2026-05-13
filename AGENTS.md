@@ -230,6 +230,9 @@ Active method contract:
 Current structured evidence data:
 - `.research/qcc-v0-20260513/qcc_v0_dataset.jsonl`
 - sanity report: `.research/qcc-v0-20260513/sanity_report.json`
+- expanded data: `.research/qcc-v0-20260513/expanded_v1/qcc_v0_expanded_dataset.jsonl`
+- expanded capacity report:
+  `.research/qcc-v0-20260513/expanded_v1/capacity_report.json`
 
 Build result:
 - 156 examples across Grid2Op observation, Grid2Op counterfactual, and
@@ -256,6 +259,16 @@ Deterministic evaluator baselines:
   `tiny_overfit` question templates reaches 0.9583 operator/field/caption/
   answer accuracy on 48 paraphrased dev questions; trace-rule upper bound stays
   at 1.0000.
+- expanded_v1 data scale-up: using only existing local trace/pair files, the
+  current builders can produce 620 structured examples: Grid2Op observation
+  224, Grid2Op counterfactual 176, and CityLearn 220. The expanded split is
+  train/dev/tiny = 470/118/32, with 0 duplicate IDs, 0 missing required fields,
+  0 trace recomputation failures, and balanced answer letters.
+- expanded_v1 verification: trace-rule extractor reaches 1.0000 on all 620
+  examples. The 32-example tiny planner reaches 0.9823 overall and still
+  confuses some counterfactual intervention-max-rho questions with delta
+  queries. The same planner trained on the 470-item expanded train split reaches
+  1.0000 on dev/tiny/train.
 
 Interpretation:
 - QCC-v0 targets are now structured and verifiable: target fields and target
@@ -269,6 +282,10 @@ Interpretation:
   are both `cf_delta_max_rho_value_slot`: paraphrased "intervention minus
   factual max_rho" questions were confused with direct intervention `max_rho`
   extraction.
+- The expanded_v1 result indicates that counterfactual operator confusion was
+  largely a data sparsity issue for the template-style planner. It still should
+  not be presented as a final learned captioner result because the executor
+  remains deterministic and trace reading is not learned.
 - Do not over-interpret dev metrics yet; some Grid2Op task families have small
   dev counts. Use tiny-overfit first, then expand data if task-level dev metrics
   are unstable.
@@ -281,6 +298,8 @@ Current scripts:
 - `scripts/generate/build_grid2op_simqa_from_trace.py`
 - `scripts/generate/export_citylearn_trace.py`
 - `scripts/generate/build_citylearn_slot_qa.py`
+- `scripts/generate/assess_qcc_v0_expansion_capacity.py`
+- `scripts/generate/build_qcc_v0_expanded_slot_qa.py`
 - `scripts/eval/eval_medium_horizon_simqa_pilot.py`
 
 Current tracker:
@@ -382,10 +401,11 @@ Use narrower claims:
 
 The immediate next experiment is to strengthen QCC-v0 before moving to SCL:
 
-1. Expand Grid2Op counterfactual slot data so `cf_delta_max_rho_value_slot` and
-   `cf_intervention_max_rho_value_slot` are not tiny classes.
-2. Add paraphrase augmentation to QCC-v0 training/eval and rerun the learned
+1. Add paraphrase augmentation to expanded_v1 QCC-v0 training/eval and rerun the
    planner smoke.
+2. If the expanded paraphrase gate passes, replace the current planner-only
+   smoke with an actual learned QCC component or LLM extractor over the expanded
+   structured target.
 3. Only after QCC-v0 is stable beyond exact templates, move to SCL /
    hard-negative training.
 
