@@ -12,6 +12,12 @@ question-conditioned evidence captioning.
 
 **Active method contract:** `./.research/research-contract-qcc-v0-20260513.md`
 
+**Active general-captioner contract:**
+`./.research/research-contract-general-qcc-captioner-20260513.md`
+
+**Next QCC experiment plan:**
+`./.research/general-qcc-captioner-experiment-plan-20260513.md`
+
 The older `./.research/research-contract-20260419.md` / ShapeShift-CPR plan is
 historical for the current workstream. Do not use it as the active route unless
 the user explicitly asks to resume that line.
@@ -72,8 +78,10 @@ Keep the paper focused. Do not expand to three full contributions unless the
 data becomes strong enough.
 
 Primary contribution:
-- **Question-conditioned evidence captioning (QCC):** caption content is
-  conditioned on the downstream question or task slot, not task-agnostic.
+- **Question-conditioned evidence captioning (QCC):** a general captioner reads
+  the time series plus the downstream question and generates a natural-language
+  answer-supporting caption. QCC is not a pure tool-agent or
+  executor-at-inference system.
 
 Supporting contribution:
 - **Verifiable grounding / self-consistency:** captions must be checked against
@@ -89,6 +97,16 @@ Benchmark contribution:
 
 Do not present CFQA as a third core contribution until it has real-simulator
 evidence and enough task breadth to stand on its own.
+
+Critical guardrail:
+- Executors, deterministic feature extractors, and structured slots may be used
+  for data generation, supervision, verification, and loss design. They must not
+  become the final method architecture unless the user explicitly approves a
+  separate tool-agent direction.
+- Slot-value lookup tasks alone are insufficient. General QCC data must cover
+  broad primitives such as trend, extrema, volatility, anomaly, periodicity,
+  comparison, temporal relation, lead/lag, counterfactual effect, and
+  domain-context reasoning.
 
 ## Data Strategy
 
@@ -430,17 +448,21 @@ Use narrower claims:
 
 ## Next Action
 
-The immediate next experiment is to strengthen QCC-v0 before moving to SCL:
+The immediate next experiment is to restart from the general QCC captioner
+route:
 
-1. Add another CityLearn local trace/window source, or another simulator domain,
-   so the strict group split has a real CityLearn heldout set instead of keeping
-   CityLearn only in train/tiny.
-2. Replace the current planner-only smoke with an actual learned QCC component
-   or LLM extractor over the expanded structured target. The learned component
-   should either call a trace executor/tool or consume a TS encoder output; the
-   no-trace smoke shows text/metadata alone is insufficient.
-3. Only after QCC-v0 is stable beyond exact templates, move to SCL /
-   hard-negative training.
+1. Follow
+   `./.research/general-qcc-captioner-experiment-plan-20260513.md`.
+2. First run `GQCC-R001`: define the broad task taxonomy and support-slot
+   schema for natural-language QCC captions.
+3. Then run `GQCC-R002`/`GQCC-R003`: generate synthetic and simulator-derived
+   caption data that covers broad QA primitives, not only slot-value lookup.
+4. Run `GQCC-R004`: oracle/generic/stat baseline gate before training, to
+   verify a real QCC gap exists.
+5. Only then train a natural-language QCC captioner (`GQCC-R005` onward).
+6. Start SCL/hard-negative loss only after a CE-only QCC captioner has a
+   measurable but imperfect baseline.
 
-Do not start SCL or broader training until QCC-v0 passes both the small overfit
-gate and the paraphrase/counterfactual disambiguation gate.
+Do not implement executor-at-inference as the method under the active general
+QCC contract. Treat trace-rule/executor results as oracle/verifier diagnostics,
+not model success.

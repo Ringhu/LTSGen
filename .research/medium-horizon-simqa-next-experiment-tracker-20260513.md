@@ -24,6 +24,23 @@
 | NEXT-R018 | M6 | Group split expanded_v1 | split by trace/pair group to avoid overlapping-window leakage | expanded_v1_group | group leakage, split balance | MUST | DONE | Built train/dev/test/tiny = 470/88/30/32. Observation groups use `trace_path`; counterfactual groups use `pair_path`; train-family/dev/test group leakage = 0. CityLearn has only one local trace, so strict split keeps CityLearn in train/tiny only. |
 | NEXT-R019 | M6 | Expanded paraphrase augmentation | two deterministic paraphrases plus original item | expanded_v1_group_paraphrase | trace-rule, split balance | MUST | DONE | Built 1860 examples, train/dev/test/tiny = 1410/264/90/96. Trace-rule extractor remains 1.0 on all paraphrased records. |
 | NEXT-R020 | M6 | Expanded training pipeline smoke | executor-assisted planner and no-trace structured smoke | group and group_paraphrase | field exact, answer letter, failure family | MUST | DONE | Executor-assisted planner reaches 1.0 on group split and paraphrase-augmented train. Original-template train on paraphrase eval drops to 0.8968 overall / 0.8222 test, mainly cf_delta confusion. No-trace structured smoke fails exact evidence: field 0.0, answer 0.0016; no-question answer 0.0. |
+| NEXT-R021 | B1 | Build CityLearn heldout source | 8192 trace blocks or second remote trace | group dev/test | overlap, trace-rule, balance | MUST | SUPERSEDED | Superseded by the general QCC captioner plan. CityLearn heldout may still be useful, but not as the first action. |
+| NEXT-R022 | B2 | Build structured query target | operator + selectors + executor fields | expanded group/paraphrase | schema sanity, executable rate | MUST | SUPERSEDED | Superseded. Structured queries are allowed as supervision/verifier metadata, not the final method route. |
+| NEXT-R023 | B2 | Evaluate query baselines | rule parser, TF-IDF, no-question | heldout group/paraphrase | operator, selector, field exact | MUST | SUPERSEDED | Superseded. Future baselines must evaluate natural-language QCC captions. |
+| NEXT-R024 | B3 | LLM JSON extractor smoke | zero-shot/few-shot QCC query | heldout group/paraphrase | executable rate, field exact, QA | MUST | SUPERSEDED | Superseded. Do not pursue JSON extractor as main method unless user approves tool-agent direction. |
+| NEXT-R025 | B3 | Supervised query model smoke | small text model or classifier heads | tiny/train/dev | overfit, heldout exact | MUST | SUPERSEDED | Superseded by natural-language captioner training. |
+| NEXT-R026 | B4 | Strong task-agnostic baselines | statistical caption, sampled numbers | test | QA, chars, factuality | MUST | SUPERSEDED | Recovered as GQCC-R004/R008 under the general captioner plan. |
+| NEXT-R027 | B6 | 4096/8192 scaling diagnostic | CityLearn longer windows | heldout blocks | QA, chars, executor success | NICE | SUPERSEDED | Recovered as GQCC-R009, with captioner/factuality metrics rather than executor success. |
+| NEXT-R028 | B5 | Hard-negative/SCL ablation | QCC vs QCC+hard negatives | test | field exact, rejection, QA | NICE | SUPERSEDED | Recovered as GQCC-R007 after CE-only captioner baseline exists. |
+| GQCC-R001 | B1 | Build broad task taxonomy and support-slot schema | natural-language caption target | design | coverage checklist | MUST | TODO | First action. Prevents drift back to slot-value lookup. |
+| GQCC-R002 | B1 | Generate synthetic primitive captions | trend/extrema/vol/anomaly/periodicity/comparison/leadlag | train/dev/test | sanity, verifier | MUST | TODO | Slots are auxiliary supervision; target is natural-language caption. |
+| GQCC-R003 | B1 | Extend simulator captions beyond lookup | Grid2Op + CityLearn broad tasks | group split | task balance, verifier | MUST | TODO | Include context cards and domain meaning. |
+| GQCC-R004 | B2 | Oracle/generic/stat baseline gate | generated eval tasks | heldout | QA, factuality, chars | MUST | TODO | Must pass before training a captioner. |
+| GQCC-R005 | B3 | Captioner tiny-overfit smoke | Q-conditioned natural-language captioner | tiny | slot factuality, QA | MUST | TODO | Natural-language output required. |
+| GQCC-R006 | B3/B4 | QCC heldout smoke | QCC vs generic/no-question | dev | QA, factuality | MUST | TODO | First real method signal. |
+| GQCC-R007 | B5 | Loss ablation | CE vs CE+slot vs CE+SCL vs hard negatives | dev/test | QA, factuality | MUST AFTER R006 | TODO | SCL promotion depends on this. |
+| GQCC-R008 | B4 | Existing benchmark transfer | TSShapeQA/TSAQA/dataset_a/FREDQA subset | eval | QA, factuality | MUST | TODO | Tests generality beyond simulator data. |
+| GQCC-R009 | B6 | Horizon scaling | 512-8192 | heldout | QA, chars | NICE/MUST | TODO | MUST if final story emphasizes medium-high horizon. |
 
 ## Addendum 2026-05-13
 - Built Grid2Op counterfactual v3 compact with selected full 1024-step paired
@@ -89,7 +106,17 @@ The pure text/metadata structured smoke fails exact numeric evidence recovery
 expected negative diagnostic: a usable QCC model must read the trace through an
 executor/tool or a TS encoder, not infer exact values from text alone. The
 current executor-assisted 1.0 is a pipeline smoke, not a final learned captioner
-result. Next work should add a proper CityLearn heldout trace and replace the
-planner-only smoke with an actual learned QCC component or LLM extractor before
-SCL. Do not download larger simulator data to the local SSD; use A100/3090
-storage for real simulator environments and traces.
+result.
+
+Route correction after user review: the project goal remains a general
+question-conditioned natural-language captioner, not an executor-at-inference
+or JSON-query tool-agent. The active next plan is
+`.research/general-qcc-captioner-experiment-plan-20260513.md`, governed by
+`.research/research-contract-general-qcc-captioner-20260513.md`. Executors and
+structured slots may be used only for data generation, supervision, verification
+and loss design unless a separate tool-agent direction is explicitly approved.
+The next work is `GQCC-R001`: define a broad task taxonomy and support-slot
+schema covering trend, extrema, volatility, anomaly, periodicity, comparison,
+lead/lag, counterfactual effect, and domain-context reasoning. Do not download
+larger simulator data to the local SSD; use A100/3090 storage for real
+simulator environments and traces.
