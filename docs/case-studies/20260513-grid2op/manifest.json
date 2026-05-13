@@ -1,0 +1,229 @@
+{
+  "cases": [
+    {
+      "index": 1,
+      "id": "simqa::grid2op_real::rte_case14_realistic_trace_2048_nooverflow::h1024::s0::peak_rho_quarter",
+      "source": "observation",
+      "task_family": "peak_rho_quarter",
+      "horizon": 1024,
+      "answer": "A",
+      "image": "figures/01_peak_rho_quarter_simqa_grid2op_real_rte_case14_realistic_trace_2048_nooverflow_h1024_s0_peak_rho_.png",
+      "predictions": {
+        "meta_only": {
+          "pred": "D",
+          "correct": false,
+          "prompt_chars": 382
+        },
+        "generic_caption": {
+          "pred": "C",
+          "correct": false,
+          "prompt_chars": 521
+        },
+        "oracle_evidence_caption": {
+          "pred": "A",
+          "correct": true,
+          "prompt_chars": 533
+        },
+        "numbers_sampled_32": {
+          "pred": "D",
+          "correct": false,
+          "prompt_chars": 12813
+        },
+        "numbers_sampled_64": {
+          "pred": "D",
+          "correct": false,
+          "prompt_chars": 25044
+        },
+        "numbers_sampled_128": {
+          "pred": "D",
+          "correct": false,
+          "prompt_chars": 49498
+        }
+      }
+    },
+    {
+      "index": 2,
+      "id": "simqa::grid2op_real::rte_case14_realistic_trace_1024::h512::s0::max_avg_load",
+      "source": "observation",
+      "task_family": "max_avg_load",
+      "horizon": 512,
+      "answer": "A",
+      "image": "figures/02_max_avg_load_simqa_grid2op_real_rte_case14_realistic_trace_1024_h512_s0_max_avg_load.png",
+      "predictions": {
+        "meta_only": {
+          "pred": "D",
+          "correct": false,
+          "prompt_chars": 255
+        },
+        "generic_caption": {
+          "pred": "D",
+          "correct": false,
+          "prompt_chars": 393
+        },
+        "oracle_evidence_caption": {
+          "pred": "A",
+          "correct": true,
+          "prompt_chars": 341
+        },
+        "numbers_sampled_32": {
+          "pred": "B",
+          "correct": false,
+          "prompt_chars": 12668
+        },
+        "numbers_sampled_64": {
+          "pred": "B",
+          "correct": false,
+          "prompt_chars": 24875
+        },
+        "numbers_sampled_128": {
+          "pred": "B",
+          "correct": false,
+          "prompt_chars": 49298
+        }
+      }
+    },
+    {
+      "index": 3,
+      "id": "simqa::grid2op_real::rte_case14_realistic_trace_2048_nooverflow::h1024::s0::total_load_trend",
+      "source": "observation",
+      "task_family": "total_load_trend",
+      "horizon": 1024,
+      "answer": "B",
+      "image": "figures/03_total_load_trend_simqa_grid2op_real_rte_case14_realistic_trace_2048_nooverflow_h1024_s0_total_loa.png",
+      "predictions": {
+        "meta_only": {
+          "pred": "A",
+          "correct": false,
+          "prompt_chars": 375
+        },
+        "generic_caption": {
+          "pred": "C",
+          "correct": false,
+          "prompt_chars": 514
+        },
+        "oracle_evidence_caption": {
+          "pred": "B",
+          "correct": true,
+          "prompt_chars": 527
+        },
+        "numbers_sampled_32": {
+          "pred": "B",
+          "correct": true,
+          "prompt_chars": 12806
+        },
+        "numbers_sampled_64": {
+          "pred": "B",
+          "correct": true,
+          "prompt_chars": 25037
+        },
+        "numbers_sampled_128": {
+          "pred": "B",
+          "correct": true,
+          "prompt_chars": 49491
+        }
+      }
+    },
+    {
+      "index": 4,
+      "id": "simqa::grid2op_real_cf::h1024_t128_line0::cf_intervention_overload_severity",
+      "source": "counterfactual",
+      "task_family": "cf_intervention_overload_severity",
+      "horizon": 1024,
+      "answer": "B",
+      "image": "figures/04_cf_intervention_overload_severity_simqa_grid2op_real_cf_h1024_t128_line0_cf_intervention_overload_severity.png",
+      "predictions": {
+        "meta_only": {
+          "pred": "D",
+          "correct": false,
+          "prompt_chars": 382
+        },
+        "generic_caption": {
+          "pred": "B",
+          "correct": true,
+          "prompt_chars": 537
+        },
+        "oracle_evidence_caption": {
+          "pred": "B",
+          "correct": true,
+          "prompt_chars": 534
+        },
+        "numbers_sampled_32": {
+          "pred": "C",
+          "correct": false,
+          "prompt_chars": 7926
+        },
+        "numbers_sampled_64": {
+          "pred": "C",
+          "correct": false,
+          "prompt_chars": 15220
+        },
+        "numbers_sampled_128": {
+          "pred": "B",
+          "correct": true,
+          "prompt_chars": 29807
+        },
+        "numbers_sampled_256": {
+          "pred": "B",
+          "correct": true,
+          "prompt_chars": 58981
+        },
+        "numbers_sampled_512": {
+          "pred": "B",
+          "correct": true,
+          "prompt_chars": 117328
+        }
+      }
+    },
+    {
+      "index": 5,
+      "id": "simqa::grid2op_real_cf::h1024_t128_line5::cf_peak_rho_direction",
+      "source": "counterfactual",
+      "task_family": "cf_peak_rho_direction",
+      "horizon": 1024,
+      "answer": "C",
+      "image": "figures/05_cf_peak_rho_direction_simqa_grid2op_real_cf_h1024_t128_line5_cf_peak_rho_direction.png",
+      "predictions": {
+        "meta_only": {
+          "pred": "A",
+          "correct": false,
+          "prompt_chars": 568
+        },
+        "generic_caption": {
+          "pred": "B",
+          "correct": false,
+          "prompt_chars": 723
+        },
+        "oracle_evidence_caption": {
+          "pred": "C",
+          "correct": true,
+          "prompt_chars": 824
+        },
+        "numbers_sampled_32": {
+          "pred": "C",
+          "correct": true,
+          "prompt_chars": 8112
+        },
+        "numbers_sampled_64": {
+          "pred": "C",
+          "correct": true,
+          "prompt_chars": 15406
+        },
+        "numbers_sampled_128": {
+          "pred": "B",
+          "correct": false,
+          "prompt_chars": 29993
+        },
+        "numbers_sampled_256": {
+          "pred": "C",
+          "correct": true,
+          "prompt_chars": 59167
+        },
+        "numbers_sampled_512": {
+          "pred": "C",
+          "correct": true,
+          "prompt_chars": 117514
+        }
+      }
+    }
+  ]
+}

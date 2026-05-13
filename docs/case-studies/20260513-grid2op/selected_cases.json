@@ -1,0 +1,287 @@
+[
+  {
+    "spec": {
+      "title": "Peak quarter localization: sampled numbers miss the late line-loading peak",
+      "case_id": "simqa::grid2op_real::rte_case14_realistic_trace_2048_nooverflow::h1024::s0::peak_rho_quarter",
+      "source": "observation",
+      "analysis": "This is the cleanest localization failure. The true peak line loading is on line 4 at local t=806, in the fourth quarter. Generic caption lacks the event location, and all sampled-numbers budgets answer the wrong quarter despite much longer prompts."
+    },
+    "record": {
+      "domain": "grid2op_real",
+      "horizon": 1024,
+      "trace_path": ".research/real-grid2op-20260513/rte_case14_realistic_trace_2048_nooverflow.json",
+      "trace_window": {
+        "start": 0,
+        "end": 1024
+      },
+      "variables": [
+        "rho[line]",
+        "load_p[load]",
+        "gen_p[generator]",
+        "p_or[line]",
+        "p_ex[line]",
+        "line_status[line]"
+      ],
+      "id": "simqa::grid2op_real::rte_case14_realistic_trace_2048_nooverflow::h1024::s0::peak_rho_quarter",
+      "source": "grid2op",
+      "simulator_meta": {
+        "env_name": "/cluster/home/hulining/data/grid2op/rte_case14_realistic",
+        "env_backend_name": "rte_case14_realisticPandaPowerBackend",
+        "n_line": 20,
+        "n_load": 11,
+        "n_gen": 5
+      },
+      "task_family": "peak_rho_quarter",
+      "question": "Which quarter of this Grid2Op trace window contains the maximum line loading?",
+      "options": [
+        "A. the fourth quarter of the trace window",
+        "B. the first quarter of the trace window",
+        "C. the second quarter of the trace window",
+        "D. the third quarter of the trace window"
+      ],
+      "answer": "A",
+      "answer_label": "fourth",
+      "oracle_evidence_caption": "The maximum line loading rho is 0.999 on line 4 at local t=806 (global t=806), which falls in the fourth quarter of the trace window.",
+      "generic_caption": "This Grid2Op power-grid trace window contains line loading, load, generator, and power-flow variables over 1024 steps.",
+      "evidence": {
+        "peak_rho": 0.9990196228027344,
+        "peak_local_t": 806,
+        "peak_global_t": 806,
+        "peak_line": 4,
+        "quarter": "fourth"
+      }
+    }
+  },
+  {
+    "spec": {
+      "title": "Average load aggregation: seeing sampled rows is not enough for window-level averages",
+      "case_id": "simqa::grid2op_real::rte_case14_realistic_trace_1024::h512::s0::max_avg_load",
+      "source": "observation",
+      "analysis": "This case stresses aggregation over the whole window. The correct evidence is the window-average active power of load 1. Generic caption and all sampled numeric prompts choose a distractor, showing that raw sampled rows do not reliably substitute for the requested statistic."
+    },
+    "record": {
+      "domain": "grid2op_real",
+      "horizon": 512,
+      "trace_path": ".research/real-grid2op-20260513/rte_case14_realistic_trace_1024.json",
+      "trace_window": {
+        "start": 0,
+        "end": 512
+      },
+      "variables": [
+        "rho[line]",
+        "load_p[load]",
+        "gen_p[generator]",
+        "p_or[line]",
+        "p_ex[line]",
+        "line_status[line]"
+      ],
+      "id": "simqa::grid2op_real::rte_case14_realistic_trace_1024::h512::s0::max_avg_load",
+      "source": "grid2op",
+      "simulator_meta": {
+        "env_name": "/cluster/home/hulining/data/grid2op/rte_case14_realistic",
+        "env_backend_name": "rte_case14_realisticPandaPowerBackend",
+        "n_line": 20,
+        "n_load": 11,
+        "n_gen": 5
+      },
+      "task_family": "max_avg_load",
+      "question": "Which load has the highest average active power in this Grid2Op trace window?",
+      "options": [
+        "A. load 1",
+        "B. load 2",
+        "C. load 5",
+        "D. load 0"
+      ],
+      "answer": "A",
+      "answer_label": "load 1",
+      "oracle_evidence_caption": "Load 1 has the largest average active power over the window: 85.189.",
+      "generic_caption": "This Grid2Op power-grid trace window contains line loading, load, generator, and power-flow variables over 512 steps.",
+      "evidence": {
+        "max_avg_load": 1,
+        "avg_load_p": 85.18906243145466
+      }
+    }
+  },
+  {
+    "spec": {
+      "title": "Trend control case: numeric samples can solve simple aggregate trend questions",
+      "case_id": "simqa::grid2op_real::rte_case14_realistic_trace_2048_nooverflow::h1024::s0::total_load_trend",
+      "source": "observation",
+      "analysis": "This is a control case. Sampled numbers solve the trend question, while generic caption still fails. It prevents overclaiming: numeric prompting does not always fail; the observed weakness is concentrated in localization and aggregation-heavy evidence."
+    },
+    "record": {
+      "domain": "grid2op_real",
+      "horizon": 1024,
+      "trace_path": ".research/real-grid2op-20260513/rte_case14_realistic_trace_2048_nooverflow.json",
+      "trace_window": {
+        "start": 0,
+        "end": 1024
+      },
+      "variables": [
+        "rho[line]",
+        "load_p[load]",
+        "gen_p[generator]",
+        "p_or[line]",
+        "p_ex[line]",
+        "line_status[line]"
+      ],
+      "id": "simqa::grid2op_real::rte_case14_realistic_trace_2048_nooverflow::h1024::s0::total_load_trend",
+      "source": "grid2op",
+      "simulator_meta": {
+        "env_name": "/cluster/home/hulining/data/grid2op/rte_case14_realistic",
+        "env_backend_name": "rte_case14_realisticPandaPowerBackend",
+        "n_line": 20,
+        "n_load": 11,
+        "n_gen": 5
+      },
+      "task_family": "total_load_trend",
+      "question": "Compared with the first quarter, how does mean total load in the last quarter change?",
+      "options": [
+        "A. lower than the first quarter",
+        "B. higher than the first quarter",
+        "C. roughly unchanged from the first quarter",
+        "D. not determinable from the trace window"
+      ],
+      "answer": "B",
+      "answer_label": "higher",
+      "oracle_evidence_caption": "Mean total load is 229.773 in the first quarter and 263.650 in the last quarter, so the last quarter is higher than the first quarter.",
+      "generic_caption": "This Grid2Op power-grid trace window contains line loading, load, generator, and power-flow variables over 1024 steps.",
+      "evidence": {
+        "first_quarter_mean_total_load": 229.77304681949317,
+        "last_quarter_mean_total_load": 263.6496094604954
+      }
+    }
+  },
+  {
+    "spec": {
+      "title": "Counterfactual threshold: a small intervention crosses the overload boundary",
+      "case_id": "simqa::grid2op_real_cf::h1024_t128_line0::cf_intervention_overload_severity",
+      "source": "counterfactual",
+      "analysis": "Disconnecting line 0 barely changes max-rho but pushes the post-intervention peak to 1.024, just over the 1.00 overload threshold. Low-budget sampled numbers miss this boundary; the oracle evidence states the threshold-relevant fact directly."
+    },
+    "record": {
+      "domain": "grid2op_real_cf",
+      "source": "grid2op_intervention",
+      "horizon": 1024,
+      "pair_path": ".research/real-grid2op-20260513/intervention_v3_selected_pairs/h1024_t128_line0.json",
+      "variables": [
+        "rho[line]",
+        "load_p[load]",
+        "gen_p[generator]",
+        "p_or[line]",
+        "p_ex[line]",
+        "line_status[line]"
+      ],
+      "simulator_meta": {
+        "env_name": "/cluster/home/hulining/data/grid2op/rte_case14_realistic",
+        "env_backend_name": "rte_case14_realisticPandaPowerBackend",
+        "n_line": 20,
+        "n_load": 11,
+        "n_gen": 5,
+        "no_overflow_disconnection": true
+      },
+      "intervention": {
+        "type": "disconnect_line",
+        "step": 128,
+        "line_id": 0,
+        "line_selection": "manual"
+      },
+      "id": "simqa::grid2op_real_cf::h1024_t128_line0::cf_intervention_overload_severity",
+      "task_family": "cf_intervention_overload_severity",
+      "question": "After disconnecting line 0 at t=128, what is the worst overload severity later in the rollout?",
+      "options": [
+        "A. a severe overload above 1.20",
+        "B. an overload above 1.00 but not above 1.20",
+        "C. no overload above 1.00",
+        "D. not determinable from the paired traces"
+      ],
+      "answer": "B",
+      "answer_label": "overload",
+      "oracle_evidence_caption": "After the intervention, the largest post-intervention max-rho is 1.024. That corresponds to an overload above 1.00 but not above 1.20.",
+      "generic_caption": "This paired Grid2Op trace contains a factual rollout and a counterfactual rollout with one power line disconnected during the episode.",
+      "evidence": {
+        "paired_steps": 1024,
+        "post_intervention_steps": 895,
+        "intervention_step": 128,
+        "line_id": 0,
+        "factual_line_status_at_intervention": 1,
+        "intervention_line_status_after": 0,
+        "mean_abs_total_load_delta_post": 0.0,
+        "max_abs_total_load_delta_post": 0.0,
+        "mean_max_rho_delta_post": 0.008961090828453363,
+        "max_abs_max_rho_delta_post": 0.047874271869659424,
+        "factual_max_rho_post": 0.9990196228027344,
+        "intervention_max_rho_post": 1.0239753723144531,
+        "intervention_post_peak_max_rho": 1.0239753723144531,
+        "severity": "overload"
+      }
+    }
+  },
+  {
+    "spec": {
+      "title": "Counterfactual direction: paired traces require comparing factual and intervention peaks",
+      "case_id": "simqa::grid2op_real_cf::h1024_t128_line5::cf_peak_rho_direction",
+      "source": "counterfactual",
+      "analysis": "Line 5 is a mild intervention: the post-peak max-rho rises from 0.999 to 1.138. The question requires paired factual/counterfactual comparison with a stated tolerance. Generic caption fails because it never provides the paired outcome facts."
+    },
+    "record": {
+      "domain": "grid2op_real_cf",
+      "source": "grid2op_intervention",
+      "horizon": 1024,
+      "pair_path": ".research/real-grid2op-20260513/intervention_v3_selected_pairs/h1024_t128_line5.json",
+      "variables": [
+        "rho[line]",
+        "load_p[load]",
+        "gen_p[generator]",
+        "p_or[line]",
+        "p_ex[line]",
+        "line_status[line]"
+      ],
+      "simulator_meta": {
+        "env_name": "/cluster/home/hulining/data/grid2op/rte_case14_realistic",
+        "env_backend_name": "rte_case14_realisticPandaPowerBackend",
+        "n_line": 20,
+        "n_load": 11,
+        "n_gen": 5,
+        "no_overflow_disconnection": true
+      },
+      "intervention": {
+        "type": "disconnect_line",
+        "step": 128,
+        "line_id": 5,
+        "line_selection": "manual"
+      },
+      "id": "simqa::grid2op_real_cf::h1024_t128_line5::cf_peak_rho_direction",
+      "task_family": "cf_peak_rho_direction",
+      "question": "Using a 0.05 max-rho tolerance, if line 5 is disconnected at t=128, how does the post-intervention peak maximum line loading compare with the factual rollout?",
+      "options": [
+        "A. it decreases by at least 0.05 max-rho relative to the factual rollout",
+        "B. it changes by less than 0.05 max-rho relative to the factual rollout",
+        "C. it increases by at least 0.05 max-rho relative to the factual rollout",
+        "D. it cannot be determined from the paired traces"
+      ],
+      "answer": "C",
+      "answer_label": "increase",
+      "oracle_evidence_caption": "In the factual rollout, the post-intervention peak max-rho is 0.999; after disconnecting line 5 at t=128, it is 1.138. The difference is +0.139; with a 0.05 tolerance, it increases by at least 0.05 max-rho relative to the factual rollout.",
+      "generic_caption": "This paired Grid2Op trace contains a factual rollout and a counterfactual rollout with one power line disconnected during the episode.",
+      "evidence": {
+        "paired_steps": 1024,
+        "post_intervention_steps": 895,
+        "intervention_step": 128,
+        "line_id": 5,
+        "factual_line_status_at_intervention": 1,
+        "intervention_line_status_after": 0,
+        "mean_abs_total_load_delta_post": 0.0,
+        "max_abs_total_load_delta_post": 0.0,
+        "mean_max_rho_delta_post": 0.03983911102710489,
+        "max_abs_max_rho_delta_post": 0.1443333625793457,
+        "factual_max_rho_post": 0.9990196228027344,
+        "intervention_max_rho_post": 1.138147234916687,
+        "factual_post_peak_max_rho": 0.9990196228027344,
+        "intervention_post_peak_max_rho": 1.138147234916687,
+        "post_peak_max_rho_delta": 0.13912761211395264,
+        "mean_post_max_rho_delta": 0.03983911102710489
+      }
+    }
+  }
+]
