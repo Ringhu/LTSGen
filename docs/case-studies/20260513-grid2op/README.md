@@ -3,7 +3,7 @@
 这个目录保存当前 Grid2Op TS-QA pilot 的 GitHub 可读中文案例分析报告。
 
 - [grid2op_case_study.md](grid2op_case_study.md)：带折叠面板的中文报告，包含时序图、QA 问题、caption（说明文本）与 evidence（证据）、各方法回答。
-- `figures/`：3 个单轨迹观测案例和 2 个 factual/counterfactual（事实/反事实）配对案例的 PNG 时序图。
+- `figures/`：4 个单轨迹观测案例和 1 个 factual/counterfactual（事实/反事实）配对案例的 PNG 时序图。
 - `selected_cases.json`：被选中的 QA 记录和案例说明。
 - `manifest.json`：供后续脚本使用的紧凑 manifest。
 

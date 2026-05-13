@@ -4,15 +4,21 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 
 import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+
+from scripts.eval.eval_medium_horizon_simqa_pilot import build_context_card
 
 plt.rcParams["font.sans-serif"] = [
     "Noto Sans CJK SC",
@@ -23,15 +29,14 @@ plt.rcParams["font.sans-serif"] = [
 plt.rcParams["axes.unicode_minus"] = False
 
 
-ROOT = Path(__file__).resolve().parents[1]
 OUT_DIR = ROOT / "docs/case-studies/20260513-grid2op"
 FIG_DIR = OUT_DIR / "figures"
 RESEARCH_DIR = ROOT / ".research/real-grid2op-20260513"
 
-OBS_QA = RESEARCH_DIR / "grid2op_real_v1_obs/grid2op_real_v1_obs.jsonl"
-OBS_PRED = RESEARCH_DIR / "grid2op_real_v1_obs/full72_core_sweep/predictions.jsonl"
-CF_QA = RESEARCH_DIR / "grid2op_real_cf_v3_compact_fixed/grid2op_real_cf_v3_compact_fixed.jsonl"
-CF_PRED = RESEARCH_DIR / "grid2op_real_cf_v3_compact_fixed/sampling_sweep_18/predictions.jsonl"
+OBS_QA = RESEARCH_DIR / "grid2op_real_v4_obs_slot/grid2op_real_v4_obs_slot.jsonl"
+OBS_PRED = RESEARCH_DIR / "grid2op_real_v4_obs_slot/core_sweep_with_context_v2b/predictions.jsonl"
+CF_QA = RESEARCH_DIR / "grid2op_real_cf_v6_slot/grid2op_real_cf_v6_slot.jsonl"
+CF_PRED = RESEARCH_DIR / "grid2op_real_cf_v6_slot/core_sweep_with_context_v2b/predictions.jsonl"
 
 
 @dataclass(frozen=True)
@@ -44,56 +49,54 @@ class CaseSpec:
 
 CASES = [
     CaseSpec(
-        title="峰值位置定位：sampled numbers（采样数值）错过后段线路负载峰值",
-        case_id="simqa::grid2op_real::rte_case14_realistic_trace_2048_nooverflow::h1024::s0::peak_rho_quarter",
+        title="单点线路负载率：背景充分后，仍需要定位到具体 line 和 local_t",
+        case_id="simqa::grid2op_real::rte_case14_realistic_trace_512::h512::s0::peak_rho_quarter::slot_v4",
         source="observation",
         analysis=(
-            "这是最清楚的定位失败样例。真实最大线路负载率出现在第 4 条线路、局部时间步 "
-            "t=806，属于窗口第四段。generic caption（通用说明文本）没有给出事件位置，"
-            "sampled numbers prompt（采样数值提示文本）虽然更长，但 32/64/128 三个采样预算"
-            "都选错了窗口段。"
+            "这个案例不是问“哪条线路最重要”，而是问指定时刻和指定线路上的 rho 数值。"
+            "背景卡片解释了 Grid2Op、line（线路）和 rho（线路负载率）的含义，但不会泄漏答案。"
+            "generic caption（通用说明文本）只说明有哪些变量，因此仍答错；oracle evidence caption"
+            "（oracle 证据说明文本）给出可核验的 slot value（槽位数值）。"
         ),
     ),
     CaseSpec(
         title="平均负载聚合：只看采样行不足以恢复窗口级均值",
-        case_id="simqa::grid2op_real::rte_case14_realistic_trace_1024::h512::s0::max_avg_load",
+        case_id="simqa::grid2op_real::rte_case14_realistic_trace_512::h512::s0::max_avg_load::slot_v4",
         source="observation",
         analysis=(
-            "这个样例考察整段窗口上的聚合统计。正确证据是负载 1 的窗口平均有功功率最高。"
-            "generic caption（通用说明文本）和所有 sampled numbers（采样数值）条件都选择了干扰项，"
-            "说明采样数值行不能稳定替代题目真正需要的窗口级统计量。"
+            "这个样例考察整段窗口上的 aggregation（聚合）统计。问题指定 load 1，要求它在整个窗口"
+            "上的平均 load_p，而不是让模型猜哪个负载最大。所有 sampled numbers（采样数值）条件"
+            "都选错，说明稀疏采样行不能稳定替代窗口级统计。"
         ),
     ),
     CaseSpec(
-        title="趋势控制样例：简单聚合趋势下 sampled numbers（采样数值）可以答对",
-        case_id="simqa::grid2op_real::rte_case14_realistic_trace_2048_nooverflow::h1024::s0::total_load_trend",
+        title="发电机窗口均值：长采样提示文本仍可能错过聚合答案",
+        case_id="simqa::grid2op_real::rte_case14_realistic_trace_512::h512::s0::max_avg_generator::slot_v4",
         source="observation",
         analysis=(
-            "这是一个控制样例。sampled numbers（采样数值）能答对简单的前后段均值趋势问题，"
-            "但 generic caption（通用说明文本）仍然失败。它提醒我们不要过度声称 raw numbers（原始数值）"
-            "总是失败；当前观察到的弱点主要集中在定位、聚合和"
-            "需要精确证据的任务上。"
+            "这个案例和负载均值类似，但变量换成 generator（发电机）的 gen_p。题目指定 generator 0，"
+            "要求窗口平均值。sampled numbers prompt（采样数值提示文本）长度达到数万字符仍答错，"
+            "而 oracle evidence caption 只保留一个可验证数值。"
         ),
     ),
     CaseSpec(
-        title="反事实阈值：小幅干预刚好跨过过载边界",
-        case_id="simqa::grid2op_real_cf::h1024_t128_line0::cf_intervention_overload_severity",
-        source="counterfactual",
+        title="控制样例：quarter 均值问题中 sampled numbers（采样数值）可以答对",
+        case_id="simqa::grid2op_real::rte_case14_realistic_trace_2048_nooverflow::h1024::s512::peak_total_load_quarter::slot_v4",
+        source="observation",
         analysis=(
-            "断开第 0 条线路只带来很小的 max-rho 变化，但 intervention（干预）后的峰值达到 1.024，"
-            "刚好超过 1.00 过载阈值。低采样预算的 sampled numbers（采样数值）漏掉了这个边界事实；"
-            "oracle evidence caption（oracle 证据说明文本）直接给出"
-            "与阈值判断相关的数值。"
+            "这是一个对照案例。问题要求第 3 个 quarter（四分段）中的 mean total_load（平均总负荷），"
+            "三个 sampled numbers 条件都答对，说明我们不能简单宣称 raw numbers（原始数值）总是失败。"
+            "当前更稳妥的结论是：oracle evidence caption 提供了更短且稳定的答案接口。"
         ),
     ),
     CaseSpec(
-        title="反事实方向：必须比较事实轨迹和干预轨迹的峰值",
-        case_id="simqa::grid2op_real_cf::h1024_t128_line5::cf_peak_rho_direction",
+        title="反事实差值：必须比较同一时刻的事实轨迹和干预轨迹",
+        case_id="simqa::grid2op_real_cf::h1024_c-1_t256_line1::cf_peak_rho_direction::slot_v4",
         source="counterfactual",
         analysis=(
-            "断开第 5 条线路后，intervention（干预）后的峰值 max-rho 从 factual trace（事实轨迹）"
-            "的 0.999 上升到 1.138。题目要求在 0.05 容忍阈值下比较 factual/counterfactual（事实/反事实）"
-            "配对结果。generic caption（通用说明文本）失败的原因是它没有提供两条轨迹的配对结果事实。"
+            "这个反事实案例要求比较同一个 local_t 上 intervention_max_rho 和 factual_max_rho 的差值。"
+            "背景卡片说明了 factual/counterfactual（事实/反事实）配对轨迹怎么读，但答案必须来自两条"
+            "轨迹的逐时刻数值比较。generic caption 没有给出配对数值；高预算 sampled numbers 也不稳定。"
         ),
     ),
 ]
@@ -132,6 +135,12 @@ TASK_LABELS = {
     "total_load_trend": "前后窗口总负荷趋势",
     "cf_intervention_overload_severity": "断线干预后的过载严重度",
     "cf_peak_rho_direction": "断线干预后的峰值方向变化",
+    "rho_value_slot": "指定时刻线路 rho 数值",
+    "load_average_value_slot": "指定负载窗口平均 load_p",
+    "generator_average_value_slot": "指定发电机窗口平均 gen_p",
+    "quarter_total_load_mean_value_slot": "指定 quarter 平均 total_load",
+    "cf_delta_max_rho_value_slot": "指定时刻反事实 max-rho 差值",
+    "cf_intervention_max_rho_value_slot": "指定时刻干预轨迹 max-rho",
 }
 
 QUARTER_LABELS = {
@@ -160,6 +169,8 @@ def index_by_id(records: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
 def load_predictions(paths: list[Path]) -> dict[str, dict[str, dict[str, Any]]]:
     by_id: dict[str, dict[str, dict[str, Any]]] = {}
     for path in paths:
+        if not path.exists():
+            continue
         for row in load_jsonl(path):
             by_id.setdefault(row["id"], {})[row["condition"]] = row
     return by_id
@@ -168,6 +179,16 @@ def load_predictions(paths: list[Path]) -> dict[str, dict[str, dict[str, Any]]]:
 def translate_text(text: str) -> str:
     """Translate the fixed prompt/caption templates used by this benchmark."""
     exact = {
+        "At local_t=170, what is rho for line 3?":
+            "在 local_t=170 时，第 3 条线路的 rho（线路负载率）是多少？",
+        "What is the window-average load_p for load 1?":
+            "load 1 在整个窗口中的平均 load_p（负载有功功率）是多少？",
+        "What is the window-average gen_p for generator 0?":
+            "generator 0 在整个窗口中的平均 gen_p（发电机有功出力）是多少？",
+        "What is the mean total_load in quarter 3 of this trace window?":
+            "这个轨迹窗口第 3 个 quarter（四分段）中的 mean total_load（平均总负荷）是多少？",
+        "At local_t=623, what is intervention_max_rho minus factual_max_rho?":
+            "在 local_t=623 时，intervention_max_rho 减去 factual_max_rho 是多少？",
         "Which quarter of this Grid2Op trace window contains the maximum line loading?":
             "这个 Grid2Op 轨迹窗口中，最大线路负载率出现在第几个窗口段？",
         "Which load has the highest average active power in this Grid2Op trace window?":
@@ -275,6 +296,39 @@ def translate_text(text: str) -> str:
             "至少上升 0.05 max-rho。"
         )
 
+    m = re.match(r"At local_t=(\d+), rho for line (\d+) is ([0-9.]+)\.", text)
+    if m:
+        local_t, line, value = m.groups()
+        return f"在 local_t={local_t} 时，第 {line} 条线路的 rho（线路负载率）为 {value}。"
+
+    m = re.match(r"The window-average load_p for load (\d+) is ([0-9.]+)\.", text)
+    if m:
+        load_id, value = m.groups()
+        return f"load {load_id} 在整个窗口中的平均 load_p（负载有功功率）为 {value}。"
+
+    m = re.match(r"The window-average gen_p for generator (\d+) is ([0-9.]+)\.", text)
+    if m:
+        gen_id, value = m.groups()
+        return f"generator {gen_id} 在整个窗口中的平均 gen_p（发电机有功出力）为 {value}。"
+
+    m = re.match(r"The mean total_load in quarter (\d+) is ([0-9.]+)\.", text)
+    if m:
+        quarter, value = m.groups()
+        return f"第 {quarter} 个 quarter（四分段）中的 mean total_load（平均总负荷）为 {value}。"
+
+    m = re.match(
+        r"At local_t=(\d+), intervention_max_rho - factual_max_rho is (-?[0-9.]+)\.",
+        text,
+    )
+    if m:
+        local_t, value = m.groups()
+        return f"在 local_t={local_t} 时，intervention_max_rho - factual_max_rho 为 {value}。"
+
+    m = re.match(r"At local_t=(\d+), intervention_max_rho is ([0-9.]+)\.", text)
+    if m:
+        local_t, value = m.groups()
+        return f"在 local_t={local_t} 时，intervention_max_rho 为 {value}。"
+
     return out
 
 
@@ -339,62 +393,65 @@ def plot_observation(record: dict[str, Any], slug: str) -> str:
     task = record["task_family"]
     evidence = record["evidence"]
 
-    if task == "peak_rho_quarter":
+    if task in {"peak_rho_quarter", "rho_value_slot"}:
         rho = np.asarray([r["rho"] for r in rows], dtype=float)
-        max_rho = rho.max(axis=1)
-        line = int(evidence["peak_line"])
+        line = int(evidence.get("slot_line", evidence.get("peak_line", 0)))
         line_rho = rho[:, line]
-        peak_t = int(evidence["peak_local_t"])
+        slot_t = int(evidence.get("slot_local_t", evidence.get("peak_local_t", 0)))
         fig, ax = plt.subplots(figsize=(9, 3.2))
-        quarter_spans(ax, len(rows))
-        ax.plot(t, max_rho, label="所有线路的最大 rho", color="#1f77b4", lw=1.6)
-        ax.plot(t, line_rho, label=f"第 {line} 条线路 rho", color="#ff7f0e", lw=1.1, alpha=0.85)
-        ax.axvline(peak_t, color="#d62728", ls="--", lw=1.2, label=f"峰值 t={peak_t}")
-        ax.scatter([peak_t], [float(evidence["peak_rho"])], color="#d62728", s=35, zorder=4)
+        ax.plot(t, line_rho, label=f"第 {line} 条线路 rho", color="#1f77b4", lw=1.2)
+        ax.axvline(slot_t, color="#d62728", ls="--", lw=1.2, label=f"查询时刻 t={slot_t}")
+        ax.scatter([slot_t], [float(line_rho[slot_t])], color="#d62728", s=35, zorder=4)
         ax.set_ylabel("rho")
         ax.set_xlabel("局部时间步")
-        ax.set_title("最大线路负载率出现在窗口第四段")
-        ax.legend(frameon=False, ncol=3, fontsize=8)
+        ax.set_title("指定线路在查询时刻的 rho（线路负载率）")
+        ax.legend(frameon=False, ncol=2, fontsize=8)
         return save_fig(fig, slug)
 
-    if task == "max_avg_load":
+    if task in {"max_avg_load", "load_average_value_slot"}:
         load = np.asarray([r["load_p"] for r in rows], dtype=float)
-        labels = [record["answer_label"]]
-        for opt in record["options"]:
-            m = re.search(r"load (\d+)", opt)
-            if m:
-                labels.append(f"load {m.group(1)}")
-        load_ids = []
-        for label in labels:
-            idx = int(label.split()[-1])
-            if idx not in load_ids:
-                load_ids.append(idx)
+        load_ids = [int(evidence.get("slot_load", evidence.get("max_avg_load", 0)))]
         fig, ax = plt.subplots(figsize=(9, 3.2))
         for idx in load_ids:
             y = load[:, idx]
             ax.plot(t, y, lw=1.2, label=f"负载 {idx}（均值={y.mean():.2f}）")
-            ax.axhline(y.mean(), lw=0.8, ls="--", alpha=0.45)
-        ax.set_ylabel("有功功率")
+            ax.axhline(y.mean(), lw=1.1, ls="--", color="#d62728", alpha=0.75, label="窗口均值")
+        ax.set_ylabel("load_p")
         ax.set_xlabel("局部时间步")
-        ax.set_title("候选负载的窗口级平均有功功率")
+        ax.set_title("指定负载的窗口级平均 load_p")
+        ax.legend(frameon=False, ncol=3, fontsize=8)
+        return save_fig(fig, slug)
+
+    if task == "generator_average_value_slot":
+        gen = np.asarray([r["gen_p"] for r in rows], dtype=float)
+        gen_id = int(evidence.get("slot_generator", evidence.get("max_avg_generator", 0)))
+        y = gen[:, gen_id]
+        fig, ax = plt.subplots(figsize=(9, 3.2))
+        ax.plot(t, y, color="#1f77b4", lw=1.2, label=f"发电机 {gen_id} gen_p")
+        ax.axhline(y.mean(), lw=1.1, ls="--", color="#d62728", alpha=0.75, label=f"窗口均值={y.mean():.2f}")
+        ax.set_ylabel("gen_p")
+        ax.set_xlabel("局部时间步")
+        ax.set_title("指定发电机的窗口级平均 gen_p")
         ax.legend(frameon=False, ncol=2, fontsize=8)
         return save_fig(fig, slug)
 
-    if task == "total_load_trend":
+    if task in {"total_load_trend", "quarter_total_load_mean_value_slot"}:
         load = np.asarray([r["load_p"] for r in rows], dtype=float)
         total = load.sum(axis=1)
         q = max(1, len(rows) // 4)
-        first = float(total[:q].mean())
-        last = float(total[-q:].mean())
+        slot_quarter = int(evidence.get("slot_quarter", 4))
+        start = (slot_quarter - 1) * q
+        end = len(rows) if slot_quarter == 4 else slot_quarter * q
+        mean_value = float(total[start:end].mean())
         fig, ax = plt.subplots(figsize=(9, 3.2))
         quarter_spans(ax, len(rows))
         ax.plot(t, total, color="#1f77b4", lw=1.3, label="总负荷")
-        ax.hlines(first, 0, q - 1, colors="#2ca02c", linestyles="--", lw=1.4, label=f"第一段均值={first:.2f}")
-        ax.hlines(last, len(rows) - q, len(rows) - 1, colors="#d62728", linestyles="--", lw=1.4, label=f"第四段均值={last:.2f}")
-        ax.set_ylabel("总有功负荷")
+        ax.axvspan(start, end, color="#fbe7c6", alpha=0.45, zorder=0)
+        ax.hlines(mean_value, start, end - 1, colors="#d62728", linestyles="--", lw=1.4, label=f"第 {slot_quarter} 段均值={mean_value:.2f}")
+        ax.set_ylabel("total_load")
         ax.set_xlabel("局部时间步")
-        ax.set_title("平均总负荷从第一段到第四段上升")
-        ax.legend(frameon=False, ncol=3, fontsize=8)
+        ax.set_title("指定 quarter（四分段）的 mean total_load")
+        ax.legend(frameon=False, ncol=2, fontsize=8)
         return save_fig(fig, slug)
 
     raise ValueError(f"Unsupported observation task: {task}")
@@ -412,17 +469,19 @@ def plot_counterfactual(record: dict[str, Any], slug: str) -> str:
     i_max = i_rho.max(axis=1)
     step = int(record["intervention"]["step"])
     line = int(record["intervention"]["line_id"])
+    slot_t = int(record.get("evidence", {}).get("slot_local_t", step + 1))
     threshold = 1.0
     fig, axes = plt.subplots(2, 1, figsize=(9, 5.2), sharex=True, gridspec_kw={"height_ratios": [3, 1]})
     ax = axes[0]
     ax.plot(t, f_max, color="#1f77b4", lw=1.3, label="事实轨迹 max rho")
     ax.plot(t, i_max, color="#d62728", lw=1.3, label="干预轨迹 max rho")
     ax.axvline(step, color="#555555", ls="--", lw=1.1, label=f"t={step} 断开第 {line} 条线路")
+    ax.axvline(slot_t, color="#2ca02c", ls="--", lw=1.1, label=f"查询时刻 t={slot_t}")
     ax.axhline(threshold, color="#9467bd", ls=":", lw=1.2, label="过载阈值 1.00")
-    peak_t = int(np.argmax(i_max[step + 1:]) + step + 1)
-    ax.scatter([peak_t], [i_max[peak_t]], color="#d62728", s=32, zorder=4)
+    ax.scatter([slot_t], [i_max[slot_t]], color="#d62728", s=32, zorder=4)
+    ax.scatter([slot_t], [f_max[slot_t]], color="#1f77b4", s=32, zorder=4)
     ax.set_ylabel("max rho")
-    ax.set_title("事实轨迹与干预轨迹的事件后线路负载率对比")
+    ax.set_title("同一 local_t 上事实轨迹与干预轨迹的 max-rho 对比")
     ax.legend(frameon=False, ncol=2, fontsize=8)
     status = np.asarray([r["line_status"][line] for r in intervention[:n]], dtype=float)
     axes[1].step(t, status, where="post", color="#2ca02c", lw=1.3)
@@ -468,6 +527,101 @@ def facts_table(record: dict[str, Any]) -> str:
     return "\n".join(rows)
 
 
+def context_card_md(record: dict[str, Any]) -> str:
+    card = build_context_card(record)
+    if not card:
+        return "这个案例没有额外背景卡片。"
+    translations = {
+        "Grid2Op context card:": "**Grid2Op context card（背景卡片）**",
+        "- Grid2Op is a power-grid simulation environment. A trace is a time-ordered rollout of grid state.":
+            "- Grid2Op 是 power-grid simulation environment（电网仿真环境）。trace（轨迹）是一段按时间排序的电网状态 rollout。",
+        "- A power line transports electricity between grid nodes. Disconnecting a line changes the grid topology and can redistribute flows across other lines.":
+            "- power line（输电线路）负责在电网节点之间传输电力。disconnecting a line（断开线路）会改变 grid topology（电网拓扑），并可能让潮流重新分配到其他线路。",
+        "- `rho[line]` is the loading ratio of each power line. A larger rho means a more heavily loaded line; rho >= 1.00 means overload, and rho > 1.20 means severe overload in these questions.":
+            "- `rho[line]` 是每条线路的 loading ratio（负载率）。rho 越大表示线路越接近负载上限；在这些问题中，rho >= 1.00 表示 overload（过载），rho > 1.20 表示 severe overload（严重过载）。",
+        "- `max_rho` means the largest rho across all lines at a timestep. `argmax rho line` is the line index with that largest rho.":
+            "- `max_rho` 表示某个时间步所有线路中最大的 rho；`argmax rho line` 是达到该最大 rho 的线路编号。",
+        "- `load_p[load]` is active power demand for each load. `gen_p[generator]` is active power output for each generator.":
+            "- `load_p[load]` 是每个负载点的 active power demand（有功功率需求）；`gen_p[generator]` 是每个发电机的 active power output（有功出力）。",
+        "- `line_status[line]` is 1 when a line is connected and 0 when disconnected.":
+            "- `line_status[line]` 表示线路状态：1 为 connected（连接），0 为 disconnected（断开）。",
+        "- Use the trace values to answer. Do not infer the effect of an intervention from domain intuition alone.":
+            "- 回答必须使用 trace values（轨迹数值）。不要只凭领域直觉推断 intervention（干预）的影响。",
+        "- Domain: Grid2Op is a power-grid simulator. Each time step is one simulated grid state.":
+            "- Domain（领域）：Grid2Op 是 power-grid simulator（电网仿真器）。每个时间步代表一个仿真的电网状态。",
+        "- line: a transmission line connecting grid nodes.":
+            "- line（线路）：连接电网节点的输电线路。",
+        "- load_p: active power demand at a load. Larger load_p means larger electricity demand.":
+            "- load_p（负载有功功率）：某个负载点的有功用电需求，数值越大表示需求越大。",
+        "- gen_p: active power output from a generator.":
+            "- gen_p（发电机有功出力）：某个发电机的有功输出。",
+        "- rho: line loading ratio. rho near or above 1.0 means the line is close to or above its thermal limit.":
+            "- rho（线路负载率）：输电线路的负载比例，接近或超过 1.0 表示线路接近或超过热稳定限额。",
+        "- max_rho: the maximum rho over all lines at a time step.":
+            "- max_rho：某个时间步上所有线路 rho 的最大值。",
+        "- line_status: 1 means connected, 0 means disconnected.":
+            "- line_status（线路状态）：1 表示连接，0 表示断开。",
+        "- total_load: sum of load_p over all loads at a time step.":
+            "- total_load（总负荷）：某个时间步所有 load_p 的总和。",
+        "Trace setup:":
+            "\n**Trace setup（轨迹设置）**",
+        "- This is a single factual trace window.":
+            "- 这是单条 factual trace window（事实轨迹窗口）。",
+        "- `local_t` indexes time within the selected window; `global_t` indexes the original exported trace.":
+            "- `local_t` 是所选窗口内部的局部时间索引；`global_t` 是原始导出轨迹中的全局时间索引。",
+        "- For quarter-based questions, divide the local window into four equal contiguous quarters.":
+            "- 对 quarter-based questions（四分段问题），把局部窗口划分为四个连续且长度相等的 quarter。",
+        "- This is a paired factual/counterfactual setting.":
+            "- 这是 paired factual/counterfactual setting（事实/反事实配对设置）。",
+        "- The factual trace is the original rollout.":
+            "- factual trace（事实轨迹）是原始 rollout。",
+        "- The intervention trace follows the same setup except that one specified power line is disconnected at the intervention time.":
+            "- intervention trace（干预轨迹）与事实轨迹设置相同，区别是在 intervention time（干预时刻）断开指定输电线路。",
+        "- For post-intervention questions, compare timesteps after the intervention time in the factual and intervention traces.":
+            "- 对 post-intervention questions（干预后问题），比较事实轨迹和干预轨迹在干预时刻之后的时间步。",
+        "- A trace window is a contiguous sequence of simulated grid states.":
+            "- trace window（轨迹窗口）是一段连续的仿真电网状态序列。",
+        "- Questions ask about facts inside the provided trace window only.":
+            "- 问题只要求回答给定轨迹窗口内部的事实。",
+        "- Background definitions do not determine the answer; the answer must come from the trace values.":
+            "- 背景定义不会决定答案；答案必须来自轨迹数值。",
+        "- factual trace: normal rollout.":
+            "- factual trace（事实轨迹）：正常 rollout。",
+        "- counterfactual/intervention trace: rollout after an action, here disconnecting one line at the stated step.":
+            "- counterfactual/intervention trace（反事实/干预轨迹）：执行动作后的 rollout，这里是在指定时间步断开一条线路。",
+        "- To answer counterfactual questions, compare the factual and intervention traces at the specified time/window.":
+            "- 回答反事实问题时，要在指定时间或窗口上比较事实轨迹和干预轨迹。",
+    }
+    lines = []
+    for line in card.splitlines():
+        if line in translations:
+            lines.append(translations[line])
+        elif line.startswith("Task rule:"):
+            lines.append("\n**Task rule（任务规则）**")
+            task_rule = line.replace("Task rule:", "").strip()
+            task_translations = {
+                "read the `rho` value for the exact line and `local_t` specified in the question.":
+                    "读取题目指定的 line（线路）和 `local_t` 上的 `rho` 数值。",
+                "compute the average `load_p` over the whole window for the exact load specified in the question.":
+                    "对题目指定的 load（负载），计算整个窗口上的平均 `load_p`。",
+                "compute the average `gen_p` over the whole window for the exact generator specified in the question.":
+                    "对题目指定的 generator（发电机），计算整个窗口上的平均 `gen_p`。",
+                "compute total load at each timestep as the sum of all `load_p` values, then average it over the exact quarter specified in the question.":
+                    "先把每个时间步所有 `load_p` 相加得到 total_load（总负荷），再对题目指定的 quarter（四分段）求平均。",
+                "at the exact `local_t` specified in the question, subtract factual `max_rho` from intervention `max_rho`.":
+                    "在题目指定的 `local_t` 上，用 intervention trace（干预轨迹）的 `max_rho` 减去 factual trace（事实轨迹）的 `max_rho`。",
+                "at the exact `local_t` specified in the question, read `max_rho` from the intervention trace.":
+                    "在题目指定的 `local_t` 上，从 intervention trace（干预轨迹）读取 `max_rho`。",
+            }
+            if task_rule in task_translations:
+                lines.append(task_translations[task_rule])
+            else:
+                lines.append(task_rule)
+        else:
+            lines.append(line)
+    return "\n".join(lines)
+
+
 def render_case(idx: int, spec: CaseSpec, record: dict[str, Any], preds: dict[str, dict[str, Any]]) -> tuple[str, dict[str, Any]]:
     slug = f"{idx:02d}_{slugify(record['task_family'])}_{slugify(record['id'])[:80]}"
     image = plot_observation(record, slug) if spec.source == "observation" else plot_counterfactual(record, slug)
@@ -488,6 +642,13 @@ def render_case(idx: int, spec: CaseSpec, record: dict[str, Any], preds: dict[st
 | ground truth（真值）来源 | `trace_array` / 仿真器轨迹 |
 
 关键结论：{spec.analysis}
+
+<details>
+<summary>背景卡片</summary>
+
+{context_card_md(record)}
+
+</details>
 
 <details>
 <summary>时序图</summary>
@@ -597,15 +758,16 @@ def main() -> None:
 | --- | --- |
 | 环境 | `rte_case14_realistic` |
 | 窗口长度 | 评测集覆盖 `512`、`1024`、`2048`；本报告选取的案例使用 `512/1024` |
-| 单轨迹观测案例 | 3 |
-| factual/counterfactual（事实/反事实）配对案例 | 2 |
+| 单轨迹观测案例 | 4 |
+| factual/counterfactual（事实/反事实）配对案例 | 1 |
 | 展示方法 | `meta_only`、`generic_caption`、`oracle_evidence_caption`、sampled numbers prompt（采样数值提示文本） |
 
 ## 主要观察
 
 - 单轨迹的定位题和聚合题差距最大：oracle evidence caption（oracle 证据说明文本）很短且答对，而 sampled numbers prompt（采样数值提示文本）更长却经常答错。
-- counterfactual（反事实）案例更适合展示 verifiability（可验证性）和阈值判断；当采样表中刚好包含关键事实时，当前 sampled numbers prompt（采样数值提示文本）也可能答对。
-- 逐案例可视化能清楚说明题目真正需要的 evidence（证据）：峰值位置、窗口平均值、第一段/最后一段均值，以及 factual/counterfactual（事实/反事实）干预后的 max-rho 对比。
+- 这版问题包含显式背景卡片；它解释 Grid2Op、line（线路）、rho（线路负载率）和 factual/counterfactual（事实/反事实）轨迹，但不包含答案事实。
+- 报告保留一个对照案例：当采样表覆盖到足够信息时，sampled numbers（采样数值）也能答对。因此当前结论不是“raw numbers（原始数值）必然失败”，而是“question-conditioned evidence（问题条件化证据）更短、更稳定”。
+- 逐案例可视化能清楚说明题目真正需要的 evidence（证据）：指定时刻的线路数值、窗口平均值、quarter 均值，以及 factual/counterfactual（事实/反事实）同一时刻的 max-rho 对比。
 
 ## 案例
 
@@ -619,7 +781,7 @@ def main() -> None:
         "# Grid2Op 中等长度时序 QA 案例分析\n\n"
         "这个目录保存当前 Grid2Op TS-QA pilot 的 GitHub 可读中文案例分析报告。\n\n"
         "- [grid2op_case_study.md](grid2op_case_study.md)：带折叠面板的中文报告，包含时序图、QA 问题、caption（说明文本）与 evidence（证据）、各方法回答。\n"
-        "- `figures/`：3 个单轨迹观测案例和 2 个 factual/counterfactual（事实/反事实）配对案例的 PNG 时序图。\n"
+        "- `figures/`：4 个单轨迹观测案例和 1 个 factual/counterfactual（事实/反事实）配对案例的 PNG 时序图。\n"
         "- `selected_cases.json`：被选中的 QA 记录和案例说明。\n"
         "- `manifest.json`：供后续脚本使用的紧凑 manifest。\n\n"
         "这组案例支持当前论文 framing：question-conditioned（问题条件化）、verifiable（可验证）的 evidence caption（证据说明文本）是更短且更可靠的接口；"
