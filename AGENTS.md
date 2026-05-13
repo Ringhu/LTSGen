@@ -248,6 +248,10 @@ Deterministic evaluator baselines:
 - trace-rule extractor: field/caption/answer = 1.0000 without reading gold
   `target_fields`; it parses question selectors and recomputes values from the
   referenced trace.
+- learned planner smoke: TF-IDF/logistic regression operator planner trained on
+  the 32-example `tiny_overfit` split reaches 1.0000 operator accuracy and
+  1.0000 field/caption/answer accuracy on tiny/dev/train when paired with the
+  deterministic trace executor.
 
 Interpretation:
 - QCC-v0 targets are now structured and verifiable: target fields and target
@@ -255,6 +259,8 @@ Interpretation:
 - The evaluator is ready for actual QCC-v0 overfit/model runs.
 - The trace-rule extractor defines the executable behavior that learned QCC-v0
   should approximate without hard-coded task-specific rules.
+- The learned planner result is only a smoke: current question templates make
+  operator planning easy, and numeric trace reading is still rule-based.
 - Do not over-interpret dev metrics yet; some Grid2Op task families have small
   dev counts. Use tiny-overfit first, then expand data if task-level dev metrics
   are unstable.

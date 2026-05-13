@@ -115,3 +115,39 @@ Interpretation:
 - This establishes that the QCC-v0 target is an executable evidence-extraction
   behavior. The next learned model should approximate this behavior without
   hard-coded task-specific rules.
+
+## Learned Planner Smoke
+
+Script:
+- `scripts/eval/run_qcc_v0_learned_planner.py`
+
+Output:
+- `learned_planner_tiny/planner.joblib`
+- `learned_planner_tiny/planner_summary.json`
+- `learned_planner_tiny/predictions_all_eval_splits.jsonl`
+- `learned_planner_tiny/eval_all_eval_splits/metrics.json`
+
+Setup:
+- Train split: `tiny_overfit`
+- Training examples: 32
+- Eval splits: `tiny_overfit`, `dev`, `train`
+- Learned component: TF-IDF + logistic regression operator planner
+- Deterministic component: executor parses selector arguments and reads trace
+  values
+
+Results:
+
+| Split | Operator acc | Field exact | Caption exact | Answer letter |
+| --- | ---: | ---: | ---: | ---: |
+| `tiny_overfit` | 1.0000 | 1.0000 | 1.0000 | 1.0000 |
+| `dev` | 1.0000 | 1.0000 | 1.0000 | 1.0000 |
+| `train` | 1.0000 | 1.0000 | 1.0000 | 1.0000 |
+
+Interpretation:
+- This passes the QCC-v0 tiny-overfit contract gate.
+- The result is a smoke, not a paper-level learned captioner result. It learns
+  the question-conditioned operator planner, while trace reading and numeric
+  computation remain deterministic.
+- Because current questions are template-style, dev generalization is easy.
+  The next real method step should expand question paraphrases and train a
+  less rule-dependent QCC model.

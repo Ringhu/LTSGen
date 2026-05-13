@@ -18,6 +18,7 @@
 | NEXT-R012 | M6 | QCC-v0 dataset build | Grid2Op + CityLearn slot QA to structured evidence targets | train/dev/tiny_overfit | target recomputation, schema gate | MUST | DONE | 156 examples; 0 duplicate IDs; 0 missing fields; 0 trace recomputation failures; split train/dev/tiny=100/24/32. |
 | NEXT-R013 | M6 | QCC-v0 evaluator baselines | oracle / metadata-only / question-only structured outputs | all splits | field exact, caption exact, answer label, answer letter | MUST | DONE | Oracle = 1.0 on all metrics; metadata-only answer-letter = 0.25; question-only answer-letter = 0.25 and numeric evidence fields = 0.0. |
 | NEXT-R014 | M6 | QCC-v0 trace-rule extractor | parse question selectors + read trace values | all splits | field exact, caption exact, answer label, answer letter | MUST | DONE | 1.0 on all metrics without reading gold target fields; confirms QCC target is executable evidence extraction. |
+| NEXT-R015 | M6 | Learned QCC-v0 planner smoke | TF-IDF/logreg operator planner + deterministic executor | train on tiny_overfit, eval all splits | operator acc, field exact, answer letter | MUST | DONE | 32-example tiny-overfit gate passed. Operator/field/caption/answer all 1.0 on tiny/dev/train, but this is template-style smoke with rule executor, not final learned captioner. |
 
 ## Addendum 2026-05-13
 - Built Grid2Op counterfactual v3 compact with selected full 1024-step paired
@@ -57,7 +58,11 @@ The CityLearn result should still be described as second-simulator feasibility,
 not a full benchmark: tasks are slot-value oriented and come from one packaged
 dataset. QCC-v0 now has a verified structured-evidence dataset, an evaluator
 with oracle/metadata-only/question-only sanity baselines, and a trace-reading
-rule extractor that reaches 1.0 without reading gold target fields. Next work
-should run an actual learned tiny overfit/slot-prediction model or LLM extractor
-before any SCL training. Do not download larger simulator data to the local SSD;
-use A100/3090 storage for real simulator environments and traces.
+rule extractor that reaches 1.0 without reading gold target fields. A learned
+TF-IDF/logreg operator planner trained on 32 tiny examples also reaches 1.0 when
+paired with the deterministic trace executor. This passes the QCC-v0 smoke gate
+but is not paper-level method evidence because current questions are
+template-style and trace reading is rule-based. Next work should expand
+question paraphrases and/or train a less rule-dependent QCC model before SCL.
+Do not download larger simulator data to the local SSD; use A100/3090 storage
+for real simulator environments and traces.
