@@ -14,6 +14,7 @@
 | NEXT-R008 | M6 | QCC-v0 overfit check | slot predictor/template captioner | tiny train/dev | train loss, slot acc | MUST | TODO | do before full training |
 | NEXT-R009 | M6 | QCC-v0 full run | QCC vs task-agnostic | real-v1 test | QA, slot F1, unsupported rate | MUST | TODO | 3 seeds after stable |
 | NEXT-R010 | M7 | SCL hard-negative ablation | QCC vs QCC+SCL | real-v1 test | QA, factuality, rejection acc | NICE | TODO | promote only if useful |
+| NEXT-R011 | M1/M4 | CityLearn second-simulator feasibility | packaged CityLearn trace + slot QA | 2048 smoke, 8192 export | trace sanity, meta/oracle, prompt chars | MUST | DONE | CityLearn 2.5.0 on 3090; exported 2048/8192 traces; 12-item slot QA gate passed, but quarter task needs expansion before paper use |
 
 ## Addendum 2026-05-13
 - Built Grid2Op counterfactual v3 compact with selected full 1024-step paired
@@ -46,8 +47,9 @@
   paper-facing claims.
 
 ## Current Gate
-Grid2Op context-card protocol is now clean enough for case studies and
-Grid2Op-only discussion. The next experiment should start the second simulator
-feasibility path, with CityLearn first, while keeping Grid2Op as the validated
-reference domain. Do not download larger simulator data to the local SSD; use
+Grid2Op context-card protocol is clean enough for case studies and Grid2Op-only
+discussion. CityLearn is feasible as a second simulator source, but its current
+12-item QA is only a smoke test. Next benchmark work should expand CityLearn to
+48-72 items over multiple windows and re-check `meta_only`, especially for
+quarter aggregation. Do not download larger simulator data to the local SSD; use
 A100/3090 storage for real simulator environments and traces.

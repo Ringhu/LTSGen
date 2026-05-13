@@ -48,6 +48,20 @@ GRID2OP_COUNTERFACTUAL_CONTEXT = """Trace setup:
 - The intervention trace follows the same setup except that one specified power line is disconnected at the intervention time.
 - For post-intervention questions, compare timesteps after the intervention time in the factual and intervention traces."""
 
+CITYLEARN_DOMAIN_CONTEXT = """CityLearn context card:
+- CityLearn is a building-energy simulation benchmark. A trace is an hourly sequence of building, weather, electricity price, and carbon-intensity variables.
+- `building` indexes a building in a district or neighborhood.
+- `non_shiftable_load` is a building's electricity demand that cannot be shifted by control actions.
+- `solar_generation` is local photovoltaic generation. Larger solar_generation can make net electricity lower or negative.
+- `net_electricity_without_storage` is total non-shiftable building load minus total solar generation in this exported trace.
+- `outdoor_dry_bulb_temperature` is outdoor air temperature.
+- Use the trace values to answer. Background definitions do not determine the answer."""
+
+CITYLEARN_OBSERVATION_CONTEXT = """Trace setup:
+- This is a packaged CityLearn dataset trace, exported as one factual observation window.
+- `local_t` indexes time within the selected hourly window.
+- For quarter-based questions, divide the local window into four equal contiguous quarters."""
+
 TASK_CONTEXT = {
     "peak_rho_quarter": (
         "Task rule: find the single largest `rho` value across all lines and all timesteps in the window, "
@@ -96,9 +110,18 @@ TASK_CONTEXT = {
     "cf_intervention_max_rho_value_slot": (
         "Task rule: at the exact `local_t` specified in the question, read `max_rho` from the intervention trace."
     ),
+    "building_load_value_slot": (
+        "Task rule: read `non_shiftable_load` for the exact building and `local_t` specified in the question."
+    ),
+    "quarter_net_electricity_mean_value_slot": (
+        "Task rule: average `net_electricity_without_storage` over the exact quarter specified in the question."
+    ),
+    "outdoor_temperature_value_slot": (
+        "Task rule: read `outdoor_dry_bulb_temperature` at the exact `local_t` specified in the question."
+    ),
 }
 
-CONTEXT_CARD_VERSION = "grid2op_context_v2_slot_value_rules_for_grid2op_records"
+CONTEXT_CARD_VERSION = "domain_context_v3_grid2op_citylearn_slot_value_rules"
 
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -152,6 +175,14 @@ def _load_grid2op_pair(record: dict[str, Any]) -> tuple[list[dict[str, Any]], li
     data = json.loads(pair_path.read_text(encoding="utf-8"))
     n = min(len(data["factual_trace"]), len(data["intervention_trace"]))
     return data["factual_trace"][:n], data["intervention_trace"][:n]
+
+
+def _load_citylearn_window(record: dict[str, Any]) -> list[dict[str, Any]]:
+    trace_path = Path(record["trace_path"])
+    data = json.loads(trace_path.read_text(encoding="utf-8"))
+    start = int(record["trace_window"]["start"])
+    end = int(record["trace_window"]["end"])
+    return data["trace"][start:end]
 
 
 def _format_vector(values: list[float], max_items: int | None = None) -> str:
@@ -244,11 +275,48 @@ def format_grid2op_pair_trace_table(record: dict[str, Any], *, max_steps: int | 
     return "\n".join(lines)
 
 
+def format_citylearn_trace_table(record: dict[str, Any], *, max_steps: int | None) -> str:
+    rows = _load_citylearn_window(record)
+    horizon = len(rows)
+    if max_steps is None or max_steps >= horizon:
+        idx = np.arange(horizon)
+        label = f"all {horizon} hourly steps"
+    else:
+        idx = np.linspace(0, horizon - 1, max_steps).astype(int)
+        label = f"{len(idx)} evenly sampled hourly steps from {horizon}"
+    lines = [
+        f"CityLearn factual trace table ({label}). Each row gives local/global time, "
+        "weather, price, carbon intensity, total net electricity without storage, "
+        "and per-building non-shiftable load and solar generation vectors."
+    ]
+    for local_i in idx:
+        r = rows[int(local_i)]
+        loads = [float(b["non_shiftable_load"]) for b in r["buildings"]]
+        solar = [float(b["solar_generation"]) for b in r["buildings"]]
+        lines.append(
+            "local_t={local_t}, global_t={global_t}: outdoor_temp={temp}, price={price}, "
+            "carbon_intensity={carbon}, net_electricity_without_storage={net}, "
+            "non_shiftable_load={loads}, solar_generation={solar}".format(
+                local_t=int(local_i),
+                global_t=int(r["t"]),
+                temp=_format_value(float(r["weather"]["outdoor_dry_bulb_temperature"])),
+                price=_format_value(float(r["price"])),
+                carbon=_format_value(float(r["carbon_intensity"])),
+                net=_format_value(float(r["totals"]["net_electricity_without_storage"])),
+                loads=_format_vector(loads),
+                solar=_format_vector(solar),
+            )
+        )
+    return "\n".join(lines)
+
+
 def format_trace_table(record: dict[str, Any], *, max_steps: int | None) -> str:
     if record.get("source") == "grid2op_intervention" and "pair_path" in record:
         return format_grid2op_pair_trace_table(record, max_steps=max_steps)
     if record.get("source") == "grid2op" and "trace_path" in record:
         return format_real_grid2op_trace_table(record, max_steps=max_steps)
+    if record.get("source") == "citylearn_packaged_dataset" and "trace_path" in record:
+        return format_citylearn_trace_table(record, max_steps=max_steps)
 
     factual, _ = regenerate_trace(record)
     variables = record["variables"]
@@ -269,13 +337,16 @@ def format_trace_table(record: dict[str, Any], *, max_steps: int | None) -> str:
 def build_context_card(record: dict[str, Any]) -> str:
     domain = str(record.get("domain", ""))
     source = str(record.get("source", ""))
-    if not domain.startswith("grid2op"):
-        return ""
-    parts = [GRID2OP_DOMAIN_CONTEXT]
-    if source == "grid2op_intervention" or "pair_path" in record:
-        parts.append(GRID2OP_COUNTERFACTUAL_CONTEXT)
+    if domain.startswith("grid2op"):
+        parts = [GRID2OP_DOMAIN_CONTEXT]
+        if source == "grid2op_intervention" or "pair_path" in record:
+            parts.append(GRID2OP_COUNTERFACTUAL_CONTEXT)
+        else:
+            parts.append(GRID2OP_OBSERVATION_CONTEXT)
+    elif domain.startswith("citylearn"):
+        parts = [CITYLEARN_DOMAIN_CONTEXT, CITYLEARN_OBSERVATION_CONTEXT]
     else:
-        parts.append(GRID2OP_OBSERVATION_CONTEXT)
+        return ""
     task = str(record.get("task_family", ""))
     if task in TASK_CONTEXT:
         parts.append(TASK_CONTEXT[task])

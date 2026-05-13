@@ -161,6 +161,8 @@ Current scripts:
 - `scripts/generate/build_medium_horizon_simqa_pilot.py`
 - `scripts/generate/export_grid2op_trace.py`
 - `scripts/generate/build_grid2op_simqa_from_trace.py`
+- `scripts/generate/export_citylearn_trace.py`
+- `scripts/generate/build_citylearn_slot_qa.py`
 - `scripts/eval/eval_medium_horizon_simqa_pilot.py`
 
 Current tracker:
@@ -252,24 +254,24 @@ Use narrower claims:
 - Local `grid2op` and `citylearn` were not installed when first checked on
   2026-05-12. `grid2op==1.12.4` is now installed in `.venv-simqa`.
   CityLearn local install was stopped because it pulled heavy torch/CUDA and
-  openstudio dependencies; run CityLearn on remote storage or through a lighter
-  packaged-data route.
+  openstudio dependencies. CityLearn 2.5.0 is available on the 3090 server at
+  `/cluster/home/hulining/envs/citylearn`, with packaged data under
+  `/cluster/home/hulining/.cache/citylearn/v2.5.0/`.
 - LLM calls use the existing OpenAI-compatible proxy through
   `~/Research/gptapi/llm_client.py`; do not expose API keys.
 
 ## Next Action
 
-The immediate next experiment is to move beyond the real-simulator schema
-smoke:
+The immediate next experiment is to expand beyond the validated Grid2Op
+context-card protocol:
 
-1. Find or download a longer Grid2Op environment on A100/3090 storage, not the
-   local SSD, and target horizons 1024/2048 first.
-2. Add factual/counterfactual Grid2Op interventions, then generate observation
-   plus intervention QA with programmatic GT.
-3. Move CityLearn feasibility to a remote environment or implement a lighter
-   packaged-data reader that avoids full local dependency installation.
-4. Only after real-simulator 1024/2048 data passes sanity and LLM smoke, scale
-   back up to 4096/8192.
+1. Expand CityLearn from the current 12-item feasibility smoke to 48-72
+   slot-value QA items over multiple windows.
+2. Re-check `meta_only`, especially for quarter aggregation tasks; do not use
+   the current CityLearn quarter task as paper-facing evidence until the leak
+   check passes.
+3. Add a Chinese CityLearn case study only after the expanded QA passes sanity.
+4. Only after Grid2Op + CityLearn both pass clean gates, start QCC-v0 training.
 
 Do not start QCC/SCL training until real-simulator data passes the same pilot
 gates that simulator-lite passed.
