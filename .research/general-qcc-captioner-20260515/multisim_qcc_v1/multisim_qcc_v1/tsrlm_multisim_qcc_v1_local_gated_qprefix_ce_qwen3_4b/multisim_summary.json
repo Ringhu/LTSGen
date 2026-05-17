@@ -1,0 +1,560 @@
+{
+  "run_dir": ".research/general-qcc-captioner-20260515/multisim_qcc_v1/multisim_qcc_v1/tsrlm_multisim_qcc_v1_local_gated_qprefix_ce_qwen3_4b",
+  "qa_subdir": "rule_qa",
+  "domains": {
+    "grid2op": {
+      "complete": true,
+      "splits": {
+        "dev": {
+          "complete": true,
+          "path": ".research/general-qcc-captioner-20260515/multisim_qcc_v1/multisim_qcc_v1/tsrlm_multisim_qcc_v1_local_gated_qprefix_ce_qwen3_4b/generate_grid2op_dev_clean/rule_qa/qa_metrics.json",
+          "n": 319,
+          "accuracy": 0.3824,
+          "empty_answer_rate": 0.0,
+          "mean_caption_chars": 116.9,
+          "by_task_family": {
+            "grid_anomaly_max_rho": {
+              "n": 26,
+              "accuracy": 0.2692
+            },
+            "grid_counterfactual_mean_stress": {
+              "n": 37,
+              "accuracy": 0.0
+            },
+            "grid_counterfactual_overload_exposure": {
+              "n": 37,
+              "accuracy": 0.0
+            },
+            "grid_counterfactual_peak_stress": {
+              "n": 37,
+              "accuracy": 0.0
+            },
+            "grid_cross_variable_stress": {
+              "n": 26,
+              "accuracy": 0.6538
+            },
+            "grid_domain_stress_context": {
+              "n": 26,
+              "accuracy": 0.9615
+            },
+            "grid_extrema_max_rho": {
+              "n": 26,
+              "accuracy": 0.4231
+            },
+            "grid_temporal_lead_lag": {
+              "n": 26,
+              "accuracy": 0.9615
+            },
+            "grid_trend_max_rho": {
+              "n": 26,
+              "accuracy": 0.3846
+            },
+            "grid_volatility_total_load": {
+              "n": 26,
+              "accuracy": 0.5
+            },
+            "grid_window_total_load": {
+              "n": 26,
+              "accuracy": 0.5385
+            }
+          },
+          "pred_answer_distribution": {
+            "A": 127,
+            "C": 63,
+            "B": 92,
+            "D": 37
+          },
+          "reason_distribution": {
+            "trend_from_start_end_std": 26,
+            "extrema_step_region": 26,
+            "region_std_compare": 26,
+            "anomaly_step_or_z": 26,
+            "half_mean_compare": 26,
+            "correlation_compare": 26,
+            "lag_corr_threshold": 26,
+            "stress_threshold": 26,
+            "cf_mean_diff": 37,
+            "cf_peak_label_text": 37,
+            "cf_overload_exposure": 37
+          }
+        },
+        "test": {
+          "complete": true,
+          "path": ".research/general-qcc-captioner-20260515/multisim_qcc_v1/multisim_qcc_v1/tsrlm_multisim_qcc_v1_local_gated_qprefix_ce_qwen3_4b/generate_grid2op_test_clean/rule_qa/qa_metrics.json",
+          "n": 319,
+          "accuracy": 0.7273,
+          "empty_answer_rate": 0.0,
+          "mean_caption_chars": 116.7,
+          "by_task_family": {
+            "grid_anomaly_max_rho": {
+              "n": 26,
+              "accuracy": 0.2308
+            },
+            "grid_counterfactual_mean_stress": {
+              "n": 37,
+              "accuracy": 1.0
+            },
+            "grid_counterfactual_overload_exposure": {
+              "n": 37,
+              "accuracy": 1.0
+            },
+            "grid_counterfactual_peak_stress": {
+              "n": 37,
+              "accuracy": 1.0
+            },
+            "grid_cross_variable_stress": {
+              "n": 26,
+              "accuracy": 0.6538
+            },
+            "grid_domain_stress_context": {
+              "n": 26,
+              "accuracy": 0.9615
+            },
+            "grid_extrema_max_rho": {
+              "n": 26,
+              "accuracy": 0.4231
+            },
+            "grid_temporal_lead_lag": {
+              "n": 26,
+              "accuracy": 0.9615
+            },
+            "grid_trend_max_rho": {
+              "n": 26,
+              "accuracy": 0.3846
+            },
+            "grid_volatility_total_load": {
+              "n": 26,
+              "accuracy": 0.5
+            },
+            "grid_window_total_load": {
+              "n": 26,
+              "accuracy": 0.5385
+            }
+          },
+          "pred_answer_distribution": {
+            "A": 80,
+            "C": 93,
+            "B": 92,
+            "D": 54
+          },
+          "reason_distribution": {
+            "trend_from_start_end_std": 26,
+            "extrema_step_region": 26,
+            "region_std_compare": 26,
+            "anomaly_step_or_z": 26,
+            "half_mean_compare": 26,
+            "correlation_compare": 26,
+            "lag_corr_threshold": 26,
+            "stress_threshold": 26,
+            "cf_mean_diff": 37,
+            "cf_peak_label_text": 37,
+            "cf_overload_exposure": 37
+          }
+        }
+      },
+      "combined": {
+        "n": 638,
+        "accuracy": 0.5548,
+        "empty_answer_rate": 0.0,
+        "mean_caption_chars": 116.8,
+        "by_task_family": {
+          "grid_anomaly_max_rho": {
+            "n": 52,
+            "accuracy": 0.25
+          },
+          "grid_counterfactual_mean_stress": {
+            "n": 74,
+            "accuracy": 0.5
+          },
+          "grid_counterfactual_overload_exposure": {
+            "n": 74,
+            "accuracy": 0.5
+          },
+          "grid_counterfactual_peak_stress": {
+            "n": 74,
+            "accuracy": 0.5
+          },
+          "grid_cross_variable_stress": {
+            "n": 52,
+            "accuracy": 0.6538
+          },
+          "grid_domain_stress_context": {
+            "n": 52,
+            "accuracy": 0.9615
+          },
+          "grid_extrema_max_rho": {
+            "n": 52,
+            "accuracy": 0.4231
+          },
+          "grid_temporal_lead_lag": {
+            "n": 52,
+            "accuracy": 0.9615
+          },
+          "grid_trend_max_rho": {
+            "n": 52,
+            "accuracy": 0.3846
+          },
+          "grid_volatility_total_load": {
+            "n": 52,
+            "accuracy": 0.5
+          },
+          "grid_window_total_load": {
+            "n": 52,
+            "accuracy": 0.5385
+          }
+        },
+        "cf_total": 0.5,
+        "lead_lag": 0.9615,
+        "non_cf_macro": 0.5841,
+        "cf_by_task_family": {
+          "grid_counterfactual_mean_stress": {
+            "n": 74,
+            "accuracy": 0.5
+          },
+          "grid_counterfactual_overload_exposure": {
+            "n": 74,
+            "accuracy": 0.5
+          },
+          "grid_counterfactual_peak_stress": {
+            "n": 74,
+            "accuracy": 0.5
+          }
+        }
+      }
+    },
+    "citylearn": {
+      "complete": true,
+      "splits": {
+        "dev": {
+          "complete": true,
+          "path": ".research/general-qcc-captioner-20260515/multisim_qcc_v1/multisim_qcc_v1/tsrlm_multisim_qcc_v1_local_gated_qprefix_ce_qwen3_4b/generate_citylearn_dev_clean/rule_qa/qa_metrics.json",
+          "n": 287,
+          "accuracy": 0.3206,
+          "empty_answer_rate": 0.0,
+          "mean_caption_chars": 85.6,
+          "by_task_family": {
+            "city_anomaly_total_load": {
+              "n": 41,
+              "accuracy": 0.2683
+            },
+            "city_cross_variable_load": {
+              "n": 41,
+              "accuracy": 0.3659
+            },
+            "city_domain_demand_context": {
+              "n": 41,
+              "accuracy": 0.2927
+            },
+            "city_extrema_total_load": {
+              "n": 41,
+              "accuracy": 0.3415
+            },
+            "city_trend_total_load": {
+              "n": 41,
+              "accuracy": 0.3902
+            },
+            "city_volatility_total_load": {
+              "n": 41,
+              "accuracy": 0.2683
+            },
+            "city_window_total_load": {
+              "n": 41,
+              "accuracy": 0.3171
+            }
+          },
+          "pred_answer_distribution": {
+            "A": 67,
+            "B": 85,
+            "C": 96,
+            "D": 39
+          },
+          "reason_distribution": {
+            "city_trend": 41,
+            "city_extrema": 41,
+            "city_volatility": 41,
+            "city_window": 41,
+            "city_cross": 41,
+            "city_domain_phrase": 41,
+            "city_anomaly": 41
+          }
+        },
+        "test": {
+          "complete": true,
+          "path": ".research/general-qcc-captioner-20260515/multisim_qcc_v1/multisim_qcc_v1/tsrlm_multisim_qcc_v1_local_gated_qprefix_ce_qwen3_4b/generate_citylearn_test_clean/rule_qa/qa_metrics.json",
+          "n": 287,
+          "accuracy": 0.3275,
+          "empty_answer_rate": 0.0,
+          "mean_caption_chars": 85.6,
+          "by_task_family": {
+            "city_anomaly_total_load": {
+              "n": 41,
+              "accuracy": 0.2683
+            },
+            "city_cross_variable_load": {
+              "n": 41,
+              "accuracy": 0.4146
+            },
+            "city_domain_demand_context": {
+              "n": 41,
+              "accuracy": 0.2195
+            },
+            "city_extrema_total_load": {
+              "n": 41,
+              "accuracy": 0.3171
+            },
+            "city_trend_total_load": {
+              "n": 41,
+              "accuracy": 0.3659
+            },
+            "city_volatility_total_load": {
+              "n": 41,
+              "accuracy": 0.2927
+            },
+            "city_window_total_load": {
+              "n": 41,
+              "accuracy": 0.4146
+            }
+          },
+          "pred_answer_distribution": {
+            "A": 68,
+            "B": 87,
+            "C": 83,
+            "D": 49
+          },
+          "reason_distribution": {
+            "city_trend": 41,
+            "city_extrema": 41,
+            "city_volatility": 41,
+            "city_window": 41,
+            "city_cross": 41,
+            "city_domain_phrase": 41,
+            "city_anomaly": 41
+          }
+        }
+      },
+      "combined": {
+        "n": 574,
+        "accuracy": 0.3241,
+        "empty_answer_rate": 0.0,
+        "mean_caption_chars": 85.6,
+        "by_task_family": {
+          "city_anomaly_total_load": {
+            "n": 82,
+            "accuracy": 0.2683
+          },
+          "city_cross_variable_load": {
+            "n": 82,
+            "accuracy": 0.3903
+          },
+          "city_domain_demand_context": {
+            "n": 82,
+            "accuracy": 0.2561
+          },
+          "city_extrema_total_load": {
+            "n": 82,
+            "accuracy": 0.3293
+          },
+          "city_trend_total_load": {
+            "n": 82,
+            "accuracy": 0.378
+          },
+          "city_volatility_total_load": {
+            "n": 82,
+            "accuracy": 0.2805
+          },
+          "city_window_total_load": {
+            "n": 82,
+            "accuracy": 0.3658
+          }
+        }
+      }
+    },
+    "finrl": {
+      "complete": true,
+      "splits": {
+        "dev": {
+          "complete": true,
+          "path": ".research/general-qcc-captioner-20260515/multisim_qcc_v1/multisim_qcc_v1/tsrlm_multisim_qcc_v1_local_gated_qprefix_ce_qwen3_4b/generate_finrl_dev_clean/rule_qa/qa_metrics.json",
+          "n": 216,
+          "accuracy": 0.7917,
+          "empty_answer_rate": 0.0,
+          "mean_caption_chars": 120.0,
+          "by_task_family": {
+            "fin_cross_variable_return": {
+              "n": 24,
+              "accuracy": 1.0
+            },
+            "fin_domain_market_regime": {
+              "n": 24,
+              "accuracy": 0.875
+            },
+            "fin_drawdown_price": {
+              "n": 24,
+              "accuracy": 0.7083
+            },
+            "fin_extrema_price": {
+              "n": 24,
+              "accuracy": 0.8333
+            },
+            "fin_temporal_lead_lag": {
+              "n": 24,
+              "accuracy": 1.0
+            },
+            "fin_trend_price": {
+              "n": 24,
+              "accuracy": 0.875
+            },
+            "fin_volatility_returns": {
+              "n": 24,
+              "accuracy": 1.0
+            },
+            "fin_volume_anomaly": {
+              "n": 24,
+              "accuracy": 0.2083
+            },
+            "fin_window_return": {
+              "n": 24,
+              "accuracy": 0.625
+            }
+          },
+          "pred_answer_distribution": {
+            "B": 49,
+            "C": 66,
+            "A": 63,
+            "D": 38
+          },
+          "reason_distribution": {
+            "fin_trend": 24,
+            "fin_extrema": 24,
+            "fin_volatility": 24,
+            "fin_drawdown_phrase": 24,
+            "fin_window": 24,
+            "fin_cross_phrase": 24,
+            "fin_regime_phrase": 24,
+            "fin_volume_anomaly": 24,
+            "fin_lead_lag_phrase": 24
+          }
+        },
+        "test": {
+          "complete": true,
+          "path": ".research/general-qcc-captioner-20260515/multisim_qcc_v1/multisim_qcc_v1/tsrlm_multisim_qcc_v1_local_gated_qprefix_ce_qwen3_4b/generate_finrl_test_clean/rule_qa/qa_metrics.json",
+          "n": 252,
+          "accuracy": 0.7659,
+          "empty_answer_rate": 0.0,
+          "mean_caption_chars": 119.9,
+          "by_task_family": {
+            "fin_cross_variable_return": {
+              "n": 28,
+              "accuracy": 1.0
+            },
+            "fin_domain_market_regime": {
+              "n": 28,
+              "accuracy": 0.8214
+            },
+            "fin_drawdown_price": {
+              "n": 28,
+              "accuracy": 0.7143
+            },
+            "fin_extrema_price": {
+              "n": 28,
+              "accuracy": 0.8214
+            },
+            "fin_temporal_lead_lag": {
+              "n": 28,
+              "accuracy": 1.0
+            },
+            "fin_trend_price": {
+              "n": 28,
+              "accuracy": 0.8571
+            },
+            "fin_volatility_returns": {
+              "n": 28,
+              "accuracy": 0.9643
+            },
+            "fin_volume_anomaly": {
+              "n": 28,
+              "accuracy": 0.1429
+            },
+            "fin_window_return": {
+              "n": 28,
+              "accuracy": 0.5714
+            }
+          },
+          "pred_answer_distribution": {
+            "A": 73,
+            "B": 63,
+            "C": 66,
+            "D": 50
+          },
+          "reason_distribution": {
+            "fin_trend": 28,
+            "fin_extrema": 28,
+            "fin_volatility": 28,
+            "fin_drawdown_phrase": 28,
+            "fin_window": 28,
+            "fin_cross_phrase": 28,
+            "fin_regime_phrase": 28,
+            "fin_volume_anomaly": 28,
+            "fin_lead_lag_phrase": 28
+          }
+        }
+      },
+      "combined": {
+        "n": 468,
+        "accuracy": 0.7778,
+        "empty_answer_rate": 0.0,
+        "mean_caption_chars": 119.9462,
+        "by_task_family": {
+          "fin_cross_variable_return": {
+            "n": 52,
+            "accuracy": 1.0
+          },
+          "fin_domain_market_regime": {
+            "n": 52,
+            "accuracy": 0.8461
+          },
+          "fin_drawdown_price": {
+            "n": 52,
+            "accuracy": 0.7115
+          },
+          "fin_extrema_price": {
+            "n": 52,
+            "accuracy": 0.8269
+          },
+          "fin_temporal_lead_lag": {
+            "n": 52,
+            "accuracy": 1.0
+          },
+          "fin_trend_price": {
+            "n": 52,
+            "accuracy": 0.8654
+          },
+          "fin_volatility_returns": {
+            "n": 52,
+            "accuracy": 0.9808
+          },
+          "fin_volume_anomaly": {
+            "n": 52,
+            "accuracy": 0.1731
+          },
+          "fin_window_return": {
+            "n": 52,
+            "accuracy": 0.5961
+          }
+        }
+      }
+    }
+  },
+  "decision": {
+    "complete": true,
+    "status": "ambiguous",
+    "scientific_success": false,
+    "worst_domain": "citylearn",
+    "worst_domain_accuracy": 0.3241,
+    "max_empty_answer_rate": 0.0,
+    "grid2op_cf_total": 0.5,
+    "as047_grid2op_cf_total": 0.1852,
+    "non_grid2op_min_accuracy": 0.3241,
+    "failure_flags": []
+  }
+}
