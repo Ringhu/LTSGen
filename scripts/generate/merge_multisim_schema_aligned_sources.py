@@ -24,6 +24,7 @@ SOURCE_SPECS = {
     "water": ("multisim_qcc_v3_stable_dataflow/water_broad_smoke_v1", "water_broad_smoke_v1"),
     "traffic": ("multisim_qcc_v3_stable_dataflow/traffic_broad_smoke_v1", "traffic_broad_smoke_v1"),
     "aiopslab_official": ("aiopslab_official_v1", "aiopslab_official_v1"),
+    "aiopslab_official_v3": ("aiopslab_official_v3", "aiopslab_official_v3"),
 }
 
 REQUIRED = (
