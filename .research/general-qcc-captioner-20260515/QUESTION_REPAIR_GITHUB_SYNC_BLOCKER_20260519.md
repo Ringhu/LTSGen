@@ -53,6 +53,35 @@ Credential audit:
 - no `GITHUB_TOKEN`, `GH_TOKEN`, `GIT_ASKPASS`, or `SSH_AUTH_SOCK` environment variable was available
 - no SSH private key was present under `~/.ssh`
 
+## Temporary SSH Key Attempt
+
+A dedicated temporary SSH key was generated under `/tmp` to give the reviewer a
+concrete authorization path without changing global Git configuration:
+
+- private key: `/tmp/ltsgen-question-repair-github_ed25519`
+- public key: `/tmp/ltsgen-question-repair-github_ed25519.pub`
+- fingerprint: `SHA256:7tOPmFRc5s3cQlk/RJDdjxmjuh1kdba6tR55oDlHa3g`
+
+Public key to add to GitHub with write access:
+
+```text
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK1UckKb6ysviSgUbqcJCwqsTAigUqW6f6l9e2XFnV6R ltsgen-question-repair-20260519
+```
+
+SSH authorization probe currently fails:
+
+```text
+git@github.com: Permission denied (publickey).
+```
+
+Once the key is authorized, push with:
+
+```bash
+cd /tmp/ltsgen-question-repair-20260519
+GIT_SSH_COMMAND="ssh -i /tmp/ltsgen-question-repair-github_ed25519 -o IdentitiesOnly=yes" \
+  git push git@github.com:Ringhu/LTSGen.git codex/question-repair-20260519-ready
+```
+
 Remote state after failed push:
 
 - `codex/question-repair-20260519-ready` is not present on GitHub.
