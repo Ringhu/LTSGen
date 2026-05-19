@@ -45,7 +45,8 @@
 | Claim of QA improvement after training | GPU audit `audit_pass=false` and `claim_scope="No training-result claim allowed."` | missing |
 | Q-conditioned vs no-question training comparison | `tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.json` status `incomplete_or_blocked` | missing |
 | Safe GitHub result sync after GPU | `natural_qcc_gpu_result_manifest_20260520.json` currently `manifest_pass=false` because required GPU result files are absent; `unsafe_path_detected=false` | prepared but incomplete |
-| GitHub sync | local `HEAD=b70e3ed80be5d2860be5b85af22f4e533d17fe6c`; remote `refs/heads/codex/question-repair-20260519-ready` same SHA before this audit update | complete before this audit update |
+| Remote GPU access diagnosis | `natural_qcc_remote_gpu_access_check_20260520.json` shows `any_access_pass=false`; `a100` DNS unresolved, `3090` SSH closed | blocker documented |
+| GitHub sync | remote branch `refs/heads/codex/question-repair-20260519-ready` synced through the pre-access-check head `532aaaa5cba52f33c6dcb094d95ded164b5cd9e3`; this remote-access update must be pushed before relying on the report from GitHub | pending for current update |
 
 ## Inspected Metrics
 
@@ -146,6 +147,18 @@ Observed status:
 - `qcond_minus_no_question=null`
 - `claim_scope="No q-conditioning training comparison allowed."`
 
+Remote GPU access check:
+
+`.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_remote_gpu_access_check_20260520.json`
+
+Observed status:
+
+- `any_access_pass=false`
+- `a100`: `reachable=false`; blocker `ssh: Could not resolve hostname a100`
+- `3090`: `reachable=false`; blocker `Connection closed by 0.0.12.18 port 22`
+
+This is a blocker diagnostic only. It confirms why the paired GPU smoke could not be launched from the current workstation, but it does not satisfy any training-result requirement.
+
 ## Commands Needed To Finish The Objective
 
 Run on an accessible GPU host:
@@ -236,7 +249,7 @@ What is complete:
 - No-question control SFT split preparation.
 - Data asset baseline/probe.
 - Local weak training diagnostic.
-- GitHub sync through commit `b70e3ed80be5d2860be5b85af22f4e533d17fe6c`.
+- GitHub sync through the pre-access-check commit `532aaaa5cba52f33c6dcb094d95ded164b5cd9e3`; the current remote-access diagnostic update is pending push.
 
 What remains incomplete:
 

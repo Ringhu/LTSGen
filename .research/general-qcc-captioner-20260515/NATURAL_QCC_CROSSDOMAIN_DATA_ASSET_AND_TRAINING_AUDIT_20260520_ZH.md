@@ -14,6 +14,7 @@
 - probe results: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/probe_eval/natural_qcc_probe_results.json`
 - local caption ranker diagnostic: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/local_caption_ranker/`
 - local GPU preflight: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/gpu_smoke_preflight_local.json`
+- remote GPU access check: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_remote_gpu_access_check_20260520.json`
 - GPU smoke launcher: `scripts/remote/run_natural_qcc_crossdomain_smoke_a100.sh`
 - paired GPU smoke launcher: `scripts/remote/run_natural_qcc_crossdomain_pair_a100.sh`
 - local SSH launcher: `scripts/remote/launch_natural_qcc_crossdomain_pair_ssh.sh`
@@ -188,6 +189,21 @@ PUSH_RESULTS=1 PROFILE=a100 scripts/remote/launch_natural_qcc_crossdomain_pair_s
 ```
 
 `PUSH_RESULTS=1` 会先运行 `scripts/eval/collect_natural_qcc_gpu_result_manifest.py`，只把 preflight、pipeline summary、predictions、QA metrics 和 audit 文件加入 commit；manifest 明确排除 `final_model`、`pytorch_model.bin`、`.safetensors` 和 checkpoint 权重。
+
+远端 GPU 可达性检查已运行：
+
+```bash
+python3 scripts/remote/check_natural_qcc_remote_gpu_access.py
+```
+
+当前结果：
+
+| profile | reachable | access pass | blocker |
+| --- | ---: | ---: | --- |
+| `a100` | `false` | `false` | `ssh: Could not resolve hostname a100` |
+| `3090` | `false` | `false` | `Connection closed by 0.0.12.18 port 22` |
+
+该检查只是 blocker 诊断，不运行训练，也不能作为 generated-caption QA 证据。SSH 或远端环境恢复后，重跑同一命令可更新可达性报告；若任一 profile 通过，再运行 paired GPU smoke。
 
 本地 dry-run 已生成完整 q-conditioned pipeline plan，包括 preflight、train、generate、rule-QA。训练命令使用：
 
