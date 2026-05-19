@@ -13,6 +13,7 @@
 | eval raw | `.research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/smoke_sft/natural_qcc_probe_eval_test_raw.jsonl` |
 | gold all rows | `.research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/natural_qcc_probe_positive.jsonl` |
 | prediction QA evaluator | `scripts/eval/evaluate_natural_qcc_predictions.py` |
+| pipeline runner | `scripts/train/run_natural_qcc_gpu_smoke.py` |
 
 ## Step 0：环境检查
 
@@ -20,6 +21,7 @@
 test -d /cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507
 python3 -m py_compile scripts/eval/evaluate_natural_qcc_predictions.py
 python3 scripts/eval/check_natural_qcc_gpu_smoke_preflight.py
+python3 scripts/train/run_natural_qcc_gpu_smoke.py --dry_run
 ```
 
 如果模型路径不存在，不要启动训练；先改成实际缓存路径。
@@ -27,6 +29,24 @@ python3 scripts/eval/check_natural_qcc_gpu_smoke_preflight.py
 本机 preflight 已执行并失败，失败原因是当前机器没有 `/cluster` 模型路径、没有 `torch/transformers/peft` Python 环境，也没有满足 20GB 门槛的 GPU。数据文件、bridge 支持和 evaluator 入口检查通过。报告见：
 
 `.research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/gpu_smoke_preflight.json`
+
+dry-run pipeline plan 已生成：
+
+`.research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/tsrlm_natural_qcc_probe_smoke_qwen3_4b_20260519/natural_qcc_smoke_pipeline_plan.json`
+
+## 一键执行方式
+
+在 GPU 环境 preflight 通过后，可直接运行：
+
+```bash
+python3 scripts/train/run_natural_qcc_gpu_smoke.py
+```
+
+该脚本会顺序执行 preflight、训练、生成、QA 打分，并写入：
+
+```text
+.research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/tsrlm_natural_qcc_probe_smoke_qwen3_4b_20260519/natural_qcc_smoke_pipeline_summary.json
+```
 
 ## Step 1：训练 smoke captioner
 

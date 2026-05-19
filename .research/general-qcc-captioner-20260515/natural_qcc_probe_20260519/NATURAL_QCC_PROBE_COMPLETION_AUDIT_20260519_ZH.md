@@ -16,6 +16,7 @@
 | 训练后 generated caption 的 QA 评估入口 | `scripts/eval/evaluate_natural_qcc_predictions.py`；`target_caption` sanity 为 1.0000，`generic_caption` sanity 为 0.0233 | 已完成评估入口 |
 | GPU smoke 训练/生成/评估命令 | `NATURAL_QCC_GPU_SMOKE_RUNBOOK_20260519_ZH.md` | 已完成 runbook |
 | GPU smoke preflight | `scripts/eval/check_natural_qcc_gpu_smoke_preflight.py`；本机报告 `gpu_smoke_preflight.json`，`preflight_pass=false` | 已完成检查，当前机器阻塞 |
+| GPU smoke pipeline runner | `scripts/train/run_natural_qcc_gpu_smoke.py`；dry-run 写出 `natural_qcc_smoke_pipeline_plan.json` | 已完成 dry-run |
 | 真正 QCC 模型训练 | 需要 A100/3090 Qwen3-4B 环境；当前本地没有 `/cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507` | 未完成 |
 | 判断 QA 是否相比旧流程提升 | 需要正式 train/dev/test 扩展数据和 trained QCC 生成结果 | 未完成 |
 
@@ -32,6 +33,8 @@ python3 scripts/eval/evaluate_natural_qcc_predictions.py --predictions_jsonl .re
 python3 scripts/eval/evaluate_natural_qcc_predictions.py --predictions_jsonl .research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/natural_qcc_probe_positive.jsonl --out_dir .research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/prediction_eval_generic_caption --caption_field generic_caption
 python3 -m py_compile scripts/generate/build_natural_qcc_smoke_sft.py scripts/eval/check_natural_qcc_gpu_smoke_preflight.py
 python3 scripts/eval/check_natural_qcc_gpu_smoke_preflight.py
+python3 -m py_compile scripts/train/run_natural_qcc_gpu_smoke.py
+python3 scripts/train/run_natural_qcc_gpu_smoke.py --dry_run
 ```
 
 ## 当前不能宣称完成的部分
