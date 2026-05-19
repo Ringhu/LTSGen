@@ -1,0 +1,142 @@
+{
+  "input": ".research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/natural_qcc_probe_positive.jsonl",
+  "train_split": "dev",
+  "eval_split": "test",
+  "files": {
+    "train_raw": ".research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/smoke_sft/natural_qcc_probe_train_dev_raw.jsonl",
+    "train_sft": ".research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/smoke_sft/natural_qcc_probe_train_dev_sft.jsonl",
+    "eval_raw": ".research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/smoke_sft/natural_qcc_probe_eval_test_raw.jsonl",
+    "eval_sft": ".research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/smoke_sft/natural_qcc_probe_eval_test_sft.jsonl",
+    "schema_report": ".research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/smoke_sft/natural_qcc_probe_smoke_sft_schema.json"
+  },
+  "train": {
+    "n": 19,
+    "by_split": {
+      "dev": 19
+    },
+    "by_source": {
+      "citylearn": 3,
+      "finrl_scaled": 5,
+      "grid2op": 5,
+      "traffic": 5,
+      "water": 1
+    },
+    "by_source_split": {
+      "citylearn": {
+        "dev": 3
+      },
+      "finrl_scaled": {
+        "dev": 5
+      },
+      "grid2op": {
+        "dev": 5
+      },
+      "traffic": {
+        "dev": 5
+      },
+      "water": {
+        "dev": 1
+      }
+    },
+    "by_value_dim": {
+      "3": 19
+    },
+    "by_task_family": {
+      "city_anomaly_total_load": 2,
+      "city_volatility_total_load": 1,
+      "fin_volume_anomaly": 2,
+      "fin_extrema_price": 2,
+      "fin_volatility_returns": 1,
+      "grid_window_total_load": 1,
+      "grid_cross_variable_stress": 1,
+      "grid_volatility_total_load": 1,
+      "grid_trend_max_rho": 1,
+      "grid_temporal_lead_lag": 1,
+      "traffic_speed_periodicity": 1,
+      "traffic_speed_extrema": 1,
+      "traffic_queue_volatility": 1,
+      "traffic_speed_trend": 1,
+      "traffic_window_speed": 1,
+      "water_flow_volatility": 1
+    },
+    "answer_distribution": {
+      "C": 4,
+      "A": 4,
+      "B": 6,
+      "D": 5
+    },
+    "max_answer_share": 0.3158,
+    "missing_required_count": 0
+  },
+  "eval": {
+    "n": 24,
+    "by_split": {
+      "test": 24
+    },
+    "by_source": {
+      "aiopslab_official_v3": 3,
+      "citylearn": 5,
+      "finrl_scaled": 3,
+      "grid2op": 3,
+      "traffic": 3,
+      "water": 7
+    },
+    "by_source_split": {
+      "aiopslab_official_v3": {
+        "test": 3
+      },
+      "citylearn": {
+        "test": 5
+      },
+      "finrl_scaled": {
+        "test": 3
+      },
+      "grid2op": {
+        "test": 3
+      },
+      "traffic": {
+        "test": 3
+      },
+      "water": {
+        "test": 7
+      }
+    },
+    "by_value_dim": {
+      "4": 3,
+      "3": 21
+    },
+    "by_task_family": {
+      "aiops_official_window_memory": 2,
+      "aiops_official_network_volatility": 1,
+      "city_window_total_load": 2,
+      "city_volatility_total_load": 1,
+      "city_domain_demand_context": 1,
+      "city_extrema_total_load": 1,
+      "fin_window_return": 1,
+      "fin_domain_market_regime": 1,
+      "fin_drawdown_price": 1,
+      "grid_cross_variable_stress": 1,
+      "grid_counterfactual_peak_stress": 1,
+      "grid_volatility_total_load": 1,
+      "traffic_speed_queue_lead_lag": 1,
+      "traffic_signal_counterfactual_queue": 1,
+      "traffic_queue_volatility": 1,
+      "water_pressure_periodicity": 1,
+      "water_combined_stress_context": 1,
+      "water_leak_counterfactual_pressure": 1,
+      "water_domain_resilience_context": 1,
+      "water_flow_volatility": 1,
+      "water_event_recovery_context": 1,
+      "water_counterfactual_event_gap": 1
+    },
+    "answer_distribution": {
+      "A": 3,
+      "B": 6,
+      "D": 6,
+      "C": 9
+    },
+    "max_answer_share": 0.375,
+    "missing_required_count": 0
+  },
+  "schema_gate_pass": true
+}
