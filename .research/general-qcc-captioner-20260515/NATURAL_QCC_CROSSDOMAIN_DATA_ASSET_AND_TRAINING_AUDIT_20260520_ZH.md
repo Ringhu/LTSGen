@@ -17,6 +17,7 @@
 - GPU smoke launcher: `scripts/remote/run_natural_qcc_crossdomain_smoke_a100.sh`
 - paired GPU smoke launcher: `scripts/remote/run_natural_qcc_crossdomain_pair_a100.sh`
 - local SSH launcher: `scripts/remote/launch_natural_qcc_crossdomain_pair_ssh.sh`
+- GPU result manifest collector: `scripts/eval/collect_natural_qcc_gpu_result_manifest.py`
 - q-conditioned GPU dry-run/audit dir: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/`
 - no-question GPU dry-run/audit dir: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/`
 - qcond-vs-no-question audit: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.json`
@@ -180,6 +181,13 @@ PROFILE=3090 scripts/remote/launch_natural_qcc_crossdomain_pair_ssh.sh
 ```
 
 该 launcher 会在远端 `git fetch/checkout/pull` 当前 GitHub 分支，运行 paired GPU runner，并把日志写到对应数据目录。
+默认不会提交训练结果。若 GPU run 完成后要把小结果文件同步回 GitHub，可以显式设置：
+
+```bash
+PUSH_RESULTS=1 PROFILE=a100 scripts/remote/launch_natural_qcc_crossdomain_pair_ssh.sh
+```
+
+`PUSH_RESULTS=1` 会先运行 `scripts/eval/collect_natural_qcc_gpu_result_manifest.py`，只把 preflight、pipeline summary、predictions、QA metrics 和 audit 文件加入 commit；manifest 明确排除 `final_model`、`pytorch_model.bin`、`.safetensors` 和 checkpoint 权重。
 
 本地 dry-run 已生成完整 q-conditioned pipeline plan，包括 preflight、train、generate、rule-QA。训练命令使用：
 
@@ -227,6 +235,8 @@ python3 scripts/eval/audit_natural_qcc_gpu_qcond_vs_noquestion.py
 - baseline max non-oracle: `0.1273`
 
 因此目前不能声称 QCC 训练提升。
+
+GPU result manifest 当前状态为 `manifest_pass=false`，因为真实 GPU run 尚未产生 `preflight.json`、generated predictions 和 rule-QA 文件；`unsafe_path_detected=false`，说明 manifest 不会收集权重路径。
 
 ## 下一步
 

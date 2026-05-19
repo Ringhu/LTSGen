@@ -5,6 +5,7 @@ PROFILE="${PROFILE:-a100}"
 BRANCH="${BRANCH:-codex/question-repair-20260519-ready}"
 REMOTE="${REMOTE:-origin}"
 SSH_TARGET="${SSH_TARGET:-$PROFILE}"
+PUSH_RESULTS="${PUSH_RESULTS:-0}"
 
 case "$PROFILE" in
   a100)
@@ -28,9 +29,10 @@ echo "[launch] profile: $PROFILE"
 echo "[launch] remote root: $ROOT"
 echo "[launch] branch: $BRANCH"
 echo "[launch] log: $LOG_PATH"
+echo "[launch] push results: $PUSH_RESULTS"
 
 ssh -o BatchMode=yes "$SSH_TARGET" \
-  "PROFILE='$PROFILE' ROOT_OVERRIDE='$ROOT' BRANCH='$BRANCH' REMOTE='$REMOTE' LOG_PATH='$LOG_PATH' bash -s" <<'REMOTE_SCRIPT'
+  "PROFILE='$PROFILE' ROOT_OVERRIDE='$ROOT' BRANCH='$BRANCH' REMOTE='$REMOTE' LOG_PATH='$LOG_PATH' PUSH_RESULTS='$PUSH_RESULTS' bash -s" <<'REMOTE_SCRIPT'
 set -euo pipefail
 
 cd "$ROOT_OVERRIDE"
@@ -49,4 +51,15 @@ mkdir -p "$(dirname "$LOG_PATH")"
   PROFILE="$PROFILE" scripts/remote/run_natural_qcc_crossdomain_pair_a100.sh
   date
 } 2>&1 | tee "$LOG_PATH"
+
+if [[ "$PUSH_RESULTS" == "1" ]]; then
+  python3 scripts/eval/collect_natural_qcc_gpu_result_manifest.py
+  git add --pathspec-from-file=.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_gpu_result_manifest_20260520.pathspec
+  if git diff --cached --quiet; then
+    echo "[remote] no result artifact changes to commit"
+  else
+    git commit -m "Add natural QCC GPU pair results"
+    git push "$REMOTE" "$BRANCH"
+  fi
+fi
 REMOTE_SCRIPT

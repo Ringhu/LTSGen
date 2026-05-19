@@ -44,6 +44,7 @@
 | Generated-caption QA | `generate_eval_test_clean/rule_qa/qa_metrics.json` absent | missing |
 | Claim of QA improvement after training | GPU audit `audit_pass=false` and `claim_scope="No training-result claim allowed."` | missing |
 | Q-conditioned vs no-question training comparison | `tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.json` status `incomplete_or_blocked` | missing |
+| Safe GitHub result sync after GPU | `natural_qcc_gpu_result_manifest_20260520.json` currently `manifest_pass=false` because required GPU result files are absent; `unsafe_path_detected=false` | prepared but incomplete |
 | GitHub sync | local `HEAD=b70e3ed80be5d2860be5b85af22f4e533d17fe6c`; remote `refs/heads/codex/question-repair-20260519-ready` same SHA before this audit update | complete before this audit update |
 
 ## Inspected Metrics
@@ -172,6 +173,7 @@ PROFILE=3090 scripts/remote/launch_natural_qcc_crossdomain_pair_ssh.sh
 ```
 
 The SSH launcher fetches, checks out, and fast-forwards `codex/question-repair-20260519-ready` on the remote host before running the paired GPU smoke command.
+It does not push training results unless `PUSH_RESULTS=1` is explicitly set. With `PUSH_RESULTS=1`, it first runs `scripts/eval/collect_natural_qcc_gpu_result_manifest.py` and commits only the manifest pathspec: preflight, pipeline summary, generated predictions, rule-QA metrics, and audit files. Checkpoint/model paths are excluded from the manifest.
 
 Equivalent explicit commands:
 
