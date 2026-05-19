@@ -26,17 +26,44 @@ ROOT="${ROOT_OVERRIDE:-$DEFAULT_ROOT}"
 PY="${PY_OVERRIDE:-$DEFAULT_PY}"
 MODEL="${MODEL_OVERRIDE:-$DEFAULT_MODEL}"
 BASE="$ROOT/.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520"
-RUN="${RUN_OVERRIDE:-$BASE/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520}"
+MODE="${MODE:-qcond}"
+
+case "$MODE" in
+  qcond)
+    SFT_DIR="$BASE/sft"
+    RUN_NAME="natural_qcc_crossdomain"
+    RUN_DEFAULT="$BASE/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520"
+    ;;
+  no_question)
+    SFT_DIR="$BASE/sft_no_question"
+    RUN_NAME="natural_qcc_crossdomain_no_question"
+    RUN_DEFAULT="$BASE/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520"
+    ;;
+  *)
+    echo "[error] unsupported MODE=$MODE; use qcond or no_question" >&2
+    exit 2
+    ;;
+esac
+
+RUN="${RUN_OVERRIDE:-$RUN_DEFAULT}"
 
 export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-$DEFAULT_GPU}"
 export PYTHONPATH="$ROOT/tslm:$ROOT:$ROOT/scripts/eval:${PYTHONPATH:-}"
 
 cd "$ROOT"
 
+if [[ "$MODE" == "no_question" && ! -f "$SFT_DIR/${RUN_NAME}_train_sft.jsonl" ]]; then
+  "$PY" scripts/generate/build_natural_qcc_no_question_control.py \
+    --sft_dir "$BASE/sft" \
+    --out_dir "$SFT_DIR" \
+    --run_name natural_qcc_crossdomain \
+    --out_run_name "$RUN_NAME"
+fi
+
 "$PY" scripts/train/run_natural_qcc_gpu_smoke.py \
-  --train_sft "$BASE/sft/natural_qcc_crossdomain_train_sft.jsonl" \
-  --eval_sft "$BASE/sft/natural_qcc_crossdomain_test_sft.jsonl" \
-  --eval_raw "$BASE/sft/natural_qcc_crossdomain_test_raw.jsonl" \
+  --train_sft "$SFT_DIR/${RUN_NAME}_train_sft.jsonl" \
+  --eval_sft "$SFT_DIR/${RUN_NAME}_test_sft.jsonl" \
+  --eval_raw "$SFT_DIR/${RUN_NAME}_test_raw.jsonl" \
   --gold_jsonl "$BASE/natural_qcc_crossdomain_positive.jsonl" \
   --model_path "$MODEL" \
   --run_dir "$RUN" \

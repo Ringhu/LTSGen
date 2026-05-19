@@ -89,7 +89,7 @@ def build_decision(*, audit_pass: bool, generated_acc: float | None, baseline: d
         "beats_all_non_oracle_baselines": beats_non_oracle,
         "oracle_gap": natural_oracle - generated_acc if natural_oracle is not None and generated_acc is not None else None,
         "claim_scope": (
-            "AIOps smoke only; not a cross-domain method claim."
+            "Smoke-level training result only; not a full method claim."
             if audit_pass
             else "No training-result claim allowed."
         ),

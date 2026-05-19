@@ -38,7 +38,7 @@ class AuditNaturalQccGpuSmokeResultTest(unittest.TestCase):
         self.assertEqual(decision["baseline_max_non_oracle"], 0.2)
         self.assertTrue(decision["beats_all_non_oracle_baselines"])
         self.assertTrue(decision["beats_question_only"])
-        self.assertEqual(decision["claim_scope"], "AIOps smoke only; not a cross-domain method claim.")
+        self.assertEqual(decision["claim_scope"], "Smoke-level training result only; not a full method claim.")
 
 
 if __name__ == "__main__":

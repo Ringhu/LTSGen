@@ -10,11 +10,14 @@
 - reviewer report: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_rewrites_20260520/NATURAL_QCC_CROSSDOMAIN_REVIEW_20260520_ZH.md`
 - positive dataset: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_crossdomain_positive.jsonl`
 - SFT files: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/`
+- no-question control SFT files: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft_no_question/`
 - probe results: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/probe_eval/natural_qcc_probe_results.json`
 - local caption ranker diagnostic: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/local_caption_ranker/`
 - local GPU preflight: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/gpu_smoke_preflight_local.json`
 - GPU smoke launcher: `scripts/remote/run_natural_qcc_crossdomain_smoke_a100.sh`
-- GPU dry-run/audit dir: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/`
+- q-conditioned GPU dry-run/audit dir: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/`
+- no-question GPU dry-run/audit dir: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/`
+- qcond-vs-no-question audit: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.json`
 
 ## 候选池
 
@@ -138,7 +141,7 @@ python3 scripts/eval/run_natural_qcc_local_caption_ranker.py \
 
 ## GPU 训练状态
 
-已新增启动脚本：
+已新增启动脚本，默认跑 question-conditioned QCC captioner：
 
 ```bash
 PROFILE=a100 scripts/remote/run_natural_qcc_crossdomain_smoke_a100.sh
@@ -150,7 +153,7 @@ PROFILE=a100 scripts/remote/run_natural_qcc_crossdomain_smoke_a100.sh
 PROFILE=3090 scripts/remote/run_natural_qcc_crossdomain_smoke_a100.sh
 ```
 
-本地 dry-run 已生成完整 pipeline plan，包括 preflight、train、generate、rule-QA。训练命令使用：
+本地 dry-run 已生成完整 q-conditioned pipeline plan，包括 preflight、train、generate、rule-QA。训练命令使用：
 
 - train: `sft/natural_qcc_crossdomain_train_sft.jsonl`
 - eval: `sft/natural_qcc_crossdomain_test_sft.jsonl`
@@ -160,6 +163,33 @@ PROFILE=3090 scripts/remote/run_natural_qcc_crossdomain_smoke_a100.sh
 - `target_num_vars=4`
 - `ts_num_vars=4`
 - `source_group_key=merge_source_name`
+
+为了判断 QCC conditioning 本身是否有效，本轮还新增了 no-question prompt control：
+
+- control assets: `sft_no_question/natural_qcc_crossdomain_no_question_{train,dev,test}_{sft,raw}.jsonl`
+- split: train/dev/test = `31/11/13`
+- gate: `question_marker_count=0`，`missing_prompt_count=0`
+- summary: `sft_no_question/natural_qcc_crossdomain_no_question_summary.json`
+
+no-question control 保留相同 time-series values、target caption、gold answer 和 split，只从顶层模型输入 prompt 中移除 downstream question。运行方式：
+
+```bash
+MODE=no_question PROFILE=a100 scripts/remote/run_natural_qcc_crossdomain_smoke_a100.sh
+```
+
+或：
+
+```bash
+MODE=no_question PROFILE=3090 scripts/remote/run_natural_qcc_crossdomain_smoke_a100.sh
+```
+
+两条 GPU run 都完成后，用以下审计器比较 q-conditioned 与 no-question：
+
+```bash
+python3 scripts/eval/audit_natural_qcc_gpu_qcond_vs_noquestion.py
+```
+
+当前 qcond-vs-no-question audit 状态为 `incomplete_or_blocked`，因为两条真实 GPU training 尚未完成。
 
 本地 preflight 检查显示数据文件、schema、bridge config、evaluator 都可用；失败原因是本机没有 `torch/transformers/peft` 和满足 20GB 门槛的 CUDA GPU。GPU result audit 当前为：
 
@@ -172,9 +202,10 @@ PROFILE=3090 scripts/remote/run_natural_qcc_crossdomain_smoke_a100.sh
 
 ## 下一步
 
-1. 在 A100 或 3090 上运行 `scripts/remote/run_natural_qcc_crossdomain_smoke_a100.sh`，完成真实 SFT、caption generation 和 generated-caption QA。
-2. 训练完成后重新运行 `scripts/eval/audit_natural_qcc_gpu_smoke_result.py --run_dir ... --probe_results ...`。
-3. 若 generated-caption QA 超过 `question_only=0.1273` 且最好超过本地非 oracle 最大基线，再记录为 cross-domain smoke 训练正信号。
-4. 修复剩余 5 条 excluded 行中暴露的 support-slot/阈值问题；其中 CityLearn demand 与 Water periodicity 需要改 deterministic 规则或重采样，不能只改文字。
-5. 恢复或重建 FinRL 源 JSONL 后，把 FinRL 加回同一 reviewer gate。
-6. 下一轮扩到每域 50-100 条 reviewer-positive 后，再做正式训练对比；当前 55 条只适合作为 smoke。
+1. 在 A100 或 3090 上分别运行 `MODE=qcond` 和 `MODE=no_question` 的 `scripts/remote/run_natural_qcc_crossdomain_smoke_a100.sh`，完成两条真实 SFT、caption generation 和 generated-caption QA。
+2. 两条 run 完成后分别重新运行 `scripts/eval/audit_natural_qcc_gpu_smoke_result.py --run_dir ... --probe_results ...`。
+3. 再运行 `scripts/eval/audit_natural_qcc_gpu_qcond_vs_noquestion.py`，判断 q-conditioned generated-caption QA 是否超过 no-question control。
+4. 若 q-conditioned generated-caption QA 超过 `question_only=0.1273`、`generic_caption=0.0182`、`statistical_caption=0.0000`，且超过 no-question control，再记录为 cross-domain smoke 训练正信号。
+5. 修复剩余 5 条 excluded 行中暴露的 support-slot/阈值问题；其中 CityLearn demand 与 Water periodicity 需要改 deterministic 规则或重采样，不能只改文字。
+6. 恢复或重建 FinRL 源 JSONL 后，把 FinRL 加回同一 reviewer gate。
+7. 下一轮扩到每域 50-100 条 reviewer-positive 后，再做正式训练对比；当前 55 条只适合作为 smoke。
