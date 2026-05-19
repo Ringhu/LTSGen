@@ -116,6 +116,11 @@ def module_exists(name: str) -> bool:
     return importlib.util.find_spec(name) is not None
 
 
+def looks_like_hf_model_id(path: Path) -> bool:
+    text = str(path)
+    return not path.is_absolute() and "/" in text and not text.startswith(".")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--train_sft", type=Path, default=DEFAULT_TRAIN)
@@ -149,13 +154,18 @@ def main() -> None:
         cfg_error = repr(exc)
 
     evaluator_path = ROOT / "scripts/eval/evaluate_natural_qcc_predictions.py"
+    model_path_exists = args.model_path.exists()
+    model_is_hf_id = looks_like_hf_model_id(args.model_path)
+    model_reference_ok = model_path_exists or model_is_hf_id
     report = {
         "train_sft": str(args.train_sft),
         "eval_sft": str(args.eval_sft),
         "eval_raw": str(args.eval_raw),
         "gold_jsonl": str(args.gold_jsonl),
         "model_path": str(args.model_path),
-        "model_path_exists": args.model_path.exists(),
+        "model_path_exists": model_path_exists,
+        "model_is_hf_id": model_is_hf_id,
+        "model_reference_ok": model_reference_ok,
         "path_checks": path_checks,
         "train_summary": train_summary,
         "eval_summary": eval_summary,
@@ -177,7 +187,7 @@ def main() -> None:
     }
     report["preflight_pass"] = (
         all(path_checks.values())
-        and report["model_path_exists"]
+        and report["model_reference_ok"]
         and train_summary.get("n", 0) > 0
         and eval_summary.get("n", 0) > 0
         and train_summary.get("missing_required_count", 1) == 0
