@@ -24,8 +24,12 @@ PATHS = {
     "no_question_summary": BASE / "sft_no_question/natural_qcc_crossdomain_no_question_summary.json",
     "probe_results": BASE / "probe_eval/natural_qcc_probe_results.json",
     "qcond_audit": BASE / "tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_gpu_smoke_result_audit.json",
+    "qcond_caption_quality": BASE
+    / "tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.json",
     "no_question_audit": BASE
     / "tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_gpu_smoke_result_audit.json",
+    "no_question_caption_quality": BASE
+    / "tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.json",
     "compare_audit": BASE / "tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.json",
     "manifest": BASE / "natural_qcc_gpu_result_manifest_20260520.json",
     "remote_access": BASE / "natural_qcc_remote_gpu_access_check_20260520.json",
@@ -159,6 +163,19 @@ def compare_summary(compare: dict[str, Any] | None) -> dict[str, Any]:
     }
 
 
+def caption_quality_summary(quality: dict[str, Any] | None) -> dict[str, Any]:
+    metrics = nested(quality, "metrics") or {}
+    return {
+        "exists": quality is not None,
+        "rows": int(metrics.get("n") or 0),
+        "quality_gate_pass": bool(metrics.get("quality_gate_pass")),
+        "evidence_shape_rate": as_float(metrics.get("evidence_shape_rate")),
+        "numeric_evidence_rate": as_float(metrics.get("numeric_evidence_rate")),
+        "answer_label_only_rate": as_float(metrics.get("answer_label_only_rate")),
+        "too_short_rate": as_float(metrics.get("too_short_rate")),
+    }
+
+
 def manifest_summary(manifest: dict[str, Any] | None) -> dict[str, Any]:
     return {
         "exists": manifest is not None,
@@ -191,20 +208,21 @@ def objective_decision(completion_checks: dict[str, bool], result_checks: dict[s
     qcond_beats_baselines = bool(result_checks.get("qcond_beats_all_non_oracle_baselines"))
     gap = as_float(result_checks.get("qcond_minus_no_question"))
     min_gap = as_float(result_checks.get("min_gap")) or 0.0
+    qcond_quality_gate_pass = bool(result_checks.get("qcond_caption_quality_gate_pass"))
     qcond_beats_no_question = gap is not None and gap > 0
     qcond_gap_meets_min = gap is not None and gap >= min_gap
 
     if not objective_complete:
         status = "incomplete_or_blocked"
-        summary_zh = "目标尚未完成：真实 QCC/no-question 训练、生成 caption、QA 或安全同步证据仍缺失。"
+        summary_zh = "目标尚未完成：真实 QCC/no-question 训练、生成 caption、caption 质量审计、QA 或安全同步证据仍缺失。"
         claim_scope = "No generated-caption training claim allowed."
-    elif qcond_beats_baselines and qcond_gap_meets_min:
+    elif qcond_beats_baselines and qcond_gap_meets_min and qcond_quality_gate_pass:
         status = "complete_positive_qcc_signal"
-        summary_zh = "目标完成，并且 q-conditioned generated-caption QA 同时超过非 oracle 基线和 no-question 对照。"
+        summary_zh = "目标完成，并且 q-conditioned generated-caption QA 同时超过非 oracle 基线和 no-question 对照，caption 质量审计也通过。"
         claim_scope = "Cross-domain smoke-level positive QCC signal; not a full method claim."
     elif qcond_beats_baselines or qcond_beats_no_question:
         status = "complete_mixed_or_weak_signal"
-        summary_zh = "目标完成，但 QCC 训练信号不完整；需要按弱信号或混合结果报告。"
+        summary_zh = "目标完成，但 QCC 训练信号或 caption 质量不完整；需要按弱信号或混合结果报告。"
         claim_scope = "Completed smoke with mixed result; do not overclaim."
     else:
         status = "complete_negative_signal"
@@ -227,14 +245,18 @@ def build_report() -> dict[str, Any]:
     no_question = load_json(PATHS["no_question_summary"])
     probe = load_json(PATHS["probe_results"])
     qcond_audit = load_json(PATHS["qcond_audit"])
+    qcond_caption_quality = load_json(PATHS["qcond_caption_quality"])
     no_question_audit = load_json(PATHS["no_question_audit"])
+    no_question_caption_quality = load_json(PATHS["no_question_caption_quality"])
     compare = load_json(PATHS["compare_audit"])
     manifest = load_json(PATHS["manifest"])
     remote_access = load_json(PATHS["remote_access"])
 
     probe_info = probe_summary(probe)
     qcond_info = gpu_audit_summary(qcond_audit)
+    qcond_quality_info = caption_quality_summary(qcond_caption_quality)
     no_question_info = gpu_audit_summary(no_question_audit)
+    no_question_quality_info = caption_quality_summary(no_question_caption_quality)
     compare_info = compare_summary(compare)
     manifest_info = manifest_summary(manifest)
     remote_info = remote_access_summary(remote_access)
@@ -257,6 +279,10 @@ def build_report() -> dict[str, Any]:
         "no_question_generated_metrics_present": (
             no_question_info["generated_accuracy"] is not None and no_question_info["generated_rows"] > 0
         ),
+        "qcond_caption_quality_audit_present": qcond_quality_info["exists"] and qcond_quality_info["rows"] > 0,
+        "no_question_caption_quality_audit_present": (
+            no_question_quality_info["exists"] and no_question_quality_info["rows"] > 0
+        ),
         "qcond_vs_no_question_comparison_complete": bool(compare_info["complete"]),
         "safe_result_manifest_pass": bool(manifest_info["manifest_pass"]),
         "safe_result_manifest_has_no_unsafe_paths": bool(manifest_info["exists"] and not manifest_info["unsafe_path_detected"]),
@@ -268,6 +294,12 @@ def build_report() -> dict[str, Any]:
         "min_gap": compare_info["min_gap"],
         "qcond_beats_all_non_oracle_baselines": qcond_info["beats_all_non_oracle_baselines"],
         "qcond_beats_question_only": qcond_info["beats_question_only"],
+        "qcond_caption_quality_gate_pass": qcond_quality_info["quality_gate_pass"],
+        "qcond_caption_evidence_shape_rate": qcond_quality_info["evidence_shape_rate"],
+        "qcond_caption_answer_label_only_rate": qcond_quality_info["answer_label_only_rate"],
+        "no_question_caption_quality_gate_pass": no_question_quality_info["quality_gate_pass"],
+        "no_question_caption_evidence_shape_rate": no_question_quality_info["evidence_shape_rate"],
+        "no_question_caption_answer_label_only_rate": no_question_quality_info["answer_label_only_rate"],
         "compare_status": compare_info["status"],
     }
     decision = objective_decision(completion_checks, result_checks)
@@ -287,7 +319,9 @@ def build_report() -> dict[str, Any]:
         },
         "probe": probe_info,
         "qcond": qcond_info,
+        "qcond_caption_quality": qcond_quality_info,
         "no_question": no_question_info,
+        "no_question_caption_quality": no_question_quality_info,
         "compare": compare_info,
         "manifest": manifest_info,
         "remote_access": remote_info,
@@ -344,8 +378,9 @@ def markdown(report: dict[str, Any]) -> str:
             "## Guardrail",
             "",
             "该 gate 只在 q-conditioned 与 no-question 两条 GPU smoke 都完成、生成 caption 和 rule-QA 指标都存在、"
-            "并且安全 manifest 通过时，才会把 objective 标为 complete。",
-            "若 objective complete 但 QCC 没有超过 baselines/no-question，应按负结果报告，而不是改写 claim。",
+            "caption-quality 审计存在，并且安全 manifest 通过时，才会把 objective 标为 complete。",
+            "若 objective complete 但 QCC 没有超过 baselines/no-question，或 QA 提升但 caption-quality gate 失败，"
+            "应按负结果或弱信号报告，而不是改写 claim。",
             "",
         ]
     )

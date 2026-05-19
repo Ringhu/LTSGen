@@ -28,6 +28,9 @@ SAFE_RELATIVE_FILES = (
     "multisim_v5_train_smoke_report.json",
     "natural_qcc_gpu_smoke_result_audit.json",
     "natural_qcc_gpu_smoke_result_audit.md",
+    "natural_qcc_caption_quality_audit.json",
+    "natural_qcc_caption_quality_audit.md",
+    "natural_qcc_caption_quality_audit.rows.jsonl",
     "generate_eval_test_clean/metrics.json",
     "generate_eval_test_clean/predictions.jsonl",
     "generate_eval_test_clean/rule_qa/qa_metrics.json",
@@ -75,6 +78,9 @@ def run_items(run_dir: Path) -> list[dict[str, Any]]:
         "natural_qcc_smoke_pipeline_summary.json",
         "natural_qcc_gpu_smoke_result_audit.json",
         "natural_qcc_gpu_smoke_result_audit.md",
+        "natural_qcc_caption_quality_audit.json",
+        "natural_qcc_caption_quality_audit.md",
+        "natural_qcc_caption_quality_audit.rows.jsonl",
         "generate_eval_test_clean/predictions.jsonl",
         "generate_eval_test_clean/rule_qa/qa_metrics.json",
         "generate_eval_test_clean/rule_qa/qa_predictions.jsonl",
@@ -112,6 +118,19 @@ def audit_summary(run_dir: Path) -> dict[str, Any]:
     }
 
 
+def caption_quality_summary(run_dir: Path) -> dict[str, Any]:
+    audit = load_json(run_dir / "natural_qcc_caption_quality_audit.json") or {}
+    metrics = audit.get("metrics") if isinstance(audit.get("metrics"), dict) else {}
+    return {
+        "exists": bool(audit),
+        "quality_gate_pass": bool(metrics.get("quality_gate_pass")),
+        "rows": metrics.get("n"),
+        "evidence_shape_rate": metrics.get("evidence_shape_rate"),
+        "answer_label_only_rate": metrics.get("answer_label_only_rate"),
+        "numeric_evidence_rate": metrics.get("numeric_evidence_rate"),
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--qcond_run_dir", type=Path, default=DEFAULT_QCOND)
@@ -137,7 +156,9 @@ def main() -> None:
         "compare_audit": rel(args.compare_audit),
         "objective_audit": rel(args.objective_audit),
         "qcond": audit_summary(args.qcond_run_dir),
+        "qcond_caption_quality": caption_quality_summary(args.qcond_run_dir),
         "no_question": audit_summary(args.no_question_run_dir),
+        "no_question_caption_quality": caption_quality_summary(args.no_question_run_dir),
         "compare_decision": compare_payload.get("decision", {}),
         "files": all_items,
         "required_missing": required_missing,

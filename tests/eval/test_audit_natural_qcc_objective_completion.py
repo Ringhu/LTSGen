@@ -21,6 +21,8 @@ BASE_CHECKS = {
     "no_question_gpu_audit_pass": True,
     "qcond_generated_metrics_present": True,
     "no_question_generated_metrics_present": True,
+    "qcond_caption_quality_audit_present": True,
+    "no_question_caption_quality_audit_present": True,
     "qcond_vs_no_question_comparison_complete": True,
     "safe_result_manifest_pass": True,
     "safe_result_manifest_has_no_unsafe_paths": True,
@@ -37,6 +39,7 @@ class AuditNaturalQccObjectiveCompletionTest(unittest.TestCase):
                 "qcond_beats_all_non_oracle_baselines": True,
                 "qcond_minus_no_question": 0.2,
                 "min_gap": 0.05,
+                "qcond_caption_quality_gate_pass": True,
             },
         )
 
@@ -51,6 +54,7 @@ class AuditNaturalQccObjectiveCompletionTest(unittest.TestCase):
                 "qcond_beats_all_non_oracle_baselines": True,
                 "qcond_minus_no_question": 0.1,
                 "min_gap": 0.05,
+                "qcond_caption_quality_gate_pass": True,
             },
         )
 
@@ -65,12 +69,27 @@ class AuditNaturalQccObjectiveCompletionTest(unittest.TestCase):
                 "qcond_beats_all_non_oracle_baselines": False,
                 "qcond_minus_no_question": -0.1,
                 "min_gap": 0.05,
+                "qcond_caption_quality_gate_pass": False,
             },
         )
 
         self.assertTrue(result["objective_complete"])
         self.assertEqual(result["status"], "complete_negative_signal")
         self.assertFalse(result["qcond_beats_no_question"])
+
+    def test_qa_positive_but_caption_quality_failed_is_mixed(self):
+        result = objective_decision(
+            BASE_CHECKS,
+            {
+                "qcond_beats_all_non_oracle_baselines": True,
+                "qcond_minus_no_question": 0.1,
+                "min_gap": 0.05,
+                "qcond_caption_quality_gate_pass": False,
+            },
+        )
+
+        self.assertTrue(result["objective_complete"])
+        self.assertEqual(result["status"], "complete_mixed_or_weak_signal")
 
 
 if __name__ == "__main__":

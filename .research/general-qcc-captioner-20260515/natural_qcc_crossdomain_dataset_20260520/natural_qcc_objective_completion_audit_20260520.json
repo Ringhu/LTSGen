@@ -5,7 +5,9 @@
     "no_question_summary": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft_no_question/natural_qcc_crossdomain_no_question_summary.json",
     "probe_results": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/probe_eval/natural_qcc_probe_results.json",
     "qcond_audit": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_gpu_smoke_result_audit.json",
+    "qcond_caption_quality": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.json",
     "no_question_audit": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_gpu_smoke_result_audit.json",
+    "no_question_caption_quality": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.json",
     "compare_audit": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.json",
     "manifest": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_gpu_result_manifest_20260520.json",
     "remote_access": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_remote_gpu_access_check_20260520.json"
@@ -47,6 +49,15 @@
     "beats_question_only": false,
     "claim_scope": "No training-result claim allowed."
   },
+  "qcond_caption_quality": {
+    "exists": false,
+    "rows": 0,
+    "quality_gate_pass": false,
+    "evidence_shape_rate": null,
+    "numeric_evidence_rate": null,
+    "answer_label_only_rate": null,
+    "too_short_rate": null
+  },
   "no_question": {
     "audit_exists": true,
     "audit_pass": false,
@@ -56,6 +67,15 @@
     "beats_all_non_oracle_baselines": false,
     "beats_question_only": false,
     "claim_scope": "No training-result claim allowed."
+  },
+  "no_question_caption_quality": {
+    "exists": false,
+    "rows": 0,
+    "quality_gate_pass": false,
+    "evidence_shape_rate": null,
+    "numeric_evidence_rate": null,
+    "answer_label_only_rate": null,
+    "too_short_rate": null
   },
   "compare": {
     "exists": true,
@@ -73,10 +93,16 @@
     "unsafe_path_detected": false,
     "required_missing": [
       ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/preflight.json",
+      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.json",
+      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.md",
+      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.rows.jsonl",
       ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/predictions.jsonl",
       ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/qa_metrics.json",
       ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/qa_predictions.jsonl",
       ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/preflight.json",
+      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.json",
+      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.md",
+      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.rows.jsonl",
       ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/generate_eval_test_clean/predictions.jsonl",
       ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/qa_metrics.json",
       ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/qa_predictions.jsonl"
@@ -113,6 +139,8 @@
     "no_question_gpu_audit_pass": false,
     "qcond_generated_metrics_present": false,
     "no_question_generated_metrics_present": false,
+    "qcond_caption_quality_audit_present": false,
+    "no_question_caption_quality_audit_present": false,
     "qcond_vs_no_question_comparison_complete": false,
     "safe_result_manifest_pass": false,
     "safe_result_manifest_has_no_unsafe_paths": true
@@ -124,18 +152,26 @@
     "min_gap": 0.05,
     "qcond_beats_all_non_oracle_baselines": false,
     "qcond_beats_question_only": false,
+    "qcond_caption_quality_gate_pass": false,
+    "qcond_caption_evidence_shape_rate": null,
+    "qcond_caption_answer_label_only_rate": null,
+    "no_question_caption_quality_gate_pass": false,
+    "no_question_caption_evidence_shape_rate": null,
+    "no_question_caption_answer_label_only_rate": null,
     "compare_status": "incomplete_or_blocked"
   },
   "decision": {
     "objective_complete": false,
     "status": "incomplete_or_blocked",
-    "summary_zh": "目标尚未完成：真实 QCC/no-question 训练、生成 caption、QA 或安全同步证据仍缺失。",
+    "summary_zh": "目标尚未完成：真实 QCC/no-question 训练、生成 caption、caption 质量审计、QA 或安全同步证据仍缺失。",
     "claim_scope": "No generated-caption training claim allowed.",
     "blockers": [
       "qcond_gpu_audit_pass",
       "no_question_gpu_audit_pass",
       "qcond_generated_metrics_present",
       "no_question_generated_metrics_present",
+      "qcond_caption_quality_audit_present",
+      "no_question_caption_quality_audit_present",
       "qcond_vs_no_question_comparison_complete",
       "safe_result_manifest_pass"
     ],

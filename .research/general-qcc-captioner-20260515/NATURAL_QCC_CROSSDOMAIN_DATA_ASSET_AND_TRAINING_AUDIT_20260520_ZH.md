@@ -1,6 +1,6 @@
 # Natural QCC 跨域数据资产与训练前审计（2026-05-20）
 
-本报告记录把新的自然 TS-QA 构造方式从 AIOps-only 扩展到跨域 QCC 的一次闭环检查。当前结论是：数据资产和接口 probe 已经比第一版更稳，但真实 QCC SFT 仍未完成，不能声称 generated-caption QA 有训练提升。
+本报告记录把新的自然 TS-QA 构造方式从 AIOps-only 扩展到跨域 QCC 的一次闭环检查。当前结论是：数据资产和接口 probe 已经比第一版更稳，也补上了 generated-caption quality audit；但真实 QCC SFT 仍未完成，不能声称 generated-caption QA 有训练提升。
 
 ## 产物位置
 
@@ -19,6 +19,7 @@
 - paired GPU smoke launcher: `scripts/remote/run_natural_qcc_crossdomain_pair_a100.sh`
 - local SSH launcher: `scripts/remote/launch_natural_qcc_crossdomain_pair_ssh.sh`
 - GPU result manifest collector: `scripts/eval/collect_natural_qcc_gpu_result_manifest.py`
+- generated-caption quality audit: `scripts/eval/audit_natural_qcc_caption_quality.py`
 - q-conditioned GPU dry-run/audit dir: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/`
 - no-question GPU dry-run/audit dir: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/`
 - qcond-vs-no-question audit: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.json`
@@ -138,10 +139,18 @@ python3 scripts/eval/run_natural_qcc_local_caption_ranker.py \
 | `local_ranker_qcond` | 0.9677 | 0.6154 | 0.0000 |
 | `local_ranker_no_question` | 0.9677 | 0.6154 | 0.0000 |
 
+新增 caption-quality audit 后，本地 ranker 的局限更清楚：
+
+| diagnostic | evidence shape | answer-label-only | numeric evidence | quality gate |
+| --- | ---: | ---: | ---: | ---: |
+| `local_ranker_qcond` | 0.0000 | 1.0000 | 0.0000 | `false` |
+| `local_ranker_no_question` | 0.0000 | 1.0000 | 0.0000 | `false` |
+
 解释：
 
 - 本地弱训练结果高于 `question_only=0.1273`、`generic_caption=0.0182` 和最近邻 q-conditioned `0.4615`，说明这批 reviewer-positive 数据存在可训练的 QA 信号。
 - q-conditioned 和 no-question 结果相同，说明这个弱 ranker 主要依赖 source/scene/numeric/option 特征，不能作为 Q-conditioning 方法成功证据。
+- caption-quality audit 显示本地 ranker 的输出都是答案标签式 caption，不包含数值证据，因此不能作为 evidence-caption 适配成功证据。
 - 该诊断不会替代 TS-RLM/Qwen caption SFT，也不验证 caption factuality；只能作为 GPU 不可达时的训练前 sanity check。
 
 ## GPU 训练状态
@@ -189,8 +198,8 @@ PROFILE=3090 scripts/remote/launch_natural_qcc_crossdomain_pair_ssh.sh
 PUSH_RESULTS=1 PROFILE=a100 scripts/remote/launch_natural_qcc_crossdomain_pair_ssh.sh
 ```
 
-`PUSH_RESULTS=1` 会先运行 `scripts/eval/collect_natural_qcc_gpu_result_manifest.py`，只把 preflight、pipeline summary、predictions、QA metrics 和 audit 文件加入 commit；manifest 明确排除 `final_model`、`pytorch_model.bin`、`.safetensors` 和 checkpoint 权重。
-当前 runner 会在 paired GPU run 后自动执行 qcond-vs-no-question audit、objective completion gate、result manifest，并做两遍 `objective -> manifest` close-out，使最终 objective gate 和 manifest 互相一致。`PUSH_RESULTS=1` 也会先刷新 objective gate，再按 manifest pathspec 同步小结果文件。
+`PUSH_RESULTS=1` 会先运行 `scripts/eval/collect_natural_qcc_gpu_result_manifest.py`，只把 preflight、pipeline summary、predictions、QA metrics、caption-quality audit 和其他 audit 文件加入 commit；manifest 明确排除 `final_model`、`pytorch_model.bin`、`.safetensors` 和 checkpoint 权重。
+当前 runner 会在每条 GPU run 后自动执行 generated-caption QA audit 和 caption-quality audit；paired GPU run 后自动执行 qcond-vs-no-question audit、objective completion gate、result manifest，并做两遍 `objective -> manifest` close-out，使最终 objective gate 和 manifest 互相一致。`PUSH_RESULTS=1` 也会先刷新 objective gate，再按 manifest pathspec 同步小结果文件。
 
 远端 GPU 可达性检查已运行：
 
@@ -264,7 +273,7 @@ python3 scripts/eval/audit_natural_qcc_gpu_qcond_vs_noquestion.py
 
 因此目前不能声称 QCC 训练提升。
 
-GPU result manifest 当前状态为 `manifest_pass=false`，因为真实 GPU run 尚未产生 `preflight.json`、generated predictions 和 rule-QA 文件；`unsafe_path_detected=false`，说明 manifest 不会收集权重路径。
+GPU result manifest 当前状态为 `manifest_pass=false`，因为真实 GPU run 尚未产生 `preflight.json`、generated predictions、caption-quality audit 和 rule-QA 文件；`unsafe_path_detected=false`，说明 manifest 不会收集权重路径。
 
 目标级 completion gate 已新增并运行：
 
@@ -278,6 +287,8 @@ python3 scripts/eval/audit_natural_qcc_objective_completion.py
 - `no_question_gpu_audit_pass=false`
 - `qcond_generated_metrics_present=false`
 - `no_question_generated_metrics_present=false`
+- `qcond_caption_quality_audit_present=false`
+- `no_question_caption_quality_audit_present=false`
 - `qcond_vs_no_question_comparison_complete=false`
 - `safe_result_manifest_pass=false`
 
@@ -286,9 +297,9 @@ manifest pathspec 已包含 objective gate 的 JSON/Markdown；仍明确排除�
 ## 下一步
 
 1. 在 A100 或 3090 上运行 `scripts/remote/run_natural_qcc_crossdomain_pair_a100.sh`，或从本机通过 `scripts/remote/launch_natural_qcc_crossdomain_pair_ssh.sh` 启动，完成 `MODE=qcond` 和 `MODE=no_question` 两条真实 SFT、caption generation 和 generated-caption QA。
-2. 两条 run 完成后分别重新运行 `scripts/eval/audit_natural_qcc_gpu_smoke_result.py --run_dir ... --probe_results ...`。
+2. 两条 run 完成后分别重新运行 `scripts/eval/audit_natural_qcc_gpu_smoke_result.py --run_dir ... --probe_results ...` 和 `scripts/eval/audit_natural_qcc_caption_quality.py --predictions_jsonl ... --out ...`；paired runner 会自动做这两步。
 3. 再运行 `scripts/eval/audit_natural_qcc_gpu_qcond_vs_noquestion.py`，判断 q-conditioned generated-caption QA 是否超过 no-question control。
-4. 若 q-conditioned generated-caption QA 超过 `question_only=0.1273`、`generic_caption=0.0182`、`statistical_caption=0.0000`，且超过 no-question control，再记录为 cross-domain smoke 训练正信号。
+4. 若 q-conditioned generated-caption QA 超过 `question_only=0.1273`、`generic_caption=0.0182`、`statistical_caption=0.0000`，超过 no-question control，并且 caption-quality gate 通过，再记录为 cross-domain smoke 训练正信号。
 5. 修复剩余 5 条 excluded 行中暴露的 support-slot/阈值问题；其中 CityLearn demand 与 Water periodicity 需要改 deterministic 规则或重采样，不能只改文字。
 6. 恢复或重建 FinRL 源 JSONL 后，把 FinRL 加回同一 reviewer gate。
 7. 下一轮扩到每域 50-100 条 reviewer-positive 后，再做正式训练对比；当前 55 条只适合作为 smoke。

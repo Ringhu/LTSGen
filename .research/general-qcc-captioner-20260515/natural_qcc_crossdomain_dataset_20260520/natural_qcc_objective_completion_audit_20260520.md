@@ -2,7 +2,7 @@
 
 - status: `incomplete_or_blocked`
 - objective complete: `False`
-- summary: 目标尚未完成：真实 QCC/no-question 训练、生成 caption、QA 或安全同步证据仍缺失。
+- summary: 目标尚未完成：真实 QCC/no-question 训练、生成 caption、caption 质量审计、QA 或安全同步证据仍缺失。
 - claim scope: `No generated-caption training claim allowed.`
 
 ## Completion Checks
@@ -21,6 +21,8 @@
 | `no_question_gpu_audit_pass` | `False` |
 | `qcond_generated_metrics_present` | `False` |
 | `no_question_generated_metrics_present` | `False` |
+| `qcond_caption_quality_audit_present` | `False` |
+| `no_question_caption_quality_audit_present` | `False` |
 | `qcond_vs_no_question_comparison_complete` | `False` |
 | `safe_result_manifest_pass` | `False` |
 | `safe_result_manifest_has_no_unsafe_paths` | `True` |
@@ -35,6 +37,12 @@
 | `min_gap` | `0.05` |
 | `qcond_beats_all_non_oracle_baselines` | `False` |
 | `qcond_beats_question_only` | `False` |
+| `qcond_caption_quality_gate_pass` | `False` |
+| `qcond_caption_evidence_shape_rate` | `None` |
+| `qcond_caption_answer_label_only_rate` | `None` |
+| `no_question_caption_quality_gate_pass` | `False` |
+| `no_question_caption_evidence_shape_rate` | `None` |
+| `no_question_caption_answer_label_only_rate` | `None` |
 | `compare_status` | `incomplete_or_blocked` |
 
 ## Blockers
@@ -43,6 +51,8 @@
 - `no_question_gpu_audit_pass`
 - `qcond_generated_metrics_present`
 - `no_question_generated_metrics_present`
+- `qcond_caption_quality_audit_present`
+- `no_question_caption_quality_audit_present`
 - `qcond_vs_no_question_comparison_complete`
 - `safe_result_manifest_pass`
 
@@ -54,5 +64,5 @@
 
 ## Guardrail
 
-该 gate 只在 q-conditioned 与 no-question 两条 GPU smoke 都完成、生成 caption 和 rule-QA 指标都存在、并且安全 manifest 通过时，才会把 objective 标为 complete。
-若 objective complete 但 QCC 没有超过 baselines/no-question，应按负结果报告，而不是改写 claim。
+该 gate 只在 q-conditioned 与 no-question 两条 GPU smoke 都完成、生成 caption 和 rule-QA 指标都存在、caption-quality 审计存在，并且安全 manifest 通过时，才会把 objective 标为 complete。
+若 objective complete 但 QCC 没有超过 baselines/no-question，或 QA 提升但 caption-quality gate 失败，应按负结果或弱信号报告，而不是改写 claim。

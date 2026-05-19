@@ -17,6 +17,8 @@ class CollectNaturalQccGpuResultManifestTest(unittest.TestCase):
         self.assertNotIn("safetensors", joined)
         self.assertIn("generate_eval_test_clean/predictions.jsonl", joined)
         self.assertIn("generate_eval_test_clean/rule_qa/qa_metrics.json", joined)
+        self.assertIn("natural_qcc_caption_quality_audit.json", joined)
+        self.assertIn("natural_qcc_caption_quality_audit.rows.jsonl", joined)
         self.assertNotIn("natural_qcc_objective_completion_audit", joined)
 
     def test_unsafe_path_detection(self):

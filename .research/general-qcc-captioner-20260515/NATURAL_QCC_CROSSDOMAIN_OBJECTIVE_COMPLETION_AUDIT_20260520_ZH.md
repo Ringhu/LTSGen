@@ -1,6 +1,6 @@
 # Natural QCC Cross-Domain Objective Completion Audit（2026-05-20）
 
-本审计用于判断当前 active objective 是否已经完成。结论先行：**目标尚未完成**。新的自然 TS-QA 构造、数据资产评估、reviewer gate、SFT 数据准备、训练前 probe、本地弱训练诊断、no-question control 准备和 GitHub 同步已经完成；但目标中要求的真实 QCC caption 训练、TS-RLM/Qwen generated-caption 生成、generated-caption QA 提升和 q-conditioned vs no-question 训练对照尚未完成。
+本审计用于判断当前 active objective 是否已经完成。结论先行：**目标尚未完成**。新的自然 TS-QA 构造、数据资产评估、reviewer gate、SFT 数据准备、训练前 probe、本地弱训练诊断、caption-quality audit、no-question control 准备和 GitHub 同步已经完成；但目标中要求的真实 QCC caption 训练、TS-RLM/Qwen generated-caption 生成、generated-caption QA 提升和 q-conditioned vs no-question 训练对照尚未完成。
 
 因此本轮不能调用 `update_goal(status="complete")`，也不能声称“新的数据已经带来 QCC 训练提升”。
 
@@ -17,8 +17,9 @@
 3. 做 QCC caption 训练：训练一个 question-conditioned captioner，而不只是 oracle/probe。
 4. 做 no-question captioner 训练对照，用来判断 question conditioning 是否真的带来训练收益。
 5. 生成 trained caption，并用同一 QA 规则评估 generated-caption QA。
-6. 判断 QA 是否相对非 oracle baseline 有提升，并判断 q-conditioned 是否超过 no-question。
-7. 把产物同步到 GitHub。
+6. 审计 generated caption 是否像 evidence caption，而不是只输出答案标签。
+7. 判断 QA 是否相对非 oracle baseline 有提升，并判断 q-conditioned 是否超过 no-question。
+8. 把产物同步到 GitHub。
 
 ## Prompt-to-Artifact Checklist
 
@@ -38,9 +39,11 @@
 | Non-oracle baselines | `generic_caption=0.0182`，`statistical_caption=0.0000`，`question_only=0.1273` | complete |
 | Weak question-conditioned probe | `nearest_caption_question_conditioned=0.4615` vs `nearest_caption_no_question=0.2308` | complete, diagnostic only |
 | Local weak training diagnostic | `local_caption_ranker/qcond/local_caption_ranker_summary.json` and `no_question/local_caption_ranker_summary.json`；both test QA `0.6154` | partial diagnostic |
+| Local caption-quality audit | `local_caption_ranker/{qcond,no_question}/natural_qcc_caption_quality_audit.json`；both `evidence_shape_rate=0.0000` and `answer_label_only_rate=1.0000` | complete diagnostic; shows ranker is not evidence-caption training |
 | True QCC TS-RLM/Qwen training | GPU smoke audit checks `pipeline_complete=false`，no predictions, no QA metrics | missing |
 | No-question TS-RLM/Qwen training control | no-question GPU smoke audit checks `pipeline_complete=false`，no predictions, no QA metrics | missing |
 | Generated trained captions | `generate_eval_test_clean/predictions.jsonl` absent in GPU run dir | missing |
+| Generated caption-quality audit | `natural_qcc_caption_quality_audit.json` absent in both GPU run dirs | missing |
 | Generated-caption QA | `generate_eval_test_clean/rule_qa/qa_metrics.json` absent | missing |
 | Claim of QA improvement after training | GPU audit `audit_pass=false` and `claim_scope="No training-result claim allowed."` | missing |
 | Q-conditioned vs no-question training comparison | `tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.json` status `incomplete_or_blocked` | missing |
@@ -70,12 +73,19 @@ Local dependency-free ranker diagnostic:
 | `local_ranker_qcond` | 0.9677 | 0.6154 | 0.0000 |
 | `local_ranker_no_question` | 0.9677 | 0.6154 | 0.0000 |
 
+Local caption-quality audit:
+
+| diagnostic | evidence shape | answer-label-only | numeric evidence | quality gate |
+| --- | ---: | ---: | ---: | ---: |
+| `local_ranker_qcond` | 0.0000 | 1.0000 | 0.0000 | `false` |
+| `local_ranker_no_question` | 0.0000 | 1.0000 | 0.0000 | `false` |
+
 Interpretation:
 
 - 数据资产本身通过了一个 smoke-level gate：oracle 强，generic/statistical/question-only 弱。
 - 最近邻 probe 有 question-conditioning gap，但它不是训练出的 QCC captioner。
 - 本地弱 ranker 显示数据中有可训练信号，但 q-conditioned 与 no-question 结果完全相同，不能证明 QCC conditioning 成功。
-- 本地 ranker 会把预测选项写进 caption，不等同于 TS-RLM/Qwen 自然 evidence caption 训练。
+- 本地 ranker 会把预测选项写进 caption；caption-quality audit 明确显示它是答案标签式输出，不等同于 TS-RLM/Qwen 自然 evidence caption 训练。
 
 No-question GPU control assets:
 
@@ -169,9 +179,9 @@ Observed status:
 
 - `objective_complete=false`
 - `status=incomplete_or_blocked`
-- blockers: `qcond_gpu_audit_pass`, `no_question_gpu_audit_pass`, `qcond_generated_metrics_present`, `no_question_generated_metrics_present`, `qcond_vs_no_question_comparison_complete`, `safe_result_manifest_pass`
+- blockers: `qcond_gpu_audit_pass`, `no_question_gpu_audit_pass`, `qcond_generated_metrics_present`, `no_question_generated_metrics_present`, `qcond_caption_quality_audit_present`, `no_question_caption_quality_audit_present`, `qcond_vs_no_question_comparison_complete`, `safe_result_manifest_pass`
 
-This gate is the final close-out check for the active objective. It only passes when data assets, q-conditioned GPU training, no-question GPU training, generated-caption QA, paired comparison, and safe result manifest are all complete. Passing the data/probe/local diagnostics alone is intentionally insufficient.
+This gate is the final close-out check for the active objective. It only passes when data assets, q-conditioned GPU training, no-question GPU training, generated-caption QA, generated-caption quality audit, paired comparison, and safe result manifest are all complete. Passing the data/probe/local diagnostics alone is intentionally insufficient.
 
 ## Commands Needed To Finish The Objective
 
@@ -200,8 +210,8 @@ PROFILE=3090 scripts/remote/launch_natural_qcc_crossdomain_pair_ssh.sh
 ```
 
 The SSH launcher fetches, checks out, and fast-forwards `codex/question-repair-20260519-ready` on the remote host before running the paired GPU smoke command.
-It does not push training results unless `PUSH_RESULTS=1` is explicitly set. With `PUSH_RESULTS=1`, it first runs `scripts/eval/collect_natural_qcc_gpu_result_manifest.py` and commits only the manifest pathspec: preflight, pipeline summary, generated predictions, rule-QA metrics, and audit files. Checkpoint/model paths are excluded from the manifest.
-The paired runner now also runs the objective-level gate and safe manifest close-out after qcond/no-question comparison. The close-out order is `objective -> manifest -> objective -> manifest`, so the final objective gate can see the latest manifest state and the final manifest includes the objective gate JSON/Markdown. With `PUSH_RESULTS=1`, the SSH launcher refreshes the objective gate before collecting and committing the manifest pathspec.
+It does not push training results unless `PUSH_RESULTS=1` is explicitly set. With `PUSH_RESULTS=1`, it first runs `scripts/eval/collect_natural_qcc_gpu_result_manifest.py` and commits only the manifest pathspec: preflight, pipeline summary, generated predictions, caption-quality audit, rule-QA metrics, and audit files. Checkpoint/model paths are excluded from the manifest.
+The paired runner now also runs caption-quality audit, objective-level gate, and safe manifest close-out after qcond/no-question comparison. The close-out order is `objective -> manifest -> objective -> manifest`, so the final objective gate can see the latest manifest state and the final manifest includes the objective gate JSON/Markdown. With `PUSH_RESULTS=1`, the SSH launcher refreshes the objective gate before collecting and committing the manifest pathspec.
 
 Equivalent explicit commands:
 
@@ -235,6 +245,20 @@ python3 scripts/eval/audit_natural_qcc_gpu_smoke_result.py \
   --probe_results .research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/probe_eval/natural_qcc_probe_results.json
 ```
 
+Then run caption-quality audits if the paired runner did not already do it:
+
+```bash
+python3 scripts/eval/audit_natural_qcc_caption_quality.py \
+  --predictions_jsonl .research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/predictions.jsonl \
+  --gold_jsonl .research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_crossdomain_positive.jsonl \
+  --out .research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.json
+
+python3 scripts/eval/audit_natural_qcc_caption_quality.py \
+  --predictions_jsonl .research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/generate_eval_test_clean/predictions.jsonl \
+  --gold_jsonl .research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_crossdomain_positive.jsonl \
+  --out .research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.json
+```
+
 Then compare q-conditioned against no-question:
 
 ```bash
@@ -256,9 +280,10 @@ Minimum evidence required before marking this objective complete:
 3. no-question SFT training finishes and `pipeline_complete=true`.
 4. Both `generate_eval_test_clean/predictions.jsonl` files exist with positive row counts.
 5. Both `generate_eval_test_clean/rule_qa/qa_metrics.json` files exist with positive row counts.
-6. Generated-caption QA is compared against `question_only=0.1273`, `generic_caption=0.0182`, and `statistical_caption=0.0000`.
-7. q-conditioned generated-caption QA is compared against no-question generated-caption QA.
-8. If generated-caption QA does not improve, or q-conditioned does not beat no-question, report failure plainly instead of weakening the claim.
+6. Both `natural_qcc_caption_quality_audit.json` files exist with positive row counts.
+7. Generated-caption QA is compared against `question_only=0.1273`, `generic_caption=0.0182`, and `statistical_caption=0.0000`.
+8. q-conditioned generated-caption QA is compared against no-question generated-caption QA.
+9. If generated-caption QA does not improve, q-conditioned does not beat no-question, or caption-quality gate fails, report failure plainly instead of weakening the claim.
 
 ## Completion Decision
 
@@ -272,6 +297,7 @@ What is complete:
 - No-question control SFT split preparation.
 - Data asset baseline/probe.
 - Local weak training diagnostic.
+- Caption-quality audit for the local weak diagnostic, showing the ranker is not evidence-caption training.
 - GitHub sync for the current non-GPU artifacts, including the remote-access diagnostic report.
 - Objective-level completion gate added; current result is `incomplete_or_blocked`.
 
@@ -280,7 +306,8 @@ What remains incomplete:
 - True TS-RLM/Qwen QCC training.
 - True TS-RLM/Qwen no-question control training.
 - Generated natural evidence captions from the trained QCC model.
+- Caption-quality audit for true trained captions.
 - Generated-caption QA evaluation.
 - Evidence that trained QCC captions improve QA over non-oracle baselines and no-question control.
 
-Therefore the active goal should remain open until the q-conditioned and no-question GPU smoke trainings, generated-caption QA audits, and qcond-vs-no-question comparison audit are complete.
+Therefore the active goal should remain open until the q-conditioned and no-question GPU smoke trainings, generated-caption quality audits, generated-caption QA audits, and qcond-vs-no-question comparison audit are complete.

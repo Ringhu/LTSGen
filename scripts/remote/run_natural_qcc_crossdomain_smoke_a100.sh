@@ -83,3 +83,8 @@ fi
 "$PY" scripts/eval/audit_natural_qcc_gpu_smoke_result.py \
   --run_dir "$RUN" \
   --probe_results "$BASE/probe_eval/natural_qcc_probe_results.json"
+
+"$PY" scripts/eval/audit_natural_qcc_caption_quality.py \
+  --predictions_jsonl "$RUN/generate_eval_test_clean/predictions.jsonl" \
+  --gold_jsonl "$BASE/natural_qcc_crossdomain_positive.jsonl" \
+  --out "$RUN/natural_qcc_caption_quality_audit.json"
