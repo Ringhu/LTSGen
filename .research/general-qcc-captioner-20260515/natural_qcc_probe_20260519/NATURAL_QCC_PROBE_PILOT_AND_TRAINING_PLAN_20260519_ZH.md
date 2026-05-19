@@ -19,6 +19,8 @@
 | smoke SFT 数据 | `.research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/smoke_sft/` |
 | smoke SFT schema | `.research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/smoke_sft/natural_qcc_probe_smoke_sft_schema.json` |
 | smoke SFT 说明 | `.research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/smoke_sft/NATURAL_QCC_SMOKE_SFT_ASSETS_20260519_ZH.md` |
+| GPU smoke runbook | `.research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/NATURAL_QCC_GPU_SMOKE_RUNBOOK_20260519_ZH.md` |
+| generated caption QA evaluator | `scripts/eval/evaluate_natural_qcc_predictions.py` |
 | dataset builder | `scripts/generate/build_natural_qcc_probe_dataset.py` |
 | probe evaluator | `scripts/eval/run_natural_qcc_probe.py` |
 | smoke SFT builder | `scripts/generate/build_natural_qcc_smoke_sft.py` |
@@ -121,6 +123,8 @@ python3 tslm/scripts/train_multisim_v5_smoke.py \
 ```
 
 注意：本地当前没有上述 Qwen3-4B 路径，因此该命令应在模型缓存存在的 A100/3090 环境执行。
+
+训练完成后，用 `tslm/scripts/generate_multisim_v5_smoke.py` 生成 `pred_caption`，再用 `scripts/eval/evaluate_natural_qcc_predictions.py` 评估 QA accuracy。完整命令见 `NATURAL_QCC_GPU_SMOKE_RUNBOOK_20260519_ZH.md`。
 
 ### NQCC-004：正式 natural QCC SFT
 

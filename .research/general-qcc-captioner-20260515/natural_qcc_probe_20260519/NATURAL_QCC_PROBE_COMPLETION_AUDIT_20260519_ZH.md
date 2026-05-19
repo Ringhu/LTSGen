@@ -13,6 +13,8 @@
 | 检查 natural evidence caption 是否可被 QA 使用 | `natural_oracle=1.0000`，`natural_evidence_no_label=0.6279` | 已验证接口，但暴露 evaluator 限制 |
 | 做 trainable caption 探针 | `nearest_caption_question_conditioned=0.1250`，`nearest_caption_no_question=0.1250` | 已做弱探针 |
 | 生成可接 TS-RLM/Qwen 训练的 SFT 资产 | `smoke_sft/natural_qcc_probe_train_dev_sft.jsonl`，`smoke_sft/natural_qcc_probe_eval_test_sft.jsonl`，schema gate pass | 已完成 smoke 资产 |
+| 训练后 generated caption 的 QA 评估入口 | `scripts/eval/evaluate_natural_qcc_predictions.py`；`target_caption` sanity 为 1.0000，`generic_caption` sanity 为 0.0233 | 已完成评估入口 |
+| GPU smoke 训练/生成/评估命令 | `NATURAL_QCC_GPU_SMOKE_RUNBOOK_20260519_ZH.md` | 已完成 runbook |
 | 真正 QCC 模型训练 | 需要 A100/3090 Qwen3-4B 环境；当前本地没有 `/cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507` | 未完成 |
 | 判断 QA 是否相比旧流程提升 | 需要正式 train/dev/test 扩展数据和 trained QCC 生成结果 | 未完成 |
 
@@ -24,6 +26,9 @@ python3 scripts/generate/build_natural_qcc_probe_dataset.py
 python3 scripts/eval/run_natural_qcc_probe.py
 python3 -m py_compile scripts/generate/build_natural_qcc_probe_dataset.py scripts/eval/run_natural_qcc_probe.py scripts/generate/build_natural_qcc_smoke_sft.py
 python3 scripts/generate/build_natural_qcc_smoke_sft.py
+python3 -m py_compile scripts/eval/evaluate_natural_qcc_predictions.py
+python3 scripts/eval/evaluate_natural_qcc_predictions.py --predictions_jsonl .research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/natural_qcc_probe_positive.jsonl --out_dir .research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/prediction_eval_target_caption --caption_field target_caption
+python3 scripts/eval/evaluate_natural_qcc_predictions.py --predictions_jsonl .research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/natural_qcc_probe_positive.jsonl --out_dir .research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/prediction_eval_generic_caption --caption_field generic_caption
 ```
 
 ## 当前不能宣称完成的部分
