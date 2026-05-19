@@ -126,6 +126,9 @@ def check_profile(
     ssh_target: str | None = None,
     remote_root: str | None = None,
     python_path: str | None = None,
+    ssh_config: str | None = None,
+    identity_file: str | None = None,
+    known_hosts: str | None = None,
 ) -> dict[str, Any]:
     cfg = profile_config(profile, ssh_target=ssh_target, remote_root=remote_root, python_path=python_path)
     cmd = [
@@ -134,14 +137,27 @@ def check_profile(
         "BatchMode=yes",
         "-o",
         f"ConnectTimeout={timeout}",
-        cfg["ssh_target"],
-        "bash",
-        "-s",
     ]
+    if ssh_config:
+        cmd.extend(["-F", ssh_config])
+    if identity_file:
+        cmd.extend(["-i", identity_file])
+    if known_hosts:
+        cmd.extend(["-o", f"UserKnownHostsFile={known_hosts}"])
+    cmd.extend([cfg["ssh_target"], "bash", "-s"])
     script = remote_probe_script(cfg["remote_root"], cfg["python"])
-    proc = subprocess.run(cmd, input=script, text=True, capture_output=True, check=False, timeout=timeout + 20)
-    parsed = parse_remote_stdout(proc.stdout)
-    reachable = proc.returncode == 0
+    try:
+        proc = subprocess.run(cmd, input=script, text=True, capture_output=True, check=False, timeout=timeout + 20)
+        stdout = proc.stdout
+        stderr = proc.stderr
+        returncode = proc.returncode
+    except subprocess.TimeoutExpired as exc:
+        stdout = (exc.stdout or "") if isinstance(exc.stdout, str) else (exc.stdout or b"").decode(errors="replace")
+        stderr = (exc.stderr or "") if isinstance(exc.stderr, str) else (exc.stderr or b"").decode(errors="replace")
+        stderr = (stderr + f"\nremote probe timed out after {timeout + 20}s").strip()
+        returncode = 124
+    parsed = parse_remote_stdout(stdout)
+    reachable = returncode == 0
     access_pass = bool(
         reachable
         and parsed.get("root_exists")
@@ -154,13 +170,18 @@ def check_profile(
         "ssh_target": cfg["ssh_target"],
         "remote_root": cfg["remote_root"],
         "python": cfg["python"],
+        "ssh_options": {
+            "ssh_config_used": bool(ssh_config),
+            "identity_file_used": bool(identity_file),
+            "known_hosts_used": bool(known_hosts),
+        },
         "expected_branch": branch,
-        "returncode": proc.returncode,
+        "returncode": returncode,
         "reachable": reachable,
         "access_pass": access_pass,
         "parsed": parsed,
-        "stdout_tail": proc.stdout[-2000:],
-        "stderr_tail": proc.stderr[-2000:],
+        "stdout_tail": stdout[-2000:],
+        "stderr_tail": stderr[-2000:],
     }
 
 
@@ -202,6 +223,9 @@ def main() -> None:
     parser.add_argument("--ssh-target", default=None, help="Override SSH target for a single selected profile.")
     parser.add_argument("--remote-root", default=None, help="Override remote repository root for a single selected profile.")
     parser.add_argument("--python-path", default=None, help="Override remote Python executable for a single selected profile.")
+    parser.add_argument("--ssh-config", default=None, help="Optional SSH config file passed with ssh -F.")
+    parser.add_argument("--identity-file", default=None, help="Optional SSH identity file passed with ssh -i.")
+    parser.add_argument("--known-hosts", default=None, help="Optional known_hosts file passed as UserKnownHostsFile.")
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     args = parser.parse_args()
 
@@ -217,6 +241,9 @@ def main() -> None:
             ssh_target=args.ssh_target,
             remote_root=args.remote_root,
             python_path=args.python_path,
+            ssh_config=args.ssh_config,
+            identity_file=args.identity_file,
+            known_hosts=args.known_hosts,
         )
         for profile in args.profiles
     ]

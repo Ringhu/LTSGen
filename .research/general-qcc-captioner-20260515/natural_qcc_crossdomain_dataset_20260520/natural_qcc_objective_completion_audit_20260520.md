@@ -1,9 +1,9 @@
 # Natural QCC Objective Completion Gate（2026-05-20）
 
-- status: `incomplete_or_blocked`
-- objective complete: `False`
-- summary: 目标尚未完成：真实 QCC/no-question 训练、生成 caption、caption 质量审计、QA 或安全同步证据仍缺失。
-- claim scope: `No generated-caption training claim allowed.`
+- status: `complete_negative_signal`
+- objective complete: `True`
+- summary: 目标完成，但 q-conditioned generated-caption QA 没有证明优于基线或 no-question 对照。
+- claim scope: `Completed smoke with negative result; report failure plainly.`
 
 ## Completion Checks
 
@@ -17,50 +17,42 @@
 | `oracle_evidence_baseline_present` | `True` |
 | `non_oracle_baselines_present` | `True` |
 | `oracle_caption_load_bearing` | `True` |
-| `qcond_gpu_audit_pass` | `False` |
-| `no_question_gpu_audit_pass` | `False` |
-| `qcond_generated_metrics_present` | `False` |
-| `no_question_generated_metrics_present` | `False` |
-| `qcond_caption_quality_audit_present` | `False` |
-| `no_question_caption_quality_audit_present` | `False` |
-| `qcond_vs_no_question_comparison_complete` | `False` |
-| `safe_result_manifest_pass` | `False` |
+| `qcond_gpu_audit_pass` | `True` |
+| `no_question_gpu_audit_pass` | `True` |
+| `qcond_generated_metrics_present` | `True` |
+| `no_question_generated_metrics_present` | `True` |
+| `qcond_caption_quality_audit_present` | `True` |
+| `no_question_caption_quality_audit_present` | `True` |
+| `qcond_vs_no_question_comparison_complete` | `True` |
+| `safe_result_manifest_pass` | `True` |
 | `safe_result_manifest_has_no_unsafe_paths` | `True` |
 
 ## Result Checks
 
 | item | value |
 | --- | --- |
-| `qcond_accuracy` | `None` |
-| `no_question_accuracy` | `None` |
-| `qcond_minus_no_question` | `None` |
+| `qcond_accuracy` | `0.0` |
+| `no_question_accuracy` | `0.0` |
+| `qcond_minus_no_question` | `0.0` |
 | `min_gap` | `0.05` |
 | `qcond_beats_all_non_oracle_baselines` | `False` |
 | `qcond_beats_question_only` | `False` |
 | `qcond_caption_quality_gate_pass` | `False` |
-| `qcond_caption_evidence_shape_rate` | `None` |
-| `qcond_caption_answer_label_only_rate` | `None` |
+| `qcond_caption_evidence_shape_rate` | `0.3846` |
+| `qcond_caption_answer_label_only_rate` | `0.5385` |
 | `no_question_caption_quality_gate_pass` | `False` |
-| `no_question_caption_evidence_shape_rate` | `None` |
-| `no_question_caption_answer_label_only_rate` | `None` |
-| `compare_status` | `incomplete_or_blocked` |
+| `no_question_caption_evidence_shape_rate` | `0.4615` |
+| `no_question_caption_answer_label_only_rate` | `0.3846` |
+| `compare_status` | `no_qconditioning_gap` |
 
 ## Blockers
 
-- `qcond_gpu_audit_pass`
-- `no_question_gpu_audit_pass`
-- `qcond_generated_metrics_present`
-- `no_question_generated_metrics_present`
-- `qcond_caption_quality_audit_present`
-- `no_question_caption_quality_audit_present`
-- `qcond_vs_no_question_comparison_complete`
-- `safe_result_manifest_pass`
+- None
 
 ## Remote Access Diagnostic
 
-- any access pass: `False`
-- `a100` reachable=`False`, access_pass=`False`, stderr=`ssh: Could not resolve hostname a100: Temporary failure in name resolution`
-- `3090` reachable=`False`, access_pass=`False`, stderr=`Connection closed by 0.0.12.18 port 22`
+- any access pass: `True`
+- `3090` reachable=`True`, access_pass=`True`, stderr=``
 
 ## Guardrail
 

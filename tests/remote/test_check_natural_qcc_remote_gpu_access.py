@@ -1,4 +1,5 @@
 from pathlib import Path
+import subprocess
 from types import SimpleNamespace
 from unittest.mock import patch
 import sys
@@ -105,14 +106,37 @@ class CheckNaturalQccRemoteGpuAccessTest(unittest.TestCase):
                 ssh_target="gpu-login",
                 remote_root="/tmp/LTSGEN",
                 python_path="/tmp/env/bin/python3",
+                ssh_config="/tmp/ssh_config",
+                identity_file="/tmp/id_rsa",
+                known_hosts="/tmp/known_hosts",
             )
 
         self.assertTrue(result["reachable"])
         self.assertTrue(result["access_pass"])
         self.assertEqual(result["parsed"]["torch_cuda_device_count"], 1)
-        self.assertEqual(run.call_args.args[0][5], "gpu-login")
+        cmd = run.call_args.args[0]
+        self.assertIn("-F", cmd)
+        self.assertIn("/tmp/ssh_config", cmd)
+        self.assertIn("-i", cmd)
+        self.assertIn("/tmp/id_rsa", cmd)
+        self.assertIn("-o", cmd)
+        self.assertIn("UserKnownHostsFile=/tmp/known_hosts", cmd)
+        self.assertIn("gpu-login", cmd)
         self.assertEqual(result["remote_root"], "/tmp/LTSGEN")
         self.assertEqual(result["python"], "/tmp/env/bin/python3")
+
+    def test_check_profile_records_timeout(self):
+        with patch(
+            "scripts.remote.check_natural_qcc_remote_gpu_access.subprocess.run",
+            side_effect=subprocess.TimeoutExpired(["ssh"], timeout=21, output="hostname=gpu-host\n", stderr=""),
+        ):
+            result = check_profile("3090", timeout=1, branch="codex/question-repair-20260519-ready")
+
+        self.assertEqual(result["returncode"], 124)
+        self.assertFalse(result["reachable"])
+        self.assertFalse(result["access_pass"])
+        self.assertEqual(result["parsed"]["hostname"], "gpu-host")
+        self.assertIn("timed out", result["stderr_tail"])
 
 
 if __name__ == "__main__":

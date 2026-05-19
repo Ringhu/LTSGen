@@ -1,20 +1,20 @@
 # Natural QCC GPU QCond vs No-Question Audit（2026-05-20）
 
-- status: `incomplete_or_blocked`
-- summary: q-conditioned 或 no-question GPU smoke 尚未完整完成，不能解释 Q-conditioning gap。
-- claim scope: `No q-conditioning training comparison allowed.`
+- status: `no_qconditioning_gap`
+- summary: q-conditioned generated-caption QA 没有超过 no-question 对照，不能作为 QCC conditioning 成功。
+- claim scope: `Report as training/interface failure or insufficient conditioning signal.`
 - min gap: `0.05`
 
 ## Run Comparison
 
 | run | audit pass | rows | QA acc | empty |
 | --- | ---: | ---: | ---: | ---: |
-| q-conditioned | `False` | 0 | `None` | `None` |
-| no-question | `False` | 0 | `None` | `None` |
+| q-conditioned | `True` | 13 | `0.0` | `1.0` |
+| no-question | `True` | 13 | `0.0` | `1.0` |
 
 ## Gap
 
-- qcond minus no-question: `None`
+- qcond minus no-question: `0.0`
 
 ## Guardrail
 

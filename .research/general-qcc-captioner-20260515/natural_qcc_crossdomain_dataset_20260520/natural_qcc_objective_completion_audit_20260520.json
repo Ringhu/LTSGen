@@ -41,88 +41,67 @@
   },
   "qcond": {
     "audit_exists": true,
-    "audit_pass": false,
-    "generated_accuracy": null,
-    "generated_rows": 0,
-    "decision_status": "incomplete_or_blocked",
+    "audit_pass": true,
+    "generated_accuracy": 0.0,
+    "generated_rows": 13,
+    "decision_status": "smoke_no_improvement_over_local_non_oracle_baselines",
     "beats_all_non_oracle_baselines": false,
     "beats_question_only": false,
-    "claim_scope": "No training-result claim allowed."
+    "claim_scope": "Smoke-level training result only; not a full method claim."
   },
   "qcond_caption_quality": {
-    "exists": false,
-    "rows": 0,
+    "exists": true,
+    "rows": 13,
     "quality_gate_pass": false,
-    "evidence_shape_rate": null,
-    "numeric_evidence_rate": null,
-    "answer_label_only_rate": null,
-    "too_short_rate": null
+    "evidence_shape_rate": 0.3846,
+    "numeric_evidence_rate": 0.3846,
+    "answer_label_only_rate": 0.5385,
+    "too_short_rate": 0.5385
   },
   "no_question": {
     "audit_exists": true,
-    "audit_pass": false,
-    "generated_accuracy": null,
-    "generated_rows": 0,
-    "decision_status": "incomplete_or_blocked",
+    "audit_pass": true,
+    "generated_accuracy": 0.0,
+    "generated_rows": 13,
+    "decision_status": "smoke_no_improvement_over_local_non_oracle_baselines",
     "beats_all_non_oracle_baselines": false,
     "beats_question_only": false,
-    "claim_scope": "No training-result claim allowed."
+    "claim_scope": "Smoke-level training result only; not a full method claim."
   },
   "no_question_caption_quality": {
-    "exists": false,
-    "rows": 0,
+    "exists": true,
+    "rows": 13,
     "quality_gate_pass": false,
-    "evidence_shape_rate": null,
-    "numeric_evidence_rate": null,
-    "answer_label_only_rate": null,
-    "too_short_rate": null
+    "evidence_shape_rate": 0.4615,
+    "numeric_evidence_rate": 0.6154,
+    "answer_label_only_rate": 0.3846,
+    "too_short_rate": 0.5385
   },
   "compare": {
     "exists": true,
-    "status": "incomplete_or_blocked",
-    "complete": false,
-    "qcond_accuracy": null,
-    "no_question_accuracy": null,
-    "qcond_minus_no_question": null,
+    "status": "no_qconditioning_gap",
+    "complete": true,
+    "qcond_accuracy": 0.0,
+    "no_question_accuracy": 0.0,
+    "qcond_minus_no_question": 0.0,
     "min_gap": 0.05,
-    "claim_scope": "No q-conditioning training comparison allowed."
+    "claim_scope": "Report as training/interface failure or insufficient conditioning signal."
   },
   "manifest": {
     "exists": true,
-    "manifest_pass": false,
+    "manifest_pass": true,
     "unsafe_path_detected": false,
-    "required_missing": [
-      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/preflight.json",
-      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.json",
-      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.md",
-      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.rows.jsonl",
-      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/predictions.jsonl",
-      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/qa_metrics.json",
-      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/qa_predictions.jsonl",
-      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/preflight.json",
-      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.json",
-      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.md",
-      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.rows.jsonl",
-      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/generate_eval_test_clean/predictions.jsonl",
-      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/qa_metrics.json",
-      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/qa_predictions.jsonl"
-    ]
+    "required_missing": []
   },
   "remote_access": {
     "exists": true,
-    "any_access_pass": false,
+    "any_access_pass": true,
     "profiles": [
       {
-        "profile": "a100",
-        "reachable": false,
-        "access_pass": false,
-        "stderr_tail": "ssh: Could not resolve hostname a100: Temporary failure in name resolution\n"
-      },
-      {
         "profile": "3090",
-        "reachable": false,
-        "access_pass": false,
-        "stderr_tail": "Connection closed by 0.0.12.18 port 22\n"
+        "reachable": true,
+        "access_pass": true,
+        "stderr_tail": ""
       }
     ]
   },
@@ -135,46 +114,37 @@
     "oracle_evidence_baseline_present": true,
     "non_oracle_baselines_present": true,
     "oracle_caption_load_bearing": true,
-    "qcond_gpu_audit_pass": false,
-    "no_question_gpu_audit_pass": false,
-    "qcond_generated_metrics_present": false,
-    "no_question_generated_metrics_present": false,
-    "qcond_caption_quality_audit_present": false,
-    "no_question_caption_quality_audit_present": false,
-    "qcond_vs_no_question_comparison_complete": false,
-    "safe_result_manifest_pass": false,
+    "qcond_gpu_audit_pass": true,
+    "no_question_gpu_audit_pass": true,
+    "qcond_generated_metrics_present": true,
+    "no_question_generated_metrics_present": true,
+    "qcond_caption_quality_audit_present": true,
+    "no_question_caption_quality_audit_present": true,
+    "qcond_vs_no_question_comparison_complete": true,
+    "safe_result_manifest_pass": true,
     "safe_result_manifest_has_no_unsafe_paths": true
   },
   "result_checks": {
-    "qcond_accuracy": null,
-    "no_question_accuracy": null,
-    "qcond_minus_no_question": null,
+    "qcond_accuracy": 0.0,
+    "no_question_accuracy": 0.0,
+    "qcond_minus_no_question": 0.0,
     "min_gap": 0.05,
     "qcond_beats_all_non_oracle_baselines": false,
     "qcond_beats_question_only": false,
     "qcond_caption_quality_gate_pass": false,
-    "qcond_caption_evidence_shape_rate": null,
-    "qcond_caption_answer_label_only_rate": null,
+    "qcond_caption_evidence_shape_rate": 0.3846,
+    "qcond_caption_answer_label_only_rate": 0.5385,
     "no_question_caption_quality_gate_pass": false,
-    "no_question_caption_evidence_shape_rate": null,
-    "no_question_caption_answer_label_only_rate": null,
-    "compare_status": "incomplete_or_blocked"
+    "no_question_caption_evidence_shape_rate": 0.4615,
+    "no_question_caption_answer_label_only_rate": 0.3846,
+    "compare_status": "no_qconditioning_gap"
   },
   "decision": {
-    "objective_complete": false,
-    "status": "incomplete_or_blocked",
-    "summary_zh": "目标尚未完成：真实 QCC/no-question 训练、生成 caption、caption 质量审计、QA 或安全同步证据仍缺失。",
-    "claim_scope": "No generated-caption training claim allowed.",
-    "blockers": [
-      "qcond_gpu_audit_pass",
-      "no_question_gpu_audit_pass",
-      "qcond_generated_metrics_present",
-      "no_question_generated_metrics_present",
-      "qcond_caption_quality_audit_present",
-      "no_question_caption_quality_audit_present",
-      "qcond_vs_no_question_comparison_complete",
-      "safe_result_manifest_pass"
-    ],
+    "objective_complete": true,
+    "status": "complete_negative_signal",
+    "summary_zh": "目标完成，但 q-conditioned generated-caption QA 没有证明优于基线或 no-question 对照。",
+    "claim_scope": "Completed smoke with negative result; report failure plainly.",
+    "blockers": [],
     "qcond_beats_no_question": false,
     "qcond_gap_meets_min": false
   }

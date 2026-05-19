@@ -1,24 +1,11 @@
 {
-  "run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520",
-  "preflight_json": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/preflight.json",
-  "pipeline_summary_json": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_smoke_pipeline_summary.json",
   "predictions_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/predictions.jsonl",
-  "qa_metrics_json": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/qa_metrics.json",
-  "probe_results_json": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/probe_eval/natural_qcc_probe_results.json",
-  "checks": {
-    "preflight_exists": true,
-    "preflight_pass": true,
-    "pipeline_summary_exists": true,
-    "pipeline_complete": true,
-    "predictions_exist": true,
-    "prediction_rows_positive": true,
-    "qa_metrics_exists": true,
-    "qa_rows_positive": true,
-    "baseline_probe_exists": true,
-    "baseline_has_question_only": true
-  },
-  "audit_pass": true,
-  "generated_qa_metrics": {
+  "gold_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_crossdomain_positive.jsonl",
+  "caption_field": "pred_caption",
+  "splits": [
+    "test"
+  ],
+  "metrics": {
     "n": 13,
     "accuracy": 0.0,
     "empty_answer_rate": 1.0,
@@ -113,24 +100,5 @@
     "reason_distribution": {
       "no_label_match": 13
     }
-  },
-  "baseline_accuracy": {
-    "natural_oracle": 1.0,
-    "generic_caption": 0.0182,
-    "statistical_caption": 0.0,
-    "question_only": 0.1273
-  },
-  "decision": {
-    "status": "smoke_no_improvement_over_local_non_oracle_baselines",
-    "summary_zh": "generated caption 没有超过当前最强非 oracle 基线，不能作为 QCC 训练成功。",
-    "next_action_zh": "检查训练日志、caption 空答率和输出格式；必要时调整训练数据或目标格式。",
-    "baseline_max_non_oracle": 0.1273,
-    "beats_generic_caption": false,
-    "beats_statistical_caption": false,
-    "beats_question_only": false,
-    "beats_all_non_oracle_baselines": false,
-    "oracle_gap": 1.0,
-    "claim_scope": "Smoke-level training result only; not a full method claim."
-  },
-  "beats_question_only": false
+  }
 }

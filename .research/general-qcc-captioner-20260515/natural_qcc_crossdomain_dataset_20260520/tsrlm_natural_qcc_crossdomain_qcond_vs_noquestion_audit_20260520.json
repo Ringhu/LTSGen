@@ -3,31 +3,31 @@
     "run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520",
     "audit_json": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_gpu_smoke_result_audit.json",
     "audit_exists": true,
-    "audit_pass": false,
-    "generated_accuracy": null,
-    "generated_rows": 0,
-    "empty_answer_rate": null,
-    "decision_status": "incomplete_or_blocked",
-    "claim_scope": "No training-result claim allowed."
+    "audit_pass": true,
+    "generated_accuracy": 0.0,
+    "generated_rows": 13,
+    "empty_answer_rate": 1.0,
+    "decision_status": "smoke_no_improvement_over_local_non_oracle_baselines",
+    "claim_scope": "Smoke-level training result only; not a full method claim."
   },
   "no_question": {
     "run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520",
     "audit_json": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_gpu_smoke_result_audit.json",
     "audit_exists": true,
-    "audit_pass": false,
-    "generated_accuracy": null,
-    "generated_rows": 0,
-    "empty_answer_rate": null,
-    "decision_status": "incomplete_or_blocked",
-    "claim_scope": "No training-result claim allowed."
+    "audit_pass": true,
+    "generated_accuracy": 0.0,
+    "generated_rows": 13,
+    "empty_answer_rate": 1.0,
+    "decision_status": "smoke_no_improvement_over_local_non_oracle_baselines",
+    "claim_scope": "Smoke-level training result only; not a full method claim."
   },
   "decision": {
-    "status": "incomplete_or_blocked",
-    "summary_zh": "q-conditioned 或 no-question GPU smoke 尚未完整完成，不能解释 Q-conditioning gap。",
-    "claim_scope": "No q-conditioning training comparison allowed.",
+    "status": "no_qconditioning_gap",
+    "summary_zh": "q-conditioned generated-caption QA 没有超过 no-question 对照，不能作为 QCC conditioning 成功。",
+    "claim_scope": "Report as training/interface failure or insufficient conditioning signal.",
     "min_gap": 0.05,
-    "qcond_accuracy": null,
-    "no_question_accuracy": null,
-    "qcond_minus_no_question": null
+    "qcond_accuracy": 0.0,
+    "no_question_accuracy": 0.0,
+    "qcond_minus_no_question": 0.0
   }
 }
