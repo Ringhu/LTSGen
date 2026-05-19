@@ -49,17 +49,68 @@ def metric(summary: dict[str, Any] | None, *keys: str) -> Any:
     return cur
 
 
+def as_float(value: Any) -> float | None:
+    if value is None:
+        return None
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def build_decision(*, audit_pass: bool, generated_acc: float | None, baseline: dict[str, Any]) -> dict[str, Any]:
+    generic = as_float(baseline.get("generic_caption"))
+    statistical = as_float(baseline.get("statistical_caption"))
+    question_only = as_float(baseline.get("question_only"))
+    natural_oracle = as_float(baseline.get("natural_oracle"))
+    non_oracle_values = [value for value in (generic, statistical, question_only) if value is not None]
+    max_non_oracle = max(non_oracle_values) if non_oracle_values else None
+    beats_non_oracle = generated_acc is not None and max_non_oracle is not None and generated_acc > max_non_oracle
+    if not audit_pass:
+        status = "incomplete_or_blocked"
+        summary_zh = "GPU smoke run 尚未完整完成，不能解释 generated-caption QA。"
+        next_action_zh = "先完成远程 preflight、训练、生成和 rule-QA，再重新运行本审计。"
+    elif beats_non_oracle:
+        status = "smoke_improves_over_local_non_oracle_baselines"
+        summary_zh = "generated caption 在当前 AIOps smoke 子集上超过所有本地非 oracle 基线。"
+        next_action_zh = "把结果作为单源 smoke 证据记录；下一步扩到跨域 reviewer-positive 数据后复验。"
+    else:
+        status = "smoke_no_improvement_over_local_non_oracle_baselines"
+        summary_zh = "generated caption 没有超过当前最强非 oracle 基线，不能作为 QCC 训练成功。"
+        next_action_zh = "检查训练日志、caption 空答率和输出格式；必要时调整训练数据或目标格式。"
+    return {
+        "status": status,
+        "summary_zh": summary_zh,
+        "next_action_zh": next_action_zh,
+        "baseline_max_non_oracle": max_non_oracle,
+        "beats_generic_caption": generated_acc is not None and generic is not None and generated_acc > generic,
+        "beats_statistical_caption": generated_acc is not None and statistical is not None and generated_acc > statistical,
+        "beats_question_only": generated_acc is not None and question_only is not None and generated_acc > question_only,
+        "beats_all_non_oracle_baselines": beats_non_oracle,
+        "oracle_gap": natural_oracle - generated_acc if natural_oracle is not None and generated_acc is not None else None,
+        "claim_scope": (
+            "AIOps smoke only; not a cross-domain method claim."
+            if audit_pass
+            else "No training-result claim allowed."
+        ),
+    }
+
+
 def markdown(report: dict[str, Any]) -> str:
     checks = report["checks"]
     metrics = report.get("generated_qa_metrics") or {}
     baseline = report.get("baseline_accuracy") or {}
+    decision = report.get("decision") or {}
     lines = [
         "# Natural QCC GPU Smoke Result Audit（2026-05-20）",
         "",
         f"- run_dir: `{report['run_dir']}`",
         f"- audit_pass: `{report['audit_pass']}`",
+        f"- status: `{decision.get('status')}`",
         f"- generated QA accuracy: `{metrics.get('accuracy')}`",
         f"- generated QA rows: `{metrics.get('n')}`",
+        f"- summary: {decision.get('summary_zh')}",
+        f"- next action: {decision.get('next_action_zh')}",
         "",
         "## Checks",
         "",
@@ -80,6 +131,18 @@ def markdown(report: dict[str, Any]) -> str:
     for key in ("natural_oracle", "generic_caption", "statistical_caption", "question_only"):
         lines.append(f"| `{key}` | `{baseline.get(key)}` |")
     lines.append(f"| `generated_caption` | `{metrics.get('accuracy')}` |")
+    lines.extend(
+        [
+            "",
+            "## Decision Fields",
+            "",
+            f"- baseline max non-oracle: `{decision.get('baseline_max_non_oracle')}`",
+            f"- beats all non-oracle baselines: `{decision.get('beats_all_non_oracle_baselines')}`",
+            f"- beats question-only: `{decision.get('beats_question_only')}`",
+            f"- oracle gap: `{decision.get('oracle_gap')}`",
+            f"- claim scope: `{decision.get('claim_scope')}`",
+        ]
+    )
     lines.extend(
         [
             "",
@@ -127,8 +190,8 @@ def main() -> None:
         "baseline_has_question_only": baseline_accuracy.get("question_only") is not None,
     }
     audit_pass = all(checks.values())
-    question_only = baseline_accuracy.get("question_only")
-    generated_acc = generated_metrics.get("accuracy")
+    generated_acc = as_float(generated_metrics.get("accuracy"))
+    decision = build_decision(audit_pass=audit_pass, generated_acc=generated_acc, baseline=baseline_accuracy)
     report = {
         "run_dir": rel(run_dir),
         "preflight_json": rel(run_dir / "preflight.json"),
@@ -140,9 +203,8 @@ def main() -> None:
         "audit_pass": audit_pass,
         "generated_qa_metrics": generated_metrics,
         "baseline_accuracy": baseline_accuracy,
-        "beats_question_only": (
-            generated_acc is not None and question_only is not None and float(generated_acc) > float(question_only)
-        ),
+        "decision": decision,
+        "beats_question_only": decision["beats_question_only"],
     }
     out = args.out or (run_dir / "natural_qcc_gpu_smoke_result_audit.json")
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -154,4 +216,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
