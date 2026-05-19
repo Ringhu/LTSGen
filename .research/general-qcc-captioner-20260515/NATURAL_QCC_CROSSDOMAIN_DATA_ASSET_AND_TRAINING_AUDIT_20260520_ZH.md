@@ -11,6 +11,7 @@
 - positive dataset: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_crossdomain_positive.jsonl`
 - SFT files: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/`
 - probe results: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/probe_eval/natural_qcc_probe_results.json`
+- local caption ranker diagnostic: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/local_caption_ranker/`
 - local GPU preflight: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/gpu_smoke_preflight_local.json`
 - GPU smoke launcher: `scripts/remote/run_natural_qcc_crossdomain_smoke_a100.sh`
 - GPU dry-run/audit dir: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/`
@@ -108,6 +109,32 @@ Schema gate: `true`。
 - `generic/statistical/question_only` 很弱，说明自然 evidence caption 是 load-bearing 的。
 - 最近邻弱探针出现 Q-conditioning gap：`0.4615` vs `0.2308`。这不是正式 QCC 模型，但说明问题条件对 caption 检索有增益。
 - `natural_evidence_no_label=0.6545` 低于 oracle，说明自然 evidence 本身可读，但当前 rule-QA evaluator 仍依赖较规范的答案标签；后续可升级 evaluator 或统一 option label。
+
+## 本地弱训练诊断
+
+由于当前机器没有 GPU/torch，我补充了一个无依赖的本地 caption ranker 诊断：
+
+```bash
+python3 scripts/eval/run_natural_qcc_local_caption_ranker.py \
+  --data .research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_crossdomain_positive.jsonl \
+  --out_dir .research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/local_caption_ranker/qcond \
+  --train_split train \
+  --eval_split test \
+  --epochs 30
+```
+
+该脚本在 train split 上训练一个小型 option-ranker，再把预测选项写成 generated caption，并用 `evaluate_natural_qcc_predictions.py` 跑相同 rule-QA。
+
+| diagnostic | train QA | test QA | empty |
+| --- | ---: | ---: | ---: |
+| `local_ranker_qcond` | 0.9677 | 0.6154 | 0.0000 |
+| `local_ranker_no_question` | 0.9677 | 0.6154 | 0.0000 |
+
+解释：
+
+- 本地弱训练结果高于 `question_only=0.1273`、`generic_caption=0.0182` 和最近邻 q-conditioned `0.4615`，说明这批 reviewer-positive 数据存在可训练的 QA 信号。
+- q-conditioned 和 no-question 结果相同，说明这个弱 ranker 主要依赖 source/scene/numeric/option 特征，不能作为 Q-conditioning 方法成功证据。
+- 该诊断不会替代 TS-RLM/Qwen caption SFT，也不验证 caption factuality；只能作为 GPU 不可达时的训练前 sanity check。
 
 ## GPU 训练状态
 
