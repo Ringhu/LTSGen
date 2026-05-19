@@ -150,6 +150,18 @@ Observed status:
 Run on an accessible GPU host:
 
 ```bash
+PROFILE=a100 scripts/remote/run_natural_qcc_crossdomain_pair_a100.sh
+```
+
+or:
+
+```bash
+PROFILE=3090 scripts/remote/run_natural_qcc_crossdomain_pair_a100.sh
+```
+
+Equivalent explicit commands:
+
+```bash
 MODE=qcond PROFILE=a100 scripts/remote/run_natural_qcc_crossdomain_smoke_a100.sh
 MODE=no_question PROFILE=a100 scripts/remote/run_natural_qcc_crossdomain_smoke_a100.sh
 ```

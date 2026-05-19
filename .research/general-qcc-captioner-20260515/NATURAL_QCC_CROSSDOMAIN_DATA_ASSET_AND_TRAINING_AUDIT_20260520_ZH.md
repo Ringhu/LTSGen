@@ -15,6 +15,7 @@
 - local caption ranker diagnostic: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/local_caption_ranker/`
 - local GPU preflight: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/gpu_smoke_preflight_local.json`
 - GPU smoke launcher: `scripts/remote/run_natural_qcc_crossdomain_smoke_a100.sh`
+- paired GPU smoke launcher: `scripts/remote/run_natural_qcc_crossdomain_pair_a100.sh`
 - q-conditioned GPU dry-run/audit dir: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/`
 - no-question GPU dry-run/audit dir: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/`
 - qcond-vs-no-question audit: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.json`
@@ -153,6 +154,18 @@ PROFILE=a100 scripts/remote/run_natural_qcc_crossdomain_smoke_a100.sh
 PROFILE=3090 scripts/remote/run_natural_qcc_crossdomain_smoke_a100.sh
 ```
 
+更推荐直接跑成对对照：
+
+```bash
+PROFILE=a100 scripts/remote/run_natural_qcc_crossdomain_pair_a100.sh
+```
+
+3090 可用：
+
+```bash
+PROFILE=3090 scripts/remote/run_natural_qcc_crossdomain_pair_a100.sh
+```
+
 本地 dry-run 已生成完整 q-conditioned pipeline plan，包括 preflight、train、generate、rule-QA。训练命令使用：
 
 - train: `sft/natural_qcc_crossdomain_train_sft.jsonl`
@@ -202,7 +215,7 @@ python3 scripts/eval/audit_natural_qcc_gpu_qcond_vs_noquestion.py
 
 ## 下一步
 
-1. 在 A100 或 3090 上分别运行 `MODE=qcond` 和 `MODE=no_question` 的 `scripts/remote/run_natural_qcc_crossdomain_smoke_a100.sh`，完成两条真实 SFT、caption generation 和 generated-caption QA。
+1. 在 A100 或 3090 上运行 `scripts/remote/run_natural_qcc_crossdomain_pair_a100.sh`，完成 `MODE=qcond` 和 `MODE=no_question` 两条真实 SFT、caption generation 和 generated-caption QA。
 2. 两条 run 完成后分别重新运行 `scripts/eval/audit_natural_qcc_gpu_smoke_result.py --run_dir ... --probe_results ...`。
 3. 再运行 `scripts/eval/audit_natural_qcc_gpu_qcond_vs_noquestion.py`，判断 q-conditioned generated-caption QA 是否超过 no-question control。
 4. 若 q-conditioned generated-caption QA 超过 `question_only=0.1273`、`generic_caption=0.0182`、`statistical_caption=0.0000`，且超过 no-question control，再记录为 cross-domain smoke 训练正信号。
