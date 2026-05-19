@@ -1,0 +1,280 @@
+{
+  "predictions_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/probe_eval/natural_evidence_no_label_predictions.jsonl",
+  "gold_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_crossdomain_positive.jsonl",
+  "caption_field": "caption",
+  "splits": [
+    "train",
+    "dev",
+    "test"
+  ],
+  "metrics": {
+    "n": 55,
+    "mean_caption_chars": 192.7,
+    "numeric_evidence_rate": 0.9091,
+    "evidence_shape_rate": 0.9091,
+    "answer_label_only_rate": 0.0,
+    "option_letter_leak_rate": 0.0,
+    "jsonish_output_rate": 0.0,
+    "too_short_rate": 0.0,
+    "by_source": {
+      "aiopslab_official_v3": {
+        "n": 12,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0,
+        "numeric_evidence_rate": 1.0
+      },
+      "citylearn": {
+        "n": 9,
+        "evidence_shape_rate": 0.8889,
+        "answer_label_only_rate": 0.0,
+        "numeric_evidence_rate": 0.8889
+      },
+      "grid2op": {
+        "n": 12,
+        "evidence_shape_rate": 0.9167,
+        "answer_label_only_rate": 0.0,
+        "numeric_evidence_rate": 0.9167
+      },
+      "traffic": {
+        "n": 11,
+        "evidence_shape_rate": 0.8182,
+        "answer_label_only_rate": 0.0,
+        "numeric_evidence_rate": 0.8182
+      },
+      "water": {
+        "n": 11,
+        "evidence_shape_rate": 0.9091,
+        "answer_label_only_rate": 0.0,
+        "numeric_evidence_rate": 0.9091
+      }
+    },
+    "by_task_family": {
+      "aiops_official_cpu_trend": {
+        "n": 3,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "aiops_official_cross_signal_relation": {
+        "n": 3,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "aiops_official_memory_extrema": {
+        "n": 2,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "aiops_official_network_volatility": {
+        "n": 2,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "aiops_official_window_memory": {
+        "n": 2,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "city_anomaly_total_load": {
+        "n": 2,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "city_cross_variable_load": {
+        "n": 2,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "city_extrema_total_load": {
+        "n": 2,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "city_trend_total_load": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "city_volatility_total_load": {
+        "n": 1,
+        "evidence_shape_rate": 0.0,
+        "answer_label_only_rate": 0.0
+      },
+      "city_window_total_load": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "grid_anomaly_max_rho": {
+        "n": 2,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "grid_counterfactual_mean_stress": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "grid_counterfactual_overload_exposure": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "grid_counterfactual_peak_stress": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "grid_cross_variable_stress": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "grid_domain_stress_context": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "grid_extrema_max_rho": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "grid_temporal_lead_lag": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "grid_trend_max_rho": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "grid_volatility_total_load": {
+        "n": 1,
+        "evidence_shape_rate": 0.0,
+        "answer_label_only_rate": 0.0
+      },
+      "grid_window_total_load": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "traffic_combined_stress_context": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "traffic_counterfactual_event_gap": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "traffic_cross_congestion_relation": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "traffic_event_impact_relation": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "traffic_event_recovery_context": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "traffic_incident_anomaly": {
+        "n": 1,
+        "evidence_shape_rate": 0.0,
+        "answer_label_only_rate": 0.0
+      },
+      "traffic_queue_volatility": {
+        "n": 1,
+        "evidence_shape_rate": 0.0,
+        "answer_label_only_rate": 0.0
+      },
+      "traffic_signal_counterfactual_queue": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "traffic_speed_extrema": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "traffic_speed_periodicity": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "traffic_speed_queue_lead_lag": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "water_combined_stress_context": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "water_counterfactual_event_gap": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "water_cross_pressure_relation": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "water_domain_resilience_context": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "water_event_impact_relation": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "water_event_recovery_context": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "water_flow_volatility": {
+        "n": 1,
+        "evidence_shape_rate": 0.0,
+        "answer_label_only_rate": 0.0
+      },
+      "water_leak_anomaly": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "water_leak_counterfactual_pressure": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "water_min_pressure_extrema": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "water_pressure_flow_lead_lag": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      }
+    },
+    "failure_reasons": {
+      "no_numeric_evidence": 5
+    },
+    "min_evidence_shape_rate": 0.8,
+    "max_answer_label_only_rate": 0.2,
+    "quality_gate_pass": true
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "probe_results": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/probe_eval/natural_qcc_probe_results.json",
+  "diagnostics": [
+    {
+      "name": "natural_oracle",
+      "kind": "oracle_evidence",
+      "scope": "all reviewer-positive rows",
+      "quality_path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/probe_eval/natural_oracle_caption_quality_audit.json",
+      "qa_exists": true,
+      "qa_accuracy": 1.0,
+      "qa_rows": 55,
+      "empty_answer_rate": 0.0,
+      "quality_exists": true,
+      "quality_rows": 55,
+      "quality_gate_pass": true,
+      "evidence_shape_rate": 0.9091,
+      "numeric_evidence_rate": 0.9091,
+      "answer_label_only_rate": 0.0,
+      "failure_reasons": {
+        "no_numeric_evidence": 5
+      },
+      "evidence_caption_signal": true
+    },
+    {
+      "name": "natural_evidence_no_label",
+      "kind": "oracle_evidence_without_answer_label",
+      "scope": "all reviewer-positive rows",
+      "quality_path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/probe_eval/natural_evidence_no_label_caption_quality_audit.json",
+      "qa_exists": true,
+      "qa_accuracy": 0.6545,
+      "qa_rows": 55,
+      "empty_answer_rate": 0.1636,
+      "quality_exists": true,
+      "quality_rows": 55,
+      "quality_gate_pass": true,
+      "evidence_shape_rate": 0.9091,
+      "numeric_evidence_rate": 0.9091,
+      "answer_label_only_rate": 0.0,
+      "failure_reasons": {
+        "no_numeric_evidence": 5
+      },
+      "evidence_caption_signal": true
+    },
+    {
+      "name": "nearest_caption_question_conditioned",
+      "kind": "train_split_nearest_caption_probe",
+      "scope": "test split",
+      "quality_path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/probe_eval/nearest_caption_question_conditioned_caption_quality_audit.json",
+      "qa_exists": true,
+      "qa_accuracy": 0.4615,
+      "qa_rows": 13,
+      "empty_answer_rate": 0.3846,
+      "quality_exists": true,
+      "quality_rows": 13,
+      "quality_gate_pass": false,
+      "evidence_shape_rate": 0.7692,
+      "numeric_evidence_rate": 0.7692,
+      "answer_label_only_rate": 0.0,
+      "failure_reasons": {
+        "no_numeric_evidence": 3
+      },
+      "evidence_caption_signal": true
+    },
+    {
+      "name": "nearest_caption_no_question",
+      "kind": "train_split_nearest_caption_probe",
+      "scope": "test split",
+      "quality_path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/probe_eval/nearest_caption_no_question_caption_quality_audit.json",
+      "qa_exists": true,
+      "qa_accuracy": 0.2308,
+      "qa_rows": 13,
+      "empty_answer_rate": 0.6154,
+      "quality_exists": true,
+      "quality_rows": 13,
+      "quality_gate_pass": true,
+      "evidence_shape_rate": 0.9231,
+      "numeric_evidence_rate": 0.9231,
+      "answer_label_only_rate": 0.0,
+      "failure_reasons": {
+        "no_numeric_evidence": 1
+      },
+      "evidence_caption_signal": true
+    },
+    {
+      "name": "local_ranker_qcond",
+      "kind": "local_option_ranker_answer_label_shortcut",
+      "scope": "test split",
+      "quality_path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/local_caption_ranker/qcond/natural_qcc_caption_quality_audit.json",
+      "qa_exists": true,
+      "qa_accuracy": 0.6154,
+      "qa_rows": 13,
+      "empty_answer_rate": 0.0,
+      "quality_exists": true,
+      "quality_rows": 13,
+      "quality_gate_pass": false,
+      "evidence_shape_rate": 0.0,
+      "numeric_evidence_rate": 0.0,
+      "answer_label_only_rate": 1.0,
+      "failure_reasons": {
+        "answer_label_only": 13,
+        "no_numeric_evidence": 13
+      },
+      "evidence_caption_signal": false
+    },
+    {
+      "name": "local_ranker_no_question",
+      "kind": "local_option_ranker_answer_label_shortcut",
+      "scope": "test split",
+      "quality_path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/local_caption_ranker/no_question/natural_qcc_caption_quality_audit.json",
+      "qa_exists": true,
+      "qa_accuracy": 0.6154,
+      "qa_rows": 13,
+      "empty_answer_rate": 0.0,
+      "quality_exists": true,
+      "quality_rows": 13,
+      "quality_gate_pass": false,
+      "evidence_shape_rate": 0.0,
+      "numeric_evidence_rate": 0.0,
+      "answer_label_only_rate": 1.0,
+      "failure_reasons": {
+        "answer_label_only": 13,
+        "no_numeric_evidence": 13
+      },
+      "evidence_caption_signal": false
+    }
+  ],
+  "summary": {
+    "nearest_qcond_qa_minus_no_question": 0.2307,
+    "nearest_qcond_quality_minus_no_question": -0.1539,
+    "nearest_qcond_quality_gate_pass": false,
+    "nearest_no_question_quality_gate_pass": true,
+    "local_ranker_qcond_answer_label_only_rate": 1.0,
+    "interpretation": "nearest-caption probe has evidence-shaped captions but is not TS-RLM/Qwen training; local ranker QA is an answer-label shortcut and is not evidence-caption adaptation.",
+    "claim_scope": "local_caption_adaptation_diagnostic_not_final_qcc_training"
+  }
+}

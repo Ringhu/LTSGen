@@ -38,6 +38,7 @@
 | Oracle evidence QA | `natural_oracle accuracy=1.0000` | complete |
 | Non-oracle baselines | `generic_caption=0.0182`，`statistical_caption=0.0000`，`question_only=0.1273` | complete |
 | Weak question-conditioned probe | `nearest_caption_question_conditioned=0.4615` vs `nearest_caption_no_question=0.2308` | complete, diagnostic only |
+| Caption-adaptation summary | `natural_qcc_caption_adaptation_summary_20260520.json` combines QA and caption-quality metrics; nearest qcond QA gap `+0.2307`, quality gap `-0.1539` | complete diagnostic only |
 | Local weak training diagnostic | `local_caption_ranker/qcond/local_caption_ranker_summary.json` and `no_question/local_caption_ranker_summary.json`；both test QA `0.6154` | partial diagnostic |
 | Local caption-quality audit | `local_caption_ranker/{qcond,no_question}/natural_qcc_caption_quality_audit.json`；both `evidence_shape_rate=0.0000` and `answer_label_only_rate=1.0000` | complete diagnostic; shows ranker is not evidence-caption training |
 | True QCC TS-RLM/Qwen training | GPU smoke audit checks `pipeline_complete=false`，no predictions, no QA metrics | missing |
@@ -66,6 +67,15 @@ Data asset probe on 55 reviewer-positive rows:
 | `nearest_caption_question_conditioned` | 0.4615 | 0.3846 |
 | `nearest_caption_no_question` | 0.2308 | 0.6154 |
 
+Caption-quality audit for evidence-style probe captions:
+
+| diagnostic | evidence shape | answer-label-only | numeric evidence | quality gate |
+| --- | ---: | ---: | ---: | ---: |
+| `natural_oracle` | 0.9091 | 0.0000 | 0.9091 | `true` |
+| `natural_evidence_no_label` | 0.9091 | 0.0000 | 0.9091 | `true` |
+| `nearest_caption_question_conditioned` | 0.7692 | 0.0000 | 0.7692 | `false` |
+| `nearest_caption_no_question` | 0.9231 | 0.0000 | 0.9231 | `true` |
+
 Local dependency-free ranker diagnostic:
 
 | diagnostic | train QA | test QA | empty |
@@ -83,7 +93,7 @@ Local caption-quality audit:
 Interpretation:
 
 - 数据资产本身通过了一个 smoke-level gate：oracle 强，generic/statistical/question-only 弱。
-- 最近邻 probe 有 question-conditioning gap，但它不是训练出的 QCC captioner。
+- 最近邻 probe 有 question-conditioning QA gap，但 q-conditioned quality gate 未通过；它不是训练出的 QCC captioner。
 - 本地弱 ranker 显示数据中有可训练信号，但 q-conditioned 与 no-question 结果完全相同，不能证明 QCC conditioning 成功。
 - 本地 ranker 会把预测选项写进 caption；caption-quality audit 明确显示它是答案标签式输出，不等同于 TS-RLM/Qwen 自然 evidence caption 训练。
 
@@ -296,6 +306,7 @@ What is complete:
 - Positive dataset and SFT split preparation.
 - No-question control SFT split preparation.
 - Data asset baseline/probe.
+- Caption-adaptation summary combining QA and caption-quality for oracle, nearest-caption probe, and local ranker.
 - Local weak training diagnostic.
 - Caption-quality audit for the local weak diagnostic, showing the ranker is not evidence-caption training.
 - GitHub sync for the current non-GPU artifacts, including the remote-access diagnostic report.
