@@ -159,6 +159,20 @@ or:
 PROFILE=3090 scripts/remote/run_natural_qcc_crossdomain_pair_a100.sh
 ```
 
+Or launch remotely from this workstation after SSH access is restored:
+
+```bash
+PROFILE=a100 scripts/remote/launch_natural_qcc_crossdomain_pair_ssh.sh
+```
+
+or:
+
+```bash
+PROFILE=3090 scripts/remote/launch_natural_qcc_crossdomain_pair_ssh.sh
+```
+
+The SSH launcher fetches, checks out, and fast-forwards `codex/question-repair-20260519-ready` on the remote host before running the paired GPU smoke command.
+
 Equivalent explicit commands:
 
 ```bash
