@@ -73,3 +73,35 @@ Or, if the target should be the original branch and the reviewer accepts adding 
 cd /tmp/ltsgen-question-repair-20260519
 git push origin codex/question-repair-20260519-ready:codex/multisim-qcc-v1-results-20260517
 ```
+
+## Offline Transfer Artifacts
+
+Two local transfer artifacts were prepared because direct GitHub push is blocked
+by missing credentials:
+
+- Patch: `/tmp/ltsgen-question-repair-dcfa6df.patch`
+- Git bundle: `/tmp/ltsgen-question-repair-ready.bundle`
+
+The bundle was verified with:
+
+```bash
+git bundle verify /tmp/ltsgen-question-repair-ready.bundle
+```
+
+Verification result:
+
+```text
+/tmp/ltsgen-question-repair-ready.bundle is okay
+The bundle contains this ref:
+dcfa6df62ea541687ab1f8156b3b884248dccfd4 refs/heads/codex/question-repair-20260519-ready
+The bundle records a complete history.
+```
+
+To transfer through another machine with GitHub credentials:
+
+```bash
+git clone /tmp/ltsgen-question-repair-ready.bundle ltsgen-question-repair
+cd ltsgen-question-repair
+git remote add origin https://github.com/Ringhu/LTSGen.git
+git push origin codex/question-repair-20260519-ready
+```
