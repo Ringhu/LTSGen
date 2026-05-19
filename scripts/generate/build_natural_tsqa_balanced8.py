@@ -188,8 +188,8 @@ def phrase_en(label: str) -> str:
         "unclear relation": "an unclear relation",
         "x1": "x1",
         "x2": "x2",
-        "both similar": "both companion signals are similarly related",
-        "both weak": "both companion signals are weakly related",
+        "both similar": "both companion signal pairs are similarly usable",
+        "both weak": "neither companion signal pair reaches usable coupling",
     }
     return mapping.get(label, natural_option_en(label))
 
@@ -312,8 +312,8 @@ def contextual_option_zh(row: dict, text: str) -> str | None:
         mapping = {
             "cpu-memory coupling": "CPU 与内存耦合更强",
             "network rx-tx coupling": "网络接收与发送耦合更强",
-            "both weak": "两组耦合都弱",
-            "both similar": "两组耦合强度相近",
+            "both weak": "两组都没有达到可用耦合",
+            "both similar": "两组都达到可用耦合且强度相近",
             "text-service": "text-service 服务",
             "user-service": "user-service 服务",
             "post-storage-service": "post-storage-service 服务",
@@ -347,8 +347,8 @@ def natural_option_en(text: str) -> str:
     mapping = {
         "x1": "x1 is the stronger companion signal",
         "x2": "x2 is the stronger companion signal",
-        "both similar": "both companion signals are similarly related",
-        "both weak": "neither companion signal is strongly related",
+        "both similar": "both telemetry pairs reach usable coupling and are similar",
+        "both weak": "neither telemetry pair reaches usable coupling",
         "x0 leads x1": "maximum line-loading stress leads total demand",
         "x1 leads x0": "total demand leads maximum line-loading stress",
         "speed leads queue": "speed changes lead queue changes",
@@ -488,10 +488,10 @@ def generic_rewrite(row: dict, scene_en: str, scene_zh: str) -> tuple[str, str, 
 
     if source == "aiopslab_official_v3" and "cross_signal_relation" in task:
         return (
-            "In this incident window, which telemetry pair should the SRE treat as more tightly coupled?",
-            "在这个事故遥测窗口里，SRE 应该把哪一组信号视为耦合更强？",
-            f"The CPU-memory correlation is {fnum(slots.get('corr_cpu_memory'), 3)}, while the network receive/transmit correlation is {fnum(slots.get('corr_net_rx_tx'), 3)}. This supports {natural_option_en(label)}.",
-            f"CPU 与内存的相关系数为 {fnum(slots.get('corr_cpu_memory'), 3)}，网络接收与发送的相关系数为 {fnum(slots.get('corr_net_rx_tx'), 3)}；因此判断为：{contextual_option_zh(row, label) or label_cn}。",
+            "Using a 0.30 absolute-correlation cutoff for usable coupling, which telemetry relationship should the SRE trust in this incident window?",
+            "按绝对相关系数 0.30 作为可用耦合阈值，SRE 在这个事故窗口中应该信任哪种遥测关系？",
+            f"Rule: correlations below 0.30 are treated as not usable; if both pairs are at least 0.30 and differ by less than 0.05, treat them as similarly usable. The CPU-memory correlation is {fnum(slots.get('corr_cpu_memory'), 3)}, while the network receive/transmit correlation is {fnum(slots.get('corr_net_rx_tx'), 3)}. This supports {natural_option_en(label)}.",
+            f"规则：绝对相关系数低于 0.30 时视为不可用耦合；如果两组都至少达到 0.30 且差值小于 0.05，则视为两组可用且相近。CPU 与内存的相关系数为 {fnum(slots.get('corr_cpu_memory'), 3)}，网络接收与发送的相关系数为 {fnum(slots.get('corr_net_rx_tx'), 3)}；因此判断为：{contextual_option_zh(row, label) or label_cn}。",
         )
 
     if "counterfactual_peak_stress" in task:

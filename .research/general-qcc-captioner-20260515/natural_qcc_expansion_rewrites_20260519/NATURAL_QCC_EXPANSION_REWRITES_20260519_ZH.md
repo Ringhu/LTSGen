@@ -20,7 +20,7 @@
 
 ## 前 12 条样例
 
-- `aiopslab_official_v3` / `aiops_official_cross_signal_relation` / `candidate`: 在这个事故遥测窗口里，SRE 应该把哪一组信号视为耦合更强？
+- `aiopslab_official_v3` / `aiops_official_cross_signal_relation` / `candidate`: 按绝对相关系数 0.30 作为可用耦合阈值，SRE 在这个事故窗口中应该信任哪种遥测关系？
 - `aiopslab_official_v3` / `aiops_official_window_memory` / `candidate`: 按 5% 相对差异规则，这个事故窗口中的服务内存占用是前后相近，还是某一半更重？
 - `aiopslab_official_v3` / `aiops_official_cpu_trend` / `candidate`: 这段事故窗口里，服务 CPU 负载是在上升、下降，还是基本平稳？
 - `aiopslab_official_v3` / `aiops_official_network_volatility` / `candidate`: 这个事故窗口中，网络接收速率在哪一段波动最大？
@@ -28,9 +28,9 @@
 - `aiopslab_official_v3` / `aiops_official_memory_extrema` / `candidate`: 把这个事故窗口按时间分成早期、中期和后期后，服务内存工作集的最高点出现在什么位置？
 - `aiopslab_official_v3` / `aiops_official_memory_extrema` / `candidate`: 把这个事故窗口按时间分成早期、中期和后期后，服务内存工作集的最高点出现在什么位置？
 - `aiopslab_official_v3` / `aiops_official_window_memory` / `candidate`: 按 5% 相对差异规则，这个事故窗口中的服务内存占用是前后相近，还是某一半更重？
-- `aiopslab_official_v3` / `aiops_official_cross_signal_relation` / `candidate`: 在这个事故遥测窗口里，SRE 应该把哪一组信号视为耦合更强？
+- `aiopslab_official_v3` / `aiops_official_cross_signal_relation` / `candidate`: 按绝对相关系数 0.30 作为可用耦合阈值，SRE 在这个事故窗口中应该信任哪种遥测关系？
 - `aiopslab_official_v3` / `aiops_official_network_volatility` / `candidate`: 这个事故窗口中，网络接收速率在哪一段波动最大？
-- `aiopslab_official_v3` / `aiops_official_cross_signal_relation` / `candidate`: 在这个事故遥测窗口里，SRE 应该把哪一组信号视为耦合更强？
+- `aiopslab_official_v3` / `aiops_official_cross_signal_relation` / `candidate`: 按绝对相关系数 0.30 作为可用耦合阈值，SRE 在这个事故窗口中应该信任哪种遥测关系？
 - `aiopslab_official_v3` / `aiops_official_window_memory` / `candidate`: 按 5% 相对差异规则，这个事故窗口中的服务内存占用是前后相近，还是某一半更重？
 
 ## 使用方式
@@ -53,14 +53,8 @@ python3 scripts/generate/review_natural_qcc_expansion_rewrites.py \
   --review_json .research/general-qcc-captioner-20260515/natural_qcc_expansion_rewrites_20260519/natural_qcc_expansion_rewrites_review.json \
   --review_md .research/general-qcc-captioner-20260515/natural_qcc_expansion_rewrites_20260519/NATURAL_QCC_EXPANSION_REVIEW_20260519_ZH.md \
   --model gpt-5.5
-
-python3 scripts/generate/build_natural_qcc_expansion_dataset.py \
-  --natural_jsonl .research/general-qcc-captioner-20260515/natural_qcc_expansion_rewrites_20260519/natural_qcc_expansion_rewrites.jsonl \
-  --review_json .research/general-qcc-captioner-20260515/natural_qcc_expansion_rewrites_20260519/natural_qcc_expansion_rewrites_review.json \
-  --raw_jsonl .research/general-qcc-captioner-20260515/natural_qcc_expansion_candidates_20260519/natural_qcc_expansion_candidates.jsonl \
-  --out_dir .research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519
 ```
 
 ## 下一步
 
-对 `natural_qcc_expansion_rewrites.jsonl` 运行 GPT-5.5 reviewer gate；只保留 `decision=keep`、`naturalness_score>=4`、`answerability_score>=4`、`accuracy_risk=low` 的样本。review 完整后再运行 `build_natural_qcc_expansion_dataset.py`，生成 positive JSONL、excluded JSONL、schema summary 以及 split-specific raw/SFT 文件，供 baseline 和 caption SFT 使用。
+对 `natural_qcc_expansion_rewrites.jsonl` 运行 GPT-5.5 reviewer gate；只保留 `decision=keep`、`naturalness_score>=4`、`answerability_score>=4`、`accuracy_risk=low` 的样本进入正式 natural QCC train/dev/test。

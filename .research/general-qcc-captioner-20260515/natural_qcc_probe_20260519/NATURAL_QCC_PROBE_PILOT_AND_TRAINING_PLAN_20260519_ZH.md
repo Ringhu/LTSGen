@@ -7,7 +7,7 @@
 结论分两层：
 
 1. **数据接口可用**：43 条 reviewer-positive 样本可以转成 evidence-caption QA 样本，`natural_oracle` 在规则 QA 中达到 `1.0000`。
-2. **还没有证明 QCC 训练收益**：当前只有 43 条样本，train/dev-as-train 只有 19 条，nearest-caption 小探针只有 `0.1250`，不能作为方法结果。
+2. **真实扩展子集已跑通但仍未证明 QCC 训练收益**：AIOpsLab 官方 v3 的 25 条扩展样本已经完成 GPT-5.5 reviewer、positive dataset、baseline/probe 和 GPU dry-run；但它只有单一 source，nearest-caption question-conditioned 与 no-question 都是 `1.0000`，说明小子集过于重复，不能作为方法结果。
 
 ## 已完成资产
 
@@ -28,6 +28,10 @@
 | expansion natural rewrite builder | `scripts/generate/build_natural_qcc_expansion_rewrites.py` |
 | expansion GPT-5.5 reviewer | `scripts/generate/review_natural_qcc_expansion_rewrites.py` |
 | expansion dataset/SFT builder | `scripts/generate/build_natural_qcc_expansion_dataset.py` |
+| AIOps expansion reviewer report | `.research/general-qcc-captioner-20260515/natural_qcc_expansion_rewrites_20260519/NATURAL_QCC_EXPANSION_REVIEW_20260519_ZH.md` |
+| AIOps expansion dataset | `.research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/` |
+| AIOps expansion baseline/probe | `.research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/probe_eval/NATURAL_QCC_PROBE_RESULTS_20260519_ZH.md` |
+| AIOps expansion GPU dry-run | `.research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/tsrlm_natural_qcc_expansion_smoke_qwen3_4b_20260520/` |
 
 ## 当前数字
 
@@ -65,6 +69,26 @@
 
 这是弱训练探针，只验证“训练/评估接口能跑到 QA 端”，不代表 QCC 模型训练结果。
 
+### AIOpsLab v3 Expansion 子集
+
+真实 GPT-5.5 reviewer 已对 25 条 AIOpsLab 官方 v3 数值时序候选完成审查：`25/25 keep`，`25/25 low risk`，positive gate `25/25`。dataset builder 生成了 25 条 positive、0 条 excluded，split 为 dev/test/train=`5/10/10`，覆盖 `cross_signal_relation`、`window_memory`、`cpu_trend`、`network_volatility`、`memory_extrema` 五类任务，每类 5 条，`schema_gate_pass=true`。
+
+扩展子集 baseline/probe：
+
+| condition | n | accuracy | empty |
+| --- | ---: | ---: | ---: |
+| `natural_oracle` | 25 | 1.0000 | 0.0000 |
+| `natural_evidence_no_label` | 25 | 0.6000 | 0.2000 |
+| `generic_caption` | 25 | 0.0000 | 1.0000 |
+| `statistical_caption` | 25 | 0.0000 | 1.0000 |
+| `question_only` | 25 | 0.2000 | 0.6000 |
+| `nearest_caption_question_conditioned` | 10 eval | 1.0000 | 0.0000 |
+| `nearest_caption_no_question` | 10 eval | 1.0000 | 0.0000 |
+
+这说明 AIOps 子集的数据接口和 schema 可以训练，但它不是 QCC 方法成功：`nearest_caption_question_conditioned` 与 no-question 持平，表示当前单源小子集能被 source/task/数值近邻记忆解决。
+
+扩展子集 GPU preflight 结果也已经写入 `natural_qcc_expansion_dataset_20260519/gpu_smoke_preflight.json`：train/test SFT、raw eval、gold JSONL、prefix bridge、TSRLMConfig 和 evaluator 都通过；本机阻塞项是 Qwen3-4B 模型路径不存在，且没有 `torch/transformers/peft` 与 CUDA。
+
 ## 为什么这一步仍然有价值
 
 旧的 MultiSim v5 小训练在 48 条 balanced eval 上只有 `0.125`，没有超过 `statistical_caption`。这次 natural pilot 没有直接证明模型变强，但证明了一个关键前提：自然化后的 QA/evidence 仍然能保持 oracle 可验证，同时 generic/statistical/question-only 基线很弱，说明任务没有退化成纯语言先验。
@@ -84,9 +108,7 @@
 - AIOps metadata-only 和 metadata-context lookup 问题单独建 split 或剔除出主数值时序 benchmark；当前 selector 已排除 `faulty_service` / `fault_layer` 这类不能从时序窗口推出的样本。
 - lead-lag、counterfactual、domain-context 题必须保证证据差距足够明显，避免视觉上接近但强行设问。
 
-当前本地 checkout 只能读取 AIOpsLab v3 source，因此扩展候选只物化了 25 条数值时序 AIOps 样本，并已通过 `build_natural_qcc_expansion_rewrites.py` 改写成自然 QA 草案。完整每域扩展需要在包含 Grid2Op、CityLearn、FinRL、water、traffic source JSONL 的数据机器上复跑 selector、natural rewrite、GPT-5.5 reviewer gate 和 `build_natural_qcc_expansion_dataset.py`。
-
-`build_natural_qcc_expansion_dataset.py` 已用 `/tmp` fixture 做过本地验证：完整 keep-review fixture 可生成 25 条 positive、dev/test/train raw/SFT 文件，`schema_gate_pass=true`；缺 1 条 review 的 partial fixture 会默认失败，避免半截 reviewer 输出误建训练集。该验证不代表真实 reviewer 结果，正式数据仍必须等待 GPT-5.5 review 完成。
+当前本地 checkout 只能读取 AIOpsLab v3 source，因此扩展候选只物化了 25 条数值时序 AIOps 样本；这 25 条已经完成自然化、GPT-5.5 review、positive dataset、baseline/probe 和 GPU dry-run。完整每域扩展仍需要在包含 Grid2Op、CityLearn、FinRL、water、traffic source JSONL 的数据机器上复跑 selector、natural rewrite、GPT-5.5 reviewer gate 和 `build_natural_qcc_expansion_dataset.py`。
 
 ### NQCC-002：重跑数据资产评估
 
@@ -111,34 +133,25 @@
 ```bash
 python3 scripts/eval/run_natural_qcc_probe.py \
   --data .research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/natural_qcc_expansion_positive.jsonl \
-  --out_dir .research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/probe_eval
+  --out_dir .research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/probe_eval \
+  --train_split train \
+  --eval_split test
 ```
 
 ### NQCC-003：先跑 natural QCC smoke SFT
 
-先在 A100/3090 上用当前 smoke SFT 资产跑最小训练，目的只验证链路：
+先在 A100/3090 上用扩展子集 SFT 资产跑最小训练，目的只验证链路：
 
 ```bash
-python3 tslm/scripts/train_multisim_v5_smoke.py \
-  --train_jsonl .research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/smoke_sft/natural_qcc_probe_train_dev_sft.jsonl \
-  --eval_jsonl .research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/smoke_sft/natural_qcc_probe_eval_test_sft.jsonl \
-  --llm_name_or_path /cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507 \
-  --output_dir .research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/tsrlm_natural_qcc_probe_smoke_qwen3_4b_20260519 \
-  --trust_remote_code \
-  --bridge_type prefix \
-  --ts_num_vars 4 \
-  --target_num_vars 4 \
-  --freeze_llm \
-  --save_trainable_only \
-  --bf16 \
-  --num_train_epochs 1 \
-  --per_device_train_batch_size 1 \
-  --per_device_eval_batch_size 1 \
-  --gradient_accumulation_steps 4 \
-  --source_group_key merge_source_name
+python3 scripts/train/run_natural_qcc_gpu_smoke.py \
+  --train_sft .research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/sft/natural_qcc_expansion_train_sft.jsonl \
+  --eval_sft .research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/sft/natural_qcc_expansion_test_sft.jsonl \
+  --eval_raw .research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/sft/natural_qcc_expansion_test_raw.jsonl \
+  --gold_jsonl .research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/natural_qcc_expansion_positive.jsonl \
+  --run_dir .research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/tsrlm_natural_qcc_expansion_smoke_qwen3_4b_20260520
 ```
 
-注意：本地当前没有上述 Qwen3-4B 路径，因此该命令应在模型缓存存在的 A100/3090 环境执行。这里使用当前仓库 `TSReportLM` 实现真实支持的 `prefix` bridge；`qprefix/local_gated_qprefix` 需要对应代码实现后才能作为架构对照。
+注意：本地当前没有上述 Qwen3-4B 路径，也没有 `torch/transformers/peft` 和 CUDA，因此该命令应在模型缓存存在的 A100/3090 环境执行。这里使用当前仓库 `TSReportLM` 实现真实支持的 `prefix` bridge；`qprefix/local_gated_qprefix` 需要对应代码实现后才能作为架构对照。
 
 训练完成后，用 `tslm/scripts/generate_multisim_v5_smoke.py` 生成 `pred_caption`，再用 `scripts/eval/evaluate_natural_qcc_predictions.py` 评估 QA accuracy。完整命令见 `NATURAL_QCC_GPU_SMOKE_RUNBOOK_20260519_ZH.md`。
 

@@ -28,6 +28,14 @@ DEFAULT_OUT_DIR = ROOT / ".research/general-qcc-captioner-20260515/natural_qcc_p
 TOKEN_RE = re.compile(r"[A-Za-z0-9_]+")
 
 
+def rel(path: Path) -> str:
+    resolved = path.resolve()
+    try:
+        return str(resolved.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
     with path.open(encoding="utf-8") as f:
         return [json.loads(line) for line in f if line.strip()]
@@ -280,10 +288,45 @@ def run_trainable_probe(rows: list[dict[str, Any]], *, train_split: str, eval_sp
 
 
 def markdown(summary: dict[str, Any]) -> str:
+    trainable = summary["trainable"]
+    qcond = trainable.get("nearest_caption_question_conditioned", {})
+    no_question = trainable.get("nearest_caption_no_question", {})
+    qcond_acc = qcond.get("accuracy", 0.0)
+    no_question_acc = no_question.get("accuracy", 0.0)
+    by_source = summary.get("by_source", {})
+    by_split = summary.get("by_split", {})
+    train_split = qcond.get("train_split", "train")
+    eval_split = qcond.get("eval_split", "eval")
+    train_n = qcond.get("n_train", 0)
+    eval_n = qcond.get("n_eval", 0)
+    if qcond_acc > no_question_acc:
+        probe_note = (
+            f"`nearest_caption_question_conditioned` 高于 no-question "
+            f"({qcond_acc:.4f} vs {no_question_acc:.4f})，说明该弱探针中问题条件有增益。"
+        )
+    elif qcond_acc == no_question_acc:
+        probe_note = (
+            f"`nearest_caption_question_conditioned` 与 no-question 持平 "
+            f"({qcond_acc:.4f})；这通常表示当前子集可由 source/task/数值近邻记忆解决，"
+            "不能作为 QCC 问题条件收益证据。"
+        )
+    else:
+        probe_note = (
+            f"`nearest_caption_question_conditioned` 低于 no-question "
+            f"({qcond_acc:.4f} vs {no_question_acc:.4f})，需要检查 split 或特征泄漏。"
+        )
     lines = [
         "# Natural QCC Probe Results（2026-05-19）",
         "",
-        "本实验是 reviewed natural balanced8 的首轮闭环验证：检查新构造的数据是否能作为 QCC evidence-caption/QA 接口运行。",
+        "本实验检查 reviewed natural QCC 数据是否能作为 evidence-caption/QA 接口运行。",
+        "",
+        "## Data",
+        "",
+        f"- data: `{summary['data']}`",
+        f"- rows: `{summary['n_rows']}`",
+        f"- by source: `{by_source}`",
+        f"- by split: `{by_split}`",
+        f"- train/eval probe split: `{train_split}` -> `{eval_split}` (`{train_n}` -> `{eval_n}`)",
         "",
         "## Baseline QA",
         "",
@@ -315,13 +358,14 @@ def markdown(summary: dict[str, Any]) -> str:
             "- `natural_oracle` 是上限检查：自然 evidence caption 被追加 exact answer label 后，应能被 rule-QA 稳定读取。",
             "- `natural_evidence_no_label` 检查自然措辞本身是否已经包含评估器可识别的答案语义；如果低于 oracle，说明需要升级 QA evaluator 或统一自然 option label。",
             "- `generic_caption` / `statistical_caption` / `question_only` 是接口对照。",
-            "- `nearest_caption_*` 是依赖 train split 的轻量 captioner 探针，不是最终 QCC 模型。当前 balanced8 没有 train split，只能做 dev->test 小样本 sanity check。",
+            f"- `nearest_caption_*` 是依赖 train split 的轻量 captioner 探针，不是最终 QCC 模型。{probe_note}",
             "",
             "## Caveats",
             "",
-            "- 样本只有 43 条 reviewer-positive，且 split 不均衡；AIOpsLab 正例只有 test，没有 dev 训练样本。",
+            "- 该探针是最近邻 caption 诊断，不是 TS-RLM/Qwen 训练结果。",
             "- 该探针验证的是数据接口和弱训练信号，不足以证明正式 QCC 训练收益。",
-            "- 下一步需要每域 50-100 条 reviewer-positive 样本，形成 train/dev/test 后再跑 TSLLM/Qwen caption SFT。",
+            "- 若当前数据只覆盖单一 source 或少量重复场景，不能据此报告跨域方法收益。",
+            "- 下一步仍需要每域 50-100 条 reviewer-positive 样本，并在 GPU 上跑真正的 caption SFT 和 generated-caption QA。",
             "",
         ]
     )
@@ -347,7 +391,7 @@ def main() -> None:
         "question_only",
     ]
     summary: dict[str, Any] = {
-        "data": str(args.data.relative_to(ROOT)),
+        "data": rel(args.data),
         "n_rows": len(rows),
         "by_split": dict(Counter(row.get("split", "") for row in rows)),
         "by_source": dict(Counter(row.get("merge_source_name", "") for row in rows)),

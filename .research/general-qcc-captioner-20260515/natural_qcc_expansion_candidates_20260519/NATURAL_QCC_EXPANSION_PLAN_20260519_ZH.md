@@ -25,6 +25,22 @@ python3 scripts/generate/select_natural_qcc_expansion_candidates.py --per_source
 
 本轮进一步把 `aiops_official_faulty_service_context` 和 `aiops_official_fault_layer_context` 从主候选池剔除。原因是它们依赖官方 incident metadata，而不是由当前时序窗口和领域规则推理得到；这类问题可以单独做 metadata/context split，但不应混入主 natural QCC 训练池。
 
+## 当前 AIOps 子集闭环结果
+
+在本地可读取的 AIOpsLab v3 子集上，后续步骤已经实际跑通：
+
+| 阶段 | 结果 |
+| --- | --- |
+| natural rewrite | 25 条候选全部改写为自然场景、自然问题、双语选项和自然 evidence |
+| GPT-5.5 reviewer | 25/25 reviewed，`keep=25`，`accuracy_risk=low=25`，positive gate `25/25` |
+| dataset/SFT | 25 条 positive、0 excluded，dev/test/train=`5/10/10`，`schema_gate_pass=true` |
+| baseline/probe | `natural_oracle=1.0000`，`generic_caption=0.0000`，`statistical_caption=0.0000`，`question_only=0.2000` |
+| nearest probe | question-conditioned/no-question 均为 `1.0000`，说明这个单源小子集可被近邻记忆解决 |
+| GPU preflight | 数据、bridge 和 evaluator 通过；本机缺 Qwen3-4B、`torch/transformers/peft` 和 CUDA |
+| GPU runner | `run_natural_qcc_gpu_smoke.py --dry_run` 已写出 preflight/train/generate/QA 命令计划 |
+
+这些结果说明新构造方式已经能生成可评估、可训练格式的数据资产；但还不能说明 QCC 训练收益，因为没有真正 GPU SFT，也没有跨域 reviewer-positive 数据。
+
 ## 产物
 
 | 资产 | 路径 |
@@ -40,6 +56,11 @@ python3 scripts/generate/select_natural_qcc_expansion_candidates.py --per_source
 | natural rewrite report | `.research/general-qcc-captioner-20260515/natural_qcc_expansion_rewrites_20260519/NATURAL_QCC_EXPANSION_REWRITES_20260519_ZH.md` |
 | GPT-5.5 reviewer 脚本 | `scripts/generate/review_natural_qcc_expansion_rewrites.py` |
 | reviewer-positive dataset builder | `scripts/generate/build_natural_qcc_expansion_dataset.py` |
+| GPT-5.5 reviewer report | `.research/general-qcc-captioner-20260515/natural_qcc_expansion_rewrites_20260519/NATURAL_QCC_EXPANSION_REVIEW_20260519_ZH.md` |
+| reviewer JSON | `.research/general-qcc-captioner-20260515/natural_qcc_expansion_rewrites_20260519/natural_qcc_expansion_rewrites_review.json` |
+| positive dataset/SFT | `.research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/` |
+| baseline/probe report | `.research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/probe_eval/NATURAL_QCC_PROBE_RESULTS_20260519_ZH.md` |
+| GPU dry-run plan | `.research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/tsrlm_natural_qcc_expansion_smoke_qwen3_4b_20260520/natural_qcc_smoke_pipeline_plan.json` |
 
 ## 数据机器上应执行的命令
 
@@ -83,5 +104,5 @@ python3 scripts/generate/build_natural_qcc_expansion_dataset.py \
 2. 对 candidate JSONL 跑 `build_natural_qcc_expansion_rewrites.py`，保持 gold answer 和 support slots 不变。
 3. 对自然化结果跑 GPT-5.5 reviewer gate，只保留 `decision=keep`、自然性和可答性均不低于 4、`accuracy_risk=low` 的样本。
 4. 用 `build_natural_qcc_expansion_dataset.py` 把 reviewer-positive 样本重建为 train/dev/test natural QCC 数据和 SFT 文件。
-5. 重新跑 `natural_oracle/generic/statistical/question_only` baseline。
-6. 再启动 `run_natural_qcc_gpu_smoke.py` 或扩展版正式 SFT。
+5. 重新跑 `natural_oracle/generic/statistical/question_only` baseline，并检查 nearest q/noq 是否仍然持平。
+6. 再启动 `run_natural_qcc_gpu_smoke.py` 或扩展版正式 SFT，产出 generated caption 后用 QA evaluator 判断是否相对旧流程提升。
