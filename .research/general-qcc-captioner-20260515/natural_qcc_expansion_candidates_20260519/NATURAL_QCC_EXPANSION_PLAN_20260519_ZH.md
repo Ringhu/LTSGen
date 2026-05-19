@@ -39,6 +39,7 @@ python3 scripts/generate/select_natural_qcc_expansion_candidates.py --per_source
 | natural rewrite lint | `.research/general-qcc-captioner-20260515/natural_qcc_expansion_rewrites_20260519/natural_qcc_expansion_rewrites_lint.json` |
 | natural rewrite report | `.research/general-qcc-captioner-20260515/natural_qcc_expansion_rewrites_20260519/NATURAL_QCC_EXPANSION_REWRITES_20260519_ZH.md` |
 | GPT-5.5 reviewer 脚本 | `scripts/generate/review_natural_qcc_expansion_rewrites.py` |
+| reviewer-positive dataset builder | `scripts/generate/build_natural_qcc_expansion_dataset.py` |
 
 ## 数据机器上应执行的命令
 
@@ -60,6 +61,12 @@ python3 scripts/generate/review_natural_qcc_expansion_rewrites.py \
   --review_json .research/general-qcc-captioner-20260515/natural_qcc_expansion_rewrites_20260519/natural_qcc_expansion_rewrites_review.json \
   --review_md .research/general-qcc-captioner-20260515/natural_qcc_expansion_rewrites_20260519/NATURAL_QCC_EXPANSION_REVIEW_20260519_ZH.md \
   --model gpt-5.5
+
+python3 scripts/generate/build_natural_qcc_expansion_dataset.py \
+  --natural_jsonl .research/general-qcc-captioner-20260515/natural_qcc_expansion_rewrites_20260519/natural_qcc_expansion_rewrites.jsonl \
+  --review_json .research/general-qcc-captioner-20260515/natural_qcc_expansion_rewrites_20260519/natural_qcc_expansion_rewrites_review.json \
+  --raw_jsonl .research/general-qcc-captioner-20260515/natural_qcc_expansion_candidates_20260519/natural_qcc_expansion_candidates.jsonl \
+  --out_dir .research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519
 ```
 
 完成条件：
@@ -67,13 +74,14 @@ python3 scripts/generate/review_natural_qcc_expansion_rewrites.py \
 - `missing_files` 为空，或只剩明确不参与的 source；
 - Grid2Op、CityLearn、FinRL、water、traffic 每个 source 选出 100 条；
 - AIOpsLab v3 由于原始数据小，且 metadata/context lookup 已排除，预期最多约 25 条数值时序候选；
-- candidate pool 覆盖 trend、extrema、volatility、anomaly、periodicity、window/cross-variable、lead-lag、counterfactual、domain-context。
+- candidate pool 覆盖 trend、extrema、volatility、anomaly、periodicity、window/cross-variable、lead-lag、counterfactual、domain-context；
+- dataset builder 的 `schema_gate_pass` 为 `true`，并输出 `train/dev/test` split-specific raw/SFT 文件。
 
 ## 后续步骤
 
 1. 在数据机器上重跑 selector，补齐 Grid2Op、CityLearn、FinRL、water、traffic 的候选。
 2. 对 candidate JSONL 跑 `build_natural_qcc_expansion_rewrites.py`，保持 gold answer 和 support slots 不变。
 3. 对自然化结果跑 GPT-5.5 reviewer gate，只保留 `decision=keep`、自然性和可答性均不低于 4、`accuracy_risk=low` 的样本。
-4. 用 reviewer-positive 样本重建 train/dev/test natural QCC 数据。
+4. 用 `build_natural_qcc_expansion_dataset.py` 把 reviewer-positive 样本重建为 train/dev/test natural QCC 数据和 SFT 文件。
 5. 重新跑 `natural_oracle/generic/statistical/question_only` baseline。
 6. 再启动 `run_natural_qcc_gpu_smoke.py` 或扩展版正式 SFT。

@@ -27,6 +27,7 @@
 | expansion candidate selector | `scripts/generate/select_natural_qcc_expansion_candidates.py` |
 | expansion natural rewrite builder | `scripts/generate/build_natural_qcc_expansion_rewrites.py` |
 | expansion GPT-5.5 reviewer | `scripts/generate/review_natural_qcc_expansion_rewrites.py` |
+| expansion dataset/SFT builder | `scripts/generate/build_natural_qcc_expansion_dataset.py` |
 
 ## 当前数字
 
@@ -83,7 +84,9 @@
 - AIOps metadata-only 和 metadata-context lookup 问题单独建 split 或剔除出主数值时序 benchmark；当前 selector 已排除 `faulty_service` / `fault_layer` 这类不能从时序窗口推出的样本。
 - lead-lag、counterfactual、domain-context 题必须保证证据差距足够明显，避免视觉上接近但强行设问。
 
-当前本地 checkout 只能读取 AIOpsLab v3 source，因此扩展候选只物化了 25 条数值时序 AIOps 样本，并已通过 `build_natural_qcc_expansion_rewrites.py` 改写成自然 QA 草案。完整每域扩展需要在包含 Grid2Op、CityLearn、FinRL、water、traffic source JSONL 的数据机器上复跑 selector、natural rewrite 和 GPT-5.5 reviewer gate。
+当前本地 checkout 只能读取 AIOpsLab v3 source，因此扩展候选只物化了 25 条数值时序 AIOps 样本，并已通过 `build_natural_qcc_expansion_rewrites.py` 改写成自然 QA 草案。完整每域扩展需要在包含 Grid2Op、CityLearn、FinRL、water、traffic source JSONL 的数据机器上复跑 selector、natural rewrite、GPT-5.5 reviewer gate 和 `build_natural_qcc_expansion_dataset.py`。
+
+`build_natural_qcc_expansion_dataset.py` 已用 `/tmp` fixture 做过本地验证：完整 keep-review fixture 可生成 25 条 positive、dev/test/train raw/SFT 文件，`schema_gate_pass=true`；缺 1 条 review 的 partial fixture 会默认失败，避免半截 reviewer 输出误建训练集。该验证不代表真实 reviewer 结果，正式数据仍必须等待 GPT-5.5 review 完成。
 
 ### NQCC-002：重跑数据资产评估
 
@@ -102,6 +105,14 @@
 - `generic_caption` 不应接近 oracle
 - `statistical_caption` 可以作为强数值摘要基线，但不能覆盖大部分 domain-context / counterfactual 题
 - answer-letter 分布不能明显偏斜
+
+扩展数据完成后的入口应使用 `build_natural_qcc_expansion_dataset.py` 生成的 positive JSONL，例如：
+
+```bash
+python3 scripts/eval/run_natural_qcc_probe.py \
+  --data .research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/natural_qcc_expansion_positive.jsonl \
+  --out_dir .research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/probe_eval
+```
 
 ### NQCC-003：先跑 natural QCC smoke SFT
 
