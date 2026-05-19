@@ -211,7 +211,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output_dir", required=True)
     parser.add_argument("--trust_remote_code", action="store_true")
     parser.add_argument("--encoder_type", default="patchtst", choices=["patchtst", "chronos2"])
-    parser.add_argument("--bridge_type", default="qprefix", choices=["prefix", "qprefix", "hybrid_qprefix", "local_gated_qprefix", "task_gated_qprefix", "xattn"])
+    parser.add_argument("--bridge_type", default="prefix", choices=["prefix", "xattn"])
     parser.add_argument("--ts_num_vars", type=int, default=4)
     parser.add_argument("--target_num_vars", type=int, default=4)
     parser.add_argument("--ts_patch_len", type=int, default=16)

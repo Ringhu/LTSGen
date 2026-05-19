@@ -28,7 +28,7 @@ python3 tslm/scripts/train_multisim_v5_smoke.py \
   --llm_name_or_path /cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507 \
   --output_dir .research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/tsrlm_natural_qcc_probe_smoke_qwen3_4b_20260519 \
   --trust_remote_code \
-  --bridge_type qprefix \
+  --bridge_type prefix \
   --ts_num_vars 4 \
   --target_num_vars 4 \
   --freeze_llm \
@@ -43,4 +43,4 @@ python3 tslm/scripts/train_multisim_v5_smoke.py \
 
 ## Caveat
 
-当前只有 43 条 positive，其中 train 只有 19 条，且 AIOpsLab 没有 train 正例。因此该资产只能验证训练接口，不应用来报告方法收益。
+当前只有 43 条 positive，其中 train 只有 19 条，且 AIOpsLab 没有 train 正例。因此该资产只能验证训练接口，不应用来报告方法收益。命令使用当前本地 TS-RLM 代码真实支持的 `prefix` bridge；若后续恢复 `qprefix/local_gated_qprefix` 实现，应另开架构对照。

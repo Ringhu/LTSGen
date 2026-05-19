@@ -109,7 +109,7 @@ python3 tslm/scripts/train_multisim_v5_smoke.py \
   --llm_name_or_path /cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507 \
   --output_dir .research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/tsrlm_natural_qcc_probe_smoke_qwen3_4b_20260519 \
   --trust_remote_code \
-  --bridge_type qprefix \
+  --bridge_type prefix \
   --ts_num_vars 4 \
   --target_num_vars 4 \
   --freeze_llm \
@@ -122,7 +122,7 @@ python3 tslm/scripts/train_multisim_v5_smoke.py \
   --source_group_key merge_source_name
 ```
 
-注意：本地当前没有上述 Qwen3-4B 路径，因此该命令应在模型缓存存在的 A100/3090 环境执行。
+注意：本地当前没有上述 Qwen3-4B 路径，因此该命令应在模型缓存存在的 A100/3090 环境执行。这里使用当前仓库 `TSReportLM` 实现真实支持的 `prefix` bridge；`qprefix/local_gated_qprefix` 需要对应代码实现后才能作为架构对照。
 
 训练完成后，用 `tslm/scripts/generate_multisim_v5_smoke.py` 生成 `pred_caption`，再用 `scripts/eval/evaluate_natural_qcc_predictions.py` 评估 QA accuracy。完整命令见 `NATURAL_QCC_GPU_SMOKE_RUNBOOK_20260519_ZH.md`。
 

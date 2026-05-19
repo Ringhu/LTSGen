@@ -19,9 +19,14 @@
 ```bash
 test -d /cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507
 python3 -m py_compile scripts/eval/evaluate_natural_qcc_predictions.py
+python3 scripts/eval/check_natural_qcc_gpu_smoke_preflight.py
 ```
 
 如果模型路径不存在，不要启动训练；先改成实际缓存路径。
+
+本机 preflight 已执行并失败，失败原因是当前机器没有 `/cluster` 模型路径、没有 `torch/transformers/peft` Python 环境，也没有满足 20GB 门槛的 GPU。数据文件、bridge 支持和 evaluator 入口检查通过。报告见：
+
+`.research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/gpu_smoke_preflight.json`
 
 ## Step 1：训练 smoke captioner
 
@@ -32,7 +37,7 @@ python3 tslm/scripts/train_multisim_v5_smoke.py \
   --llm_name_or_path /cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507 \
   --output_dir .research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/tsrlm_natural_qcc_probe_smoke_qwen3_4b_20260519 \
   --trust_remote_code \
-  --bridge_type qprefix \
+  --bridge_type prefix \
   --ts_num_vars 4 \
   --target_num_vars 4 \
   --freeze_llm \
@@ -44,6 +49,8 @@ python3 tslm/scripts/train_multisim_v5_smoke.py \
   --gradient_accumulation_steps 4 \
   --source_group_key merge_source_name
 ```
+
+当前本地 `TSReportLM` 只实现了 `prefix` 和 `xattn` bridge；本 smoke 使用 `prefix`。不要把旧报告中的 `qprefix/local_gated_qprefix` 直接传给当前脚本，除非对应实现已经恢复。
 
 预期输出：
 
