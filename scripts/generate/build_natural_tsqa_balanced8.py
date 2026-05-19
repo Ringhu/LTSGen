@@ -40,6 +40,10 @@ OPTION_ZH = {
     "lower overload exposure": "过载暴露更低",
     "similar overload exposure": "过载暴露相近",
     "cannot determine": "无法判断",
+    "high grid stress": "高电网压力",
+    "moderate grid stress": "中等电网压力",
+    "low grid stress": "低电网压力",
+    "unclear stress": "电网压力不清楚",
     "cpu-memory coupling": "CPU 与内存耦合更强",
     "network rx-tx coupling": "网络接收与发送耦合更强",
     "first half higher": "前半段更高",
@@ -134,8 +138,33 @@ OPTION_ZH = {
     "queue leads speed": "队列领先车速变化",
     "speed-queue coupling": "车速与队列耦合更强",
     "speed-occupancy coupling": "车速与占有率/控制上下文耦合更强",
-    "event creates lower x0 than baseline": "事件窗口水压低于基线",
-    "event creates higher x0 than baseline": "事件窗口水压高于基线",
+    "no pronounced incident": "没有明显交通事件",
+    "speed-led disruption": "车速扰动更强",
+    "queue-led disruption": "队列扰动更强",
+    "both speed and queue disrupted": "车速和队列都明显扰动",
+    "no clear event response": "没有清晰事件响应",
+    "lower queue under adaptive signal": "自适应信号下队列更低",
+    "higher queue under adaptive signal": "自适应信号下队列更高",
+    "moderate congestion": "中等拥堵",
+    "free-flow traffic": "自由流交通",
+    "severe congestion": "严重拥堵",
+    "unclear traffic state": "交通状态不清楚",
+    "speed recovers": "车速恢复",
+    "speed overshoot": "车速过冲",
+    "persistent congestion": "持续拥堵",
+    "pressure-led disruption": "水压扰动更强",
+    "flow-led disruption": "流量扰动更强",
+    "both pressure and flow disrupted": "水压和流量都明显扰动",
+    "pressure-flow coupling": "水压与流量耦合更强",
+    "pressure-storage coupling": "水压与水箱蓄水量耦合更强",
+    "pressure leads flow": "水压变化领先流量变化",
+    "flow leads pressure": "流量变化领先水压变化",
+    "no pronounced leak": "没有明显疑似漏水扰动",
+    "moderate combined congestion": "中等综合拥堵",
+    "stable combined traffic": "稳定综合交通状态",
+    "critical combined congestion": "严重综合拥堵",
+    "event creates lower x0 than baseline": "事件窗口监测信号低于基线",
+    "event creates higher x0 than baseline": "事件窗口监测信号高于基线",
     "event effect is mixed": "事件影响混合",
 }
 
@@ -272,11 +301,71 @@ def position_phrase_zh(index: int | None, horizon: int | None) -> str:
     return "窗口后段"
 
 
+def section_rule_en() -> str:
+    return "The early, middle, and late options split the local window into three equal time sections."
+
+
+def section_rule_zh() -> str:
+    return "早期、中期和后期选项按当前局部窗口的时间顺序三等分。"
+
+
+def relation_rule_en(weak: float = 0.30, similar: float = 0.05) -> str:
+    return (
+        f"Use absolute correlation: below {weak:.2f} is too weak to rely on, "
+        f"and a difference below {similar:.2f} is treated as similar."
+    )
+
+
+def relation_rule_zh(weak: float = 0.30, similar: float = 0.05) -> str:
+    return (
+        f"按绝对相关系数比较：低于 {weak:.2f} 视为太弱，"
+        f"两者差值低于 {similar:.2f} 视为强度相近。"
+    )
+
+
+def event_response_rule_en(strong: float = 1.0, similar: float = 0.10) -> str:
+    return (
+        f"Use event-window change scores: below {strong:.2f} is not a clear response, "
+        f"and a score gap below {similar:.2f} is treated as both signals changing similarly."
+    )
+
+
+def event_response_rule_zh(strong: float = 1.0, similar: float = 0.10) -> str:
+    return (
+        f"按事件窗口变化分数比较：低于 {strong:.2f} 视为响应不清晰，"
+        f"两者差值低于 {similar:.2f} 视为两个信号变化强度相近。"
+    )
+
+
+def direct_evidence_en(metric: str, label: str, detail: str = "") -> str:
+    suffix = f" {detail}" if detail else ""
+    return f"The deterministic evidence marks {metric} as {natural_option_en(label)}.{suffix}"
+
+
+def direct_evidence_zh(metric: str, label: str, detail: str = "") -> str:
+    suffix = f"{detail}" if detail else ""
+    return f"确定性证据将{metric}判定为：{label_zh(label)}。{suffix}"
+
+
 def contextual_option_zh(row: dict, text: str) -> str | None:
     task = row["task_family"]
     source = row["merge_source_name"]
     if "grid_cross_variable" in task:
-        return {"x1": "总需求", "x2": "发电裕度"}.get(text)
+        mapping = {
+            "x1": "总需求",
+            "x2": "发电裕度",
+            "both similar": "两者与线路压力的关联强度相近",
+            "both weak": "两者与线路压力的关联都较弱",
+        }
+        return mapping.get(text)
+    if "city_cross_variable_load" in task:
+        mapping = {
+            "x1": "天气/需求上下文关联更强",
+            "x2": "太阳能/辅助上下文关联更强",
+            "both similar": "两者与用电需求的关联强度相近",
+            "both weak": "两者与用电需求的关联都较弱",
+        }
+        return mapping.get(text)
     if "grid_temporal_lead_lag" in task:
         mapping = {
             "x0 leads x1": "最大线路负载压力领先总需求",
@@ -296,37 +385,61 @@ def contextual_option_zh(row: dict, text: str) -> str | None:
     if "traffic_cross_congestion_relation" in task:
         mapping = {
             "speed-queue coupling": "车速与队列长度耦合更强",
-            "speed-occupancy coupling": "车速与占有率/控制上下文耦合更强",
+            "speed-occupancy coupling": "车速与车道占有率耦合更强",
             "both similar": "两组拥堵伴随关系强度相近",
             "both weak": "两组拥堵伴随关系都低于可用阈值",
         }
         return mapping.get(text)
+    if "traffic_counterfactual_event_gap" in task:
+        mapping = {
+            "event has similar x0 to baseline": "事件窗口平均车速与基线相近",
+            "event creates lower x0 than baseline": "事件窗口平均车速低于基线",
+            "event creates higher x0 than baseline": "事件窗口平均车速高于基线",
+            "event effect is mixed": "事件影响方向不一致",
+        }
+        return mapping.get(text)
+    if "traffic_event_recovery_context" in task:
+        mapping = {
+            "speed recovers": "车速恢复",
+            "speed overshoot": "车速过冲",
+            "persistent congestion": "持续拥堵",
+            "no event recovery": "没有事件恢复",
+        }
+        return mapping.get(text)
+    if "traffic_combined_stress_context" in task:
+        mapping = {
+            "moderate combined congestion": "中等综合拥堵",
+            "stable combined traffic": "稳定综合交通状态",
+            "critical combined congestion": "严重综合拥堵",
+            "unclear combined state": "综合状态不清楚",
+        }
+        return mapping.get(text)
     if "grid_counterfactual_peak_stress" in task:
         mapping = {
-            "larger upward peak": "断线后压力更高",
-            "larger downward dip": "断线后压力更低",
-            "no material change": "断线前后压力基本相同",
+            "larger upward peak": "断线干预下压力更高",
+            "larger downward dip": "断线干预下压力更低",
+            "no material change": "干预情形与事实情形压力基本相同",
         }
         return mapping.get(text)
     if "grid_counterfactual_mean_stress" in task:
         mapping = {
-            "higher after intervention": "断线后平均压力更高",
-            "lower after intervention": "断线后平均压力更低",
-            "no material change": "断线前后平均压力没有实质变化",
+            "higher after intervention": "干预情形的平均压力更高",
+            "lower after intervention": "干预情形的平均压力更低",
+            "no material change": "干预情形与事实情形平均压力没有实质变化",
             "cannot determine": "无法判断",
         }
         return mapping.get(text)
     if "grid_counterfactual_overload_exposure" in task:
         mapping = {
-            "greater overload exposure": "断线后过载暴露更高",
-            "lower overload exposure": "断线后过载暴露更低",
-            "similar overload exposure": "断线前后过载暴露相近",
+            "greater overload exposure": "干预情形的过载暴露更高",
+            "lower overload exposure": "干预情形的过载暴露更低",
+            "similar overload exposure": "干预情形与事实情形过载暴露相近",
             "cannot determine": "无法判断",
         }
         return mapping.get(text)
     if "leak_counterfactual_pressure" in task:
         mapping = {
-            "mixed effect": "窗口内变化方向不一致",
+            "mixed effect": "水压变化方向不一致",
             "no material pressure change": "平均水压基本相同",
         }
         return mapping.get(text)
@@ -335,6 +448,22 @@ def contextual_option_zh(row: dict, text: str) -> str | None:
             "event has similar x0 to baseline": "事件窗口水压与基线相近",
             "event creates lower x0 than baseline": "事件窗口水压低于基线",
             "event creates higher x0 than baseline": "事件窗口水压高于基线",
+        }
+        return mapping.get(text)
+    if "water_pressure_flow_lead_lag" in task:
+        mapping = {
+            "pressure leads flow": "水压变化领先流量变化",
+            "flow leads pressure": "流量变化领先水压变化",
+            "no clear lead": "没有稳定领先方",
+            "unclear relation": "相关性太弱，无法判断先后",
+        }
+        return mapping.get(text)
+    if "water_cross_pressure_relation" in task:
+        mapping = {
+            "pressure-flow coupling": "水压与管道流量耦合更强",
+            "pressure-storage coupling": "水压与水箱蓄水量耦合更强",
+            "both similar": "两组水力关系强度相近",
+            "both weak": "两组水力关系都低于可用阈值",
         }
         return mapping.get(text)
     if source == "finrl_scaled" and text in {"x1", "x2"}:
@@ -393,18 +522,40 @@ def natural_option_en(text: str) -> str:
         "lower after intervention": "average stress is lower after the intervention",
         "greater overload exposure": "overload exposure is greater after the intervention",
         "lower overload exposure": "overload exposure is lower after the intervention",
-        "similar overload exposure": "overload exposure is similar before and after the intervention",
+        "similar overload exposure": "overload exposure is similar under intervention and factual operation",
         "higher queue under adaptive signal": "adaptive signal has the higher mean queue",
         "lower queue under adaptive signal": "adaptive signal has the lower mean queue",
         "no material queue change": "both policies have about the same queue",
         "mixed effect": "the policy effect is mixed",
         "no material pressure change": "there is no material pressure change",
-        "event has similar x0 to baseline": "event-window x0 is similar to baseline",
-        "event creates lower x0 than baseline": "event-window pressure is lower than baseline",
-        "event creates higher x0 than baseline": "event-window pressure is higher than baseline",
+        "event has similar x0 to baseline": "event-window signal is similar to baseline",
+        "event creates lower x0 than baseline": "event-window signal is lower than baseline",
+        "event creates higher x0 than baseline": "event-window signal is higher than baseline",
         "event effect is mixed": "the event effect is mixed",
         "speed-queue coupling": "speed is more strongly coupled with queue length",
-        "speed-occupancy coupling": "speed is more strongly coupled with occupancy/control context",
+        "speed-occupancy coupling": "speed is more strongly coupled with occupancy context",
+        "no pronounced incident": "there is no pronounced traffic incident",
+        "speed-led disruption": "speed changes more strongly during the event",
+        "queue-led disruption": "queue length changes more strongly during the event",
+        "both speed and queue disrupted": "speed and queue both change strongly",
+        "no clear event response": "there is no clear event response",
+        "moderate congestion": "moderate congestion",
+        "free-flow traffic": "free-flow traffic",
+        "severe congestion": "severe congestion",
+        "unclear traffic state": "unclear traffic state",
+        "speed recovers": "traffic speed recovers",
+        "speed overshoot": "traffic speed overshoots",
+        "persistent congestion": "congestion persists",
+        "pressure-led disruption": "pressure changes more strongly during the event",
+        "flow-led disruption": "flow changes more strongly during the event",
+        "both pressure and flow disrupted": "pressure and flow both change strongly",
+        "pressure-flow coupling": "pressure is more strongly coupled with pipe flow",
+        "pressure-storage coupling": "pressure is more strongly coupled with tank storage",
+        "pressure leads flow": "pressure changes lead flow changes",
+        "flow leads pressure": "flow changes lead pressure changes",
+        "moderate combined congestion": "moderate combined congestion",
+        "stable combined traffic": "stable combined traffic",
+        "critical combined congestion": "critical combined congestion",
     }
     return mapping.get(text, text)
 
@@ -447,10 +598,10 @@ def source_context(row: dict) -> tuple[str, str, list[str], list[str]]:
         )
     if source == "traffic":
         return (
-            "A traffic engineer is reviewing a traffic-system window with mean speed, queue length, and occupancy/control context recorded as aligned time-series signals. Lower queue and higher speed usually indicate better traffic flow.",
-            "交通工程师正在查看一段交通系统窗口，其中平均车速、排队长度、占有率/控制上下文都作为对齐的时间序列记录。更低队列和更高速度通常表示交通流更好。",
-            ["x0 mean speed", "x1 queue length", "x2 occupancy/control context"],
-            ["x0 平均车速", "x1 队列长度", "x2 占有率或控制上下文"],
+            "A traffic engineer is reviewing a traffic-system window with mean speed, queue length, and lane occupancy recorded as aligned time-series signals. Lower queue and higher speed usually indicate better traffic flow.",
+            "交通工程师正在查看一段交通系统窗口，其中平均车速、排队长度和车道占有率都作为对齐的时间序列记录。更低队列和更高速度通常表示交通流更好。",
+            ["x0 mean speed", "x1 queue length", "x2 lane occupancy"],
+            ["x0 平均车速", "x1 队列长度", "x2 车道占有率"],
         )
     return (
         "An SRE is reviewing an AIOpsLab microservice telemetry window. x0 is service CPU load, x1 is memory working set, x2 is network receive rate, and x3 is network transmit rate.",
@@ -507,7 +658,7 @@ def rewrite_case(row: dict) -> dict:
         "options": [option_dict(row, opt) for opt in row["options"]],
         "gold_answer": row["answer"],
         "gold_answer_label": row["answer_label"],
-        "gold_answer_zh": label_zh(row["answer_label"]),
+        "gold_answer_zh": contextual_option_zh(row, row["answer_label"]) or label_zh(row["answer_label"]),
         "evidence_en": evidence_en,
         "evidence_zh": evidence_zh,
         "support_slots": slots,
@@ -574,43 +725,66 @@ def generic_rewrite(row: dict, scene_en: str, scene_zh: str) -> tuple[str, str, 
         scene_extra_en = (
             f" The line disconnection occurred at global step {slots.get('intervention_step')}; "
             f"this local plot covers global steps {slots.get('segment_start')} to {slots.get('segment_end')}. "
-            "Overload exposure is the fraction of post-event steps where maximum line-loading stress exceeds 1.0."
+            "Overload exposure is the fraction of post-event steps where maximum line-loading stress exceeds 1.0. "
+            "This question compares factual operation with the same post-event window under the line-disconnection intervention."
         )
         scene_extra_zh = (
             f" 断线发生在全局第 {slots.get('intervention_step')} 步；这张局部图覆盖全局第 "
             f"{slots.get('segment_start')} 到 {slots.get('segment_end')} 步。过载暴露指事件后最大线路负载压力超过 1.0 的时间步比例。"
+            "本题比较事实运行与同一个事件后窗口中的断线干预运行。"
         )
         row["_scene_extra_en"] = scene_extra_en
         row["_scene_extra_zh"] = scene_extra_zh
         return (
-            "Does disconnecting the line make overload exposure higher, lower, or about the same in this post-event segment?",
-            "在这个事件后片段里，断开线路会让过载暴露更高、更低，还是基本相同？",
+            "Compared with factual operation, does the line-disconnection intervention make overload exposure higher, lower, or about the same in this post-event segment?",
+            "与事实运行相比，在这个事件后片段里，断线干预会让过载暴露更高、更低，还是基本相同？",
             f"Factual overload exposure is {fnum(slots.get('factual_overload_exposure'))}, intervention exposure is {fnum(slots.get('intervention_overload_exposure'))}, and the difference is {fnum(slots.get('exposure_diff'))}, supporting {natural_option_en(label)}.",
             f"事实运行的过载暴露为 {fnum(slots.get('factual_overload_exposure'))}，干预后的过载暴露为 {fnum(slots.get('intervention_overload_exposure'))}，差值为 {fnum(slots.get('exposure_diff'))}，因此判断为：{contextual_option_zh(row, label) or label_cn}。",
         )
 
-    if "cross_variable" in task:
+    if "city_cross_variable_load" in task:
+        return (
+            "For this building-load diagnosis, is electricity demand more associated with the weather/demand context, the solar/auxiliary context, both similarly, or neither strongly?",
+            "做建筑用电需求诊断时，用电需求与天气/需求上下文、太阳能/辅助上下文哪一个关联更强；还是两者相近或都较弱？",
+            f"{relation_rule_en()} The absolute correlations with total building demand are {fnum(abs(float(slots.get('corr_x1', 0))), 3)} for the weather/demand context and {fnum(abs(float(slots.get('corr_x2', 0))), 3)} for the solar/auxiliary context, supporting {natural_option_en(label)}.",
+            f"{relation_rule_zh()} 天气/需求上下文与总用电需求的绝对相关系数为 {fnum(abs(float(slots.get('corr_x1', 0))), 3)}，太阳能/辅助上下文与总用电需求的绝对相关系数为 {fnum(abs(float(slots.get('corr_x2', 0))), 3)}；因此判断为：{contextual_option_zh(row, label) or label_cn}。",
+        )
+
+    if "grid_cross_variable" in task:
         return (
             "For a quick overload review, should the operator look more closely at total demand or generation margin?",
             "做快速过载复盘时，调度员更应该关注总需求还是发电裕度？",
-            f"The correlation with line-loading stress is {fnum(slots.get('corr_x1'))} for total demand and {fnum(slots.get('corr_x2'))} for generation margin; the stronger companion is {phrase_en(label)}.",
-            f"总需求与线路负载压力的相关系数为 {fnum(slots.get('corr_x1'))}，发电裕度与线路负载压力的相关系数为 {fnum(slots.get('corr_x2'))}；更强的伴随信号是 {label_cn}。",
+            f"{relation_rule_en()} The absolute correlations with line-loading stress are {fnum(abs(float(slots.get('corr_x1', 0))), 3)} for total demand and {fnum(abs(float(slots.get('corr_x2', 0))), 3)} for generation margin; this supports {natural_option_en(label)}.",
+            f"{relation_rule_zh()} 总需求与线路负载压力的绝对相关系数为 {fnum(abs(float(slots.get('corr_x1', 0))), 3)}，发电裕度与线路负载压力的绝对相关系数为 {fnum(abs(float(slots.get('corr_x2', 0))), 3)}；因此判断为：{contextual_option_zh(row, label) or label_cn}。",
+        )
+
+    if "water_cross_pressure_relation" in task:
+        return (
+            "For hydraulic diagnosis, is pressure more tightly coupled with pipe flow or with tank storage?",
+            "做水力诊断时，水压与管道流量的耦合更强，还是与水箱蓄水量的耦合更强？",
+            f"{relation_rule_en()} The absolute correlation between pressure and pipe flow is {fnum(abs(float(slots.get('corr_x1', 0))), 3)}, while the absolute correlation between pressure and tank storage is {fnum(abs(float(slots.get('corr_x2', 0))), 3)}. This supports {natural_option_en(label)}.",
+            f"{relation_rule_zh()} 水压与管道流量的绝对相关系数为 {fnum(abs(float(slots.get('corr_x1', 0))), 3)}，水压与水箱蓄水量的绝对相关系数为 {fnum(abs(float(slots.get('corr_x2', 0))), 3)}；因此判断为：{contextual_option_zh(row, label) or label_cn}。",
         )
 
     if "traffic_cross_congestion_relation" in task:
         return (
-            "For congestion diagnosis, is speed more tightly coupled with queue length or with the occupancy/control context?",
-            "做拥堵诊断时，车速与队列长度的耦合更强，还是与占有率/控制上下文的耦合更强？",
-            f"The absolute correlation between speed and queue length is {fnum(abs(float(slots.get('corr_x1', 0))), 3)}, while the absolute correlation between speed and occupancy/control context is {fnum(abs(float(slots.get('corr_x2', 0))), 3)}. This supports {natural_option_en(label)}.",
-            f"车速与队列长度的绝对相关系数为 {fnum(abs(float(slots.get('corr_x1', 0))), 3)}，车速与占有率/控制上下文的绝对相关系数为 {fnum(abs(float(slots.get('corr_x2', 0))), 3)}；因此判断为：{contextual_option_zh(row, label) or label_cn}。",
+            "For congestion diagnosis, is speed more tightly coupled with queue length or with lane occupancy?",
+            "做拥堵诊断时，车速与队列长度的耦合更强，还是与车道占有率的耦合更强？",
+            f"{relation_rule_en()} The absolute correlation between speed and queue length is {fnum(abs(float(slots.get('corr_x1', 0))), 3)}, while the absolute correlation between speed and lane occupancy is {fnum(abs(float(slots.get('corr_x2', 0))), 3)}. This supports {natural_option_en(label)}.",
+            f"{relation_rule_zh()} 车速与队列长度的绝对相关系数为 {fnum(abs(float(slots.get('corr_x1', 0))), 3)}，车速与车道占有率的绝对相关系数为 {fnum(abs(float(slots.get('corr_x2', 0))), 3)}；因此判断为：{contextual_option_zh(row, label) or label_cn}。",
         )
 
     if "temporal_lead_lag" in task or "lead_lag" in task:
         if source == "traffic":
             signal_pair_en = "speed changes and queue-length changes"
             signal_pair_zh = "车速变化和排队长度变化"
-            extra_en = " For this timing review, negative lag means speed tends to move earlier, and positive lag means queue length tends to move earlier. Absolute correlation strength below 0.35 is treated as too weak to use; if the best lag improves on the synchronous absolute-correlation strength by less than 0.05, the timing order is treated as not stable."
-            extra_zh = " 对这个先后关系复盘来说，负滞后表示车速更早变化，正滞后表示排队长度更早变化。绝对相关强度低于 0.35 时视为太弱；若最强滞后相对同步绝对相关强度的提升小于 0.05，则视为没有稳定的方向性领先。"
+            extra_en = " For this timing review, positive lag means speed tends to move earlier, and negative lag means queue length tends to move earlier. Absolute correlation strength below 0.35 is treated as too weak to use; if the best lag improves on the synchronous absolute-correlation strength by less than 0.05, the timing order is treated as not stable."
+            extra_zh = " 对这个先后关系复盘来说，正滞后表示车速更早变化，负滞后表示排队长度更早变化。绝对相关强度低于 0.35 时视为太弱；若最强滞后相对同步绝对相关强度的提升小于 0.05，则视为没有稳定的方向性领先。"
+        elif source == "water":
+            signal_pair_en = "water-pressure changes and pipe-flow changes"
+            signal_pair_zh = "水压变化和管道流量变化"
+            extra_en = " This question compares only x0 water pressure and x1 pipe flow. Lag 0 means synchronous movement; if the strongest relation is at lag 0, choose the no-stable-lead option."
+            extra_zh = " 本题只比较 x0 水压和 x1 管道流量。滞后 0 表示同步变化；如果最强关系出现在滞后 0，则选择没有稳定领先方。"
         else:
             signal_pair_en = "total demand and maximum line-loading stress"
             signal_pair_zh = "总需求和最大线路负载压力"
@@ -630,14 +804,16 @@ def generic_rewrite(row: dict, scene_en: str, scene_zh: str) -> tuple[str, str, 
             )
         elif source == "traffic":
             improvement = abs(abs(float(slots.get("best_lag_corr", 0))) - abs(float(zero_lag)))
+            margin_text = "at least" if improvement >= 0.05 else "below"
+            margin_text_zh = "达到或超过" if improvement >= 0.05 else "低于"
             evidence_en = (
                 f"The strongest lag is {slots.get('best_lag')} with correlation {fnum(slots.get('best_lag_corr'))}, "
                 f"while the synchronous correlation is {fnum(zero_lag)}. The absolute-correlation strength improves by only {fnum(improvement)}, "
-                f"below the 0.05 stability margin, so the traffic review should choose {natural_option_en(label)}."
+                f"{margin_text} the 0.05 stability margin, so the traffic review should choose {natural_option_en(label)}."
             )
             evidence_zh = (
                 f"最强滞后为 {slots.get('best_lag')}，相关系数为 {fnum(slots.get('best_lag_corr'))}；"
-                f"同步相关系数为 {fnum(zero_lag)}。绝对相关强度只提升了 {fnum(improvement)}，低于 0.05 的稳定性余量，"
+                f"同步相关系数为 {fnum(zero_lag)}。绝对相关强度提升了 {fnum(improvement)}，{margin_text_zh} 0.05 的稳定性余量，"
                 f"因此交通复盘应选择：{contextual_option_zh(row, label) or phrase_zh(label)}。"
             )
         else:
@@ -820,11 +996,25 @@ def generic_rewrite(row: dict, scene_en: str, scene_zh: str) -> tuple[str, str, 
                 f"历史价格序列最高点位于{position_phrase_zh(slots.get('extrema_index'), slots.get('horizon'))}，数值约 {fnum(slots.get('extrema_value'))}，因此判断为{phrase_zh(label)}。",
             )
         if source == "traffic":
+            if "controlled_event" in slots:
+                if label == "no pronounced incident":
+                    return (
+                        "Does the traffic trace contain a pronounced incident-like disruption, and if so when does it occur?",
+                        "这段交通轨迹是否包含明显的事故式扰动；如果有，大致发生在哪一段？",
+                        "The incident detector does not mark a controlled event in this window, so the trace supports no pronounced incident.",
+                        "事故检测器没有在这个窗口标记受控事件，因此判断为：没有明显交通事件。",
+                    )
+                return (
+                    "When does the strongest incident-like traffic disruption occur after splitting this window into early, middle, and late thirds?",
+                    "把这个交通窗口按时间分成早期、中期和后期后，最明显的事故式交通扰动出现在什么位置？",
+                    f"{section_rule_en()} The incident detector places the strongest disruption near step {slots.get('event_index')} of the local window, supporting {phrase_en(label)}.",
+                    f"{section_rule_zh()} 事故检测器把最强扰动定位在局部窗口第 {slots.get('event_index')} 步附近，因此判断为{phrase_zh(label)}。",
+                )
             return (
                 "Where does the lowest mean speed occur after splitting this traffic window into early, middle, and late thirds?",
                 "把这个交通窗口按时间分成早期、中期和后期后，最低平均车速出现在什么位置？",
-                f"The speed minimum is about {fnum(slots.get('extrema_value'))} and falls in {phrase_en(label)}.",
-                f"最低平均车速约为 {fnum(slots.get('extrema_value'))}，位置在{phrase_zh(label)}。",
+                f"{section_rule_en()} The speed minimum is about {fnum(slots.get('extrema_value'))} and falls in {phrase_en(label)}.",
+                f"{section_rule_zh()} 最低平均车速约为 {fnum(slots.get('extrema_value'))}，位置在{phrase_zh(label)}。",
             )
         if source == "aiopslab_official_v3":
             return (
@@ -832,6 +1022,34 @@ def generic_rewrite(row: dict, scene_en: str, scene_zh: str) -> tuple[str, str, 
                 "把这个事故窗口按时间分成早期、中期和后期后，服务内存工作集的最高点出现在什么位置？",
                 f"The memory working set peaks at about {fnum(slots.get('extrema_value'))} near step {slots.get('extrema_index')} of the window, which falls in {position_phrase_en(slots.get('extrema_index'), slots.get('horizon') or window_horizon(row))}.",
                 f"服务内存工作集最高约为 {fnum(slots.get('extrema_value'))}，出现在窗口第 {slots.get('extrema_index')} 步附近，位置在{position_phrase_zh(slots.get('extrema_index'), slots.get('horizon') or window_horizon(row))}。",
+            )
+        if source == "grid2op":
+            if "event_abs_z" in slots:
+                return (
+                    "Where does the strongest isolated line-loading stress spike occur after splitting this grid window into early, middle, and late thirds?",
+                    "把这个电网窗口按时间分成早期、中期和后期后，最强的线路负载压力孤立尖峰出现在什么位置？",
+                    f"{section_rule_en()} The strongest isolated stress spike has absolute z-score {fnum(slots.get('event_abs_z'))} near step {slots.get('event_index')} of the local window, supporting {phrase_en(label)}.",
+                    f"{section_rule_zh()} 最强孤立压力尖峰的绝对 z 分数为 {fnum(slots.get('event_abs_z'))}，出现在局部窗口第 {slots.get('event_index')} 步附近，因此判断为{phrase_zh(label)}。",
+                )
+            return (
+                "Where does maximum line-loading stress reach its highest point after splitting this grid window into early, middle, and late thirds?",
+                "把这个电网窗口按时间分成早期、中期和后期后，最大线路负载压力的最高点出现在什么位置？",
+                f"{section_rule_en()} Maximum line-loading stress reaches about {fnum(slots.get('extrema_value'))} near step {slots.get('extrema_index')} of the local window, supporting {phrase_en(label)}.",
+                f"{section_rule_zh()} 最大线路负载压力约达到 {fnum(slots.get('extrema_value'))}，出现在局部窗口第 {slots.get('extrema_index')} 步附近，因此判断为{phrase_zh(label)}。",
+            )
+        if source == "water":
+            if "leak_anomaly" in task:
+                return (
+                    "When does the strongest leak-like pressure disruption occur after splitting this service window into early, middle, and late thirds?",
+                    "把这个供水服务窗口按时间分成早期、中期和后期后，最强的疑似漏水压力扰动出现在什么位置？",
+                    f"{section_rule_en()} The leak-like disruption detector places the strongest event near step {slots.get('event_index')} of the local window, supporting {phrase_en(label)}.",
+                    f"{section_rule_zh()} 疑似漏水扰动检测器把最强事件定位在局部窗口第 {slots.get('event_index')} 步附近，因此判断为{phrase_zh(label)}。",
+                )
+            return (
+                "Where does water pressure reach its lowest point after splitting this service window into early, middle, and late thirds?",
+                "把这个供水服务窗口按时间分成早期、中期和后期后，水压最低点出现在什么位置？",
+                f"{section_rule_en()} The minimum water pressure is about {fnum(slots.get('extrema_value'))} near step {slots.get('extrema_index')} of the local window, supporting {phrase_en(label)}.",
+                f"{section_rule_zh()} 最低水压约为 {fnum(slots.get('extrema_value'))}，出现在局部窗口第 {slots.get('extrema_index')} 步附近，因此判断为{phrase_zh(label)}。",
             )
         return (
             f"Where does the most important {noun} occur in this window?",
@@ -866,6 +1084,22 @@ def generic_rewrite(row: dict, scene_en: str, scene_zh: str) -> tuple[str, str, 
             f"需求压力规则为：平均负载至少 8 或峰值负载至少 16 时为高需求压力；平均负载低于 3 且峰值负载低于 8 时为低需求压力；否则为中等需求压力。本窗口平均负载为 {fnum(slots.get('x0_mean'))}，峰值负载为 {fnum(slots.get('x0_peak'))}，太阳能/上下文均值为 {fnum(slots.get('x2_mean'))}。",
         )
 
+    if "grid_domain_stress_context" in task:
+        return (
+            "Using the stated overload-risk bands, what operating-stress regime best describes this Grid2Op window?",
+            "按照过载风险分档规则，这个 Grid2Op 窗口最符合哪种运行压力状态？",
+            f"Stress rule: peak maximum line-loading stress at or above 1.0 is high stress; peak below 0.70 is low stress; otherwise it is moderate stress. Mean maximum line-loading stress is {fnum(slots.get('x0_mean'))}, peak stress is {fnum(slots.get('x0_peak'))}, and mean demand is {fnum(slots.get('x1_mean'))}. This supports {natural_option_en(label)}.",
+            f"压力分档规则：最大线路负载压力峰值达到或超过 1.0 时为高压力；峰值低于 0.70 时为低压力；其余情况为中等压力。本窗口最大线路负载压力均值为 {fnum(slots.get('x0_mean'))}，峰值为 {fnum(slots.get('x0_peak'))}，平均总需求为 {fnum(slots.get('x1_mean'))}；因此判断为：{label_zh(label)}。",
+        )
+
+    if "traffic_domain_congestion_context" in task:
+        return (
+            "Using the stated congestion bands, what traffic condition best describes this window?",
+            "按照拥堵分档规则，这个交通窗口最符合哪种交通状态？",
+            f"Congestion rule: severe congestion is used when the maximum queue is at least 8 or mean speed is below 25; free-flow traffic needs mean speed at least 45 and maximum queue below 3; otherwise classify moderate congestion unless the signals are inconsistent. Mean speed is {fnum(slots.get('mean_speed'))}, maximum queue is {fnum(slots.get('max_queue'))}, and mean lane occupancy is {fnum(slots.get('mean_occupancy'))}. This supports {natural_option_en(label)}.",
+            f"拥堵分档规则：最大队列至少为 8 或平均车速低于 25 时视为严重拥堵；平均车速至少为 45 且最大队列低于 3 时视为自由流；其余一致情形视为中等拥堵，信号矛盾时视为状态不清楚。本窗口平均车速为 {fnum(slots.get('mean_speed'))}，最大队列为 {fnum(slots.get('max_queue'))}，平均车道占有率为 {fnum(slots.get('mean_occupancy'))}；因此判断为：{contextual_option_zh(row, label) or label_cn}。",
+        )
+
     if "periodicity" in task:
         if source == "traffic":
             signal_en = "traffic speed"
@@ -876,6 +1110,13 @@ def generic_rewrite(row: dict, scene_en: str, scene_zh: str) -> tuple[str, str, 
         else:
             signal_en = "the monitored signal"
             signal_zh = "监测信号"
+        if source == "water" and label != "no clear cycle" and float(slots.get("period_score", 0.0)) < 0.30:
+            return (
+                f"What operating-cycle pattern does {signal_en} show in this window?",
+                f"{signal_zh}在这个窗口中显示出哪种运行周期模式？",
+                f"The deterministic source labels the dominant pattern as {natural_option_en(label)}: the strongest autocorrelation peak is at lag {slots.get('best_period')} with score {fnum(slots.get('period_score'), 3)}. This row should be checked against the dataset's cycle-label rule before scaling.",
+                f"确定性来源把主导周期模式标为：{phrase_zh(label)}；最强自相关峰在滞后 {slots.get('best_period')}，分数为 {fnum(slots.get('period_score'), 3)}。扩展前应复查该行的周期标签规则。",
+            )
         return (
             f"Using the stated autocorrelation bands, what operating-cycle pattern does {signal_en} show?",
             f"按照自相关分档规则，{signal_zh}显示出哪种运行周期模式？",
@@ -899,7 +1140,39 @@ def generic_rewrite(row: dict, scene_en: str, scene_zh: str) -> tuple[str, str, 
             f"漏水场景平均水压为 {fnum(slots.get('factual_mean'))}，无漏水基线为 {fnum(slots.get('counterfactual_mean'))}。",
         )
 
+    if "event_impact_relation" in task:
+        if source == "traffic":
+            return (
+                "During the traffic event, which changed more strongly: mean speed or queue length?",
+                "在这个交通事件窗口内，平均车速和队列长度哪一个变化更强？",
+                f"{event_response_rule_en()} The mean-speed change score is {fnum(slots.get('event_response_score_x0'), 3)}, and the queue-length change score is {fnum(slots.get('event_response_score_x1'), 3)}. This supports {natural_option_en(label)}.",
+                f"{event_response_rule_zh()} 平均车速变化分数为 {fnum(slots.get('event_response_score_x0'), 3)}，队列长度变化分数为 {fnum(slots.get('event_response_score_x1'), 3)}；因此判断为：{contextual_option_zh(row, label) or label_cn}。",
+            )
+        if source == "water":
+            return (
+                "During the service event, which changed more strongly: water pressure or pipe flow?",
+                "在这个供水服务事件窗口内，水压和管道流量哪一个变化更强？",
+                f"{event_response_rule_en()} The water-pressure change score is {fnum(slots.get('event_response_score_x0'), 3)}, and the pipe-flow change score is {fnum(slots.get('event_response_score_x1'), 3)}. This supports {natural_option_en(label)}.",
+                f"{event_response_rule_zh()} 水压变化分数为 {fnum(slots.get('event_response_score_x0'), 3)}，管道流量变化分数为 {fnum(slots.get('event_response_score_x1'), 3)}；因此判断为：{contextual_option_zh(row, label) or label_cn}。",
+            )
+
     if "counterfactual_event_gap" in task:
+        if source == "traffic":
+            def speed_gap_option_en(answer_label: str) -> str:
+                mapping = {
+                    "event has similar x0 to baseline": "event-window mean speed is similar to baseline",
+                    "event creates lower x0 than baseline": "event-window mean speed is lower than baseline",
+                    "event creates higher x0 than baseline": "event-window mean speed is higher than baseline",
+                    "event effect is mixed": "the event effect is mixed",
+                }
+                return mapping.get(answer_label, natural_option_en(answer_label))
+
+            return (
+                "Inside the traffic-event window, is factual mean speed meaningfully different from the matched baseline?",
+                "在交通事件窗口内，事实平均车速与匹配基线相比是否有明显差异？",
+                f"Factual event-window mean speed is {fnum(slots.get('event_factual_mean'))}, baseline mean speed is {fnum(slots.get('event_baseline_mean'))}, and the gap is {fnum(slots.get('event_gap'))}, supporting {speed_gap_option_en(label)}.",
+                f"事实事件窗口平均车速为 {fnum(slots.get('event_factual_mean'))}，基线平均车速为 {fnum(slots.get('event_baseline_mean'))}，差值为 {fnum(slots.get('event_gap'))}，因此判断为：{contextual_option_zh(row, label) or label_cn}。",
+            )
         return (
             "Inside the event window, is water pressure meaningfully different from the matched baseline?",
             "在事件窗口内，事实水压与匹配基线相比是否有明显差异？",
@@ -908,11 +1181,18 @@ def generic_rewrite(row: dict, scene_en: str, scene_zh: str) -> tuple[str, str, 
         )
 
     if "event_recovery" in task:
+        if source == "traffic":
+            return (
+                "Using the pre-event, event, and post-event mean speeds, what traffic state follows the event?",
+                "根据事件前、事件中和事件后的平均车速，事件后的交通状态最符合哪一种判断？",
+                f"Recovery rule: if post-event speed returns close to pre-event speed, classify as speed recovers; if it rises above pre-event speed, classify as speed overshoot; if it remains close to event speed and far below pre-event speed, classify as persistent congestion. Pre-event mean speed is {fnum(slots.get('pre_mean'))}, event mean is {fnum(slots.get('event_mean'))}, and post-event mean is {fnum(slots.get('post_mean'))}.",
+                f"恢复规则：事件后车速接近事件前水平时视为车速恢复；高于事件前水平时视为车速过冲；若仍接近事件中水平且明显低于事件前水平，则视为持续拥堵。事件前平均车速为 {fnum(slots.get('pre_mean'))}，事件中为 {fnum(slots.get('event_mean'))}，事件后为 {fnum(slots.get('post_mean'))}。",
+            )
         return (
             "Using the stated phase-mean rule, what water-pressure state follows the event?",
             "按照事件前、中、后三阶段均值规则，事件后的水压状态最符合哪一种判断？",
-            f"Recovery rule: any post-event mean above the pre-event mean is overshoot; equal-to or below-but-returning toward pre-event level is recovery; below pre-event while still stressed is persistent pressure stress. Pre-event mean is {fnum(slots.get('pre_mean'))}, event mean is {fnum(slots.get('event_mean'))}, and post-event mean is {fnum(slots.get('post_mean'))}.",
-            f"恢复规则为：事件后均值只要高于事件前均值，就视为水压过冲；等于或低于但回到事件前水平附近时视为恢复；低于事件前且仍偏低视为持续承压。事件前均值为 {fnum(slots.get('pre_mean'))}，事件中均值为 {fnum(slots.get('event_mean'))}，事件后均值为 {fnum(slots.get('post_mean'))}。",
+            f"Recovery rule: post-event pressure above pre-event pressure is overshoot; if event pressure is lower than pre-event pressure and post-event pressure rises above event pressure without exceeding pre-event pressure, classify as pressure recovers; if post-event pressure does not rise above event pressure and remains below pre-event pressure, classify as persistent pressure stress. Pre-event mean is {fnum(slots.get('pre_mean'))}, event mean is {fnum(slots.get('event_mean'))}, and post-event mean is {fnum(slots.get('post_mean'))}.",
+            f"恢复规则：事件后水压高于事件前水压时视为水压过冲；若事件中水压低于事件前，且事件后水压高于事件中但不超过事件前，则视为水压恢复；若事件后水压未高于事件中且仍低于事件前，则视为持续水压压力。事件前均值为 {fnum(slots.get('pre_mean'))}，事件中均值为 {fnum(slots.get('event_mean'))}，事件后均值为 {fnum(slots.get('post_mean'))}。",
         )
 
     if "domain_resilience" in task:
@@ -925,6 +1205,13 @@ def generic_rewrite(row: dict, scene_en: str, scene_zh: str) -> tuple[str, str, 
 
     if "combined_stress" in task:
         severe_low = slots.get("x0_event_indicator")
+        if source == "traffic":
+            return (
+                "Using the combined traffic stress score and event timing, what operating state is most plausible for this traffic window?",
+                "根据综合交通压力分数和事件时段，这个交通窗口最可能处于哪种运行状态？",
+                f"Combined-traffic rule: scores at or above 6.0 indicate critical combined congestion; scores from 3.0 to below 6.0 indicate moderate combined congestion; lower scores indicate stable combined traffic unless the event evidence is unclear. The stress score is {fnum(slots.get('combined_stress_score'))}, the event timing label is {slots.get('event_label')}, and the severe event flag is {bool(severe_low)}. This supports {natural_option_en(label)}.",
+                f"综合交通规则：综合压力分数达到或超过 6.0 时视为严重综合拥堵；3.0 到 6.0 以下视为中等综合拥堵；更低分数视为稳定综合交通状态，除非事件证据不清楚。本窗口综合压力分数为 {fnum(slots.get('combined_stress_score'))}，事件位于{phrase_zh(slots.get('event_label'))}，严重事件标记为 {str(bool(severe_low)).lower()}；因此判断为：{contextual_option_zh(row, label) or label_cn}。",
+            )
         return (
             "Using the stated stress-score rule, what operating state is most plausible for this water-service window?",
             "按照综合压力评分规则，这个供水服务窗口最可能处于哪种运行状态？",

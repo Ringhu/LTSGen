@@ -21,15 +21,15 @@
   "generated_qa_metrics": {},
   "baseline_accuracy": {
     "natural_oracle": 1.0,
-    "generic_caption": 0.0,
+    "generic_caption": 0.0182,
     "statistical_caption": 0.0,
-    "question_only": 0.1212
+    "question_only": 0.1273
   },
   "decision": {
     "status": "incomplete_or_blocked",
     "summary_zh": "GPU smoke run 尚未完整完成，不能解释 generated-caption QA。",
     "next_action_zh": "先完成远程 preflight、训练、生成和 rule-QA，再重新运行本审计。",
-    "baseline_max_non_oracle": 0.1212,
+    "baseline_max_non_oracle": 0.1273,
     "beats_generic_caption": false,
     "beats_statistical_caption": false,
     "beats_question_only": false,

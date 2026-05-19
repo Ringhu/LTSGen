@@ -28,14 +28,14 @@
 | condition | accuracy |
 | --- | ---: |
 | `natural_oracle` | `1.0` |
-| `generic_caption` | `0.0` |
+| `generic_caption` | `0.0182` |
 | `statistical_caption` | `0.0` |
-| `question_only` | `0.1212` |
+| `question_only` | `0.1273` |
 | `generated_caption` | `None` |
 
 ## Decision Fields
 
-- baseline max non-oracle: `0.1212`
+- baseline max non-oracle: `0.1273`
 - beats all non-oracle baselines: `False`
 - beats question-only: `False`
 - oracle gap: `None`

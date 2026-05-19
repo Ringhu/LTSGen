@@ -13,22 +13,22 @@
 
 ## Positive Summary
 
-- positive rows: `33`
-- excluded rows: `27`
-- by source: `{'aiopslab_official_v3': 12, 'citylearn': 7, 'grid2op': 6, 'traffic': 4, 'water': 4}`
-- by split: `{'dev': 6, 'test': 9, 'train': 18}`
-- by value dim: `{'4': 12, '3': 21}`
-- answer distribution: `{'B': 11, 'D': 8, 'A': 9, 'C': 5}`
-- max answer share: `0.3333`
+- positive rows: `55`
+- excluded rows: `5`
+- by source: `{'aiopslab_official_v3': 12, 'citylearn': 9, 'grid2op': 12, 'traffic': 11, 'water': 11}`
+- by split: `{'dev': 11, 'test': 13, 'train': 31}`
+- by value dim: `{'4': 12, '3': 43}`
+- answer distribution: `{'B': 20, 'D': 13, 'A': 10, 'C': 12}`
+- max answer share: `0.3636`
 - schema gate pass: `True`
 
 ## SFT Files
 
 | split | rows | raw | sft |
 | --- | ---: | --- | --- |
-| `dev` | 6 | `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_dev_raw.jsonl` | `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_dev_sft.jsonl` |
-| `test` | 9 | `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_test_raw.jsonl` | `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_test_sft.jsonl` |
-| `train` | 18 | `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_train_raw.jsonl` | `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_train_sft.jsonl` |
+| `dev` | 11 | `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_dev_raw.jsonl` | `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_dev_sft.jsonl` |
+| `test` | 13 | `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_test_raw.jsonl` | `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_test_sft.jsonl` |
+| `train` | 31 | `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_train_raw.jsonl` | `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_train_sft.jsonl` |
 
 ## 下一步
 

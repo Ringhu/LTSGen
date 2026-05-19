@@ -16,43 +16,43 @@
   "train_summary": {
     "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_train_sft.jsonl",
     "exists": true,
-    "n": 18,
+    "n": 31,
     "missing_required_count": 0,
     "missing_required_examples": [],
     "value_dim_counts": {
       "4": 5,
-      "3": 13
+      "3": 26
     },
     "split_counts": {
-      "": 18
+      "": 31
     }
   },
   "eval_summary": {
     "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_test_sft.jsonl",
     "exists": true,
-    "n": 9,
+    "n": 13,
     "missing_required_count": 0,
     "missing_required_examples": [],
     "value_dim_counts": {
       "4": 5,
-      "3": 4
+      "3": 8
     },
     "split_counts": {
-      "": 9
+      "": 13
     }
   },
   "raw_eval_summary": {
     "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_test_raw.jsonl",
     "exists": true,
-    "n": 9,
+    "n": 13,
     "missing_required_count": 0,
     "missing_required_examples": [],
     "value_dim_counts": {
       "4": 5,
-      "3": 4
+      "3": 8
     },
     "split_counts": {
-      "test": 9
+      "test": 13
     }
   },
   "cuda": {

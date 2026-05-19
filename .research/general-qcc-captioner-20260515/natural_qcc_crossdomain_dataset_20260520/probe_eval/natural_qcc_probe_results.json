@@ -1,24 +1,24 @@
 {
   "data": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_crossdomain_positive.jsonl",
-  "n_rows": 33,
+  "n_rows": 55,
   "by_split": {
-    "dev": 6,
-    "test": 9,
-    "train": 18
+    "dev": 11,
+    "test": 13,
+    "train": 31
   },
   "by_source": {
     "aiopslab_official_v3": 12,
-    "citylearn": 7,
-    "grid2op": 6,
-    "traffic": 4,
-    "water": 4
+    "citylearn": 9,
+    "grid2op": 12,
+    "traffic": 11,
+    "water": 11
   },
   "baselines": {
     "natural_oracle": {
-      "n": 33,
+      "n": 55,
       "accuracy": 1.0,
       "empty_answer_rate": 0.0,
-      "mean_caption_chars": 178.4,
+      "mean_caption_chars": 222.5,
       "by_source": {
         "aiopslab_official_v3": {
           "n": 12,
@@ -26,37 +26,37 @@
           "empty_answer_rate": 0.0
         },
         "citylearn": {
-          "n": 7,
+          "n": 9,
           "accuracy": 1.0,
           "empty_answer_rate": 0.0
         },
         "grid2op": {
-          "n": 6,
+          "n": 12,
           "accuracy": 1.0,
           "empty_answer_rate": 0.0
         },
         "traffic": {
-          "n": 4,
+          "n": 11,
           "accuracy": 1.0,
           "empty_answer_rate": 0.0
         },
         "water": {
-          "n": 4,
+          "n": 11,
           "accuracy": 1.0,
           "empty_answer_rate": 0.0
         }
       },
       "by_split": {
         "dev": {
-          "n": 6,
+          "n": 11,
           "accuracy": 1.0
         },
         "test": {
-          "n": 9,
+          "n": 13,
           "accuracy": 1.0
         },
         "train": {
-          "n": 18,
+          "n": 31,
           "accuracy": 1.0
         }
       },
@@ -85,6 +85,10 @@
           "n": 2,
           "accuracy": 1.0
         },
+        "city_cross_variable_load": {
+          "n": 2,
+          "accuracy": 1.0
+        },
         "city_extrema_total_load": {
           "n": 2,
           "accuracy": 1.0
@@ -101,11 +105,31 @@
           "n": 1,
           "accuracy": 1.0
         },
+        "grid_anomaly_max_rho": {
+          "n": 2,
+          "accuracy": 1.0
+        },
         "grid_counterfactual_mean_stress": {
           "n": 1,
           "accuracy": 1.0
         },
+        "grid_counterfactual_overload_exposure": {
+          "n": 1,
+          "accuracy": 1.0
+        },
         "grid_counterfactual_peak_stress": {
+          "n": 1,
+          "accuracy": 1.0
+        },
+        "grid_cross_variable_stress": {
+          "n": 1,
+          "accuracy": 1.0
+        },
+        "grid_domain_stress_context": {
+          "n": 1,
+          "accuracy": 1.0
+        },
+        "grid_extrema_max_rho": {
           "n": 1,
           "accuracy": 1.0
         },
@@ -125,6 +149,30 @@
           "n": 1,
           "accuracy": 1.0
         },
+        "traffic_combined_stress_context": {
+          "n": 1,
+          "accuracy": 1.0
+        },
+        "traffic_counterfactual_event_gap": {
+          "n": 1,
+          "accuracy": 1.0
+        },
+        "traffic_cross_congestion_relation": {
+          "n": 1,
+          "accuracy": 1.0
+        },
+        "traffic_event_impact_relation": {
+          "n": 1,
+          "accuracy": 1.0
+        },
+        "traffic_event_recovery_context": {
+          "n": 1,
+          "accuracy": 1.0
+        },
+        "traffic_incident_anomaly": {
+          "n": 1,
+          "accuracy": 1.0
+        },
         "traffic_queue_volatility": {
           "n": 1,
           "accuracy": 1.0
@@ -141,6 +189,10 @@
           "n": 1,
           "accuracy": 1.0
         },
+        "traffic_speed_queue_lead_lag": {
+          "n": 1,
+          "accuracy": 1.0
+        },
         "water_combined_stress_context": {
           "n": 1,
           "accuracy": 1.0
@@ -149,31 +201,59 @@
           "n": 1,
           "accuracy": 1.0
         },
+        "water_cross_pressure_relation": {
+          "n": 1,
+          "accuracy": 1.0
+        },
         "water_domain_resilience_context": {
+          "n": 1,
+          "accuracy": 1.0
+        },
+        "water_event_impact_relation": {
+          "n": 1,
+          "accuracy": 1.0
+        },
+        "water_event_recovery_context": {
           "n": 1,
           "accuracy": 1.0
         },
         "water_flow_volatility": {
           "n": 1,
           "accuracy": 1.0
+        },
+        "water_leak_anomaly": {
+          "n": 1,
+          "accuracy": 1.0
+        },
+        "water_leak_counterfactual_pressure": {
+          "n": 1,
+          "accuracy": 1.0
+        },
+        "water_min_pressure_extrema": {
+          "n": 1,
+          "accuracy": 1.0
+        },
+        "water_pressure_flow_lead_lag": {
+          "n": 1,
+          "accuracy": 1.0
         }
       },
       "pred_answer_distribution": {
-        "B": 11,
-        "D": 8,
-        "A": 9,
-        "C": 5
+        "B": 20,
+        "D": 13,
+        "A": 10,
+        "C": 12
       },
       "reason_distribution": {
-        "explicit_gold_answer_label": 6,
-        "explicit_answer_label": 27
+        "explicit_gold_answer_label": 20,
+        "explicit_answer_label": 35
       }
     },
     "natural_evidence_no_label": {
-      "n": 33,
-      "accuracy": 0.6667,
-      "empty_answer_rate": 0.2121,
-      "mean_caption_chars": 150.3,
+      "n": 55,
+      "accuracy": 0.6545,
+      "empty_answer_rate": 0.1636,
+      "mean_caption_chars": 192.7,
       "by_source": {
         "aiopslab_official_v3": {
           "n": 12,
@@ -181,38 +261,38 @@
           "empty_answer_rate": 0.1667
         },
         "citylearn": {
-          "n": 7,
-          "accuracy": 0.7143,
-          "empty_answer_rate": 0.2857
+          "n": 9,
+          "accuracy": 0.7778,
+          "empty_answer_rate": 0.2222
         },
         "grid2op": {
-          "n": 6,
+          "n": 12,
           "accuracy": 0.8333,
-          "empty_answer_rate": 0.1667
+          "empty_answer_rate": 0.0833
         },
         "traffic": {
-          "n": 4,
-          "accuracy": 0.5,
-          "empty_answer_rate": 0.25
+          "n": 11,
+          "accuracy": 0.5455,
+          "empty_answer_rate": 0.1818
         },
         "water": {
-          "n": 4,
-          "accuracy": 0.5,
-          "empty_answer_rate": 0.25
+          "n": 11,
+          "accuracy": 0.4545,
+          "empty_answer_rate": 0.1818
         }
       },
       "by_split": {
         "dev": {
-          "n": 6,
-          "accuracy": 0.8333
+          "n": 11,
+          "accuracy": 0.7273
         },
         "test": {
-          "n": 9,
-          "accuracy": 0.4444
+          "n": 13,
+          "accuracy": 0.5385
         },
         "train": {
-          "n": 18,
-          "accuracy": 0.7222
+          "n": 31,
+          "accuracy": 0.6774
         }
       },
       "by_task_family": {
@@ -240,6 +320,10 @@
           "n": 2,
           "accuracy": 1.0
         },
+        "city_cross_variable_load": {
+          "n": 2,
+          "accuracy": 1.0
+        },
         "city_extrema_total_load": {
           "n": 2,
           "accuracy": 1.0
@@ -256,11 +340,31 @@
           "n": 1,
           "accuracy": 0.0
         },
+        "grid_anomaly_max_rho": {
+          "n": 2,
+          "accuracy": 0.5
+        },
         "grid_counterfactual_mean_stress": {
           "n": 1,
           "accuracy": 1.0
         },
+        "grid_counterfactual_overload_exposure": {
+          "n": 1,
+          "accuracy": 1.0
+        },
         "grid_counterfactual_peak_stress": {
+          "n": 1,
+          "accuracy": 1.0
+        },
+        "grid_cross_variable_stress": {
+          "n": 1,
+          "accuracy": 1.0
+        },
+        "grid_domain_stress_context": {
+          "n": 1,
+          "accuracy": 1.0
+        },
+        "grid_extrema_max_rho": {
           "n": 1,
           "accuracy": 1.0
         },
@@ -280,6 +384,30 @@
           "n": 1,
           "accuracy": 0.0
         },
+        "traffic_combined_stress_context": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "traffic_counterfactual_event_gap": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "traffic_cross_congestion_relation": {
+          "n": 1,
+          "accuracy": 1.0
+        },
+        "traffic_event_impact_relation": {
+          "n": 1,
+          "accuracy": 1.0
+        },
+        "traffic_event_recovery_context": {
+          "n": 1,
+          "accuracy": 1.0
+        },
+        "traffic_incident_anomaly": {
+          "n": 1,
+          "accuracy": 1.0
+        },
         "traffic_queue_volatility": {
           "n": 1,
           "accuracy": 1.0
@@ -290,11 +418,15 @@
         },
         "traffic_speed_extrema": {
           "n": 1,
-          "accuracy": 1.0
+          "accuracy": 0.0
         },
         "traffic_speed_periodicity": {
           "n": 1,
           "accuracy": 0.0
+        },
+        "traffic_speed_queue_lead_lag": {
+          "n": 1,
+          "accuracy": 1.0
         },
         "water_combined_stress_context": {
           "n": 1,
@@ -304,32 +436,61 @@
           "n": 1,
           "accuracy": 0.0
         },
+        "water_cross_pressure_relation": {
+          "n": 1,
+          "accuracy": 1.0
+        },
         "water_domain_resilience_context": {
           "n": 1,
           "accuracy": 1.0
         },
+        "water_event_impact_relation": {
+          "n": 1,
+          "accuracy": 1.0
+        },
+        "water_event_recovery_context": {
+          "n": 1,
+          "accuracy": 0.0
+        },
         "water_flow_volatility": {
+          "n": 1,
+          "accuracy": 1.0
+        },
+        "water_leak_anomaly": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "water_leak_counterfactual_pressure": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "water_min_pressure_extrema": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "water_pressure_flow_lead_lag": {
           "n": 1,
           "accuracy": 1.0
         }
       },
       "pred_answer_distribution": {
-        "B": 7,
-        "D": 6,
-        "EMPTY": 7,
-        "A": 9,
-        "C": 4
+        "B": 14,
+        "D": 9,
+        "EMPTY": 9,
+        "A": 14,
+        "C": 9
       },
       "reason_distribution": {
-        "option_label_text": 26,
-        "no_label_match": 7
+        "option_label_text": 44,
+        "no_label_match": 9,
+        "gold_label_text": 2
       }
     },
     "generic_caption": {
-      "n": 33,
-      "accuracy": 0.0,
-      "empty_answer_rate": 0.9091,
-      "mean_caption_chars": 121.5,
+      "n": 55,
+      "accuracy": 0.0182,
+      "empty_answer_rate": 0.8909,
+      "mean_caption_chars": 118.7,
       "by_source": {
         "aiopslab_official_v3": {
           "n": 12,
@@ -337,37 +498,37 @@
           "empty_answer_rate": 1.0
         },
         "citylearn": {
-          "n": 7,
+          "n": 9,
           "accuracy": 0.0,
           "empty_answer_rate": 1.0
         },
         "grid2op": {
-          "n": 6,
+          "n": 12,
           "accuracy": 0.0,
           "empty_answer_rate": 1.0
         },
         "traffic": {
-          "n": 4,
+          "n": 11,
           "accuracy": 0.0,
-          "empty_answer_rate": 0.5
+          "empty_answer_rate": 0.7273
         },
         "water": {
-          "n": 4,
-          "accuracy": 0.0,
-          "empty_answer_rate": 0.75
+          "n": 11,
+          "accuracy": 0.0909,
+          "empty_answer_rate": 0.7273
         }
       },
       "by_split": {
         "dev": {
-          "n": 6,
-          "accuracy": 0.0
+          "n": 11,
+          "accuracy": 0.0909
         },
         "test": {
-          "n": 9,
+          "n": 13,
           "accuracy": 0.0
         },
         "train": {
-          "n": 18,
+          "n": 31,
           "accuracy": 0.0
         }
       },
@@ -396,6 +557,10 @@
           "n": 2,
           "accuracy": 0.0
         },
+        "city_cross_variable_load": {
+          "n": 2,
+          "accuracy": 0.0
+        },
         "city_extrema_total_load": {
           "n": 2,
           "accuracy": 0.0
@@ -412,11 +577,31 @@
           "n": 1,
           "accuracy": 0.0
         },
+        "grid_anomaly_max_rho": {
+          "n": 2,
+          "accuracy": 0.0
+        },
         "grid_counterfactual_mean_stress": {
           "n": 1,
           "accuracy": 0.0
         },
+        "grid_counterfactual_overload_exposure": {
+          "n": 1,
+          "accuracy": 0.0
+        },
         "grid_counterfactual_peak_stress": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "grid_cross_variable_stress": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "grid_domain_stress_context": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "grid_extrema_max_rho": {
           "n": 1,
           "accuracy": 0.0
         },
@@ -436,6 +621,30 @@
           "n": 1,
           "accuracy": 0.0
         },
+        "traffic_combined_stress_context": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "traffic_counterfactual_event_gap": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "traffic_cross_congestion_relation": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "traffic_event_impact_relation": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "traffic_event_recovery_context": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "traffic_incident_anomaly": {
+          "n": 1,
+          "accuracy": 0.0
+        },
         "traffic_queue_volatility": {
           "n": 1,
           "accuracy": 0.0
@@ -452,6 +661,10 @@
           "n": 1,
           "accuracy": 0.0
         },
+        "traffic_speed_queue_lead_lag": {
+          "n": 1,
+          "accuracy": 0.0
+        },
         "water_combined_stress_context": {
           "n": 1,
           "accuracy": 0.0
@@ -460,30 +673,59 @@
           "n": 1,
           "accuracy": 0.0
         },
+        "water_cross_pressure_relation": {
+          "n": 1,
+          "accuracy": 0.0
+        },
         "water_domain_resilience_context": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "water_event_impact_relation": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "water_event_recovery_context": {
           "n": 1,
           "accuracy": 0.0
         },
         "water_flow_volatility": {
           "n": 1,
           "accuracy": 0.0
+        },
+        "water_leak_anomaly": {
+          "n": 1,
+          "accuracy": 1.0
+        },
+        "water_leak_counterfactual_pressure": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "water_min_pressure_extrema": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "water_pressure_flow_lead_lag": {
+          "n": 1,
+          "accuracy": 0.0
         }
       },
       "pred_answer_distribution": {
-        "EMPTY": 30,
-        "B": 1,
+        "EMPTY": 49,
+        "D": 1,
+        "B": 3,
         "C": 2
       },
       "reason_distribution": {
-        "no_label_match": 30,
-        "option_label_text": 3
+        "no_label_match": 49,
+        "option_label_text": 6
       }
     },
     "statistical_caption": {
-      "n": 33,
+      "n": 55,
       "accuracy": 0.0,
       "empty_answer_rate": 1.0,
-      "mean_caption_chars": 164.8,
+      "mean_caption_chars": 152.8,
       "by_source": {
         "aiopslab_official_v3": {
           "n": 12,
@@ -491,37 +733,37 @@
           "empty_answer_rate": 1.0
         },
         "citylearn": {
-          "n": 7,
+          "n": 9,
           "accuracy": 0.0,
           "empty_answer_rate": 1.0
         },
         "grid2op": {
-          "n": 6,
+          "n": 12,
           "accuracy": 0.0,
           "empty_answer_rate": 1.0
         },
         "traffic": {
-          "n": 4,
+          "n": 11,
           "accuracy": 0.0,
           "empty_answer_rate": 1.0
         },
         "water": {
-          "n": 4,
+          "n": 11,
           "accuracy": 0.0,
           "empty_answer_rate": 1.0
         }
       },
       "by_split": {
         "dev": {
-          "n": 6,
+          "n": 11,
           "accuracy": 0.0
         },
         "test": {
-          "n": 9,
+          "n": 13,
           "accuracy": 0.0
         },
         "train": {
-          "n": 18,
+          "n": 31,
           "accuracy": 0.0
         }
       },
@@ -550,6 +792,10 @@
           "n": 2,
           "accuracy": 0.0
         },
+        "city_cross_variable_load": {
+          "n": 2,
+          "accuracy": 0.0
+        },
         "city_extrema_total_load": {
           "n": 2,
           "accuracy": 0.0
@@ -566,11 +812,31 @@
           "n": 1,
           "accuracy": 0.0
         },
+        "grid_anomaly_max_rho": {
+          "n": 2,
+          "accuracy": 0.0
+        },
         "grid_counterfactual_mean_stress": {
           "n": 1,
           "accuracy": 0.0
         },
+        "grid_counterfactual_overload_exposure": {
+          "n": 1,
+          "accuracy": 0.0
+        },
         "grid_counterfactual_peak_stress": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "grid_cross_variable_stress": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "grid_domain_stress_context": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "grid_extrema_max_rho": {
           "n": 1,
           "accuracy": 0.0
         },
@@ -590,6 +856,30 @@
           "n": 1,
           "accuracy": 0.0
         },
+        "traffic_combined_stress_context": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "traffic_counterfactual_event_gap": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "traffic_cross_congestion_relation": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "traffic_event_impact_relation": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "traffic_event_recovery_context": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "traffic_incident_anomaly": {
+          "n": 1,
+          "accuracy": 0.0
+        },
         "traffic_queue_volatility": {
           "n": 1,
           "accuracy": 0.0
@@ -606,6 +896,10 @@
           "n": 1,
           "accuracy": 0.0
         },
+        "traffic_speed_queue_lead_lag": {
+          "n": 1,
+          "accuracy": 0.0
+        },
         "water_combined_stress_context": {
           "n": 1,
           "accuracy": 0.0
@@ -614,27 +908,55 @@
           "n": 1,
           "accuracy": 0.0
         },
+        "water_cross_pressure_relation": {
+          "n": 1,
+          "accuracy": 0.0
+        },
         "water_domain_resilience_context": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "water_event_impact_relation": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "water_event_recovery_context": {
           "n": 1,
           "accuracy": 0.0
         },
         "water_flow_volatility": {
           "n": 1,
           "accuracy": 0.0
+        },
+        "water_leak_anomaly": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "water_leak_counterfactual_pressure": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "water_min_pressure_extrema": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "water_pressure_flow_lead_lag": {
+          "n": 1,
+          "accuracy": 0.0
         }
       },
       "pred_answer_distribution": {
-        "EMPTY": 33
+        "EMPTY": 55
       },
       "reason_distribution": {
-        "no_label_match": 33
+        "no_label_match": 55
       }
     },
     "question_only": {
-      "n": 33,
-      "accuracy": 0.1212,
-      "empty_answer_rate": 0.697,
-      "mean_caption_chars": 101.2,
+      "n": 55,
+      "accuracy": 0.1273,
+      "empty_answer_rate": 0.7091,
+      "mean_caption_chars": 105.6,
       "by_source": {
         "aiopslab_official_v3": {
           "n": 12,
@@ -642,38 +964,38 @@
           "empty_answer_rate": 0.5833
         },
         "citylearn": {
-          "n": 7,
-          "accuracy": 0.1429,
-          "empty_answer_rate": 0.4286
+          "n": 9,
+          "accuracy": 0.2222,
+          "empty_answer_rate": 0.4444
         },
         "grid2op": {
-          "n": 6,
-          "accuracy": 0.0,
-          "empty_answer_rate": 1.0
-        },
-        "traffic": {
-          "n": 4,
-          "accuracy": 0.0,
+          "n": 12,
+          "accuracy": 0.1667,
           "empty_answer_rate": 0.75
         },
-        "water": {
-          "n": 4,
+        "traffic": {
+          "n": 11,
           "accuracy": 0.0,
-          "empty_answer_rate": 1.0
+          "empty_answer_rate": 0.9091
+        },
+        "water": {
+          "n": 11,
+          "accuracy": 0.0,
+          "empty_answer_rate": 0.8182
         }
       },
       "by_split": {
         "dev": {
-          "n": 6,
-          "accuracy": 0.0
+          "n": 11,
+          "accuracy": 0.0909
         },
         "test": {
-          "n": 9,
-          "accuracy": 0.2222
+          "n": 13,
+          "accuracy": 0.3077
         },
         "train": {
-          "n": 18,
-          "accuracy": 0.1111
+          "n": 31,
+          "accuracy": 0.0645
         }
       },
       "by_task_family": {
@@ -700,6 +1022,10 @@
         "city_anomaly_total_load": {
           "n": 2,
           "accuracy": 0.0
+        },
+        "city_cross_variable_load": {
+          "n": 2,
+          "accuracy": 0.5
         },
         "city_extrema_total_load": {
           "n": 2,
@@ -717,13 +1043,33 @@
           "n": 1,
           "accuracy": 0.0
         },
+        "grid_anomaly_max_rho": {
+          "n": 2,
+          "accuracy": 0.5
+        },
         "grid_counterfactual_mean_stress": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "grid_counterfactual_overload_exposure": {
           "n": 1,
           "accuracy": 0.0
         },
         "grid_counterfactual_peak_stress": {
           "n": 1,
           "accuracy": 0.0
+        },
+        "grid_cross_variable_stress": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "grid_domain_stress_context": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "grid_extrema_max_rho": {
+          "n": 1,
+          "accuracy": 1.0
         },
         "grid_temporal_lead_lag": {
           "n": 1,
@@ -738,6 +1084,30 @@
           "accuracy": 0.0
         },
         "grid_window_total_load": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "traffic_combined_stress_context": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "traffic_counterfactual_event_gap": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "traffic_cross_congestion_relation": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "traffic_event_impact_relation": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "traffic_event_recovery_context": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "traffic_incident_anomaly": {
           "n": 1,
           "accuracy": 0.0
         },
@@ -757,6 +1127,10 @@
           "n": 1,
           "accuracy": 0.0
         },
+        "traffic_speed_queue_lead_lag": {
+          "n": 1,
+          "accuracy": 0.0
+        },
         "water_combined_stress_context": {
           "n": 1,
           "accuracy": 0.0
@@ -765,34 +1139,63 @@
           "n": 1,
           "accuracy": 0.0
         },
+        "water_cross_pressure_relation": {
+          "n": 1,
+          "accuracy": 0.0
+        },
         "water_domain_resilience_context": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "water_event_impact_relation": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "water_event_recovery_context": {
           "n": 1,
           "accuracy": 0.0
         },
         "water_flow_volatility": {
           "n": 1,
           "accuracy": 0.0
+        },
+        "water_leak_anomaly": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "water_leak_counterfactual_pressure": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "water_min_pressure_extrema": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "water_pressure_flow_lead_lag": {
+          "n": 1,
+          "accuracy": 0.0
         }
       },
       "pred_answer_distribution": {
-        "EMPTY": 23,
-        "A": 4,
-        "B": 4,
-        "C": 1,
-        "D": 1
+        "EMPTY": 39,
+        "A": 5,
+        "B": 5,
+        "C": 4,
+        "D": 2
       },
       "reason_distribution": {
-        "no_label_match": 23,
-        "option_label_text": 10
+        "no_label_match": 39,
+        "option_label_text": 15,
+        "gold_label_text": 1
       }
     }
   },
   "trainable": {
     "nearest_caption_question_conditioned": {
-      "n": 9,
-      "accuracy": 0.6667,
-      "empty_answer_rate": 0.3333,
-      "mean_caption_chars": 197.6,
+      "n": 13,
+      "accuracy": 0.4615,
+      "empty_answer_rate": 0.3846,
+      "mean_caption_chars": 221.5,
       "by_source": {
         "aiopslab_official_v3": {
           "n": 5,
@@ -800,17 +1203,17 @@
           "empty_answer_rate": 0.0
         },
         "citylearn": {
-          "n": 1,
-          "accuracy": 1.0,
+          "n": 2,
+          "accuracy": 0.5,
           "empty_answer_rate": 0.0
         },
         "grid2op": {
-          "n": 1,
+          "n": 2,
           "accuracy": 0.0,
-          "empty_answer_rate": 1.0
+          "empty_answer_rate": 0.5
         },
         "traffic": {
-          "n": 1,
+          "n": 3,
           "accuracy": 0.0,
           "empty_answer_rate": 1.0
         },
@@ -822,8 +1225,8 @@
       },
       "by_split": {
         "test": {
-          "n": 9,
-          "accuracy": 0.6667
+          "n": 13,
+          "accuracy": 0.4615
         }
       },
       "by_task_family": {
@@ -847,7 +1250,23 @@
           "n": 1,
           "accuracy": 1.0
         },
+        "city_cross_variable_load": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "grid_extrema_max_rho": {
+          "n": 1,
+          "accuracy": 0.0
+        },
         "grid_window_total_load": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "traffic_counterfactual_event_gap": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "traffic_event_impact_relation": {
           "n": 1,
           "accuracy": 0.0
         },
@@ -862,25 +1281,26 @@
       },
       "pred_answer_distribution": {
         "A": 2,
-        "D": 2,
+        "D": 3,
         "C": 1,
-        "B": 1,
-        "EMPTY": 3
+        "B": 2,
+        "EMPTY": 5
       },
       "reason_distribution": {
-        "explicit_answer_label": 6,
-        "no_label_match": 3
+        "explicit_answer_label": 7,
+        "option_label_text": 1,
+        "no_label_match": 5
       },
-      "n_train": 18,
-      "n_eval": 9,
+      "n_train": 31,
+      "n_eval": 13,
       "train_split": "train",
       "eval_split": "test"
     },
     "nearest_caption_no_question": {
-      "n": 9,
-      "accuracy": 0.3333,
-      "empty_answer_rate": 0.5556,
-      "mean_caption_chars": 198.1,
+      "n": 13,
+      "accuracy": 0.2308,
+      "empty_answer_rate": 0.6154,
+      "mean_caption_chars": 259.6,
       "by_source": {
         "aiopslab_official_v3": {
           "n": 5,
@@ -888,17 +1308,17 @@
           "empty_answer_rate": 0.4
         },
         "citylearn": {
-          "n": 1,
+          "n": 2,
           "accuracy": 0.0,
-          "empty_answer_rate": 0.0
+          "empty_answer_rate": 0.5
         },
         "grid2op": {
-          "n": 1,
+          "n": 2,
           "accuracy": 0.0,
-          "empty_answer_rate": 1.0
+          "empty_answer_rate": 0.5
         },
         "traffic": {
-          "n": 1,
+          "n": 3,
           "accuracy": 0.0,
           "empty_answer_rate": 1.0
         },
@@ -910,8 +1330,8 @@
       },
       "by_split": {
         "test": {
-          "n": 9,
-          "accuracy": 0.3333
+          "n": 13,
+          "accuracy": 0.2308
         }
       },
       "by_task_family": {
@@ -935,7 +1355,23 @@
           "n": 1,
           "accuracy": 0.0
         },
+        "city_cross_variable_load": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "grid_extrema_max_rho": {
+          "n": 1,
+          "accuracy": 0.0
+        },
         "grid_window_total_load": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "traffic_counterfactual_event_gap": {
+          "n": 1,
+          "accuracy": 0.0
+        },
+        "traffic_event_impact_relation": {
           "n": 1,
           "accuracy": 0.0
         },
@@ -950,16 +1386,16 @@
       },
       "pred_answer_distribution": {
         "A": 1,
-        "EMPTY": 5,
+        "EMPTY": 8,
         "C": 1,
-        "B": 2
+        "B": 3
       },
       "reason_distribution": {
-        "explicit_answer_label": 4,
-        "no_label_match": 5
+        "explicit_answer_label": 5,
+        "no_label_match": 8
       },
-      "n_train": 18,
-      "n_eval": 9,
+      "n_train": 31,
+      "n_eval": 13,
       "train_split": "train",
       "eval_split": "test"
     }
