@@ -7,7 +7,12 @@ import unittest
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from scripts.remote.check_natural_qcc_remote_gpu_access import check_profile, parse_remote_stdout
+from scripts.remote.check_natural_qcc_remote_gpu_access import (
+    check_profile,
+    parse_remote_stdout,
+    profile_config,
+    remote_probe_script,
+)
 
 
 class CheckNaturalQccRemoteGpuAccessTest(unittest.TestCase):
@@ -58,6 +63,24 @@ class CheckNaturalQccRemoteGpuAccessTest(unittest.TestCase):
         self.assertTrue(result["reachable"])
         self.assertFalse(result["access_pass"])
 
+    def test_profile_config_supports_overrides(self):
+        cfg = profile_config(
+            "a100",
+            ssh_target="gpu-login",
+            remote_root="/tmp/LTS GEN",
+            python_path="/tmp/env/bin/python3",
+        )
+
+        self.assertEqual(cfg["ssh_target"], "gpu-login")
+        self.assertEqual(cfg["remote_root"], "/tmp/LTS GEN")
+        self.assertEqual(cfg["python"], "/tmp/env/bin/python3")
+
+    def test_remote_probe_script_shell_quotes_paths(self):
+        script = remote_probe_script("/tmp/LTS GEN", "/tmp/env's/bin/python3")
+
+        self.assertIn("test -d '/tmp/LTS GEN'", script)
+        self.assertIn("test -x '/tmp/env'\"'\"'s/bin/python3'", script)
+
     def test_check_profile_passes_when_repo_python_and_cuda_exist(self):
         fake_proc = SimpleNamespace(
             returncode=0,
@@ -74,12 +97,22 @@ class CheckNaturalQccRemoteGpuAccessTest(unittest.TestCase):
             stderr="",
         )
 
-        with patch("scripts.remote.check_natural_qcc_remote_gpu_access.subprocess.run", return_value=fake_proc):
-            result = check_profile("3090", timeout=1, branch="codex/question-repair-20260519-ready")
+        with patch("scripts.remote.check_natural_qcc_remote_gpu_access.subprocess.run", return_value=fake_proc) as run:
+            result = check_profile(
+                "3090",
+                timeout=1,
+                branch="codex/question-repair-20260519-ready",
+                ssh_target="gpu-login",
+                remote_root="/tmp/LTSGEN",
+                python_path="/tmp/env/bin/python3",
+            )
 
         self.assertTrue(result["reachable"])
         self.assertTrue(result["access_pass"])
         self.assertEqual(result["parsed"]["torch_cuda_device_count"], 1)
+        self.assertEqual(run.call_args.args[0][5], "gpu-login")
+        self.assertEqual(result["remote_root"], "/tmp/LTSGEN")
+        self.assertEqual(result["python"], "/tmp/env/bin/python3")
 
 
 if __name__ == "__main__":

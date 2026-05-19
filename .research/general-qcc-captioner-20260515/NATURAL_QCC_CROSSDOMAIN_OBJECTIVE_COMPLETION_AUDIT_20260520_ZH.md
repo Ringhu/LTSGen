@@ -159,6 +159,7 @@ Observed status:
 - `3090`: `reachable=false`; blocker `Connection closed by 0.0.12.18 port 22`
 
 This is a blocker diagnostic only. It confirms why the paired GPU smoke could not be launched from the current workstation, but it does not satisfy any training-result requirement.
+If the real GPU host is reachable through a different SSH alias or root path, rerun `scripts/remote/check_natural_qcc_remote_gpu_access.py` with `--profiles`, `--ssh-target`, `--remote-root`, and `--python-path` before launching the paired smoke.
 
 Objective-level completion gate:
 

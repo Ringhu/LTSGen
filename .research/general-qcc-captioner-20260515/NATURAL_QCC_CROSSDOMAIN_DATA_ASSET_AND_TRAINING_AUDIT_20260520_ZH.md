@@ -198,6 +198,16 @@ PUSH_RESULTS=1 PROFILE=a100 scripts/remote/launch_natural_qcc_crossdomain_pair_s
 python3 scripts/remote/check_natural_qcc_remote_gpu_access.py
 ```
 
+如果实际 SSH alias、远端 repo root 或 Python 环境与默认 `a100/3090` 配置不同，可以用覆盖参数先验证单个 profile：
+
+```bash
+python3 scripts/remote/check_natural_qcc_remote_gpu_access.py \
+  --profiles a100 \
+  --ssh-target <ssh-host> \
+  --remote-root <remote-LTSGEN-root> \
+  --python-path <remote-python>
+```
+
 当前结果：
 
 | profile | reachable | access pass | blocker |

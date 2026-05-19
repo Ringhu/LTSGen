@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import shlex
 import subprocess
 from pathlib import Path
 from typing import Any
@@ -39,17 +40,36 @@ def local_git_head() -> str:
     return proc.stdout.strip() if proc.returncode == 0 else ""
 
 
+def profile_config(
+    profile: str,
+    *,
+    ssh_target: str | None = None,
+    remote_root: str | None = None,
+    python_path: str | None = None,
+) -> dict[str, str]:
+    cfg = dict(PROFILES[profile])
+    if ssh_target:
+        cfg["ssh_target"] = ssh_target
+    if remote_root:
+        cfg["remote_root"] = remote_root
+    if python_path:
+        cfg["python"] = python_path
+    return cfg
+
+
 def remote_probe_script(remote_root: str, python_path: str) -> str:
+    root_q = shlex.quote(remote_root)
+    py_q = shlex.quote(python_path)
     return f"""set -euo pipefail
 echo "hostname=$(hostname)"
-echo "root_exists=$(test -d {remote_root!r} && echo 1 || echo 0)"
-if test -d {remote_root!r}; then
-  cd {remote_root!r}
+echo "root_exists=$(test -d {root_q} && echo 1 || echo 0)"
+if test -d {root_q}; then
+  cd {root_q}
   echo "git_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo missing)"
   echo "git_head=$(git rev-parse HEAD 2>/dev/null || echo missing)"
-  echo "python_exists=$(test -x {python_path!r} && echo 1 || echo 0)"
-  if test -x {python_path!r}; then
-    {python_path!r} - <<'PY'
+  echo "python_exists=$(test -x {py_q} && echo 1 || echo 0)"
+  if test -x {py_q}; then
+    {py_q} - <<'PY'
 import importlib.util
 import json
 
@@ -98,8 +118,16 @@ def parse_remote_stdout(stdout: str) -> dict[str, Any]:
     return parsed
 
 
-def check_profile(profile: str, *, timeout: int, branch: str) -> dict[str, Any]:
-    cfg = PROFILES[profile]
+def check_profile(
+    profile: str,
+    *,
+    timeout: int,
+    branch: str,
+    ssh_target: str | None = None,
+    remote_root: str | None = None,
+    python_path: str | None = None,
+) -> dict[str, Any]:
+    cfg = profile_config(profile, ssh_target=ssh_target, remote_root=remote_root, python_path=python_path)
     cmd = [
         "ssh",
         "-o",
@@ -171,10 +199,27 @@ def main() -> None:
     parser.add_argument("--profiles", nargs="+", default=["a100", "3090"], choices=sorted(PROFILES))
     parser.add_argument("--timeout", type=int, default=8)
     parser.add_argument("--branch", default="codex/question-repair-20260519-ready")
+    parser.add_argument("--ssh-target", default=None, help="Override SSH target for a single selected profile.")
+    parser.add_argument("--remote-root", default=None, help="Override remote repository root for a single selected profile.")
+    parser.add_argument("--python-path", default=None, help="Override remote Python executable for a single selected profile.")
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     args = parser.parse_args()
 
-    profiles = [check_profile(profile, timeout=args.timeout, branch=args.branch) for profile in args.profiles]
+    has_override = bool(args.ssh_target or args.remote_root or args.python_path)
+    if has_override and len(args.profiles) != 1:
+        parser.error("--ssh-target/--remote-root/--python-path can only be used with exactly one --profiles value")
+
+    profiles = [
+        check_profile(
+            profile,
+            timeout=args.timeout,
+            branch=args.branch,
+            ssh_target=args.ssh_target,
+            remote_root=args.remote_root,
+            python_path=args.python_path,
+        )
+        for profile in args.profiles
+    ]
     report = {
         "local_head": local_git_head(),
         "branch": args.branch,
