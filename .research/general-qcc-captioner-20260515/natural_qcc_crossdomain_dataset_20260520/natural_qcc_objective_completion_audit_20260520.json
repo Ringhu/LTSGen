@@ -1,0 +1,145 @@
+{
+  "objective": "Run the new natural TS-QA construction through data asset evaluation, QCC caption training, no-question control training, generated-caption QA, and improvement/comparison analysis.",
+  "paths": {
+    "dataset_summary": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_crossdomain_dataset_summary.json",
+    "no_question_summary": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft_no_question/natural_qcc_crossdomain_no_question_summary.json",
+    "probe_results": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/probe_eval/natural_qcc_probe_results.json",
+    "qcond_audit": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_gpu_smoke_result_audit.json",
+    "no_question_audit": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_gpu_smoke_result_audit.json",
+    "compare_audit": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.json",
+    "manifest": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_gpu_result_manifest_20260520.json",
+    "remote_access": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_remote_gpu_access_check_20260520.json"
+  },
+  "dataset": {
+    "schema_gate_pass": true,
+    "positive_n": 55,
+    "by_source": {
+      "aiopslab_official_v3": 12,
+      "citylearn": 9,
+      "grid2op": 12,
+      "traffic": 11,
+      "water": 11
+    },
+    "by_split": {
+      "dev": 11,
+      "test": 13,
+      "train": 31
+    }
+  },
+  "probe": {
+    "exists": true,
+    "accuracy": {
+      "natural_oracle": 1.0,
+      "generic_caption": 0.0182,
+      "statistical_caption": 0.0,
+      "question_only": 0.1273
+    },
+    "max_non_oracle": 0.1273,
+    "oracle_load_bearing": true
+  },
+  "qcond": {
+    "audit_exists": true,
+    "audit_pass": false,
+    "generated_accuracy": null,
+    "generated_rows": 0,
+    "decision_status": "incomplete_or_blocked",
+    "beats_all_non_oracle_baselines": false,
+    "beats_question_only": false,
+    "claim_scope": "No training-result claim allowed."
+  },
+  "no_question": {
+    "audit_exists": true,
+    "audit_pass": false,
+    "generated_accuracy": null,
+    "generated_rows": 0,
+    "decision_status": "incomplete_or_blocked",
+    "beats_all_non_oracle_baselines": false,
+    "beats_question_only": false,
+    "claim_scope": "No training-result claim allowed."
+  },
+  "compare": {
+    "exists": true,
+    "status": "incomplete_or_blocked",
+    "complete": false,
+    "qcond_accuracy": null,
+    "no_question_accuracy": null,
+    "qcond_minus_no_question": null,
+    "min_gap": 0.05,
+    "claim_scope": "No q-conditioning training comparison allowed."
+  },
+  "manifest": {
+    "exists": true,
+    "manifest_pass": false,
+    "unsafe_path_detected": false,
+    "required_missing": [
+      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/preflight.json",
+      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/predictions.jsonl",
+      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/qa_metrics.json",
+      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/qa_predictions.jsonl",
+      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/preflight.json",
+      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/generate_eval_test_clean/predictions.jsonl",
+      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/qa_metrics.json",
+      ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/qa_predictions.jsonl"
+    ]
+  },
+  "remote_access": {
+    "exists": true,
+    "any_access_pass": false,
+    "profiles": [
+      {
+        "profile": "a100",
+        "reachable": false,
+        "access_pass": false,
+        "stderr_tail": "ssh: Could not resolve hostname a100: Temporary failure in name resolution\n"
+      },
+      {
+        "profile": "3090",
+        "reachable": false,
+        "access_pass": false,
+        "stderr_tail": "Connection closed by 0.0.12.18 port 22\n"
+      }
+    ]
+  },
+  "completion_checks": {
+    "dataset_schema_gate_pass": true,
+    "positive_dataset_rows_present": true,
+    "sft_split_files_present": true,
+    "no_question_control_gate_pass": true,
+    "probe_results_present": true,
+    "oracle_evidence_baseline_present": true,
+    "non_oracle_baselines_present": true,
+    "oracle_caption_load_bearing": true,
+    "qcond_gpu_audit_pass": false,
+    "no_question_gpu_audit_pass": false,
+    "qcond_generated_metrics_present": false,
+    "no_question_generated_metrics_present": false,
+    "qcond_vs_no_question_comparison_complete": false,
+    "safe_result_manifest_pass": false,
+    "safe_result_manifest_has_no_unsafe_paths": true
+  },
+  "result_checks": {
+    "qcond_accuracy": null,
+    "no_question_accuracy": null,
+    "qcond_minus_no_question": null,
+    "min_gap": 0.05,
+    "qcond_beats_all_non_oracle_baselines": false,
+    "qcond_beats_question_only": false,
+    "compare_status": "incomplete_or_blocked"
+  },
+  "decision": {
+    "objective_complete": false,
+    "status": "incomplete_or_blocked",
+    "summary_zh": "目标尚未完成：真实 QCC/no-question 训练、生成 caption、QA 或安全同步证据仍缺失。",
+    "claim_scope": "No generated-caption training claim allowed.",
+    "blockers": [
+      "qcond_gpu_audit_pass",
+      "no_question_gpu_audit_pass",
+      "qcond_generated_metrics_present",
+      "no_question_generated_metrics_present",
+      "qcond_vs_no_question_comparison_complete",
+      "safe_result_manifest_pass"
+    ],
+    "qcond_beats_no_question": false,
+    "qcond_gap_meets_min": false
+  }
+}

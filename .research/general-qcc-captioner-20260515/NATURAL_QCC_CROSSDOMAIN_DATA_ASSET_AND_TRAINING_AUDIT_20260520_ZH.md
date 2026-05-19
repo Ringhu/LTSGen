@@ -22,6 +22,7 @@
 - q-conditioned GPU dry-run/audit dir: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/`
 - no-question GPU dry-run/audit dir: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/`
 - qcond-vs-no-question audit: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.json`
+- objective completion gate: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_objective_completion_audit_20260520.json`
 
 ## 候选池
 
@@ -253,6 +254,21 @@ python3 scripts/eval/audit_natural_qcc_gpu_qcond_vs_noquestion.py
 因此目前不能声称 QCC 训练提升。
 
 GPU result manifest 当前状态为 `manifest_pass=false`，因为真实 GPU run 尚未产生 `preflight.json`、generated predictions 和 rule-QA 文件；`unsafe_path_detected=false`，说明 manifest 不会收集权重路径。
+
+目标级 completion gate 已新增并运行：
+
+```bash
+python3 scripts/eval/audit_natural_qcc_objective_completion.py
+```
+
+当前状态为 `incomplete_or_blocked`，`objective_complete=false`。该 gate 已确认数据资产、SFT split、no-question control 和 probe 通过，但以下目标项仍阻塞：
+
+- `qcond_gpu_audit_pass=false`
+- `no_question_gpu_audit_pass=false`
+- `qcond_generated_metrics_present=false`
+- `no_question_generated_metrics_present=false`
+- `qcond_vs_no_question_comparison_complete=false`
+- `safe_result_manifest_pass=false`
 
 ## 下一步
 

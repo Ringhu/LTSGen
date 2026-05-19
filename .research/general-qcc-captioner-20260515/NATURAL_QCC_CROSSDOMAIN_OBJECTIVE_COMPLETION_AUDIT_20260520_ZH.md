@@ -46,6 +46,7 @@
 | Q-conditioned vs no-question training comparison | `tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.json` status `incomplete_or_blocked` | missing |
 | Safe GitHub result sync after GPU | `natural_qcc_gpu_result_manifest_20260520.json` currently `manifest_pass=false` because required GPU result files are absent; `unsafe_path_detected=false` | prepared but incomplete |
 | Remote GPU access diagnosis | `natural_qcc_remote_gpu_access_check_20260520.json` shows `any_access_pass=false`; `a100` DNS unresolved, `3090` SSH closed | blocker documented |
+| Objective-level completion gate | `natural_qcc_objective_completion_audit_20260520.json` status `incomplete_or_blocked`; blocks on GPU audits, generated metrics, comparison, and manifest | incomplete |
 | GitHub sync | current natural-QCC data, audit, launcher, manifest, and remote-access diagnostic artifacts are pushed to `refs/heads/codex/question-repair-20260519-ready`; verify with `git ls-remote origin refs/heads/codex/question-repair-20260519-ready` | complete for current non-GPU artifacts |
 
 ## Inspected Metrics
@@ -159,6 +160,18 @@ Observed status:
 
 This is a blocker diagnostic only. It confirms why the paired GPU smoke could not be launched from the current workstation, but it does not satisfy any training-result requirement.
 
+Objective-level completion gate:
+
+`.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_objective_completion_audit_20260520.json`
+
+Observed status:
+
+- `objective_complete=false`
+- `status=incomplete_or_blocked`
+- blockers: `qcond_gpu_audit_pass`, `no_question_gpu_audit_pass`, `qcond_generated_metrics_present`, `no_question_generated_metrics_present`, `qcond_vs_no_question_comparison_complete`, `safe_result_manifest_pass`
+
+This gate is the final close-out check for the active objective. It only passes when data assets, q-conditioned GPU training, no-question GPU training, generated-caption QA, paired comparison, and safe result manifest are all complete. Passing the data/probe/local diagnostics alone is intentionally insufficient.
+
 ## Commands Needed To Finish The Objective
 
 Run on an accessible GPU host:
@@ -226,6 +239,12 @@ Then compare q-conditioned against no-question:
 python3 scripts/eval/audit_natural_qcc_gpu_qcond_vs_noquestion.py
 ```
 
+Finally rerun the objective-level gate:
+
+```bash
+python3 scripts/eval/audit_natural_qcc_objective_completion.py
+```
+
 Minimum evidence required before marking this objective complete:
 
 1. GPU `preflight.json` exists and passes.
@@ -250,6 +269,7 @@ What is complete:
 - Data asset baseline/probe.
 - Local weak training diagnostic.
 - GitHub sync for the current non-GPU artifacts, including the remote-access diagnostic report.
+- Objective-level completion gate added; current result is `incomplete_or_blocked`.
 
 What remains incomplete:
 
