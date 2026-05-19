@@ -105,3 +105,26 @@ cd ltsgen-question-repair
 git remote add origin https://github.com/Ringhu/LTSGen.git
 git push origin codex/question-repair-20260519-ready
 ```
+
+## Bundle Restore Check
+
+The bundle was also restored into a fresh temporary clone to verify that it is
+usable as an offline transfer artifact:
+
+```bash
+git clone /tmp/ltsgen-question-repair-ready.bundle /tmp/ltsgen-question-repair-bundle-check-20260519
+cd /tmp/ltsgen-question-repair-bundle-check-20260519
+git checkout codex/question-repair-20260519-ready
+python3 -m py_compile scripts/generate/repair_multisim_questions.py
+jq -r '.clarity_gate_pass, .missing_context_count, .support_slot_numeric_leak_count' \
+  .research/general-qcc-captioner-20260515/question_repair_20260519/repaired_multisim_v5_balanced8_audit.json \
+  .research/general-qcc-captioner-20260515/question_repair_20260519/repaired_multisim_v3_eval_source_dev_sft_smoke64_audit.json
+```
+
+Observed result:
+
+- checkout restored `dcfa6df Add MultiSim question repair artifacts`
+- script compilation passed
+- case-study audit returned `true / 0 / 0`
+- SFT smoke audit returned `true / 0 / 0`
+- restored worktree was clean
