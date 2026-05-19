@@ -46,7 +46,7 @@
 | Q-conditioned vs no-question training comparison | `tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.json` status `incomplete_or_blocked` | missing |
 | Safe GitHub result sync after GPU | `natural_qcc_gpu_result_manifest_20260520.json` currently `manifest_pass=false` because required GPU result files are absent; `unsafe_path_detected=false` | prepared but incomplete |
 | Remote GPU access diagnosis | `natural_qcc_remote_gpu_access_check_20260520.json` shows `any_access_pass=false`; `a100` DNS unresolved, `3090` SSH closed | blocker documented |
-| GitHub sync | remote branch `refs/heads/codex/question-repair-20260519-ready` synced through the pre-access-check head `532aaaa5cba52f33c6dcb094d95ded164b5cd9e3`; this remote-access update must be pushed before relying on the report from GitHub | pending for current update |
+| GitHub sync | current natural-QCC data, audit, launcher, manifest, and remote-access diagnostic artifacts are pushed to `refs/heads/codex/question-repair-20260519-ready`; verify with `git ls-remote origin refs/heads/codex/question-repair-20260519-ready` | complete for current non-GPU artifacts |
 
 ## Inspected Metrics
 
@@ -249,7 +249,7 @@ What is complete:
 - No-question control SFT split preparation.
 - Data asset baseline/probe.
 - Local weak training diagnostic.
-- GitHub sync through the pre-access-check commit `532aaaa5cba52f33c6dcb094d95ded164b5cd9e3`; the current remote-access diagnostic update is pending push.
+- GitHub sync for the current non-GPU artifacts, including the remote-access diagnostic report.
 
 What remains incomplete:
 
