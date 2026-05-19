@@ -1,0 +1,95 @@
+{
+  "input": ".research/general-qcc-captioner-20260515/multisim_qcc_v5_aiops_v3/case_study_simulator_data_20260518/raw_samples/balanced_eval_per_source8.jsonl",
+  "output": ".research/general-qcc-captioner-20260515/natural_qa_balanced8_20260519/natural_multisim_v5_balanced8.jsonl",
+  "n": 48,
+  "by_status": {
+    "exclude_metadata_only": 5,
+    "candidate": 43
+  },
+  "by_source": {
+    "aiopslab_official_v3": 8,
+    "citylearn": 8,
+    "finrl_scaled": 8,
+    "grid2op": 8,
+    "traffic": 8,
+    "water": 8
+  },
+  "issue_counts": {
+    "metadata_only_not_pure_ts": 5
+  },
+  "by_id": {
+    "multisim_qcc_v5_aiops_v3::aiopslab_official_v3::aiopslab_official::port_misconfig_seed0_user-service::case000::aiops_official_app_context": [
+      {
+        "code": "metadata_only_not_pure_ts",
+        "detail": "This AIOpsLab row requires official metadata rather than numeric telemetry alone."
+      }
+    ],
+    "multisim_qcc_v5_aiops_v3::aiopslab_official_v3::aiopslab_official::scale_pod_zero_seed0_user-service::case005::aiops_official_case_provenance_context": [
+      {
+        "code": "metadata_only_not_pure_ts",
+        "detail": "This AIOpsLab row requires official metadata rather than numeric telemetry alone."
+      }
+    ],
+    "multisim_qcc_v5_aiops_v3::aiopslab_official_v3::aiopslab_official::port_misconfig_seed0_user-service::case000::aiops_official_window_memory": [],
+    "multisim_qcc_v5_aiops_v3::aiopslab_official_v3::aiopslab_official::scale_pod_zero_seed0_user-service::case005::aiops_official_window_memory": [],
+    "multisim_qcc_v5_aiops_v3::aiopslab_official_v3::aiopslab_official::scale_pod_zero_seed0_user-service::case005::aiops_official_service_role_context": [
+      {
+        "code": "metadata_only_not_pure_ts",
+        "detail": "This AIOpsLab row requires official metadata rather than numeric telemetry alone."
+      }
+    ],
+    "multisim_qcc_v5_aiops_v3::aiopslab_official_v3::aiopslab_official::scale_pod_zero_seed0_user-service::case005::aiops_official_fault_family_detail_context": [
+      {
+        "code": "metadata_only_not_pure_ts",
+        "detail": "This AIOpsLab row requires official metadata rather than numeric telemetry alone."
+      }
+    ],
+    "multisim_qcc_v5_aiops_v3::aiopslab_official_v3::aiopslab_official::port_misconfig_seed0_user-service::case000::aiops_official_network_volatility": [],
+    "multisim_qcc_v5_aiops_v3::aiopslab_official_v3::aiopslab_official::port_misconfig_seed0_text-service::case001::aiops_official_fault_context": [
+      {
+        "code": "metadata_only_not_pure_ts",
+        "detail": "This AIOpsLab row requires official metadata rather than numeric telemetry alone."
+      }
+    ],
+    "multisim_qcc_v5_aiops_v3::citylearn::citylearn_broad::citylearn_challenge_2022_phase_1_start6144_h2048_b5::w512_768::city_anomaly_total_load": [],
+    "multisim_qcc_v5_aiops_v3::citylearn::citylearn_broad::citylearn_challenge_2022_phase_1_start6144_h2048_b5::w1664_1920::city_window_total_load": [],
+    "multisim_qcc_v5_aiops_v3::citylearn::citylearn_broad::citylearn_challenge_2022_phase_1_start4096_h2048_b5::w128_384::city_anomaly_total_load": [],
+    "multisim_qcc_v5_aiops_v3::citylearn::citylearn_broad::citylearn_challenge_2022_phase_1_start6144_h2048_b5::w320_576::city_volatility_total_load": [],
+    "multisim_qcc_v5_aiops_v3::citylearn::citylearn_broad::citylearn_challenge_2022_phase_1_start2048_h2048_b5::w1792_2048::city_domain_demand_context": [],
+    "multisim_qcc_v5_aiops_v3::citylearn::citylearn_broad::citylearn_challenge_2022_phase_1_start4096_h2048_b5::w1216_1472::city_window_total_load": [],
+    "multisim_qcc_v5_aiops_v3::citylearn::citylearn_broad::citylearn_challenge_2022_phase_1_start6144_h2048_b5::w512_1024::city_volatility_total_load": [],
+    "multisim_qcc_v5_aiops_v3::citylearn::citylearn_broad::citylearn_challenge_2022_phase_1_start0_h2048_b5::w0_512::city_extrema_total_load": [],
+    "multisim_qcc_v5_aiops_v3::finrl_scaled::finrl_broad::JPM::w0_256::fin_volume_anomaly": [],
+    "multisim_qcc_v5_aiops_v3::finrl_scaled::finrl_broad::GS::w1022_1534::fin_extrema_price": [],
+    "multisim_qcc_v5_aiops_v3::finrl_scaled::finrl_broad::GOOG::w507_2555::fin_window_return": [],
+    "multisim_qcc_v5_aiops_v3::finrl_scaled::finrl_broad::MSFT::w1150_1406::fin_extrema_price": [],
+    "multisim_qcc_v5_aiops_v3::finrl_scaled::finrl_broad::GOOG::w2299_2555::fin_domain_market_regime": [],
+    "multisim_qcc_v5_aiops_v3::finrl_scaled::finrl_broad::JPM::w2299_2555::fin_volume_anomaly": [],
+    "multisim_qcc_v5_aiops_v3::finrl_scaled::finrl_broad::MRK::w2043_2555::fin_drawdown_price": [],
+    "multisim_qcc_v5_aiops_v3::finrl_scaled::finrl_broad::JPM::w1150_1406::fin_volatility_returns": [],
+    "multisim_qcc_v5_aiops_v3::grid2op::grid2op_broad::rte_case14_realistic_chronic2_trace_2048_nooverflow::w128_384::grid_cross_variable_stress": [],
+    "multisim_qcc_v5_aiops_v3::grid2op::grid2op_broad_cf::h2048_c-1_t512_line1::post769_1025::grid_counterfactual_peak_stress": [],
+    "multisim_qcc_v5_aiops_v3::grid2op::grid2op_broad::rte_case14_realistic_chronic4_trace_2048_nooverflow::w1792_2048::grid_window_total_load": [],
+    "multisim_qcc_v5_aiops_v3::grid2op::grid2op_broad::rte_case14_realistic_chronic4_trace_2048_nooverflow::w1536_2048::grid_cross_variable_stress": [],
+    "multisim_qcc_v5_aiops_v3::grid2op::grid2op_broad::rte_case14_realistic_chronic4_trace_2048_nooverflow::w1536_1792::grid_volatility_total_load": [],
+    "multisim_qcc_v5_aiops_v3::grid2op::grid2op_broad::rte_case14_realistic_chronic4_trace_2048_nooverflow::w512_1024::grid_trend_max_rho": [],
+    "multisim_qcc_v5_aiops_v3::grid2op::grid2op_broad::rte_case14_realistic_chronic2_trace_2048_nooverflow::w256_768::grid_volatility_total_load": [],
+    "multisim_qcc_v5_aiops_v3::grid2op::grid2op_broad::rte_case14_realistic_chronic4_trace_2048_nooverflow::w512_1536::grid_temporal_lead_lag": [],
+    "multisim_qcc_v5_aiops_v3::traffic::traffic_broad::traffic_scenario_011::traffic_speed_periodicity": [],
+    "multisim_qcc_v5_aiops_v3::traffic::traffic_broad::traffic_scenario_006::traffic_speed_extrema": [],
+    "multisim_qcc_v5_aiops_v3::traffic::traffic_broad::traffic_scenario_020::traffic_speed_queue_lead_lag": [],
+    "multisim_qcc_v5_aiops_v3::traffic::traffic_broad::traffic_scenario_025::traffic_signal_counterfactual_queue": [],
+    "multisim_qcc_v5_aiops_v3::traffic::traffic_broad::traffic_scenario_031::traffic_queue_volatility": [],
+    "multisim_qcc_v5_aiops_v3::traffic::traffic_broad::traffic_scenario_010::traffic_queue_volatility": [],
+    "multisim_qcc_v5_aiops_v3::traffic::traffic_broad::traffic_scenario_026::traffic_speed_trend": [],
+    "multisim_qcc_v5_aiops_v3::traffic::traffic_broad::traffic_scenario_001::traffic_window_speed": [],
+    "multisim_qcc_v5_aiops_v3::water::water_broad::water_scenario_025::water_pressure_periodicity": [],
+    "multisim_qcc_v5_aiops_v3::water::water_broad::water_scenario_005::water_combined_stress_context": [],
+    "multisim_qcc_v5_aiops_v3::water::water_broad::water_scenario_005::water_leak_counterfactual_pressure": [],
+    "multisim_qcc_v5_aiops_v3::water::water_broad::water_scenario_006::water_flow_volatility": [],
+    "multisim_qcc_v5_aiops_v3::water::water_broad::water_scenario_015::water_domain_resilience_context": [],
+    "multisim_qcc_v5_aiops_v3::water::water_broad::water_scenario_035::water_flow_volatility": [],
+    "multisim_qcc_v5_aiops_v3::water::water_broad::water_scenario_000::water_event_recovery_context": [],
+    "multisim_qcc_v5_aiops_v3::water::water_broad::water_scenario_015::water_counterfactual_event_gap": []
+  }
+}
