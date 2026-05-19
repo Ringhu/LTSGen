@@ -34,6 +34,11 @@ OPTION_ZH = {
     "larger downward dip": "更大的向下偏差",
     "no material change": "没有实质变化",
     "larger upward peak": "更大的向上峰值",
+    "higher after intervention": "干预后更高",
+    "lower after intervention": "干预后更低",
+    "greater overload exposure": "过载暴露更高",
+    "lower overload exposure": "过载暴露更低",
+    "similar overload exposure": "过载暴露相近",
     "cannot determine": "无法判断",
     "cpu-memory coupling": "CPU 与内存耦合更强",
     "network rx-tx coupling": "网络接收与发送耦合更强",
@@ -127,6 +132,8 @@ OPTION_ZH = {
     "unknown fault context": "未知故障上下文",
     "speed leads queue": "车速领先队列变化",
     "queue leads speed": "队列领先车速变化",
+    "speed-queue coupling": "车速与队列耦合更强",
+    "speed-occupancy coupling": "车速与占有率/控制上下文耦合更强",
     "event creates lower x0 than baseline": "事件窗口水压低于基线",
     "event creates higher x0 than baseline": "事件窗口水压高于基线",
     "event effect is mixed": "事件影响混合",
@@ -286,11 +293,35 @@ def contextual_option_zh(row: dict, text: str) -> str | None:
             "unclear relation": "相关性低于可用阈值",
         }
         return mapping.get(text)
+    if "traffic_cross_congestion_relation" in task:
+        mapping = {
+            "speed-queue coupling": "车速与队列长度耦合更强",
+            "speed-occupancy coupling": "车速与占有率/控制上下文耦合更强",
+            "both similar": "两组拥堵伴随关系强度相近",
+            "both weak": "两组拥堵伴随关系都低于可用阈值",
+        }
+        return mapping.get(text)
     if "grid_counterfactual_peak_stress" in task:
         mapping = {
             "larger upward peak": "断线后压力更高",
             "larger downward dip": "断线后压力更低",
             "no material change": "断线前后压力基本相同",
+        }
+        return mapping.get(text)
+    if "grid_counterfactual_mean_stress" in task:
+        mapping = {
+            "higher after intervention": "断线后平均压力更高",
+            "lower after intervention": "断线后平均压力更低",
+            "no material change": "断线前后平均压力没有实质变化",
+            "cannot determine": "无法判断",
+        }
+        return mapping.get(text)
+    if "grid_counterfactual_overload_exposure" in task:
+        mapping = {
+            "greater overload exposure": "断线后过载暴露更高",
+            "lower overload exposure": "断线后过载暴露更低",
+            "similar overload exposure": "断线前后过载暴露相近",
+            "cannot determine": "无法判断",
         }
         return mapping.get(text)
     if "leak_counterfactual_pressure" in task:
@@ -358,6 +389,11 @@ def natural_option_en(text: str) -> str:
         "larger upward peak": "the intervention raises the stress",
         "larger downward dip": "the intervention lowers the stress",
         "no material change": "there is no material change",
+        "higher after intervention": "average stress is higher after the intervention",
+        "lower after intervention": "average stress is lower after the intervention",
+        "greater overload exposure": "overload exposure is greater after the intervention",
+        "lower overload exposure": "overload exposure is lower after the intervention",
+        "similar overload exposure": "overload exposure is similar before and after the intervention",
         "higher queue under adaptive signal": "adaptive signal has the higher mean queue",
         "lower queue under adaptive signal": "adaptive signal has the lower mean queue",
         "no material queue change": "both policies have about the same queue",
@@ -367,6 +403,8 @@ def natural_option_en(text: str) -> str:
         "event creates lower x0 than baseline": "event-window pressure is lower than baseline",
         "event creates higher x0 than baseline": "event-window pressure is higher than baseline",
         "event effect is mixed": "the event effect is mixed",
+        "speed-queue coupling": "speed is more strongly coupled with queue length",
+        "speed-occupancy coupling": "speed is more strongly coupled with occupancy/control context",
     }
     return mapping.get(text, text)
 
@@ -513,12 +551,58 @@ def generic_rewrite(row: dict, scene_en: str, scene_zh: str) -> tuple[str, str, 
             f"干预后与事实运行的压力差值范围为 {fnum(slots.get('min_x0_diff'))} 到 {fnum(slots.get('max_x0_diff'))}，因此判断为：{contextual_option_zh(row, label) or label_cn}。",
         )
 
+    if "counterfactual_mean_stress" in task:
+        scene_extra_en = (
+            f" The line disconnection occurred at global step {slots.get('intervention_step')}; "
+            f"this local plot covers global steps {slots.get('segment_start')} to {slots.get('segment_end')}. "
+            "Here x0 is intervention-minus-factual maximum line-loading stress, so positive mean difference means the disconnection raises average stress."
+        )
+        scene_extra_zh = (
+            f" 断线发生在全局第 {slots.get('intervention_step')} 步；这张局部图覆盖全局第 "
+            f"{slots.get('segment_start')} 到 {slots.get('segment_end')} 步。这里 x0 表示“干预后最大线路负载压力减去事实运行压力”；均值为正表示断线提高平均压力。"
+        )
+        row["_scene_extra_en"] = scene_extra_en
+        row["_scene_extra_zh"] = scene_extra_zh
+        return (
+            "In this post-event segment, how does disconnecting the line change average maximum line-loading stress?",
+            "在这个事件后片段里，断开线路如何改变平均最大线路负载压力？",
+            f"The mean intervention-minus-factual stress difference is {fnum(slots.get('mean_x0_diff'))}, supporting {natural_option_en(label)}.",
+            f"干预后与事实运行的平均压力差为 {fnum(slots.get('mean_x0_diff'))}，因此判断为：{contextual_option_zh(row, label) or label_cn}。",
+        )
+
+    if "counterfactual_overload_exposure" in task:
+        scene_extra_en = (
+            f" The line disconnection occurred at global step {slots.get('intervention_step')}; "
+            f"this local plot covers global steps {slots.get('segment_start')} to {slots.get('segment_end')}. "
+            "Overload exposure is the fraction of post-event steps where maximum line-loading stress exceeds 1.0."
+        )
+        scene_extra_zh = (
+            f" 断线发生在全局第 {slots.get('intervention_step')} 步；这张局部图覆盖全局第 "
+            f"{slots.get('segment_start')} 到 {slots.get('segment_end')} 步。过载暴露指事件后最大线路负载压力超过 1.0 的时间步比例。"
+        )
+        row["_scene_extra_en"] = scene_extra_en
+        row["_scene_extra_zh"] = scene_extra_zh
+        return (
+            "Does disconnecting the line make overload exposure higher, lower, or about the same in this post-event segment?",
+            "在这个事件后片段里，断开线路会让过载暴露更高、更低，还是基本相同？",
+            f"Factual overload exposure is {fnum(slots.get('factual_overload_exposure'))}, intervention exposure is {fnum(slots.get('intervention_overload_exposure'))}, and the difference is {fnum(slots.get('exposure_diff'))}, supporting {natural_option_en(label)}.",
+            f"事实运行的过载暴露为 {fnum(slots.get('factual_overload_exposure'))}，干预后的过载暴露为 {fnum(slots.get('intervention_overload_exposure'))}，差值为 {fnum(slots.get('exposure_diff'))}，因此判断为：{contextual_option_zh(row, label) or label_cn}。",
+        )
+
     if "cross_variable" in task:
         return (
             "For a quick overload review, should the operator look more closely at total demand or generation margin?",
             "做快速过载复盘时，调度员更应该关注总需求还是发电裕度？",
             f"The correlation with line-loading stress is {fnum(slots.get('corr_x1'))} for total demand and {fnum(slots.get('corr_x2'))} for generation margin; the stronger companion is {phrase_en(label)}.",
             f"总需求与线路负载压力的相关系数为 {fnum(slots.get('corr_x1'))}，发电裕度与线路负载压力的相关系数为 {fnum(slots.get('corr_x2'))}；更强的伴随信号是 {label_cn}。",
+        )
+
+    if "traffic_cross_congestion_relation" in task:
+        return (
+            "For congestion diagnosis, is speed more tightly coupled with queue length or with the occupancy/control context?",
+            "做拥堵诊断时，车速与队列长度的耦合更强，还是与占有率/控制上下文的耦合更强？",
+            f"The absolute correlation between speed and queue length is {fnum(abs(float(slots.get('corr_x1', 0))), 3)}, while the absolute correlation between speed and occupancy/control context is {fnum(abs(float(slots.get('corr_x2', 0))), 3)}. This supports {natural_option_en(label)}.",
+            f"车速与队列长度的绝对相关系数为 {fnum(abs(float(slots.get('corr_x1', 0))), 3)}，车速与占有率/控制上下文的绝对相关系数为 {fnum(abs(float(slots.get('corr_x2', 0))), 3)}；因此判断为：{contextual_option_zh(row, label) or label_cn}。",
         )
 
     if "temporal_lead_lag" in task or "lead_lag" in task:

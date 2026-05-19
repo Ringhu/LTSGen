@@ -333,7 +333,7 @@ def build_markdown(cases: list[dict[str, Any]], reviews: list[dict[str, Any]], *
             "## 结论",
             "",
             "- reviewer gate 是进入正式 natural QCC train/dev/test 之前的准入条件，不替代 deterministic support slots。",
-            "- 当前本地输出只覆盖 AIOpsLab 数值时序候选；完整每域结果需要在数据机器上重跑 selector、natural rewrite 和本 reviewer。",
+            "- reviewer-positive rows 可进入自然化 QCC 数据集；revise/reject rows 应作为模板或 support-slot 修复清单，不能混入主训练池。",
             "",
         ]
     )

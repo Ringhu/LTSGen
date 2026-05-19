@@ -84,21 +84,30 @@ def candidate_ok(row: dict[str, Any], *, include_metadata_only: bool) -> bool:
     return True
 
 
-def source_paths(schema: dict[str, Any], source_filter: set[str]) -> list[tuple[str, str, Path]]:
+def source_paths(schema: dict[str, Any], source_filter: set[str], source_root: Path) -> list[tuple[str, str, Path]]:
     paths = []
     for report in schema.get("source_reports", []):
         source = report["source"]
         if source_filter and source not in source_filter:
             continue
         for split, info in sorted(report.get("splits", {}).items()):
-            paths.append((source, split, ROOT / info["path"]))
+            path = Path(info["path"])
+            if not path.is_absolute():
+                path = source_root / path
+            paths.append((source, split, path))
     return paths
 
 
-def load_available_rows(schema: dict[str, Any], source_filter: set[str], *, include_metadata_only: bool) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+def load_available_rows(
+    schema: dict[str, Any],
+    source_filter: set[str],
+    *,
+    include_metadata_only: bool,
+    source_root: Path,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     rows: list[dict[str, Any]] = []
     missing = []
-    for source, split, path in source_paths(schema, source_filter):
+    for source, split, path in source_paths(schema, source_filter, source_root):
         if not path.exists():
             missing.append({"source": source, "split": split, "path": rel(path)})
             continue
@@ -223,12 +232,23 @@ def main() -> None:
     parser.add_argument("--sources", nargs="*", default=[])
     parser.add_argument("--pilot_jsonl", type=Path, default=DEFAULT_PILOT)
     parser.add_argument("--include_metadata_only", action="store_true")
+    parser.add_argument(
+        "--source_root",
+        type=Path,
+        default=ROOT,
+        help="Root used to resolve relative source paths recorded in the schema report.",
+    )
     args = parser.parse_args()
 
     schema = json.loads(args.schema.read_text(encoding="utf-8"))
     source_filter = set(args.sources)
     pilot_ids = load_pilot_ids(args.pilot_jsonl)
-    available, missing = load_available_rows(schema, source_filter, include_metadata_only=args.include_metadata_only)
+    available, missing = load_available_rows(
+        schema,
+        source_filter,
+        include_metadata_only=args.include_metadata_only,
+        source_root=args.source_root,
+    )
     selected = select_rows(available, per_source=args.per_source, seed=args.seed, exclude_ids=pilot_ids)
 
     args.out_dir.mkdir(parents=True, exist_ok=True)
@@ -243,6 +263,7 @@ def main() -> None:
         "per_source": args.per_source,
         "seed": args.seed,
         "sources": args.sources or "all",
+        "source_root": rel(args.source_root),
         "include_metadata_only": args.include_metadata_only,
         "available_rows_local": summarize(available),
         "selected": summarize(selected),

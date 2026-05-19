@@ -1,0 +1,78 @@
+{
+  "train_sft": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_train_sft.jsonl",
+  "eval_sft": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_test_sft.jsonl",
+  "eval_raw": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_test_raw.jsonl",
+  "gold_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_crossdomain_positive.jsonl",
+  "model_path": "Qwen/Qwen3-4B",
+  "model_path_exists": false,
+  "model_is_hf_id": true,
+  "model_reference_ok": true,
+  "path_checks": {
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_train_sft.jsonl": true,
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_test_sft.jsonl": true,
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_test_raw.jsonl": true,
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_crossdomain_positive.jsonl": true
+  },
+  "train_summary": {
+    "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_train_sft.jsonl",
+    "exists": true,
+    "n": 18,
+    "missing_required_count": 0,
+    "missing_required_examples": [],
+    "value_dim_counts": {
+      "4": 5,
+      "3": 13
+    },
+    "split_counts": {
+      "": 18
+    }
+  },
+  "eval_summary": {
+    "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_test_sft.jsonl",
+    "exists": true,
+    "n": 9,
+    "missing_required_count": 0,
+    "missing_required_examples": [],
+    "value_dim_counts": {
+      "4": 5,
+      "3": 4
+    },
+    "split_counts": {
+      "": 9
+    }
+  },
+  "raw_eval_summary": {
+    "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_test_raw.jsonl",
+    "exists": true,
+    "n": 9,
+    "missing_required_count": 0,
+    "missing_required_examples": [],
+    "value_dim_counts": {
+      "4": 5,
+      "3": 4
+    },
+    "split_counts": {
+      "test": 9
+    }
+  },
+  "cuda": {
+    "torch_import": false,
+    "cuda_available": false,
+    "devices": [],
+    "error": "ModuleNotFoundError(\"No module named 'torch'\")"
+  },
+  "min_gpu_mem_gb": 20.0,
+  "max_gpu_mem_gb": 0.0,
+  "has_required_gpu_memory": false,
+  "bridge_type": "prefix",
+  "bridge_supported_by_current_tsrlm": true,
+  "tsrlm_config_constructible": true,
+  "tsrlm_config_error": "",
+  "python_modules": {
+    "torch": false,
+    "transformers": false,
+    "peft": false
+  },
+  "evaluator_exists": true,
+  "preflight_pass": false
+}

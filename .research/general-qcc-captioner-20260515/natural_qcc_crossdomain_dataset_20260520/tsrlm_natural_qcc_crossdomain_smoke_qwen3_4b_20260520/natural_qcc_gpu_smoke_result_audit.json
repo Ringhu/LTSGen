@@ -1,0 +1,41 @@
+{
+  "run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520",
+  "preflight_json": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/preflight.json",
+  "pipeline_summary_json": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_smoke_pipeline_summary.json",
+  "predictions_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/predictions.jsonl",
+  "qa_metrics_json": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/qa_metrics.json",
+  "probe_results_json": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/probe_eval/natural_qcc_probe_results.json",
+  "checks": {
+    "preflight_exists": false,
+    "preflight_pass": false,
+    "pipeline_summary_exists": true,
+    "pipeline_complete": false,
+    "predictions_exist": false,
+    "prediction_rows_positive": false,
+    "qa_metrics_exists": false,
+    "qa_rows_positive": false,
+    "baseline_probe_exists": true,
+    "baseline_has_question_only": true
+  },
+  "audit_pass": false,
+  "generated_qa_metrics": {},
+  "baseline_accuracy": {
+    "natural_oracle": 1.0,
+    "generic_caption": 0.0,
+    "statistical_caption": 0.0,
+    "question_only": 0.1212
+  },
+  "decision": {
+    "status": "incomplete_or_blocked",
+    "summary_zh": "GPU smoke run 尚未完整完成，不能解释 generated-caption QA。",
+    "next_action_zh": "先完成远程 preflight、训练、生成和 rule-QA，再重新运行本审计。",
+    "baseline_max_non_oracle": 0.1212,
+    "beats_generic_caption": false,
+    "beats_statistical_caption": false,
+    "beats_question_only": false,
+    "beats_all_non_oracle_baselines": false,
+    "oracle_gap": null,
+    "claim_scope": "No training-result claim allowed."
+  },
+  "beats_question_only": false
+}
