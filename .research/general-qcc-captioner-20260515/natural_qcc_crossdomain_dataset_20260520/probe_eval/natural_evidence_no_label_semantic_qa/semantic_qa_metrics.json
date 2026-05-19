@@ -1,0 +1,255 @@
+{
+  "predictions_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/probe_eval/natural_evidence_no_label_predictions.jsonl",
+  "gold_jsonl": "/tmp/ltsgen-question-repair-20260519/.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_crossdomain_positive.jsonl",
+  "caption_field": "caption",
+  "splits": [
+    "train",
+    "dev",
+    "test"
+  ],
+  "metrics": {
+    "n": 55,
+    "accuracy": 1.0,
+    "empty_answer_rate": 0.0,
+    "by_source": {
+      "aiopslab_official_v3": {
+        "n": 12,
+        "accuracy": 1.0
+      },
+      "citylearn": {
+        "n": 9,
+        "accuracy": 1.0
+      },
+      "grid2op": {
+        "n": 12,
+        "accuracy": 1.0
+      },
+      "traffic": {
+        "n": 11,
+        "accuracy": 1.0
+      },
+      "water": {
+        "n": 11,
+        "accuracy": 1.0
+      }
+    },
+    "by_task_family": {
+      "aiops_official_cpu_trend": {
+        "n": 3,
+        "accuracy": 1.0
+      },
+      "aiops_official_cross_signal_relation": {
+        "n": 3,
+        "accuracy": 1.0
+      },
+      "aiops_official_memory_extrema": {
+        "n": 2,
+        "accuracy": 1.0
+      },
+      "aiops_official_network_volatility": {
+        "n": 2,
+        "accuracy": 1.0
+      },
+      "aiops_official_window_memory": {
+        "n": 2,
+        "accuracy": 1.0
+      },
+      "city_anomaly_total_load": {
+        "n": 2,
+        "accuracy": 1.0
+      },
+      "city_cross_variable_load": {
+        "n": 2,
+        "accuracy": 1.0
+      },
+      "city_extrema_total_load": {
+        "n": 2,
+        "accuracy": 1.0
+      },
+      "city_trend_total_load": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "city_volatility_total_load": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "city_window_total_load": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "grid_anomaly_max_rho": {
+        "n": 2,
+        "accuracy": 1.0
+      },
+      "grid_counterfactual_mean_stress": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "grid_counterfactual_overload_exposure": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "grid_counterfactual_peak_stress": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "grid_cross_variable_stress": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "grid_domain_stress_context": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "grid_extrema_max_rho": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "grid_temporal_lead_lag": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "grid_trend_max_rho": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "grid_volatility_total_load": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "grid_window_total_load": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "traffic_combined_stress_context": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "traffic_counterfactual_event_gap": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "traffic_cross_congestion_relation": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "traffic_event_impact_relation": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "traffic_event_recovery_context": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "traffic_incident_anomaly": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "traffic_queue_volatility": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "traffic_signal_counterfactual_queue": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "traffic_speed_extrema": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "traffic_speed_periodicity": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "traffic_speed_queue_lead_lag": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "water_combined_stress_context": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "water_counterfactual_event_gap": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "water_cross_pressure_relation": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "water_domain_resilience_context": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "water_event_impact_relation": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "water_event_recovery_context": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "water_flow_volatility": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "water_leak_anomaly": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "water_leak_counterfactual_pressure": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "water_min_pressure_extrema": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "water_pressure_flow_lead_lag": {
+        "n": 1,
+        "accuracy": 1.0
+      }
+    },
+    "reason_distribution": {
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}neither\\ telemetry\\ pair\\ reaches\\ usable\\ coupling": 2,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}early": 6,
+      "semantic_numeric_similar_halves": 2,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}network\\ rx\\-tx\\ coupling": 2,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}flat": 3,
+      "semantic_plain_pattern:late": 2,
+      "semantic_plain_pattern:\\bends clearly higher\\b": 1,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}no\\ pronounced\\ spike": 2,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}both\\ telemetry\\ pairs\\ reach\\ usable\\ coupling\\ and\\ are\\ similar": 1,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}middle": 3,
+      "semantic_numeric_first_half_higher": 1,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}late": 3,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}there\\ is\\ no\\ stable\\ timing\\ lead": 2,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}overload\\ exposure\\ is\\ similar\\ under\\ intervention\\ and\\ factual\\ operation": 1,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}average\\ stress\\ is\\ lower\\ after\\ the\\ intervention": 1,
+      "semantic_numeric_second_half_higher": 1,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}downward": 1,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}moderate\\ grid\\ stress": 1,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}x2\\ is\\ the\\ stronger\\ companion\\ signal": 1,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}the\\ intervention\\ raises\\ the\\ stress": 1,
+      "semantic_gold_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}no\\ pronounced\\ incident": 1,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}speed\\ changes\\ more\\ strongly\\ during\\ the\\ event": 1,
+      "semantic_numeric_no_material_change": 2,
+      "semantic_gold_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}\\bevent-window mean speed is lower than baseline\\b": 1,
+      "semantic_plain_pattern:middle": 1,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}queue\\ changes\\ lead\\ speed\\ changes": 1,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}speed\\ is\\ more\\ strongly\\ coupled\\ with\\ occupancy\\ context": 1,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}short\\ cycle": 1,
+      "semantic_numeric_persistent_congestion": 1,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}critical\\ combined\\ congestion": 1,
+      "semantic_numeric_moderate_combined_stress": 1,
+      "semantic_numeric_zero_gap": 1,
+      "semantic_numeric_pressure_recovers": 1,
+      "semantic_numeric_stable_water_service": 1,
+      "semantic_plain_pattern:early": 1,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}pressure\\ is\\ more\\ strongly\\ coupled\\ with\\ pipe\\ flow": 1,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}flow\\ changes\\ more\\ strongly\\ during\\ the\\ event": 1
+    }
+  },
+  "claim_scope": "deterministic_semantic_bridge_diagnostic_not_llm_judge"
+}

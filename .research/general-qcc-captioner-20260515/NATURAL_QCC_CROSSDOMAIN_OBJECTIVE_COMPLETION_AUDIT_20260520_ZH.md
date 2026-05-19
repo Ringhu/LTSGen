@@ -38,7 +38,8 @@
 | Oracle evidence QA | `natural_oracle accuracy=1.0000` | complete |
 | Non-oracle baselines | `generic_caption=0.0182`，`statistical_caption=0.0000`，`question_only=0.1273` | complete |
 | Weak question-conditioned probe | `nearest_caption_question_conditioned=0.4615` vs `nearest_caption_no_question=0.2308` | complete, diagnostic only |
-| Caption-adaptation summary | `natural_qcc_caption_adaptation_summary_20260520.json` combines QA and caption-quality metrics; nearest qcond QA gap `+0.2307`, quality gap `-0.1539` | complete diagnostic only |
+| Caption-adaptation summary | `natural_qcc_caption_adaptation_summary_20260520.json` combines strict QA, semantic QA, and caption-quality metrics; nearest qcond QA gap `+0.2307`, semantic QA gap `+0.2307`, quality gap `-0.1539` | complete diagnostic only |
+| Semantic QA bridge diagnostic | `probe_eval/*_semantic_qa/semantic_qa_metrics.json`; deterministic bridge, no LLM judge, does not alter gold | complete diagnostic only |
 | Local weak training diagnostic | `local_caption_ranker/qcond/local_caption_ranker_summary.json` and `no_question/local_caption_ranker_summary.json`；both test QA `0.6154` | partial diagnostic |
 | Local caption-quality audit | `local_caption_ranker/{qcond,no_question}/natural_qcc_caption_quality_audit.json`；both `evidence_shape_rate=0.0000` and `answer_label_only_rate=1.0000` | complete diagnostic; shows ranker is not evidence-caption training |
 | True QCC TS-RLM/Qwen training | GPU smoke audit checks `pipeline_complete=false`，no predictions, no QA metrics | missing |
@@ -76,6 +77,15 @@ Caption-quality audit for evidence-style probe captions:
 | `nearest_caption_question_conditioned` | 0.7692 | 0.0000 | 0.7692 | `false` |
 | `nearest_caption_no_question` | 0.9231 | 0.0000 | 0.9231 | `true` |
 
+Semantic QA bridge diagnostic:
+
+| diagnostic | strict QA | semantic QA | semantic empty |
+| --- | ---: | ---: | ---: |
+| `natural_oracle` | 1.0000 | 1.0000 | 0.0000 |
+| `natural_evidence_no_label` | 0.6545 | 1.0000 | 0.0000 |
+| `nearest_caption_question_conditioned` | 0.4615 | 0.4615 | 0.3077 |
+| `nearest_caption_no_question` | 0.2308 | 0.2308 | 0.6154 |
+
 Local dependency-free ranker diagnostic:
 
 | diagnostic | train QA | test QA | empty |
@@ -93,7 +103,9 @@ Local caption-quality audit:
 Interpretation:
 
 - 数据资产本身通过了一个 smoke-level gate：oracle 强，generic/statistical/question-only 弱。
+- deterministic semantic bridge 显示 `natural_evidence_no_label` 的 strict QA `0.6545` 是过严 label bridge 的低估；自然 evidence 去掉答案标签后仍可被确定性读到 `1.0000`。
 - 最近邻 probe 有 question-conditioning QA gap，但 q-conditioned quality gate 未通过；它不是训练出的 QCC captioner。
+- 最近邻 q-conditioned/no-question 在 semantic QA 下仍是 `0.4615` / `0.2308`，所以弱探针失败主要来自 evidence retrieval，不是 evaluator 低估。
 - 本地弱 ranker 显示数据中有可训练信号，但 q-conditioned 与 no-question 结果完全相同，不能证明 QCC conditioning 成功。
 - 本地 ranker 会把预测选项写进 caption；caption-quality audit 明确显示它是答案标签式输出，不等同于 TS-RLM/Qwen 自然 evidence caption 训练。
 

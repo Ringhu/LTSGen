@@ -19,6 +19,10 @@
       "failure_reasons": {
         "no_numeric_evidence": 5
       },
+      "semantic_qa_exists": true,
+      "semantic_qa_accuracy": 1.0,
+      "semantic_empty_answer_rate": 0.0,
+      "semantic_qa_rows": 55,
       "evidence_caption_signal": true
     },
     {
@@ -39,6 +43,10 @@
       "failure_reasons": {
         "no_numeric_evidence": 5
       },
+      "semantic_qa_exists": true,
+      "semantic_qa_accuracy": 1.0,
+      "semantic_empty_answer_rate": 0.0,
+      "semantic_qa_rows": 55,
       "evidence_caption_signal": true
     },
     {
@@ -59,6 +67,10 @@
       "failure_reasons": {
         "no_numeric_evidence": 3
       },
+      "semantic_qa_exists": true,
+      "semantic_qa_accuracy": 0.4615,
+      "semantic_empty_answer_rate": 0.3077,
+      "semantic_qa_rows": 13,
       "evidence_caption_signal": true
     },
     {
@@ -79,6 +91,10 @@
       "failure_reasons": {
         "no_numeric_evidence": 1
       },
+      "semantic_qa_exists": true,
+      "semantic_qa_accuracy": 0.2308,
+      "semantic_empty_answer_rate": 0.6154,
+      "semantic_qa_rows": 13,
       "evidence_caption_signal": true
     },
     {
@@ -100,6 +116,10 @@
         "answer_label_only": 13,
         "no_numeric_evidence": 13
       },
+      "semantic_qa_exists": false,
+      "semantic_qa_accuracy": null,
+      "semantic_empty_answer_rate": null,
+      "semantic_qa_rows": 0,
       "evidence_caption_signal": false
     },
     {
@@ -121,16 +141,22 @@
         "answer_label_only": 13,
         "no_numeric_evidence": 13
       },
+      "semantic_qa_exists": false,
+      "semantic_qa_accuracy": null,
+      "semantic_empty_answer_rate": null,
+      "semantic_qa_rows": 0,
       "evidence_caption_signal": false
     }
   ],
   "summary": {
     "nearest_qcond_qa_minus_no_question": 0.2307,
+    "nearest_qcond_semantic_qa_minus_no_question": 0.2307,
     "nearest_qcond_quality_minus_no_question": -0.1539,
     "nearest_qcond_quality_gate_pass": false,
     "nearest_no_question_quality_gate_pass": true,
+    "natural_evidence_no_label_strict_to_semantic_delta": 0.3455,
     "local_ranker_qcond_answer_label_only_rate": 1.0,
-    "interpretation": "nearest-caption probe has evidence-shaped captions but is not TS-RLM/Qwen training; local ranker QA is an answer-label shortcut and is not evidence-caption adaptation.",
+    "interpretation": "semantic QA bridge shows strict label matching can undercount natural evidence, while nearest-caption probe failures remain evidence-retrieval failures; local ranker QA is an answer-label shortcut.",
     "claim_scope": "local_caption_adaptation_diagnostic_not_final_qcc_training"
   }
 }

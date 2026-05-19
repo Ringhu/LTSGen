@@ -12,7 +12,9 @@
 - SFT files: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/`
 - no-question control SFT files: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft_no_question/`
 - probe results: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/probe_eval/natural_qcc_probe_results.json`
+- semantic QA bridge diagnostics: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/probe_eval/*_semantic_qa/`
 - caption adaptation summary: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_caption_adaptation_summary_20260520.json`
+- semantic QA bridge script: `scripts/eval/evaluate_natural_qcc_semantic_predictions.py`
 - local caption ranker diagnostic: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/local_caption_ranker/`
 - local GPU preflight: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/gpu_smoke_preflight_local.json`
 - remote GPU access check: `.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_remote_gpu_access_check_20260520.json`
@@ -122,13 +124,23 @@ Caption-quality audit for evidence-style probe captions:
 | `nearest_caption_question_conditioned` | 0.7692 | 0.0000 | 0.7692 | `false` |
 | `nearest_caption_no_question` | 0.9231 | 0.0000 | 0.9231 | `true` |
 
+Semantic QA bridge diagnostic:
+
+| diagnostic | strict QA | semantic QA | semantic empty |
+| --- | ---: | ---: | ---: |
+| `natural_oracle` | 1.0000 | 1.0000 | 0.0000 |
+| `natural_evidence_no_label` | 0.6545 | 1.0000 | 0.0000 |
+| `nearest_caption_question_conditioned` | 0.4615 | 0.4615 | 0.3077 |
+| `nearest_caption_no_question` | 0.2308 | 0.2308 | 0.6154 |
+
 解释：
 
 - `natural_oracle=1.0` 说明 reviewer-positive 行在 rule-QA 接口上可验证。
 - `generic/statistical/question_only` 很弱，说明自然 evidence caption 是 load-bearing 的。
 - `natural_evidence_no_label` 与 `natural_oracle` 都通过 caption-quality gate，说明人工/规则生成的自然 evidence caption 不是答案标签捷径。
+- semantic QA bridge 只用确定性短语/数值规则把自然证据映射回选项，不改变 gold answer，也不是 LLM judge。它显示 `natural_evidence_no_label` 的 strict QA `0.6545` 主要是 label bridge 过严造成的低估；去掉答案标签后，自然 evidence 仍可被确定性读到 `1.0000`。
 - 最近邻弱探针出现 Q-conditioning QA gap：`0.4615` vs `0.2308`，但 q-conditioned 的 evidence-shape rate 是 `0.7692`，未达到默认 `0.8` quality gate；因此只能报告为弱检索信号，不是正式 QCC 训练成功。
-- `natural_evidence_no_label=0.6545` 低于 oracle，说明自然 evidence 本身可读，但当前 rule-QA evaluator 仍依赖较规范的答案标签；后续可升级 evaluator 或统一 option label。
+- 最近邻 q-conditioned/no-question 在 semantic QA 下仍分别是 `0.4615` / `0.2308`，说明弱探针的主要问题是取错 evidence caption，而不是 strict evaluator 低估。
 
 ## 本地弱训练诊断
 

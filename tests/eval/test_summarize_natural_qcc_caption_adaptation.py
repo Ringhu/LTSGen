@@ -22,6 +22,7 @@ class SummarizeNaturalQccCaptionAdaptationTest(unittest.TestCase):
                     "name": "nearest_caption_question_conditioned",
                     "kind": "train_split_nearest_caption_probe",
                     "qa_accuracy": 0.4615,
+                    "semantic_qa_accuracy": 0.4615,
                     "evidence_shape_rate": 0.7692,
                     "answer_label_only_rate": 0.0,
                     "quality_gate_pass": False,
@@ -30,7 +31,9 @@ class SummarizeNaturalQccCaptionAdaptationTest(unittest.TestCase):
             "summary": {
                 "claim_scope": "local_caption_adaptation_diagnostic_not_final_qcc_training",
                 "nearest_qcond_qa_minus_no_question": 0.2307,
+                "nearest_qcond_semantic_qa_minus_no_question": 0.2307,
                 "nearest_qcond_quality_minus_no_question": -0.1539,
+                "natural_evidence_no_label_strict_to_semantic_delta": 0.3455,
                 "local_ranker_qcond_answer_label_only_rate": 1.0,
             },
         }
@@ -40,6 +43,8 @@ class SummarizeNaturalQccCaptionAdaptationTest(unittest.TestCase):
         self.assertIn("nearest_caption_question_conditioned", text)
         self.assertIn("0.4615", text)
         self.assertIn("0.2307", text)
+        self.assertIn("0.3455", text)
+        self.assertIn("semantic bridge", text)
         self.assertIn("not_final_qcc_training", text)
 
 

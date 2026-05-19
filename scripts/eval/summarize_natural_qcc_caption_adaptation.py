@@ -26,6 +26,7 @@ DIAGNOSTICS = (
         "kind": "oracle_evidence",
         "qa_source": ("baselines", "natural_oracle"),
         "quality": BASE / "probe_eval/natural_oracle_caption_quality_audit.json",
+        "semantic_qa": BASE / "probe_eval/natural_oracle_semantic_qa/semantic_qa_metrics.json",
         "scope": "all reviewer-positive rows",
     },
     {
@@ -33,6 +34,7 @@ DIAGNOSTICS = (
         "kind": "oracle_evidence_without_answer_label",
         "qa_source": ("baselines", "natural_evidence_no_label"),
         "quality": BASE / "probe_eval/natural_evidence_no_label_caption_quality_audit.json",
+        "semantic_qa": BASE / "probe_eval/natural_evidence_no_label_semantic_qa/semantic_qa_metrics.json",
         "scope": "all reviewer-positive rows",
     },
     {
@@ -40,6 +42,7 @@ DIAGNOSTICS = (
         "kind": "train_split_nearest_caption_probe",
         "qa_source": ("trainable", "nearest_caption_question_conditioned"),
         "quality": BASE / "probe_eval/nearest_caption_question_conditioned_caption_quality_audit.json",
+        "semantic_qa": BASE / "probe_eval/nearest_caption_question_conditioned_semantic_qa/semantic_qa_metrics.json",
         "scope": "test split",
     },
     {
@@ -47,6 +50,7 @@ DIAGNOSTICS = (
         "kind": "train_split_nearest_caption_probe",
         "qa_source": ("trainable", "nearest_caption_no_question"),
         "quality": BASE / "probe_eval/nearest_caption_no_question_caption_quality_audit.json",
+        "semantic_qa": BASE / "probe_eval/nearest_caption_no_question_semantic_qa/semantic_qa_metrics.json",
         "scope": "test split",
     },
     {
@@ -130,6 +134,24 @@ def quality_metrics(path: Path) -> dict[str, Any]:
     }
 
 
+def semantic_qa_metrics(path: Path | None) -> dict[str, Any]:
+    if path is None:
+        return {
+            "semantic_qa_exists": False,
+            "semantic_qa_accuracy": None,
+            "semantic_empty_answer_rate": None,
+            "semantic_qa_rows": 0,
+        }
+    report = load_json(path)
+    metrics = nested(report, "metrics") or {}
+    return {
+        "semantic_qa_exists": report is not None,
+        "semantic_qa_accuracy": as_float(metrics.get("accuracy")),
+        "semantic_empty_answer_rate": as_float(metrics.get("empty_answer_rate")),
+        "semantic_qa_rows": int(metrics.get("n") or 0),
+    }
+
+
 def build_report(probe_path: Path) -> dict[str, Any]:
     probe = load_json(probe_path)
     rows = []
@@ -143,6 +165,7 @@ def build_report(probe_path: Path) -> dict[str, Any]:
         }
         row.update(qa_metrics(item, probe))
         row.update(quality_metrics(quality_path))
+        row.update(semantic_qa_metrics(item.get("semantic_qa")))
         row["evidence_caption_signal"] = bool(
             row["qa_exists"]
             and row["quality_exists"]
@@ -160,22 +183,31 @@ def build_report(probe_path: Path) -> dict[str, Any]:
     qa_gap = None
     if qcond.get("qa_accuracy") is not None and no_question.get("qa_accuracy") is not None:
         qa_gap = round(qcond["qa_accuracy"] - no_question["qa_accuracy"], 4)
+    semantic_qa_gap = None
+    if qcond.get("semantic_qa_accuracy") is not None and no_question.get("semantic_qa_accuracy") is not None:
+        semantic_qa_gap = round(qcond["semantic_qa_accuracy"] - no_question["semantic_qa_accuracy"], 4)
     quality_gap = None
     if qcond.get("evidence_shape_rate") is not None and no_question.get("evidence_shape_rate") is not None:
         quality_gap = round(qcond["evidence_shape_rate"] - no_question["evidence_shape_rate"], 4)
+    strict_to_semantic_delta = None
+    no_label = by_name.get("natural_evidence_no_label", {})
+    if no_label.get("qa_accuracy") is not None and no_label.get("semantic_qa_accuracy") is not None:
+        strict_to_semantic_delta = round(no_label["semantic_qa_accuracy"] - no_label["qa_accuracy"], 4)
 
     return {
         "probe_results": rel(probe_path),
         "diagnostics": rows,
         "summary": {
             "nearest_qcond_qa_minus_no_question": qa_gap,
+            "nearest_qcond_semantic_qa_minus_no_question": semantic_qa_gap,
             "nearest_qcond_quality_minus_no_question": quality_gap,
             "nearest_qcond_quality_gate_pass": bool(qcond.get("quality_gate_pass")),
             "nearest_no_question_quality_gate_pass": bool(no_question.get("quality_gate_pass")),
+            "natural_evidence_no_label_strict_to_semantic_delta": strict_to_semantic_delta,
             "local_ranker_qcond_answer_label_only_rate": ranker_qcond.get("answer_label_only_rate"),
             "interpretation": (
-                "nearest-caption probe has evidence-shaped captions but is not TS-RLM/Qwen training; "
-                "local ranker QA is an answer-label shortcut and is not evidence-caption adaptation."
+                "semantic QA bridge shows strict label matching can undercount natural evidence, while nearest-caption "
+                "probe failures remain evidence-retrieval failures; local ranker QA is an answer-label shortcut."
             ),
             "claim_scope": "local_caption_adaptation_diagnostic_not_final_qcc_training",
         },
@@ -194,12 +226,13 @@ def markdown(report: dict[str, Any]) -> str:
         "",
         "## Diagnostics",
         "",
-        "| diagnostic | kind | QA | evidence shaped | answer-label-only | quality gate |",
-        "| --- | --- | ---: | ---: | ---: | ---: |",
+        "| diagnostic | kind | strict QA | semantic QA | evidence shaped | answer-label-only | quality gate |",
+        "| --- | --- | ---: | ---: | ---: | ---: | ---: |",
     ]
     for row in report["diagnostics"]:
         lines.append(
             f"| `{row['name']}` | `{row['kind']}` | {fmt(row['qa_accuracy'])} | "
+            f"{fmt(row.get('semantic_qa_accuracy'))} | "
             f"{fmt(row['evidence_shape_rate'])} | {fmt(row['answer_label_only_rate'])} | "
             f"`{row['quality_gate_pass']}` |"
         )
@@ -209,9 +242,11 @@ def markdown(report: dict[str, Any]) -> str:
             "## Key Read",
             "",
             f"- nearest q-conditioned QA minus no-question: `{summary['nearest_qcond_qa_minus_no_question']}`.",
+            f"- nearest q-conditioned semantic QA minus no-question: `{summary['nearest_qcond_semantic_qa_minus_no_question']}`.",
             f"- nearest q-conditioned quality minus no-question: `{summary['nearest_qcond_quality_minus_no_question']}`.",
+            f"- natural evidence no-label strict-to-semantic QA delta: `{summary['natural_evidence_no_label_strict_to_semantic_delta']}`.",
             f"- local ranker qcond answer-label-only rate: `{summary['local_ranker_qcond_answer_label_only_rate']}`.",
-            "- nearest-caption 是 evidence-shaped 弱探针；local ranker 是答案标签捷径诊断；二者都不能替代 GPU 上的 TS-RLM/Qwen QCC caption SFT。",
+            "- semantic bridge 只诊断自然证据能否被确定性读出，不改变 gold；nearest-caption 是 evidence-shaped 弱探针；local ranker 是答案标签捷径诊断；三者都不能替代 GPU 上的 TS-RLM/Qwen QCC caption SFT。",
             "",
         ]
     )
