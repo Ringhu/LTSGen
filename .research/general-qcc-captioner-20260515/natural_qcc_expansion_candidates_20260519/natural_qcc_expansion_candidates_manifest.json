@@ -1,0 +1,208 @@
+{
+  "schema": ".research/general-qcc-captioner-20260515/multisim_qcc_v5_aiops_v3/schema_report.json",
+  "output_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_expansion_candidates_20260519/natural_qcc_expansion_candidates.jsonl",
+  "output_sft_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_expansion_candidates_20260519/natural_qcc_expansion_candidates_sft.jsonl",
+  "per_source": 100,
+  "seed": 55,
+  "sources": "all",
+  "include_metadata_only": false,
+  "available_rows_local": {
+    "n": 35,
+    "by_source": {
+      "aiopslab_official_v3": 35
+    },
+    "by_split": {
+      "dev": 7,
+      "test": 14,
+      "train": 14
+    },
+    "by_task_family": {
+      "aiops_official_cpu_trend": 5,
+      "aiops_official_memory_extrema": 5,
+      "aiops_official_network_volatility": 5,
+      "aiops_official_window_memory": 5,
+      "aiops_official_cross_signal_relation": 5,
+      "aiops_official_faulty_service_context": 5,
+      "aiops_official_fault_layer_context": 5
+    },
+    "by_abstract_primitive": {
+      "trend": 5,
+      "extrema": 5,
+      "volatility": 5,
+      "window_comparison": 5,
+      "cross_variable_relation": 5,
+      "domain_context": 10
+    },
+    "by_answer": {
+      "C": 9,
+      "D": 12,
+      "A": 5,
+      "B": 9
+    },
+    "by_source_split": {
+      "aiopslab_official_v3": {
+        "dev": 7,
+        "test": 14,
+        "train": 14
+      }
+    },
+    "by_source_answer": {
+      "aiopslab_official_v3": {
+        "C": 9,
+        "D": 12,
+        "A": 5,
+        "B": 9
+      }
+    },
+    "task_family_per_source": {
+      "aiopslab_official_v3": {
+        "aiops_official_cpu_trend": 5,
+        "aiops_official_memory_extrema": 5,
+        "aiops_official_network_volatility": 5,
+        "aiops_official_window_memory": 5,
+        "aiops_official_cross_signal_relation": 5,
+        "aiops_official_faulty_service_context": 5,
+        "aiops_official_fault_layer_context": 5
+      }
+    }
+  },
+  "selected": {
+    "n": 35,
+    "by_source": {
+      "aiopslab_official_v3": 35
+    },
+    "by_split": {
+      "dev": 7,
+      "test": 14,
+      "train": 14
+    },
+    "by_task_family": {
+      "aiops_official_cross_signal_relation": 5,
+      "aiops_official_window_memory": 5,
+      "aiops_official_cpu_trend": 5,
+      "aiops_official_network_volatility": 5,
+      "aiops_official_faulty_service_context": 5,
+      "aiops_official_memory_extrema": 5,
+      "aiops_official_fault_layer_context": 5
+    },
+    "by_abstract_primitive": {
+      "cross_variable_relation": 5,
+      "window_comparison": 5,
+      "trend": 5,
+      "volatility": 5,
+      "domain_context": 10,
+      "extrema": 5
+    },
+    "by_answer": {
+      "B": 9,
+      "D": 12,
+      "C": 9,
+      "A": 5
+    },
+    "by_source_split": {
+      "aiopslab_official_v3": {
+        "dev": 7,
+        "test": 14,
+        "train": 14
+      }
+    },
+    "by_source_answer": {
+      "aiopslab_official_v3": {
+        "B": 9,
+        "D": 12,
+        "C": 9,
+        "A": 5
+      }
+    },
+    "task_family_per_source": {
+      "aiopslab_official_v3": {
+        "aiops_official_cross_signal_relation": 5,
+        "aiops_official_window_memory": 5,
+        "aiops_official_cpu_trend": 5,
+        "aiops_official_network_volatility": 5,
+        "aiops_official_faulty_service_context": 5,
+        "aiops_official_memory_extrema": 5,
+        "aiops_official_fault_layer_context": 5
+      }
+    }
+  },
+  "missing_files": [
+    {
+      "source": "grid2op",
+      "split": "dev",
+      "path": ".research/general-qcc-captioner-20260515/grid2op_broad_v5_semantic_anchor/grid2op_broad_v5_semantic_anchor_dev.jsonl"
+    },
+    {
+      "source": "grid2op",
+      "split": "test",
+      "path": ".research/general-qcc-captioner-20260515/grid2op_broad_v5_semantic_anchor/grid2op_broad_v5_semantic_anchor_test.jsonl"
+    },
+    {
+      "source": "grid2op",
+      "split": "train",
+      "path": ".research/general-qcc-captioner-20260515/grid2op_broad_v5_semantic_anchor/grid2op_broad_v5_semantic_anchor_train.jsonl"
+    },
+    {
+      "source": "citylearn",
+      "split": "dev",
+      "path": ".research/general-qcc-captioner-20260515/citylearn_broad_semantic_v3_qual/citylearn_broad_semantic_v3_qual_dev.jsonl"
+    },
+    {
+      "source": "citylearn",
+      "split": "test",
+      "path": ".research/general-qcc-captioner-20260515/citylearn_broad_semantic_v3_qual/citylearn_broad_semantic_v3_qual_test.jsonl"
+    },
+    {
+      "source": "citylearn",
+      "split": "train",
+      "path": ".research/general-qcc-captioner-20260515/citylearn_broad_semantic_v3_qual/citylearn_broad_semantic_v3_qual_train.jsonl"
+    },
+    {
+      "source": "finrl_scaled",
+      "split": "dev",
+      "path": ".research/general-qcc-captioner-20260515/finrl_broad_scaled_v1/finrl_broad_scaled_v1_dev.jsonl"
+    },
+    {
+      "source": "finrl_scaled",
+      "split": "test",
+      "path": ".research/general-qcc-captioner-20260515/finrl_broad_scaled_v1/finrl_broad_scaled_v1_test.jsonl"
+    },
+    {
+      "source": "finrl_scaled",
+      "split": "train",
+      "path": ".research/general-qcc-captioner-20260515/finrl_broad_scaled_v1/finrl_broad_scaled_v1_train.jsonl"
+    },
+    {
+      "source": "water",
+      "split": "dev",
+      "path": ".research/general-qcc-captioner-20260515/multisim_qcc_v3_stable_dataflow/water_broad_smoke_v1/water_broad_smoke_v1_dev.jsonl"
+    },
+    {
+      "source": "water",
+      "split": "test",
+      "path": ".research/general-qcc-captioner-20260515/multisim_qcc_v3_stable_dataflow/water_broad_smoke_v1/water_broad_smoke_v1_test.jsonl"
+    },
+    {
+      "source": "water",
+      "split": "train",
+      "path": ".research/general-qcc-captioner-20260515/multisim_qcc_v3_stable_dataflow/water_broad_smoke_v1/water_broad_smoke_v1_train.jsonl"
+    },
+    {
+      "source": "traffic",
+      "split": "dev",
+      "path": ".research/general-qcc-captioner-20260515/multisim_qcc_v3_stable_dataflow/traffic_broad_smoke_v1/traffic_broad_smoke_v1_dev.jsonl"
+    },
+    {
+      "source": "traffic",
+      "split": "test",
+      "path": ".research/general-qcc-captioner-20260515/multisim_qcc_v3_stable_dataflow/traffic_broad_smoke_v1/traffic_broad_smoke_v1_test.jsonl"
+    },
+    {
+      "source": "traffic",
+      "split": "train",
+      "path": ".research/general-qcc-captioner-20260515/multisim_qcc_v3_stable_dataflow/traffic_broad_smoke_v1/traffic_broad_smoke_v1_train.jsonl"
+    }
+  ],
+  "excluded_pilot_ids": 43,
+  "selection_complete_for_requested_sources": false
+}
