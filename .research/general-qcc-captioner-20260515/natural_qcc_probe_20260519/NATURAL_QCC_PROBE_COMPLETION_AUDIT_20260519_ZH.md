@@ -17,7 +17,9 @@
 | GPU smoke 训练/生成/评估命令 | `NATURAL_QCC_GPU_SMOKE_RUNBOOK_20260519_ZH.md` | 已完成 runbook |
 | GPU smoke preflight | `scripts/eval/check_natural_qcc_gpu_smoke_preflight.py`；本机报告 `gpu_smoke_preflight.json`，`preflight_pass=false` | 已完成检查，当前机器阻塞 |
 | GPU smoke pipeline runner | `scripts/train/run_natural_qcc_gpu_smoke.py`；dry-run 写出 `natural_qcc_smoke_pipeline_plan.json` | 已完成 dry-run |
-| 下一批自然化候选池选择 | `scripts/generate/select_natural_qcc_expansion_candidates.py`；本地 manifest 在 `natural_qcc_expansion_candidates_20260519/` | 已完成选择器，本地只物化 AIOps |
+| 下一批自然化候选池选择 | `scripts/generate/select_natural_qcc_expansion_candidates.py`；本地 manifest 在 `natural_qcc_expansion_candidates_20260519/` | 已完成选择器，本地只物化 AIOps 数值时序候选 |
+| 扩展候选自然化改写 | `scripts/generate/build_natural_qcc_expansion_rewrites.py`；本地 25 条 AIOps 候选已写入 `natural_qcc_expansion_rewrites_20260519/` | 已完成本地可运行阶段 |
+| 扩展 reviewer gate 入口 | `scripts/generate/review_natural_qcc_expansion_rewrites.py`；`--dry-run` 已验证 25 条输入和 GPT-5.5 prompt | 已完成入口，未实际调用 GPT |
 | 真正 QCC 模型训练 | 需要 A100/3090 Qwen3-4B 环境；当前本地没有 `/cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507` | 未完成 |
 | 判断 QA 是否相比旧流程提升 | 需要正式 train/dev/test 扩展数据和 trained QCC 生成结果 | 未完成 |
 
@@ -38,6 +40,10 @@ python3 -m py_compile scripts/train/run_natural_qcc_gpu_smoke.py
 python3 scripts/train/run_natural_qcc_gpu_smoke.py --dry_run
 python3 -m py_compile scripts/generate/select_natural_qcc_expansion_candidates.py
 python3 scripts/generate/select_natural_qcc_expansion_candidates.py --per_source 100
+python3 -m py_compile scripts/generate/build_natural_tsqa_balanced8.py scripts/generate/select_natural_qcc_expansion_candidates.py scripts/generate/build_natural_qcc_expansion_rewrites.py
+python3 scripts/generate/build_natural_qcc_expansion_rewrites.py
+python3 -m py_compile scripts/generate/review_natural_qcc_expansion_rewrites.py
+python3 scripts/generate/review_natural_qcc_expansion_rewrites.py --dry-run
 ```
 
 ## 当前不能宣称完成的部分
@@ -46,7 +52,8 @@ python3 scripts/generate/select_natural_qcc_expansion_candidates.py --per_source
 2. 还不能说“QA 提升”，因为当前只有 oracle/baseline/nearest-probe，没有 trained captioner 的 heldout 生成。
 3. 当前 balanced8 只有 43 条 positive，且 split 不平衡；AIOps positive 只有 test，没有 train。
 4. 本机 preflight 失败：缺少 Qwen3-4B 模型路径、`torch/transformers/peft` 环境，以及可用的大显存 GPU。
-5. 本机缺少 Grid2Op、CityLearn、FinRL、water、traffic 的完整 source JSONL；扩展候选池需要在数据机器上重跑 selector。
+5. 本机缺少 Grid2Op、CityLearn、FinRL、water、traffic 的完整 source JSONL；扩展候选池需要在数据机器上重跑 selector 和 natural rewrite。
+6. AIOps 的 `faulty_service` / `fault_layer` 等 metadata-context lookup 已从主候选池剔除；若后续要保留，应作为单独 metadata/context split，而不是主数值时序 QCC 训练样本。
 
 ## 下一步 gate
 
@@ -54,5 +61,6 @@ python3 scripts/generate/select_natural_qcc_expansion_candidates.py --per_source
 
 - 每个 source `50-100` 条 reviewer-positive 样本。
 - 真正的 `train/dev/test` split。
+- 主训练池排除依赖隐藏 metadata 的 lookup 题，保留能由时序窗口、领域规则和 support slots 验证的样本。
 - reviewer-positive 后重跑 `natural_oracle/generic/statistical/question_only` baseline。
 - 在 A100/3090 上先跑 `smoke_sft` 命令，确认 TS-RLM/Qwen 训练链路能读 natural SFT 文件。

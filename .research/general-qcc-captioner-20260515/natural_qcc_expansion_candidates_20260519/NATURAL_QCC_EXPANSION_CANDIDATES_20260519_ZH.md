@@ -4,7 +4,7 @@
 
 - schema: `.research/general-qcc-captioner-20260515/multisim_qcc_v5_aiops_v3/schema_report.json`
 - output: `.research/general-qcc-captioner-20260515/natural_qcc_expansion_candidates_20260519/natural_qcc_expansion_candidates.jsonl`
-- selected rows: `35`
+- selected rows: `25`
 - missing source files: `15`
 - excluded pilot ids: `43`
 
@@ -12,7 +12,7 @@
 
 | source | selected | split counts |
 | --- | ---: | --- |
-| `aiopslab_official_v3` | 35 | `{'dev': 7, 'test': 14, 'train': 14}` |
+| `aiopslab_official_v3` | 25 | `{'dev': 5, 'test': 10, 'train': 10}` |
 
 ## Missing Files
 

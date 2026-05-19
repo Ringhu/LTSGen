@@ -7,51 +7,48 @@
   "sources": "all",
   "include_metadata_only": false,
   "available_rows_local": {
-    "n": 35,
+    "n": 25,
     "by_source": {
-      "aiopslab_official_v3": 35
+      "aiopslab_official_v3": 25
     },
     "by_split": {
-      "dev": 7,
-      "test": 14,
-      "train": 14
+      "dev": 5,
+      "test": 10,
+      "train": 10
     },
     "by_task_family": {
       "aiops_official_cpu_trend": 5,
       "aiops_official_memory_extrema": 5,
       "aiops_official_network_volatility": 5,
       "aiops_official_window_memory": 5,
-      "aiops_official_cross_signal_relation": 5,
-      "aiops_official_faulty_service_context": 5,
-      "aiops_official_fault_layer_context": 5
+      "aiops_official_cross_signal_relation": 5
     },
     "by_abstract_primitive": {
       "trend": 5,
       "extrema": 5,
       "volatility": 5,
       "window_comparison": 5,
-      "cross_variable_relation": 5,
-      "domain_context": 10
+      "cross_variable_relation": 5
     },
     "by_answer": {
-      "C": 9,
-      "D": 12,
-      "A": 5,
-      "B": 9
+      "C": 6,
+      "D": 9,
+      "A": 4,
+      "B": 6
     },
     "by_source_split": {
       "aiopslab_official_v3": {
-        "dev": 7,
-        "test": 14,
-        "train": 14
+        "dev": 5,
+        "test": 10,
+        "train": 10
       }
     },
     "by_source_answer": {
       "aiopslab_official_v3": {
-        "C": 9,
-        "D": 12,
-        "A": 5,
-        "B": 9
+        "C": 6,
+        "D": 9,
+        "A": 4,
+        "B": 6
       }
     },
     "task_family_per_source": {
@@ -60,58 +57,53 @@
         "aiops_official_memory_extrema": 5,
         "aiops_official_network_volatility": 5,
         "aiops_official_window_memory": 5,
-        "aiops_official_cross_signal_relation": 5,
-        "aiops_official_faulty_service_context": 5,
-        "aiops_official_fault_layer_context": 5
+        "aiops_official_cross_signal_relation": 5
       }
     }
   },
   "selected": {
-    "n": 35,
+    "n": 25,
     "by_source": {
-      "aiopslab_official_v3": 35
+      "aiopslab_official_v3": 25
     },
     "by_split": {
-      "dev": 7,
-      "test": 14,
-      "train": 14
+      "dev": 5,
+      "test": 10,
+      "train": 10
     },
     "by_task_family": {
       "aiops_official_cross_signal_relation": 5,
       "aiops_official_window_memory": 5,
       "aiops_official_cpu_trend": 5,
       "aiops_official_network_volatility": 5,
-      "aiops_official_faulty_service_context": 5,
-      "aiops_official_memory_extrema": 5,
-      "aiops_official_fault_layer_context": 5
+      "aiops_official_memory_extrema": 5
     },
     "by_abstract_primitive": {
       "cross_variable_relation": 5,
       "window_comparison": 5,
       "trend": 5,
       "volatility": 5,
-      "domain_context": 10,
       "extrema": 5
     },
     "by_answer": {
-      "B": 9,
-      "D": 12,
-      "C": 9,
-      "A": 5
+      "B": 6,
+      "D": 9,
+      "C": 6,
+      "A": 4
     },
     "by_source_split": {
       "aiopslab_official_v3": {
-        "dev": 7,
-        "test": 14,
-        "train": 14
+        "dev": 5,
+        "test": 10,
+        "train": 10
       }
     },
     "by_source_answer": {
       "aiopslab_official_v3": {
-        "B": 9,
-        "D": 12,
-        "C": 9,
-        "A": 5
+        "B": 6,
+        "D": 9,
+        "C": 6,
+        "A": 4
       }
     },
     "task_family_per_source": {
@@ -120,9 +112,7 @@
         "aiops_official_window_memory": 5,
         "aiops_official_cpu_trend": 5,
         "aiops_official_network_volatility": 5,
-        "aiops_official_faulty_service_context": 5,
-        "aiops_official_memory_extrema": 5,
-        "aiops_official_fault_layer_context": 5
+        "aiops_official_memory_extrema": 5
       }
     }
   },

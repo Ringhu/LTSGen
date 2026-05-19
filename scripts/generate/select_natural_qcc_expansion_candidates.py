@@ -31,6 +31,8 @@ METADATA_ONLY_TASKS = {
     "aiops_official_service_role_context",
     "aiops_official_fault_family_detail_context",
     "aiops_official_fault_context",
+    "aiops_official_faulty_service_context",
+    "aiops_official_fault_layer_context",
 }
 
 

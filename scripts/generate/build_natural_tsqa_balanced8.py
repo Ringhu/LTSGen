@@ -35,6 +35,8 @@ OPTION_ZH = {
     "no material change": "没有实质变化",
     "larger upward peak": "更大的向上峰值",
     "cannot determine": "无法判断",
+    "cpu-memory coupling": "CPU 与内存耦合更强",
+    "network rx-tx coupling": "网络接收与发送耦合更强",
     "first half higher": "前半段更高",
     "second half higher": "后半段更高",
     "similar halves": "前后两半相近",
@@ -109,6 +111,14 @@ OPTION_ZH = {
     "memory leak": "内存泄漏",
     "network delay": "网络延迟",
     "unknown fault family": "未知故障族",
+    "text-service": "text-service 服务",
+    "user-service": "user-service 服务",
+    "post-storage-service": "post-storage-service 服务",
+    "other service": "其他服务",
+    "database authentication layer": "数据库认证层",
+    "replica scaling layer": "副本伸缩层",
+    "service routing layer": "服务路由层",
+    "unknown layer": "未知层",
     "authentication fault context": "认证故障上下文",
     "port misconfiguration context": "端口配置错误上下文",
     "scale-to-zero context": "副本缩为零上下文",
@@ -129,6 +139,8 @@ METADATA_ONLY_TASKS = {
     "aiops_official_service_role_context",
     "aiops_official_fault_family_detail_context",
     "aiops_official_fault_context",
+    "aiops_official_faulty_service_context",
+    "aiops_official_fault_layer_context",
 }
 
 
@@ -296,6 +308,22 @@ def contextual_option_zh(row: dict, text: str) -> str | None:
         return mapping.get(text)
     if source == "finrl_scaled" and text in {"x1", "x2"}:
         return {"x1": "市场背景指标", "x2": "交易量"}.get(text)
+    if source == "aiopslab_official_v3":
+        mapping = {
+            "cpu-memory coupling": "CPU 与内存耦合更强",
+            "network rx-tx coupling": "网络接收与发送耦合更强",
+            "both weak": "两组耦合都弱",
+            "both similar": "两组耦合强度相近",
+            "text-service": "text-service 服务",
+            "user-service": "user-service 服务",
+            "post-storage-service": "post-storage-service 服务",
+            "other service": "其他服务",
+            "database authentication layer": "数据库认证层",
+            "replica scaling layer": "副本伸缩层",
+            "service routing layer": "服务路由层",
+            "unknown layer": "未知层",
+        }
+        return mapping.get(text)
     return None
 
 
@@ -458,6 +486,14 @@ def generic_rewrite(row: dict, scene_en: str, scene_zh: str) -> tuple[str, str, 
     label = row["answer_label"]
     label_cn = label_zh(label)
 
+    if source == "aiopslab_official_v3" and "cross_signal_relation" in task:
+        return (
+            "In this incident window, which telemetry pair should the SRE treat as more tightly coupled?",
+            "在这个事故遥测窗口里，SRE 应该把哪一组信号视为耦合更强？",
+            f"The CPU-memory correlation is {fnum(slots.get('corr_cpu_memory'), 3)}, while the network receive/transmit correlation is {fnum(slots.get('corr_net_rx_tx'), 3)}. This supports {natural_option_en(label)}.",
+            f"CPU 与内存的相关系数为 {fnum(slots.get('corr_cpu_memory'), 3)}，网络接收与发送的相关系数为 {fnum(slots.get('corr_net_rx_tx'), 3)}；因此判断为：{contextual_option_zh(row, label) or label_cn}。",
+        )
+
     if "counterfactual_peak_stress" in task:
         scene_extra_en = (
             f" The line disconnection occurred at global step {slots.get('intervention_step')}; "
@@ -553,6 +589,13 @@ def generic_rewrite(row: dict, scene_en: str, scene_zh: str) -> tuple[str, str, 
                 f"Mean speed starts near {fnum(slots.get('start_value'))} and ends near {fnum(slots.get('end_value'))}, with variability {fnum(slots.get('std'))}; the trend is {phrase_en(label)}.",
                 f"平均车速起点约 {fnum(slots.get('start_value'))}，终点约 {fnum(slots.get('end_value'))}，波动尺度为 {fnum(slots.get('std'))}；整体趋势是 {phrase_zh(label)}。",
             )
+        if source == "aiopslab_official_v3":
+            return (
+                "Is service CPU load rising, falling, or staying roughly flat during this incident window?",
+                "这段事故窗口里，服务 CPU 负载是在上升、下降，还是基本平稳？",
+                f"CPU load starts near {fnum(slots.get('start_value'))}, ends near {fnum(slots.get('end_value'))}, and has variability {fnum(slots.get('std'))}, supporting {phrase_en(label)}.",
+                f"CPU 负载起点约 {fnum(slots.get('start_value'))}，终点约 {fnum(slots.get('end_value'))}，波动尺度为 {fnum(slots.get('std'))}；因此判断为{phrase_zh(label)}。",
+            )
         return (
             "How does the main monitored signal behave over this window?",
             "这个窗口中主要监测信号整体如何变化？",
@@ -587,6 +630,14 @@ def generic_rewrite(row: dict, scene_en: str, scene_zh: str) -> tuple[str, str, 
         else:
             role_en = "operator"
             role_zh = "运维人员"
+        if source == "aiopslab_official_v3":
+            stds = slots.get("region_stds") or {}
+            return (
+                f"Which third of this incident window has the highest volatility in {signal}?",
+                f"这个事故窗口中，{signal_cn}在哪一段波动最大？",
+                f"The window is split into early, middle, and late thirds. Their standard deviations are {fnum(stds.get('early'))}, {fnum(stds.get('middle'))}, and {fnum(stds.get('late'))}, supporting {phrase_en(label)}.",
+                f"窗口按时间分为早期、中期和后期三段；三段标准差分别为 {fnum(stds.get('early'))}、{fnum(stds.get('middle'))} 和 {fnum(stds.get('late'))}，因此判断为{phrase_zh(label)}。",
+            )
         return (
             f"Which part of the window should the {role_en} treat as the most variable for {signal}?",
             f"{role_zh}应该把窗口的哪一段视为{signal_cn}波动最大的部分？",
@@ -690,6 +741,13 @@ def generic_rewrite(row: dict, scene_en: str, scene_zh: str) -> tuple[str, str, 
                 "把这个交通窗口按时间分成早期、中期和后期后，最低平均车速出现在什么位置？",
                 f"The speed minimum is about {fnum(slots.get('extrema_value'))} and falls in {phrase_en(label)}.",
                 f"最低平均车速约为 {fnum(slots.get('extrema_value'))}，位置在{phrase_zh(label)}。",
+            )
+        if source == "aiopslab_official_v3":
+            return (
+                "Where does the service memory working set reach its highest point after splitting this incident window into early, middle, and late thirds?",
+                "把这个事故窗口按时间分成早期、中期和后期后，服务内存工作集的最高点出现在什么位置？",
+                f"The memory working set peaks at about {fnum(slots.get('extrema_value'))} near step {slots.get('extrema_index')} of the window, which falls in {position_phrase_en(slots.get('extrema_index'), slots.get('horizon') or window_horizon(row))}.",
+                f"服务内存工作集最高约为 {fnum(slots.get('extrema_value'))}，出现在窗口第 {slots.get('extrema_index')} 步附近，位置在{position_phrase_zh(slots.get('extrema_index'), slots.get('horizon') or window_horizon(row))}。",
             )
         return (
             f"Where does the most important {noun} occur in this window?",
@@ -811,6 +869,14 @@ def generic_rewrite(row: dict, scene_en: str, scene_zh: str) -> tuple[str, str, 
             "aiops_official_fault_context": (
                 f"The official simulator label indicates {slots.get('fault_family')} for faulty service {slots.get('faulty_service')}.",
                 f"官方模拟器标签显示故障族为 {slots.get('fault_family')}，故障服务为 {slots.get('faulty_service')}；对应上下文是：{label_cn}。",
+            ),
+            "aiops_official_faulty_service_context": (
+                f"The official incident metadata marks {slots.get('faulty_service')} as the faulty service.",
+                f"官方事故 metadata 标记的故障服务是：{label_cn}。",
+            ),
+            "aiops_official_fault_layer_context": (
+                f"The official fault-family metadata maps {slots.get('fault_family')} to {slots.get('fault_layer')}.",
+                f"官方故障族 metadata 将 {slots.get('fault_family')} 映射到：{label_cn}。",
             ),
         }
         evidence_en, evidence_zh = meta_evidence.get(
