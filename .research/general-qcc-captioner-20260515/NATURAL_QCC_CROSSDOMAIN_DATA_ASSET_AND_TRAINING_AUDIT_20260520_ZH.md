@@ -190,6 +190,7 @@ PUSH_RESULTS=1 PROFILE=a100 scripts/remote/launch_natural_qcc_crossdomain_pair_s
 ```
 
 `PUSH_RESULTS=1` 会先运行 `scripts/eval/collect_natural_qcc_gpu_result_manifest.py`，只把 preflight、pipeline summary、predictions、QA metrics 和 audit 文件加入 commit；manifest 明确排除 `final_model`、`pytorch_model.bin`、`.safetensors` 和 checkpoint 权重。
+当前 runner 会在 paired GPU run 后自动执行 qcond-vs-no-question audit、objective completion gate、result manifest，并做两遍 `objective -> manifest` close-out，使最终 objective gate 和 manifest 互相一致。`PUSH_RESULTS=1` 也会先刷新 objective gate，再按 manifest pathspec 同步小结果文件。
 
 远端 GPU 可达性检查已运行：
 
@@ -269,6 +270,8 @@ python3 scripts/eval/audit_natural_qcc_objective_completion.py
 - `no_question_generated_metrics_present=false`
 - `qcond_vs_no_question_comparison_complete=false`
 - `safe_result_manifest_pass=false`
+
+manifest pathspec 已包含 objective gate 的 JSON/Markdown；仍明确排除模型权重和 checkpoint。
 
 ## 下一步
 

@@ -24,6 +24,7 @@ BASE="$ROOT/.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dat
 QCOND_RUN="${QCOND_RUN_OVERRIDE:-$BASE/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520}"
 NOQ_RUN="${NOQ_RUN_OVERRIDE:-$BASE/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520}"
 COMPARE_OUT="${COMPARE_OUT_OVERRIDE:-$BASE/tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.json}"
+OBJECTIVE_OUT="${OBJECTIVE_OUT_OVERRIDE:-$BASE/natural_qcc_objective_completion_audit_20260520.json}"
 
 cd "$ROOT"
 
@@ -35,6 +36,12 @@ if [[ " $* " == *" --dry_run "* ]]; then
     --qcond_run_dir "$QCOND_RUN" \
     --no_question_run_dir "$NOQ_RUN" \
     --out "$COMPARE_OUT" || true
+  "$PY" scripts/eval/audit_natural_qcc_objective_completion.py \
+    --out "$OBJECTIVE_OUT" || true
+  "$PY" scripts/eval/collect_natural_qcc_gpu_result_manifest.py || true
+  "$PY" scripts/eval/audit_natural_qcc_objective_completion.py \
+    --out "$OBJECTIVE_OUT" || true
+  "$PY" scripts/eval/collect_natural_qcc_gpu_result_manifest.py || true
   exit 0
 fi
 
@@ -42,3 +49,13 @@ fi
   --qcond_run_dir "$QCOND_RUN" \
   --no_question_run_dir "$NOQ_RUN" \
   --out "$COMPARE_OUT"
+
+# The objective gate checks manifest pass, while the manifest should include the
+# objective gate report. Run a short two-pass close-out so the final reports are
+# mutually consistent before any result sync.
+"$PY" scripts/eval/audit_natural_qcc_objective_completion.py \
+  --out "$OBJECTIVE_OUT" || true
+"$PY" scripts/eval/collect_natural_qcc_gpu_result_manifest.py
+"$PY" scripts/eval/audit_natural_qcc_objective_completion.py \
+  --out "$OBJECTIVE_OUT"
+"$PY" scripts/eval/collect_natural_qcc_gpu_result_manifest.py

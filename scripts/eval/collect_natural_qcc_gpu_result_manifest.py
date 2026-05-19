@@ -18,6 +18,7 @@ BASE = ROOT / ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_
 DEFAULT_QCOND = BASE / "tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520"
 DEFAULT_NOQ = BASE / "tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520"
 DEFAULT_COMPARE = BASE / "tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.json"
+DEFAULT_OBJECTIVE = BASE / "natural_qcc_objective_completion_audit_20260520.json"
 DEFAULT_OUT = BASE / "natural_qcc_gpu_result_manifest_20260520.json"
 
 SAFE_RELATIVE_FILES = (
@@ -81,6 +82,15 @@ def run_items(run_dir: Path) -> list[dict[str, Any]]:
     return [file_item(run_dir / name, required=name in required) for name in SAFE_RELATIVE_FILES]
 
 
+def audit_items(compare_audit: Path, objective_audit: Path) -> list[dict[str, Any]]:
+    return [
+        file_item(compare_audit, required=True),
+        file_item(compare_audit.with_suffix(".md"), required=True),
+        file_item(objective_audit, required=True),
+        file_item(objective_audit.with_suffix(".md"), required=True),
+    ]
+
+
 def has_unsafe_path(items: list[dict[str, Any]]) -> bool:
     unsafe_markers = ("/final_model/", "pytorch_model.bin", "adapter_model", ".safetensors", "/checkpoint-")
     return any(any(marker in item["path"] for marker in unsafe_markers) for item in items)
@@ -107,16 +117,14 @@ def main() -> None:
     parser.add_argument("--qcond_run_dir", type=Path, default=DEFAULT_QCOND)
     parser.add_argument("--no_question_run_dir", type=Path, default=DEFAULT_NOQ)
     parser.add_argument("--compare_audit", type=Path, default=DEFAULT_COMPARE)
+    parser.add_argument("--objective_audit", type=Path, default=DEFAULT_OBJECTIVE)
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     parser.add_argument("--pathspec_out", type=Path, default=None)
     args = parser.parse_args()
 
     qcond_items = run_items(args.qcond_run_dir)
     noq_items = run_items(args.no_question_run_dir)
-    compare_items = [
-        file_item(args.compare_audit, required=True),
-        file_item(args.compare_audit.with_suffix(".md"), required=True),
-    ]
+    compare_items = audit_items(args.compare_audit, args.objective_audit)
     all_items = qcond_items + noq_items + compare_items
     required_missing = [item["path"] for item in all_items if item["required"] and not item["exists"]]
     unsafe = has_unsafe_path(all_items)
@@ -127,6 +135,7 @@ def main() -> None:
         "qcond_run_dir": rel(args.qcond_run_dir),
         "no_question_run_dir": rel(args.no_question_run_dir),
         "compare_audit": rel(args.compare_audit),
+        "objective_audit": rel(args.objective_audit),
         "qcond": audit_summary(args.qcond_run_dir),
         "no_question": audit_summary(args.no_question_run_dir),
         "compare_decision": compare_payload.get("decision", {}),

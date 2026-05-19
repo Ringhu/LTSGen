@@ -53,6 +53,7 @@ mkdir -p "$(dirname "$LOG_PATH")"
 } 2>&1 | tee "$LOG_PATH"
 
 if [[ "$PUSH_RESULTS" == "1" ]]; then
+  python3 scripts/eval/audit_natural_qcc_objective_completion.py || true
   python3 scripts/eval/collect_natural_qcc_gpu_result_manifest.py
   git add --pathspec-from-file=.research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_gpu_result_manifest_20260520.pathspec
   if git diff --cached --quiet; then

@@ -200,6 +200,7 @@ PROFILE=3090 scripts/remote/launch_natural_qcc_crossdomain_pair_ssh.sh
 
 The SSH launcher fetches, checks out, and fast-forwards `codex/question-repair-20260519-ready` on the remote host before running the paired GPU smoke command.
 It does not push training results unless `PUSH_RESULTS=1` is explicitly set. With `PUSH_RESULTS=1`, it first runs `scripts/eval/collect_natural_qcc_gpu_result_manifest.py` and commits only the manifest pathspec: preflight, pipeline summary, generated predictions, rule-QA metrics, and audit files. Checkpoint/model paths are excluded from the manifest.
+The paired runner now also runs the objective-level gate and safe manifest close-out after qcond/no-question comparison. The close-out order is `objective -> manifest -> objective -> manifest`, so the final objective gate can see the latest manifest state and the final manifest includes the objective gate JSON/Markdown. With `PUSH_RESULTS=1`, the SSH launcher refreshes the objective gate before collecting and committing the manifest pathspec.
 
 Equivalent explicit commands:
 
@@ -244,6 +245,8 @@ Finally rerun the objective-level gate:
 ```bash
 python3 scripts/eval/audit_natural_qcc_objective_completion.py
 ```
+
+When using `scripts/remote/run_natural_qcc_crossdomain_pair_a100.sh`, this final gate and manifest close-out are run automatically after the paired GPU smoke completes.
 
 Minimum evidence required before marking this objective complete:
 

@@ -2,6 +2,7 @@
   "qcond_run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520",
   "no_question_run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520",
   "compare_audit": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.json",
+  "objective_audit": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_objective_completion_audit_20260520.json",
   "qcond": {
     "audit_pass": false,
     "decision_status": "incomplete_or_blocked",
@@ -177,6 +178,18 @@
       "exists": true,
       "required": true,
       "bytes": 749
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_objective_completion_audit_20260520.json",
+      "exists": true,
+      "required": true,
+      "bytes": 6761
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_objective_completion_audit_20260520.md",
+      "exists": true,
+      "required": true,
+      "bytes": 2189
     }
   ],
   "required_missing": [
@@ -200,7 +213,9 @@
     ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_gpu_smoke_result_audit.json",
     ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_gpu_smoke_result_audit.md",
     ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.json",
-    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.md"
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.md",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_objective_completion_audit_20260520.json",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_objective_completion_audit_20260520.md"
   ],
   "manifest_pass": false
 }
