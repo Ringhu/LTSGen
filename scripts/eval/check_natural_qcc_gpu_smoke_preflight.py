@@ -78,6 +78,119 @@ def summarize_rows(path: Path) -> dict[str, Any]:
     }
 
 
+def load_tokenizer(model_path: Path) -> Any | None:
+    try:
+        from transformers import AutoTokenizer
+    except Exception:  # noqa: BLE001
+        return None
+    try:
+        return AutoTokenizer.from_pretrained(str(model_path), trust_remote_code=True)
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def supervised_preview(tokenizer: Any, output_ids: list[int], eos_id: int | None, *, limit: int = 120) -> str:
+    ids = list(output_ids)
+    if eos_id is not None:
+        ids.append(int(eos_id))
+    text = tokenizer.decode(ids, skip_special_tokens=True) if ids else ""
+    return " ".join(text.split())[:limit]
+
+
+def token_budget_row(
+    row: dict[str, Any],
+    *,
+    tokenizer: Any,
+    max_text_length: int,
+    max_prompt_length: int,
+    add_eos: bool,
+) -> dict[str, Any]:
+    prompt_full = tokenizer(str(row.get("prompt", "")), add_special_tokens=False)["input_ids"]
+    output_full = tokenizer(str(row.get("output", "")), add_special_tokens=False)["input_ids"]
+    prompt_kept = prompt_full[:max_prompt_length]
+    reserve = 1 + len(prompt_kept) + (1 if add_eos else 0)
+    output_budget = max(max_text_length - reserve, 0)
+    output_kept = output_full[:output_budget]
+    eos_id = int(tokenizer.eos_token_id) if add_eos and tokenizer.eos_token_id is not None else None
+    return {
+        "id": row.get("id", ""),
+        "prompt_full_tokens": len(prompt_full),
+        "prompt_kept_tokens": len(prompt_kept),
+        "prompt_truncated": len(prompt_full) > len(prompt_kept),
+        "output_full_tokens": len(output_full),
+        "output_kept_tokens": len(output_kept),
+        "output_truncated": len(output_kept) < len(output_full),
+        "labels_non_ignored": len(output_kept) + (1 if add_eos else 0),
+        "reserve_tokens": reserve,
+        "needed_tokens": 1 + len(prompt_full) + len(output_full) + (1 if add_eos else 0),
+        "supervised_text_preview": supervised_preview(tokenizer, output_kept, eos_id),
+    }
+
+
+def summarize_token_budget(
+    path: Path,
+    *,
+    tokenizer: Any | None,
+    max_text_length: int,
+    max_prompt_length: int,
+    add_eos: bool,
+    preview_rows: int = 5,
+) -> dict[str, Any]:
+    if tokenizer is None:
+        return {
+            "path": str(path.relative_to(ROOT) if path.is_relative_to(ROOT) else path),
+            "checked": False,
+            "reason": "tokenizer_unavailable",
+        }
+    rows = load_jsonl(path)
+    items = [
+        token_budget_row(
+            row,
+            tokenizer=tokenizer,
+            max_text_length=max_text_length,
+            max_prompt_length=max_prompt_length,
+            add_eos=add_eos,
+        )
+        for row in rows
+    ]
+    if not items:
+        return {
+            "path": str(path.relative_to(ROOT) if path.is_relative_to(ROOT) else path),
+            "checked": True,
+            "n": 0,
+        }
+    zero_output = [item for item in items if item["output_kept_tokens"] == 0]
+    output_truncated = [item for item in items if item["output_truncated"]]
+    prompt_truncated = [item for item in items if item["prompt_truncated"]]
+    eos_only = [item for item in items if item["supervised_text_preview"] == ""]
+    return {
+        "path": str(path.relative_to(ROOT) if path.is_relative_to(ROOT) else path),
+        "checked": True,
+        "n": len(items),
+        "max_text_length": max_text_length,
+        "max_prompt_length": max_prompt_length,
+        "add_eos": add_eos,
+        "zero_output_kept": len(zero_output),
+        "zero_output_kept_rate": round(len(zero_output) / len(items), 4),
+        "output_truncated": len(output_truncated),
+        "output_truncated_rate": round(len(output_truncated) / len(items), 4),
+        "prompt_truncated": len(prompt_truncated),
+        "prompt_truncated_rate": round(len(prompt_truncated) / len(items), 4),
+        "eos_only_supervision": len(eos_only),
+        "mean_prompt_full_tokens": round(sum(item["prompt_full_tokens"] for item in items) / len(items), 2),
+        "mean_prompt_kept_tokens": round(sum(item["prompt_kept_tokens"] for item in items) / len(items), 2),
+        "mean_output_full_tokens": round(sum(item["output_full_tokens"] for item in items) / len(items), 2),
+        "mean_output_kept_tokens": round(sum(item["output_kept_tokens"] for item in items) / len(items), 2),
+        "min_output_kept_tokens": min(item["output_kept_tokens"] for item in items),
+        "max_output_kept_tokens": max(item["output_kept_tokens"] for item in items),
+        "max_needed_tokens": max(item["needed_tokens"] for item in items),
+        "examples": items[:preview_rows],
+        "zero_output_examples": zero_output[:preview_rows],
+        "output_truncated_examples": output_truncated[:preview_rows],
+        "prompt_truncated_examples": prompt_truncated[:preview_rows],
+    }
+
+
 def command_output(cmd: list[str]) -> tuple[int, str]:
     try:
         proc = subprocess.run(cmd, check=False, text=True, capture_output=True, timeout=20)
@@ -131,6 +244,10 @@ def main() -> None:
     parser.add_argument("--bridge_type", default="prefix")
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     parser.add_argument("--min_gpu_mem_gb", type=float, default=20.0)
+    parser.add_argument("--max_text_length", type=int, default=224)
+    parser.add_argument("--max_prompt_length", type=int, default=320)
+    parser.add_argument("--allow_output_truncation", action="store_true")
+    parser.add_argument("--allow_prompt_truncation", action="store_true")
     args = parser.parse_args()
 
     sys.path.insert(0, str(ROOT / "tslm"))
@@ -141,6 +258,39 @@ def main() -> None:
     train_summary = summarize_rows(args.train_sft) if args.train_sft.exists() else {"exists": False}
     eval_summary = summarize_rows(args.eval_sft) if args.eval_sft.exists() else {"exists": False}
     raw_eval_summary = summarize_rows(args.eval_raw) if args.eval_raw.exists() else {"exists": False}
+    tokenizer = load_tokenizer(args.model_path) if args.model_path.exists() or looks_like_hf_model_id(args.model_path) else None
+    train_token_budget = (
+        summarize_token_budget(
+            args.train_sft,
+            tokenizer=tokenizer,
+            max_text_length=args.max_text_length,
+            max_prompt_length=args.max_prompt_length,
+            add_eos=True,
+        )
+        if args.train_sft.exists()
+        else {"checked": False, "reason": "train_sft_missing"}
+    )
+    eval_token_budget = (
+        summarize_token_budget(
+            args.eval_sft,
+            tokenizer=tokenizer,
+            max_text_length=args.max_text_length,
+            max_prompt_length=args.max_prompt_length,
+            add_eos=True,
+        )
+        if args.eval_sft.exists()
+        else {"checked": False, "reason": "eval_sft_missing"}
+    )
+    token_budget_pass = bool(
+        train_token_budget.get("checked")
+        and eval_token_budget.get("checked")
+        and train_token_budget.get("zero_output_kept", 1) == 0
+        and eval_token_budget.get("zero_output_kept", 1) == 0
+        and (args.allow_output_truncation or train_token_budget.get("output_truncated", 1) == 0)
+        and (args.allow_output_truncation or eval_token_budget.get("output_truncated", 1) == 0)
+        and (args.allow_prompt_truncation or train_token_budget.get("prompt_truncated", 1) == 0)
+        and (args.allow_prompt_truncation or eval_token_budget.get("prompt_truncated", 1) == 0)
+    )
     cuda = cuda_report()
     max_gpu_mem = max((item["total_memory_gb"] for item in cuda.get("devices", [])), default=0.0)
 
@@ -170,6 +320,16 @@ def main() -> None:
         "train_summary": train_summary,
         "eval_summary": eval_summary,
         "raw_eval_summary": raw_eval_summary,
+        "token_budget": {
+            "max_text_length": args.max_text_length,
+            "max_prompt_length": args.max_prompt_length,
+            "allow_output_truncation": args.allow_output_truncation,
+            "allow_prompt_truncation": args.allow_prompt_truncation,
+            "tokenizer_loaded": tokenizer is not None,
+            "train": train_token_budget,
+            "eval": eval_token_budget,
+            "token_budget_pass": token_budget_pass,
+        },
         "cuda": cuda,
         "min_gpu_mem_gb": args.min_gpu_mem_gb,
         "max_gpu_mem_gb": max_gpu_mem,
@@ -193,6 +353,7 @@ def main() -> None:
         and train_summary.get("missing_required_count", 1) == 0
         and eval_summary.get("missing_required_count", 1) == 0
         and raw_eval_summary.get("n", 0) > 0
+        and token_budget_pass
         and report["has_required_gpu_memory"]
         and supported_bridge
         and cfg_constructible

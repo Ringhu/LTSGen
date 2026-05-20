@@ -86,8 +86,15 @@ def main() -> None:
     parser.add_argument("--train_batch_size", type=int, default=1)
     parser.add_argument("--eval_batch_size", type=int, default=1)
     parser.add_argument("--gradient_accumulation_steps", type=int, default=4)
+    parser.add_argument("--max_text_length", type=int, default=224)
+    parser.add_argument("--max_prompt_length", type=int, default=320)
+    parser.add_argument("--max_train_samples", type=int, default=0)
+    parser.add_argument("--max_eval_samples", type=int, default=0)
     parser.add_argument("--max_new_tokens", type=int, default=48)
     parser.add_argument("--clean_max_sentences", type=int, default=2)
+    parser.add_argument("--generate_limit", type=int, default=0)
+    parser.add_argument("--allow_output_truncation", action="store_true")
+    parser.add_argument("--allow_prompt_truncation", action="store_true")
     parser.add_argument("--min_gpu_mem_gb", type=float, default=20.0)
     parser.add_argument(
         "--qa_evaluator",
@@ -95,6 +102,7 @@ def main() -> None:
         default="strict",
         help="Use the strict answer-label bridge or deterministic semantic bridge for generated-caption QA.",
     )
+    parser.add_argument("--qa_splits", nargs="+", default=["test"])
     parser.add_argument("--dry_run", action="store_true")
     parser.add_argument("--skip_preflight", action="store_true")
     args = parser.parse_args()
@@ -123,6 +131,10 @@ def main() -> None:
             args.bridge_type,
             "--min_gpu_mem_gb",
             str(args.min_gpu_mem_gb),
+            "--max_text_length",
+            str(args.max_text_length),
+            "--max_prompt_length",
+            str(args.max_prompt_length),
             "--out",
             rel(preflight_json),
         ],
@@ -155,6 +167,10 @@ def main() -> None:
             str(args.eval_batch_size),
             "--gradient_accumulation_steps",
             str(args.gradient_accumulation_steps),
+            "--max_text_length",
+            str(args.max_text_length),
+            "--max_prompt_length",
+            str(args.max_prompt_length),
             "--source_group_key",
             "merge_source_name",
         ],
@@ -175,6 +191,16 @@ def main() -> None:
             str(args.clean_max_sentences),
         ],
     }
+    if args.allow_output_truncation:
+        commands["preflight"].append("--allow_output_truncation")
+    if args.allow_prompt_truncation:
+        commands["preflight"].append("--allow_prompt_truncation")
+    if args.max_train_samples:
+        commands["train"].extend(["--max_train_samples", str(args.max_train_samples)])
+    if args.max_eval_samples:
+        commands["train"].extend(["--max_eval_samples", str(args.max_eval_samples)])
+    if args.generate_limit:
+        commands["generate"].extend(["--limit", str(args.generate_limit)])
     qa_script = (
         "scripts/eval/evaluate_natural_qcc_semantic_predictions.py"
         if args.qa_evaluator == "semantic"
@@ -192,13 +218,14 @@ def main() -> None:
         "--caption_field",
         "pred_caption",
         "--splits",
-        "test",
+        *args.qa_splits,
     ]
 
     plan = {
         "dry_run": args.dry_run,
         "run_dir": rel(args.run_dir),
         "qa_evaluator": args.qa_evaluator,
+        "qa_splits": args.qa_splits,
         "commands": {name: " ".join(shlex.quote(part) for part in cmd) for name, cmd in commands.items()},
     }
     write_json(pipeline_plan, plan)
