@@ -122,10 +122,12 @@ def load_available_rows(
     return rows, missing
 
 
-def load_pilot_ids(path: Path) -> set[str]:
-    if not path.exists():
-        return set()
-    return {row["id"] for row in load_jsonl(path)}
+def load_exclude_ids(paths: list[Path]) -> set[str]:
+    ids: set[str] = set()
+    for path in paths:
+        if path.exists():
+            ids.update(row["id"] for row in load_jsonl(path))
+    return ids
 
 
 def select_rows(rows: list[dict[str, Any]], *, per_source: int, seed: int, exclude_ids: set[str]) -> list[dict[str, Any]]:
@@ -231,6 +233,13 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=55)
     parser.add_argument("--sources", nargs="*", default=[])
     parser.add_argument("--pilot_jsonl", type=Path, default=DEFAULT_PILOT)
+    parser.add_argument(
+        "--exclude_jsonl",
+        action="append",
+        type=Path,
+        default=[],
+        help="Additional JSONL files whose row ids should be excluded from selection.",
+    )
     parser.add_argument("--include_metadata_only", action="store_true")
     parser.add_argument(
         "--source_root",
@@ -242,7 +251,8 @@ def main() -> None:
 
     schema = json.loads(args.schema.read_text(encoding="utf-8"))
     source_filter = set(args.sources)
-    pilot_ids = load_pilot_ids(args.pilot_jsonl)
+    exclude_paths = [args.pilot_jsonl, *args.exclude_jsonl]
+    pilot_ids = load_exclude_ids(exclude_paths)
     available, missing = load_available_rows(
         schema,
         source_filter,
@@ -265,6 +275,7 @@ def main() -> None:
         "sources": args.sources or "all",
         "source_root": rel(args.source_root),
         "include_metadata_only": args.include_metadata_only,
+        "exclude_jsonl": [rel(path) for path in exclude_paths],
         "available_rows_local": summarize(available),
         "selected": summarize(selected),
         "missing_files": missing,

@@ -1,0 +1,131 @@
+{
+  "inputs": {
+    "natural_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/rewrites_tw2/natural_qcc_failure_domain_tw2_rewrites.jsonl",
+    "review_json": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/rewrites_tw2/natural_qcc_failure_domain_tw2_rewrites_review.json",
+    "raw_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/candidates_tw2/natural_qcc_failure_domain_tw2_candidates.jsonl"
+  },
+  "outputs": {
+    "positive_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/dataset_tw2/natural_qcc_failure_domain_tw2_expansion_positive.jsonl",
+    "excluded_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/dataset_tw2/natural_qcc_failure_domain_tw2_expansion_excluded.jsonl",
+    "schema_report": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/dataset_tw2/natural_qcc_failure_domain_tw2_expansion_dataset_summary.json",
+    "report_md": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/dataset_tw2/NATURAL_QCC_EXPANSION_DATASET_20260519_ZH.md"
+  },
+  "review_complete": true,
+  "missing_review_count": 0,
+  "positive": {
+    "n": 20,
+    "by_source": {
+      "traffic": 13,
+      "water": 7
+    },
+    "by_split": {
+      "dev": 3,
+      "test": 6,
+      "train": 11
+    },
+    "by_source_split": {
+      "traffic": {
+        "dev": 2,
+        "test": 4,
+        "train": 7
+      },
+      "water": {
+        "dev": 1,
+        "test": 2,
+        "train": 4
+      }
+    },
+    "by_task_family": {
+      "traffic_event_impact_relation": 1,
+      "traffic_speed_trend": 1,
+      "traffic_speed_extrema": 1,
+      "traffic_incident_anomaly": 1,
+      "traffic_cross_congestion_relation": 1,
+      "traffic_window_speed": 1,
+      "traffic_speed_queue_lead_lag": 1,
+      "traffic_signal_counterfactual_queue": 1,
+      "traffic_domain_congestion_context": 1,
+      "traffic_speed_periodicity": 1,
+      "traffic_queue_volatility": 1,
+      "traffic_event_recovery_context": 1,
+      "traffic_counterfactual_event_gap": 1,
+      "water_counterfactual_event_gap": 2,
+      "water_flow_volatility": 1,
+      "water_leak_anomaly": 1,
+      "water_leak_counterfactual_pressure": 1,
+      "water_pressure_flow_lead_lag": 1,
+      "water_min_pressure_extrema": 1
+    },
+    "by_value_dim": {
+      "3": 20
+    },
+    "answer_distribution": {
+      "A": 7,
+      "D": 6,
+      "C": 3,
+      "B": 4
+    },
+    "max_answer_share": 0.35,
+    "missing_required_count": 0
+  },
+  "excluded": {
+    "n": 12,
+    "by_source": {
+      "traffic": 3,
+      "water": 9
+    },
+    "by_split": {
+      "dev": 3,
+      "test": 1,
+      "train": 8
+    },
+    "by_source_split": {
+      "traffic": {
+        "dev": 2,
+        "test": 1
+      },
+      "water": {
+        "dev": 1,
+        "train": 8
+      }
+    },
+    "by_task_family": {
+      "traffic_counterfactual_event_gap": 1,
+      "traffic_combined_stress_context": 2,
+      "water_domain_resilience_context": 1,
+      "water_combined_stress_context": 2,
+      "water_pressure_trend": 1,
+      "water_event_recovery_context": 1,
+      "water_cross_pressure_relation": 1,
+      "water_event_impact_relation": 1,
+      "water_window_pressure": 1,
+      "water_pressure_periodicity": 1
+    },
+    "by_value_dim": {
+      "0": 12
+    },
+    "answer_distribution": {
+      "": 12
+    },
+    "max_answer_share": 1.0,
+    "missing_required_count": 12
+  },
+  "sft_files": {
+    "dev": {
+      "raw": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/dataset_tw2/sft/natural_qcc_failure_domain_tw2_expansion_dev_raw.jsonl",
+      "sft": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/dataset_tw2/sft/natural_qcc_failure_domain_tw2_expansion_dev_sft.jsonl",
+      "n": 3
+    },
+    "test": {
+      "raw": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/dataset_tw2/sft/natural_qcc_failure_domain_tw2_expansion_test_raw.jsonl",
+      "sft": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/dataset_tw2/sft/natural_qcc_failure_domain_tw2_expansion_test_sft.jsonl",
+      "n": 6
+    },
+    "train": {
+      "raw": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/dataset_tw2/sft/natural_qcc_failure_domain_tw2_expansion_train_raw.jsonl",
+      "sft": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/dataset_tw2/sft/natural_qcc_failure_domain_tw2_expansion_train_sft.jsonl",
+      "n": 11
+    }
+  },
+  "schema_gate_pass": true
+}
