@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="880" viewBox="0 0 1500 880" role="img" aria-label="Natural QA research roadmap">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#334155"/>
+    </marker>
+    <style>
+      .title { font: 700 34px Arial, 'Noto Sans CJK SC', sans-serif; fill: #0f172a; }
+      .subtitle { font: 400 18px Arial, 'Noto Sans CJK SC', sans-serif; fill: #475569; }
+      .phase { font: 700 18px Arial, 'Noto Sans CJK SC', sans-serif; fill: #0f172a; }
+      .body { font: 400 15px Arial, 'Noto Sans CJK SC', sans-serif; fill: #334155; }
+      .small { font: 400 13px Arial, 'Noto Sans CJK SC', sans-serif; fill: #475569; }
+      .lane { font: 700 15px Arial, 'Noto Sans CJK SC', sans-serif; fill: #0f172a; }
+      .box { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.4; rx: 8; }
+      .done { fill: #dcfce7; stroke: #16a34a; }
+      .current { fill: #fef3c7; stroke: #d97706; stroke-width: 2.2; }
+      .next { fill: #e0f2fe; stroke: #0284c7; }
+      .risk { fill: #fee2e2; stroke: #dc2626; }
+      .arrow { stroke: #334155; stroke-width: 2.4; fill: none; marker-end: url(#arrow); }
+      .line { stroke: #94a3b8; stroke-width: 4; fill: none; }
+    </style>
+  </defs>
+
+  <rect width="1500" height="880" fill="#f8fafc"/>
+  <text x="70" y="70" class="title">Natural QA / QCC 研究路线图</text>
+  <text x="70" y="104" class="subtitle">这条路线不是“把题目写漂亮”本身，而是把可验证的时序证据包装成正常人能读、模型能学、指标能审计的 QA 接口。</text>
+
+  <line x1="150" y1="226" x2="1345" y2="226" class="line"/>
+  <circle cx="150" cy="226" r="11" fill="#16a34a"/>
+  <circle cx="340" cy="226" r="11" fill="#16a34a"/>
+  <circle cx="535" cy="226" r="11" fill="#16a34a"/>
+  <circle cx="730" cy="226" r="11" fill="#16a34a"/>
+  <circle cx="925" cy="226" r="12" fill="#d97706"/>
+  <circle cx="1120" cy="226" r="11" fill="#0284c7"/>
+  <circle cx="1315" cy="226" r="11" fill="#0284c7"/>
+
+  <rect x="60" y="270" width="180" height="150" class="box risk"/>
+  <text x="82" y="302" class="phase">0. 问题暴露</text>
+  <text x="82" y="334" class="body">旧题像 slot 拼接</text>
+  <text x="82" y="360" class="body">内部 ID / 时间轴混乱</text>
+  <text x="82" y="386" class="body">读起来不像正常 QA</text>
+  <text x="82" y="412" class="small">触发 Natural QA 改造</text>
+
+  <rect x="250" y="270" width="180" height="150" class="box done"/>
+  <text x="272" y="302" class="phase">1. Pilot</text>
+  <text x="272" y="334" class="body">6 个图文 case</text>
+  <text x="272" y="360" class="body">场景 / 问题 / 选项</text>
+  <text x="272" y="386" class="body">中英翻译齐全</text>
+  <text x="272" y="412" class="small">建立写作规则</text>
+
+  <rect x="445" y="270" width="180" height="150" class="box done"/>
+  <text x="467" y="302" class="phase">2. Balanced8</text>
+  <text x="467" y="334" class="body">48 个候选样本</text>
+  <text x="467" y="360" class="body">43 个正例保留</text>
+  <text x="467" y="386" class="body">12 张时序图</text>
+  <text x="467" y="412" class="small">覆盖多 domain</text>
+
+  <rect x="640" y="270" width="180" height="150" class="box done"/>
+  <text x="662" y="302" class="phase">3. Reviewer gate</text>
+  <text x="662" y="334" class="body">60 个扩展候选</text>
+  <text x="662" y="360" class="body">55 个低风险正例</text>
+  <text x="662" y="386" class="body">剔除规则冲突样本</text>
+  <text x="662" y="412" class="small">gold 仍由 slots 定</text>
+
+  <rect x="835" y="270" width="180" height="150" class="box current"/>
+  <text x="857" y="302" class="phase">4. 训练诊断</text>
+  <text x="857" y="334" class="body">发现 token budget</text>
+  <text x="857" y="360" class="body">导致 qcond 空生成</text>
+  <text x="857" y="386" class="body">修后 caption 非空</text>
+  <text x="857" y="412" class="small">新瓶颈：数字 grounding</text>
+
+  <rect x="1030" y="270" width="180" height="150" class="box next"/>
+  <text x="1052" y="302" class="phase">5. 微诊断</text>
+  <text x="1052" y="334" class="body">1-example overfit</text>
+  <text x="1052" y="360" class="body">token-level trace</text>
+  <text x="1052" y="386" class="body">save-load parity</text>
+  <text x="1052" y="412" class="small">定位机制 bug</text>
+
+  <rect x="1225" y="270" width="220" height="150" class="box next"/>
+  <text x="1247" y="302" class="phase">6. 扩大验证</text>
+  <text x="1247" y="334" class="body">完整 train/dev/test smoke</text>
+  <text x="1247" y="360" class="body">qcond vs no-question</text>
+  <text x="1247" y="386" class="body">QA + factuality 双指标</text>
+  <text x="1247" y="412" class="small">决定是否进入主实验</text>
+
+  <path d="M240 345 H250" class="arrow"/>
+  <path d="M430 345 H445" class="arrow"/>
+  <path d="M625 345 H640" class="arrow"/>
+  <path d="M820 345 H835" class="arrow"/>
+  <path d="M1015 345 H1030" class="arrow"/>
+  <path d="M1210 345 H1225" class="arrow"/>
+
+  <rect x="90" y="505" width="400" height="250" class="box done"/>
+  <text x="118" y="540" class="phase">已经比较清楚的结论</text>
+  <text x="118" y="578" class="body">• Natural QA 能显著改善问题可读性。</text>
+  <text x="118" y="610" class="body">• reviewer 适合当质检员，不适合决定答案。</text>
+  <text x="118" y="642" class="body">• 55 个正例不是模型上限，是严格准入后的样本池。</text>
+  <text x="118" y="674" class="body">• 训练前必须检查 target caption 是否真的进入 loss。</text>
+  <text x="118" y="706" class="body">• 非空生成不等于事实可靠，数字复制仍要单独审计。</text>
+
+  <rect x="550" y="505" width="400" height="250" class="box current"/>
+  <text x="578" y="540" class="phase">当前主要风险</text>
+  <text x="578" y="578" class="body">• 长 prompt + 短 max_text_length 会把答案截没。</text>
+  <text x="578" y="610" class="body">• 模型可能能写出顺畅 caption，但抄错数值。</text>
+  <text x="578" y="642" class="body">• 多样本过拟合失败时，不能直接扩大训练。</text>
+  <text x="578" y="674" class="body">• 必须区分：数据问题、collator 问题、生成路径问题、</text>
+  <text x="596" y="706" class="body">save/load 问题、模型数值 grounding 能力问题。</text>
+
+  <rect x="1010" y="505" width="400" height="250" class="box next"/>
+  <text x="1038" y="540" class="phase">建议下一步</text>
+  <text x="1038" y="578" class="body">• 先做 1-example overfit，不急着跑完整 89/35。</text>
+  <text x="1038" y="610" class="body">• 保存 first_new_token、raw decode、clean decode。</text>
+  <text x="1038" y="642" class="body">• 做 before-save / after-reload 一致性检查。</text>
+  <text x="1038" y="674" class="body">• 若 1-example 仍抄错数值，再改 target/canonical evidence。</text>
+  <text x="1038" y="706" class="body">• 通过后再跑完整 qcond/no-question 对照。</text>
+</svg>
