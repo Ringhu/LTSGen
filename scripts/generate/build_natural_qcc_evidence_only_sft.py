@@ -126,6 +126,212 @@ def support_numbers(slots: dict[str, Any]) -> list[str]:
     return numbers
 
 
+def sign_fmt(value: Any, digits: int = 2) -> str:
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return str(value)
+    return f"{number:+.{digits}f}"
+
+
+def task_requirements(row: dict[str, Any]) -> str:
+    """Name the evidence fields a q-conditioned caption must compute.
+
+    This is a prompt-side repair: it names field types, not field values, so the
+    model still has to ground the numbers from the current time-series window.
+    """
+
+    slots = row.get("support_slots") if isinstance(row.get("support_slots"), dict) else {}
+    if isinstance(slots.get("region_stds"), dict):
+        return "required evidence fields: early, middle, and late section standard deviations; largest section."
+    if "extrema_index" in slots and "extrema_value" in slots:
+        return "required evidence fields: local window length, extremum value, extremum local step, and the third containing that step."
+    if "event_abs_z" in slots and "event_index" in slots:
+        return "required evidence fields: local window length, strongest-event local step, absolute z-score, and pronounced-spike decision."
+    if "first_mean" in slots and "second_mean" in slots:
+        return "required evidence fields: first-half mean, second-half mean, relative difference, and half comparison."
+    if {"start_value", "end_value", "delta"}.issubset(slots):
+        return "required evidence fields: start value, end value, net change, variability, and trend decision."
+    if "corr_cpu_memory" in slots and "corr_net_rx_tx" in slots:
+        return "required evidence fields: CPU-memory correlation, network receive/transmit correlation, threshold comparison, and trusted pair."
+    if "corr_x1" in slots and "corr_x2" in slots:
+        return "required evidence fields: absolute correlation with x1, absolute correlation with x2, threshold comparison, and trusted relation."
+    if "best_lag" in slots and "best_lag_corr" in slots:
+        return "required evidence fields: tested lag, lag correlation, zero-lag check when available, and lead/no-lead decision."
+    if "factual_overload_exposure" in slots and "intervention_overload_exposure" in slots:
+        return "required evidence fields: factual exposure, intervention exposure, intervention-minus-factual difference, and effect direction."
+    if "mean_x0_diff" in slots:
+        return "required evidence fields: mean intervention-minus-factual stress difference and sign direction."
+    if "max_x0_diff" in slots and "min_x0_diff" in slots:
+        return "required evidence fields: minimum and maximum intervention-minus-factual stress difference and range direction."
+    if "event_factual_mean" in slots and "event_baseline_mean" in slots:
+        return "required evidence fields: event-window mean, matched baseline mean, gap, and event effect direction."
+    if "factual_mean" in slots and "counterfactual_mean" in slots:
+        return "required evidence fields: factual mean, counterfactual mean, delta, and material-change decision."
+    if "event_response_score_x0" in slots and "event_response_score_x1" in slots:
+        return "required evidence fields: x0 response score, x1 response score, threshold comparison, and stronger response."
+    if {"pre_mean", "event_mean", "post_mean"}.issubset(slots):
+        return "required evidence fields: pre-event mean, event mean, post-event mean, and recovery decision."
+    if "combined_stress_score" in slots:
+        return "required evidence fields: combined stress score, event timing, severe-event flag, and operating-state decision."
+    if "x0_mean" in slots and "x0_peak" in slots:
+        return "required evidence fields: mean stress, peak stress, mean demand, and overload-risk band."
+    if "mean_pressure" in slots and "min_pressure" in slots:
+        return "required evidence fields: mean pressure, minimum pressure, mean flow, and service-state band."
+    if "mean_speed" in slots and "max_queue" in slots:
+        return "required evidence fields: mean speed, maximum queue, mean occupancy, and congestion band."
+    if "controlled_event" in slots or "event_index" in slots:
+        return "required evidence fields: local window length, event local step, event timing, and anomaly decision."
+    return "required evidence fields: the numeric facts needed by the question and the resulting decision."
+
+
+def grounding_instruction(row: dict[str, Any], *, include_requirements: bool) -> str:
+    slots = row.get("support_slots") if isinstance(row.get("support_slots"), dict) else {}
+    win_len = window_len(slots)
+    if win_len is None and row.get("values"):
+        win_len = len(row.get("values") or [])
+    parts = [
+        "Grounding checklist: compute numbers from this specific trace window only; do not reuse numeric facts from other examples."
+    ]
+    if win_len:
+        parts.append(f"The local window has {win_len} time steps; if you mention a window length, it must be {win_len}.")
+    if include_requirements:
+        parts.append(task_requirements(row))
+    parts.append("Keep local-step, half-window, correlation, and counterfactual signs internally consistent with the numbers you report.")
+    return " ".join(parts)
+
+
+def numeric_grounding_repaired_evidence_text(row: dict[str, Any]) -> str:
+    """Build value-copy-focused targets from deterministic support slots."""
+
+    slots = row.get("support_slots") if isinstance(row.get("support_slots"), dict) else {}
+    decision = option_label(row)
+    task = str(row.get("task_family", ""))
+    win_len = window_len(slots)
+    win_phrase = f"in the {win_len}-step local window" if win_len else "in the local window"
+    evidence: str
+    rule: str
+
+    if isinstance(slots.get("region_stds"), dict):
+        values = slots["region_stds"]
+        largest = max(("early", "middle", "late"), key=lambda key: float(values.get(key, 0.0)))
+        evidence = (
+            f"Evidence: {win_phrase}, section standard deviations are "
+            f"early={fmt(values.get('early'))}, middle={fmt(values.get('middle'))}, "
+            f"late={fmt(values.get('late'))}; the largest section is {largest}."
+        )
+        rule = "Decision rule: choose the section with the largest standard deviation unless the section values are effectively similar."
+    elif "extrema_index" in slots and "extrema_value" in slots:
+        mode = str(slots.get("extrema_mode") or ("minimum" if "min" in task else "maximum")).lower()
+        mode_word = "minimum" if "min" in mode else "maximum"
+        evidence = (
+            f"Evidence: {win_phrase}, the {mode_word} value is {fmt(slots.get('extrema_value'))} "
+            f"at local step {slots.get('extrema_index')}."
+        )
+        rule = "Decision rule: split the local window into early, middle, and late thirds and choose the third containing that local step."
+    elif "event_abs_z" in slots and "event_index" in slots:
+        evidence = (
+            f"Evidence: {win_phrase}, the strongest event is at local step {slots.get('event_index')} "
+            f"with absolute z-score {fmt(slots.get('event_abs_z'))}."
+        )
+        rule = "Decision rule: apply the pronounced-event cutoff from the question; if the event is not pronounced, choose the no-pronounced-spike option."
+    elif "first_mean" in slots and "second_mean" in slots:
+        diff = float(slots.get("second_mean", 0.0)) - float(slots.get("first_mean", 0.0))
+        rel_diff = abs(diff) / max(abs(float(slots.get("first_mean", 0.0))), abs(float(slots.get("second_mean", 0.0))), 1.0)
+        evidence = (
+            f"Evidence: {win_phrase}, first-half mean is {fmt(slots.get('first_mean'))}, "
+            f"second-half mean is {fmt(slots.get('second_mean'))}, "
+            f"and second-minus-first difference is {sign_fmt(diff)} "
+            f"(relative difference {rel_diff:.3f})."
+        )
+        rule = "Decision rule: use the stated relative-difference threshold to decide similar halves versus the higher half."
+    elif {"start_value", "end_value", "delta"}.issubset(slots):
+        std_text = f", variability is {fmt(slots.get('std'))}" if slots.get("std") is not None else ""
+        evidence = (
+            f"Evidence: {win_phrase}, the signal starts at {fmt(slots.get('start_value'))}, "
+            f"ends at {fmt(slots.get('end_value'))}, and net change is {sign_fmt(slots.get('delta'))}{std_text}."
+        )
+        rule = "Decision rule: compare the signed net change with the stated trend tolerance and variability."
+    elif "corr_cpu_memory" in slots and "corr_net_rx_tx" in slots:
+        evidence = (
+            f"Evidence: {win_phrase}, CPU-memory correlation is {fmt(slots.get('corr_cpu_memory'), 3)}, "
+            f"and network receive/transmit correlation is {fmt(slots.get('corr_net_rx_tx'), 3)}."
+        )
+        rule = "Decision rule: use absolute correlation; values below 0.30 are not usable, and close usable values are treated as similar."
+    elif "corr_x1" in slots and "corr_x2" in slots:
+        evidence = (
+            f"Evidence: {win_phrase}, absolute correlation with x1 is {fmt(abs(float(slots.get('corr_x1', 0))), 3)}, "
+            f"and absolute correlation with x2 is {fmt(abs(float(slots.get('corr_x2', 0))), 3)}."
+        )
+        rule = "Decision rule: use absolute correlation; values below 0.30 are weak, and differences below 0.05 are treated as similar."
+    elif "best_lag" in slots and "best_lag_corr" in slots:
+        zero = f", zero-lag correlation is {fmt(slots.get('zero_lag_corr'), 3)}" if slots.get("zero_lag_corr") is not None else ""
+        evidence = (
+            f"Evidence: {win_phrase}, the strongest tested lag is {slots.get('best_lag')} "
+            f"with correlation {fmt(slots.get('best_lag_corr'), 3)}{zero}."
+        )
+        rule = "Decision rule: lag 0 means no stable timing lead; a stable nonzero lag indicates the leading signal."
+    elif "factual_overload_exposure" in slots and "intervention_overload_exposure" in slots:
+        evidence = (
+            "Evidence: in the same post-event segment, factual overload exposure is "
+            f"{fmt(slots.get('factual_overload_exposure'))}, intervention exposure is "
+            f"{fmt(slots.get('intervention_overload_exposure'))}, and intervention-minus-factual exposure is "
+            f"{sign_fmt(slots.get('exposure_diff'))}."
+        )
+        rule = "Decision rule: positive intervention-minus-factual exposure means the intervention creates greater overload exposure."
+    elif "mean_x0_diff" in slots:
+        evidence = (
+            "Evidence: in the same post-event segment, mean intervention-minus-factual stress difference is "
+            f"{sign_fmt(slots.get('mean_x0_diff'))}."
+        )
+        rule = "Decision rule: positive values mean average stress is higher after intervention; negative values mean it is lower."
+    elif "max_x0_diff" in slots and "min_x0_diff" in slots:
+        evidence = (
+            "Evidence: in the same post-event segment, intervention-minus-factual stress difference ranges from "
+            f"{sign_fmt(slots.get('min_x0_diff'))} to {sign_fmt(slots.get('max_x0_diff'))}."
+        )
+        rule = "Decision rule: a consistently positive range means the intervention raises stress; a negative range means it lowers stress."
+    elif "event_factual_mean" in slots and "event_baseline_mean" in slots:
+        evidence = (
+            f"Evidence: {win_phrase}, event-window mean is {fmt(slots.get('event_factual_mean'))}, "
+            f"matched baseline mean is {fmt(slots.get('event_baseline_mean'))}, "
+            f"and event-minus-baseline gap is {sign_fmt(slots.get('event_gap'))}."
+        )
+        rule = "Decision rule: compare the event-window mean against the matched baseline and treat near-zero gaps as similar."
+    elif "factual_mean" in slots and "counterfactual_mean" in slots:
+        evidence = (
+            f"Evidence: {win_phrase}, factual mean is {fmt(slots.get('factual_mean'))}, "
+            f"counterfactual mean is {fmt(slots.get('counterfactual_mean'))}, "
+            f"and factual-minus-counterfactual delta is {sign_fmt(slots.get('delta'))}."
+        )
+        rule = "Decision rule: compare factual operation with the counterfactual baseline; near-zero delta means no material change."
+    elif "event_response_score_x0" in slots and "event_response_score_x1" in slots:
+        evidence = (
+            f"Evidence: {win_phrase}, x0 event-response score is {fmt(slots.get('event_response_score_x0'), 3)}, "
+            f"and x1 event-response score is {fmt(slots.get('event_response_score_x1'), 3)}."
+        )
+        rule = "Decision rule: scores below 1.00 are not clear responses, and close scores are treated as similar."
+    elif {"pre_mean", "event_mean", "post_mean"}.issubset(slots):
+        evidence = (
+            f"Evidence: {win_phrase}, pre-event mean is {fmt(slots.get('pre_mean'))}, "
+            f"event mean is {fmt(slots.get('event_mean'))}, and post-event mean is {fmt(slots.get('post_mean'))}."
+        )
+        rule = "Decision rule: compare post-event level with event and pre-event levels to decide recovery, persistence, or overshoot."
+    elif "combined_stress_score" in slots:
+        flag = slots.get("x0_event_indicator")
+        evidence = (
+            f"Evidence: {win_phrase}, combined stress score is {fmt(slots.get('combined_stress_score'))}, "
+            f"event timing is {slots.get('event_label')}, and severe-event flag is {flag}."
+        )
+        rule = "Decision rule: use the stated stress-score band together with the event flag to classify the operating state."
+    else:
+        base = style_repaired_evidence_text(row)
+        evidence, _, tail = base.partition(" Decision rule:")
+        rule = "Decision rule:" + tail if tail else "Decision rule: use the numeric evidence stated above to choose the matching operational conclusion."
+
+    return re.sub(r"\s+", " ", f"{evidence} {rule} Therefore, {decision}.").strip()
+
+
 def style_repaired_evidence_text(row: dict[str, Any]) -> str:
     """Build a stable evidence/rule/decision target from deterministic slots.
 
@@ -279,7 +485,13 @@ def options_text(row: dict[str, Any]) -> str:
     return "; ".join(str(item).strip() for item in options if str(item).strip())
 
 
-def build_prompt(row: dict[str, Any], *, include_options: bool = False, style_repair: bool = False) -> str:
+def build_prompt(
+    row: dict[str, Any],
+    *,
+    include_options: bool = False,
+    style_repair: bool = False,
+    numeric_grounding_repair: bool = False,
+) -> str:
     scene = str(row.get("scene_en", "")).strip()
     variables = row.get("variables_en") or []
     if isinstance(variables, list):
@@ -287,7 +499,7 @@ def build_prompt(row: dict[str, Any], *, include_options: bool = False, style_re
     else:
         variables_text = str(variables)
     question = str(row.get("question", "")).strip()
-    if style_repair:
+    if style_repair or numeric_grounding_repair:
         prompt = (
             "You are a question-conditioned time-series evidence captioner. "
             "Given the time series, scene, variables, and question, write exactly "
@@ -298,6 +510,8 @@ def build_prompt(row: dict[str, Any], *, include_options: bool = False, style_re
             f"Variables: {variables_text}\n"
             f"Question: {question}"
         )
+        if numeric_grounding_repair:
+            prompt += f"\n{grounding_instruction(row, include_requirements=True)}"
     else:
         prompt = (
             "You are a question-conditioned time-series evidence captioner. "
@@ -315,15 +529,15 @@ def build_prompt(row: dict[str, Any], *, include_options: bool = False, style_re
     return prompt
 
 
-def build_no_question_prompt(row: dict[str, Any], *, style_repair: bool = False) -> str:
+def build_no_question_prompt(row: dict[str, Any], *, style_repair: bool = False, numeric_grounding_repair: bool = False) -> str:
     scene = str(row.get("scene_en", "")).strip()
     variables = row.get("variables_en") or []
     if isinstance(variables, list):
         variables_text = "; ".join(str(item) for item in variables)
     else:
         variables_text = str(variables)
-    if style_repair:
-        return (
+    if style_repair or numeric_grounding_repair:
+        prompt = (
             "You are a time-series evidence captioner. Given the time series, scene, "
             "and variables, write exactly three short English evidence clauses in this "
             "order: Evidence, Decision rule, Therefore. Include numeric facts from the "
@@ -331,6 +545,9 @@ def build_no_question_prompt(row: dict[str, Any], *, style_repair: bool = False)
             f"Scene: {scene}\n"
             f"Variables: {variables_text}"
         )
+        if numeric_grounding_repair:
+            prompt += f"\n{grounding_instruction(row, include_requirements=False)}"
+        return prompt
     return (
         "You are a time-series evidence captioner. Given the time series, scene, "
         "and variables, write one or two concise natural-language evidence "
@@ -347,13 +564,25 @@ def transform_row(
     prompt_control: str,
     include_options_in_prompt: bool = False,
     style_repair: bool = False,
+    numeric_grounding_repair: bool = False,
 ) -> dict[str, Any]:
-    evidence = style_repaired_evidence_text(row) if style_repair else evidence_text(row)
+    evidence = (
+        numeric_grounding_repaired_evidence_text(row)
+        if numeric_grounding_repair
+        else style_repaired_evidence_text(row)
+        if style_repair
+        else evidence_text(row)
+    )
     out = dict(row)
     out["prompt"] = (
-        build_no_question_prompt(row, style_repair=style_repair)
+        build_no_question_prompt(row, style_repair=style_repair, numeric_grounding_repair=numeric_grounding_repair)
         if prompt_control == "no_question"
-        else build_prompt(row, include_options=include_options_in_prompt, style_repair=style_repair)
+        else build_prompt(
+            row,
+            include_options=include_options_in_prompt,
+            style_repair=style_repair,
+            numeric_grounding_repair=numeric_grounding_repair,
+        )
     )
     out["output"] = evidence
     out["target_caption"] = evidence
@@ -366,6 +595,7 @@ def transform_row(
             "question_conditioned": prompt_control == "qcond",
             "include_options_in_prompt": include_options_in_prompt if prompt_control == "qcond" else False,
             "style_repair": style_repair,
+            "numeric_grounding_repair": numeric_grounding_repair,
             "merge_source_name": source_name(row),
             "task_family": row.get("task_family", ""),
             "answer": row.get("answer", ""),
@@ -434,6 +664,7 @@ def markdown(report: dict[str, Any]) -> str:
         f"- output dir: `{report['out_dir']}`",
         f"- include options in qcond prompt: `{report['include_options_in_prompt']}`",
         f"- style repair: `{report['style_repair']}`",
+        f"- numeric grounding repair: `{report['numeric_grounding_repair']}`",
         f"- train splits: `{report['train_splits']}`",
         f"- eval split: `{report['eval_split']}`",
         f"- schema gate pass: `{report['schema_gate_pass']}`",
@@ -478,6 +709,11 @@ def main() -> None:
         action="store_true",
         help="Rewrite evidence-only targets into a uniform Evidence / Decision rule / Therefore style using support slots.",
     )
+    parser.add_argument(
+        "--numeric_grounding_repair",
+        action="store_true",
+        help="Use value-copy-focused targets and prompt instructions that name required evidence fields without exposing slot values.",
+    )
     args = parser.parse_args()
 
     positive_rows = load_jsonl(args.positive_jsonl)
@@ -488,6 +724,7 @@ def main() -> None:
         "run_name": args.run_name,
         "include_options_in_prompt": args.include_options_in_prompt,
         "style_repair": args.style_repair,
+        "numeric_grounding_repair": args.numeric_grounding_repair,
         "train_splits": args.train_splits,
         "eval_split": args.eval_split,
         "original_positive": summarize(positive_rows),
@@ -501,6 +738,7 @@ def main() -> None:
                 prompt_control=control,
                 include_options_in_prompt=args.include_options_in_prompt,
                 style_repair=args.style_repair,
+                numeric_grounding_repair=args.numeric_grounding_repair,
             )
             for row in positive_rows
         ]

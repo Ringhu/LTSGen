@@ -5,7 +5,12 @@ import unittest
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from scripts.generate.build_natural_qcc_evidence_only_sft import evidence_text, style_repaired_evidence_text, transform_row
+from scripts.generate.build_natural_qcc_evidence_only_sft import (
+    evidence_text,
+    numeric_grounding_repaired_evidence_text,
+    style_repaired_evidence_text,
+    transform_row,
+)
 
 
 class BuildNaturalQccEvidenceOnlySftTest(unittest.TestCase):
@@ -118,6 +123,68 @@ class BuildNaturalQccEvidenceOnlySftTest(unittest.TestCase):
         self.assertIn("early=18.41", evidence)
         self.assertIn("Evidence, Decision rule, Therefore", out["prompt"])
         self.assertTrue(out["meta"]["style_repair"])
+
+    def test_numeric_grounding_repair_names_fields_without_prompt_slot_values(self):
+        row = {
+            "id": "grid1",
+            "values": [[0.0, 1.0]] * 2048,
+            "scene_en": "A grid operator reviews a local simulator window.",
+            "variables_en": ["x0 max rho", "x1 total load"],
+            "question": "Where does the maximum line-loading stress occur?",
+            "options": ["A. early", "B. middle", "C. late", "D. no clear extremum"],
+            "answer": "B",
+            "answer_label": "middle",
+            "task_family": "grid_extrema_max_rho",
+            "merge_source_name": "grid2op",
+            "support_slots": {
+                "extrema_index": 809,
+                "extrema_value": 1.119,
+                "horizon": 2048,
+                "window_start": 0,
+                "window_end": 2048,
+                "answer_label": "middle",
+            },
+            "meta": {},
+        }
+
+        evidence = numeric_grounding_repaired_evidence_text(row)
+        out = transform_row(row, prompt_control="qcond", numeric_grounding_repair=True)
+
+        self.assertIn("2048-step local window", evidence)
+        self.assertIn("1.12", evidence)
+        self.assertIn("local step 809", evidence)
+        self.assertIn("Therefore, middle.", evidence)
+        self.assertIn("required evidence fields: local window length, extremum value, extremum local step", out["prompt"])
+        self.assertIn("The local window has 2048 time steps", out["prompt"])
+        self.assertNotIn("809", out["prompt"])
+        self.assertNotIn("1.119", out["prompt"])
+        self.assertTrue(out["meta"]["numeric_grounding_repair"])
+
+    def test_numeric_grounding_repair_keeps_counterfactual_sign_explicit(self):
+        row = {
+            "id": "grid2",
+            "values": [[0.0, 1.0]] * 256,
+            "scene_en": "A grid operator compares factual and intervention windows.",
+            "variables_en": ["x0 max rho", "x1 total load"],
+            "question": "Does the intervention increase average stress?",
+            "options": ["A. higher after intervention", "B. lower after intervention", "C. similar", "D. cannot determine"],
+            "answer": "A",
+            "answer_label": "higher after intervention",
+            "task_family": "grid_counterfactual_mean_stress",
+            "merge_source_name": "grid2op",
+            "support_slots": {
+                "mean_x0_diff": 0.0669,
+                "answer_label": "higher after intervention",
+                "window_start": 0,
+                "window_end": 256,
+            },
+            "meta": {},
+        }
+
+        evidence = numeric_grounding_repaired_evidence_text(row)
+
+        self.assertIn("+0.07", evidence)
+        self.assertIn("positive values mean average stress is higher after intervention", evidence)
 
 
 if __name__ == "__main__":
