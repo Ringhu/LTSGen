@@ -1,0 +1,418 @@
+{
+  "cases": [
+    {
+      "case_key": "grid2op_counterfactual_stress",
+      "source": "grid2op",
+      "row_id": "multisim_qcc_v5_aiops_v3::grid2op::grid2op_broad_cf::h2048_c-1_t512_line1::post769_1025::grid_counterfactual_peak_stress",
+      "title_en": "Grid2Op line-disconnection stress check",
+      "title_zh": "Grid2Op 断线后的线路压力检查",
+      "variables_en": [
+        "x0: intervention-minus-factual maximum line-loading stress",
+        "x1: demand-context difference",
+        "x2: generation-margin-context difference"
+      ],
+      "variables_zh": [
+        "x0：干预轨迹减事实轨迹后的最大线路负载压力差",
+        "x1：需求上下文差异",
+        "x2：发电裕度上下文差异"
+      ],
+      "scene_en": "A Grid2Op operator is reviewing a 256-step local window after line 1 was disconnected. The disconnection happened earlier at global step 512; this plot starts at global step 769, so every point shown is already post-event. In this counterfactual plot, positive x0 means the disconnection makes maximum line-loading stress higher than the original factual run.",
+      "scene_zh": "一名 Grid2Op 电网调度员正在查看 1 号线路断开后的 256 步局部窗口。断线发生在更早的全局第 512 步；这张图从全局第 769 步开始，因此图中所有点都已经是事件后片段。在这张反事实图里，x0 为正表示断线让最大线路负载压力高于原始事实运行。",
+      "question_en": "In this post-event window, what is the main effect of disconnecting line 1 on maximum line-loading stress?",
+      "question_zh": "在这个事件后窗口里，断开 1 号线路对最大线路负载压力的主要影响是什么？",
+      "options": [
+        {
+          "letter": "A",
+          "en": "It mainly lowers the stress.",
+          "zh": "主要降低线路压力。"
+        },
+        {
+          "letter": "B",
+          "en": "It causes no material stress change.",
+          "zh": "没有造成实质压力变化。"
+        },
+        {
+          "letter": "C",
+          "en": "It raises the stress with a clear positive deviation.",
+          "zh": "产生清晰的正向偏差，使线路压力升高。"
+        },
+        {
+          "letter": "D",
+          "en": "The plotted window is not enough to tell.",
+          "zh": "仅凭这个窗口无法判断。"
+        }
+      ],
+      "gold_answer": "C",
+      "gold_answer_zh": "产生清晰的正向偏差，使线路压力升高。",
+      "evidence_en": "x0 stays positive throughout the post-event segment, with post-event differences from about 0.37 to 0.56.",
+      "evidence_zh": "事件后片段里 x0 始终为正，差值大约在 0.37 到 0.56 之间。",
+      "design_note_zh": "把 global step 和局部窗口的关系放进场景说明，问题本身只问调度员关心的效果。",
+      "task_family": "grid_counterfactual_peak_stress",
+      "original_question": "The provided trace is intervention-minus-factual after disconnecting line 1 at global step 512, shown in segment post769_1025. What is the strongest post-event stress deviation in x0?",
+      "original_options": [
+        "A. larger downward dip",
+        "B. no material change",
+        "C. larger upward peak",
+        "D. cannot determine"
+      ],
+      "original_answer": "C",
+      "original_answer_label": "larger upward peak",
+      "support_slots": {
+        "max_x0_diff": 0.5586962103843689,
+        "min_x0_diff": 0.3663806915283203,
+        "answer_label": "larger upward peak",
+        "line_id": 1,
+        "intervention_step": 512,
+        "post_start": 0,
+        "global_post_start": 513,
+        "segment_start": 769,
+        "segment_end": 1025,
+        "segment_tag": "post769_1025"
+      },
+      "figure": "figures/grid2op_counterfactual_stress.png"
+    },
+    {
+      "case_key": "citylearn_energy_planning",
+      "source": "citylearn",
+      "row_id": "multisim_qcc_v5_aiops_v3::citylearn::citylearn_broad::citylearn_challenge_2022_phase_1_start6144_h2048_b5::w1664_1920::city_window_total_load",
+      "title_en": "CityLearn building-load planning",
+      "title_zh": "CityLearn 建筑负载调度判断",
+      "variables_en": [
+        "x0: total building electricity load",
+        "x1: outdoor/weather context",
+        "x2: solar or auxiliary context"
+      ],
+      "variables_zh": [
+        "x0：建筑总用电负载",
+        "x1：室外/天气上下文",
+        "x2：太阳能或辅助上下文"
+      ],
+      "scene_en": "A building energy controller uses x0 as the electricity demand signal. Higher average x0 means the controller should reserve more grid or battery supply for that part of the window.",
+      "scene_zh": "建筑能耗控制器把 x0 作为用电需求信号。x0 平均值越高，表示这一段需要预留更多电网或电池供给。",
+      "question_en": "For this window, when should the controller plan for higher average electricity demand?",
+      "question_zh": "在这个窗口里，控制器应该在哪一段为更高的平均用电需求做准备？",
+      "options": [
+        {
+          "letter": "A",
+          "en": "The second half of the window.",
+          "zh": "窗口后半段。"
+        },
+        {
+          "letter": "B",
+          "en": "The first half of the window.",
+          "zh": "窗口前半段。"
+        },
+        {
+          "letter": "C",
+          "en": "Both halves are about the same.",
+          "zh": "前后两半差不多。"
+        },
+        {
+          "letter": "D",
+          "en": "The plot is not enough to determine this.",
+          "zh": "仅凭图无法判断。"
+        }
+      ],
+      "gold_answer": "B",
+      "gold_answer_zh": "窗口前半段。",
+      "evidence_en": "The first-half mean of x0 is 7.77, higher than the second-half mean of 6.65.",
+      "evidence_zh": "x0 前半段均值为 7.77，高于后半段均值 6.65。",
+      "design_note_zh": "从“比较均值”改成“建筑控制器做供能计划”的自然决策问题。",
+      "task_family": "city_window_total_load",
+      "original_question": "Is total building load x0 higher in the first half or the second half of the window?",
+      "original_options": [
+        "A. second half higher",
+        "B. first half higher",
+        "C. similar halves",
+        "D. cannot determine"
+      ],
+      "original_answer": "B",
+      "original_answer_label": "first half higher",
+      "support_slots": {
+        "first_mean": 7.773307588367187,
+        "second_mean": 6.645089904023438,
+        "answer_label": "first half higher",
+        "window_start": 1664,
+        "window_end": 1920,
+        "trace_bucket_group": "citylearn_challenge_2022_phase_1_start6144_h2048_b5::bucket06"
+      },
+      "figure": "figures/citylearn_energy_planning.png"
+    },
+    {
+      "case_key": "finrl_mrk_drawdown_risk",
+      "source": "finrl_scaled",
+      "row_id": "multisim_qcc_v5_aiops_v3::finrl_scaled::finrl_broad::MRK::w2043_2555::fin_drawdown_price",
+      "title_en": "FinRL MRK drawdown-risk review",
+      "title_zh": "FinRL MRK 回撤风险复盘",
+      "variables_en": [
+        "x0: MRK target close price",
+        "x1: equal-weight market index",
+        "x2: trading volume"
+      ],
+      "variables_zh": [
+        "x0：MRK 目标收盘价",
+        "x1：等权市场指数",
+        "x2：交易量"
+      ],
+      "scene_en": "A risk analyst is reviewing the MRK price window. In this setting, drawdown means the largest peak-to-trough percentage loss inside the window; a fall around one third of the price level is treated as severe.",
+      "scene_zh": "一名风险分析师正在复盘 MRK 的价格窗口。这里的回撤指窗口内从峰值到谷值的最大百分比损失；接近三分之一价格水平的下跌应视为严重回撤。",
+      "question_en": "From a risk-management perspective, how should this MRK window be described?",
+      "question_zh": "从风险管理角度看，这段 MRK 窗口应该如何描述？",
+      "options": [
+        {
+          "letter": "A",
+          "en": "Moderate drawdown.",
+          "zh": "中等回撤。"
+        },
+        {
+          "letter": "B",
+          "en": "Mild drawdown.",
+          "zh": "轻微回撤。"
+        },
+        {
+          "letter": "C",
+          "en": "Severe drawdown.",
+          "zh": "严重回撤。"
+        },
+        {
+          "letter": "D",
+          "en": "Little drawdown.",
+          "zh": "回撤很小。"
+        }
+      ],
+      "gold_answer": "C",
+      "gold_answer_zh": "严重回撤。",
+      "evidence_en": "The maximum drawdown is about 36.65% during the 2023-02-14 to 2025-02-28 review window.",
+      "evidence_zh": "在 2023-02-14 到 2025-02-28 的复盘窗口中，最大回撤约为 36.65%。",
+      "design_note_zh": "明确股票是 MRK，不再写“ticker named in the question”；问题面向风险管理语境。",
+      "task_family": "fin_drawdown_price",
+      "original_question": "What drawdown regime best describes MRK target price x0 in this window?",
+      "original_options": [
+        "A. moderate drawdown",
+        "B. mild drawdown",
+        "C. severe drawdown",
+        "D. little drawdown"
+      ],
+      "original_answer": "C",
+      "original_answer_label": "severe drawdown",
+      "support_slots": {
+        "max_drawdown": -0.3664664534790538,
+        "drawdown_peak_index": 340,
+        "drawdown_trough_index": 502,
+        "answer_label": "severe drawdown",
+        "window_start": 2043,
+        "window_end": 2555,
+        "date_start": "2023-02-14",
+        "date_end": "2025-02-28"
+      },
+      "figure": "figures/finrl_mrk_drawdown_risk.png"
+    },
+    {
+      "case_key": "water_service_resilience",
+      "source": "water",
+      "row_id": "multisim_qcc_v5_aiops_v3::water::water_broad::water_scenario_015::water_domain_resilience_context",
+      "title_en": "Water-network service-state check",
+      "title_zh": "供水网络服务状态判断",
+      "variables_en": [
+        "x0: water pressure",
+        "x1: pipe flow",
+        "x2: tank storage"
+      ],
+      "variables_zh": [
+        "x0：水压",
+        "x1：管道流量",
+        "x2：水箱蓄水量"
+      ],
+      "scene_en": "A water-network operator is checking whether the service looks stressed. Low pressure would suggest service risk, while stable pressure with ordinary flow is consistent with normal operation.",
+      "scene_zh": "供水网络运维人员正在判断服务是否承压。低水压会提示供水风险；水压稳定且流量正常则更符合正常运行。",
+      "question_en": "Which operational state best matches this water-network window?",
+      "question_zh": "这个供水网络窗口最符合哪种运行状态？",
+      "options": [
+        {
+          "letter": "A",
+          "en": "Leak-stressed network.",
+          "zh": "漏水压力下的网络。"
+        },
+        {
+          "letter": "B",
+          "en": "Low-pressure service risk.",
+          "zh": "低水压服务风险。"
+        },
+        {
+          "letter": "C",
+          "en": "Unclear hydraulic state.",
+          "zh": "水力状态不清楚。"
+        },
+        {
+          "letter": "D",
+          "en": "Stable water service.",
+          "zh": "稳定供水服务。"
+        }
+      ],
+      "gold_answer": "D",
+      "gold_answer_zh": "稳定供水服务。",
+      "evidence_en": "Mean pressure is 83.43, minimum pressure is 57.73, and mean flow is 10.71, matching a stable-service label.",
+      "evidence_zh": "平均水压为 83.43，最低水压为 57.73，平均流量为 10.71，对应稳定供水服务标签。",
+      "design_note_zh": "用水务运维状态来表达，而不是直接问某个统计量。",
+      "task_family": "water_domain_resilience_context",
+      "original_question": "What operational water-network condition best describes this window?",
+      "original_options": [
+        "A. leak-stressed network",
+        "B. low-pressure risk",
+        "C. unclear hydraulic state",
+        "D. stable water service"
+      ],
+      "original_answer": "D",
+      "original_answer_label": "stable water service",
+      "support_slots": {
+        "mean_pressure": 83.42916676402092,
+        "min_pressure": 57.73121643066406,
+        "mean_flow": 10.705253700507456,
+        "answer_label": "stable water service",
+        "window_start": 0,
+        "window_end": 256,
+        "event_index": null,
+        "event_label": "no pronounced leak"
+      },
+      "figure": "figures/water_service_resilience.png"
+    },
+    {
+      "case_key": "traffic_signal_queue_effect",
+      "source": "traffic",
+      "row_id": "multisim_qcc_v5_aiops_v3::traffic::traffic_broad::traffic_scenario_025::traffic_signal_counterfactual_queue",
+      "title_en": "Traffic signal-policy queue comparison",
+      "title_zh": "交通信号策略的队列影响比较",
+      "variables_en": [
+        "x0: mean traffic speed",
+        "x1: queue length",
+        "x2: occupancy or control context"
+      ],
+      "variables_zh": [
+        "x0：平均车速",
+        "x1：队列长度",
+        "x2：占有率或控制上下文"
+      ],
+      "scene_en": "A traffic engineer compares an adaptive signal policy against a matched fixed-signal baseline under the same demand window. For queue length, lower is better.",
+      "scene_zh": "交通工程师在相同需求窗口下比较自适应信号策略和匹配的固定信号基线。对队列长度来说，越低越好。",
+      "question_en": "Did the adaptive signal policy improve queueing in this window?",
+      "question_zh": "在这个窗口里，自适应信号策略是否改善了排队情况？",
+      "options": [
+        {
+          "letter": "A",
+          "en": "Yes, it lowered the mean queue.",
+          "zh": "是，它降低了平均队列长度。"
+        },
+        {
+          "letter": "B",
+          "en": "The two policies have the same mean queue.",
+          "zh": "两种策略的平均队列长度相同。"
+        },
+        {
+          "letter": "C",
+          "en": "The mean queue values are not enough to decide.",
+          "zh": "给出的平均队列长度不足以判断。"
+        },
+        {
+          "letter": "D",
+          "en": "No, it raised the mean queue.",
+          "zh": "没有，它提高了平均队列长度。"
+        }
+      ],
+      "gold_answer": "D",
+      "gold_answer_zh": "没有，它提高了平均队列长度。",
+      "evidence_en": "The adaptive-signal mean queue is 2.91, higher than the matched fixed-signal baseline mean of 2.56.",
+      "evidence_zh": "自适应信号下平均队列为 2.91，高于匹配固定信号基线的 2.56。",
+      "design_note_zh": "把“factual vs baseline”改成交通工程师关心的策略是否改善排队。",
+      "task_family": "traffic_signal_counterfactual_queue",
+      "original_question": "Compared with the matched fixed-signal baseline, how does the traffic-control scenario change mean queue length?",
+      "original_options": [
+        "A. lower queue under adaptive signal",
+        "B. no material queue change",
+        "C. mixed effect",
+        "D. higher queue under adaptive signal"
+      ],
+      "original_answer": "D",
+      "original_answer_label": "higher queue under adaptive signal",
+      "support_slots": {
+        "factual_mean": 2.91015625,
+        "counterfactual_mean": 2.55859375,
+        "delta": 0.3515625,
+        "counterfactual_var": 1,
+        "answer_label": "higher queue under adaptive signal",
+        "window_start": 0,
+        "window_end": 256,
+        "event_index": 141,
+        "event_label": "middle"
+      },
+      "figure": "figures/traffic_signal_queue_effect.png"
+    },
+    {
+      "case_key": "aiops_memory_pressure",
+      "source": "aiopslab_official_v3",
+      "row_id": "multisim_qcc_v5_aiops_v3::aiopslab_official_v3::aiopslab_official::scale_pod_zero_seed0_user-service::case005::aiops_official_window_memory",
+      "title_en": "AIOpsLab memory-pressure triage",
+      "title_zh": "AIOpsLab 内存压力排查",
+      "variables_en": [
+        "x0: service CPU load",
+        "x1: memory working set",
+        "x2: network receive rate",
+        "x3: network transmit rate"
+      ],
+      "variables_zh": [
+        "x0：服务 CPU 负载",
+        "x1：内存工作集",
+        "x2：网络接收速率",
+        "x3：网络发送速率"
+      ],
+      "scene_en": "An SRE is triaging an AIOpsLab microservice incident window. The memory working set x1 is used as a memory-pressure signal; a higher second-half average means pressure is building rather than easing.",
+      "scene_zh": "一名 SRE 正在排查 AIOpsLab 微服务事故窗口。内存工作集 x1 用作内存压力信号；后半段平均值更高表示压力在累积，而不是缓解。",
+      "question_en": "Does memory pressure ease or build up over this incident window?",
+      "question_zh": "在这个事故窗口中，内存压力是在缓解还是在累积？",
+      "options": [
+        {
+          "letter": "A",
+          "en": "It is higher in the first half, so pressure eases later.",
+          "zh": "前半段更高，因此后面压力缓解。"
+        },
+        {
+          "letter": "B",
+          "en": "It is higher in the second half, so pressure builds up.",
+          "zh": "后半段更高，因此压力在累积。"
+        },
+        {
+          "letter": "C",
+          "en": "Both halves are about the same.",
+          "zh": "前后两半差不多。"
+        },
+        {
+          "letter": "D",
+          "en": "The telemetry is not enough to tell.",
+          "zh": "这些遥测不足以判断。"
+        }
+      ],
+      "gold_answer": "B",
+      "gold_answer_zh": "后半段更高，因此压力在累积。",
+      "evidence_en": "The first-half mean of x1 is 12,725,660.44, while the second-half mean is 14,534,246.40.",
+      "evidence_zh": "x1 前半段均值为 12,725,660.44，后半段均值为 14,534,246.40。",
+      "design_note_zh": "把窗口均值比较转成 SRE 事故排查中的“压力是否累积”。",
+      "task_family": "aiops_official_window_memory",
+      "original_question": "Is memory working set x1 higher in the first half or the second half of the window?",
+      "original_options": [
+        "A. first half higher",
+        "B. second half higher",
+        "C. similar halves",
+        "D. cannot determine"
+      ],
+      "original_answer": "B",
+      "original_answer_label": "second half higher",
+      "support_slots": {
+        "first_mean": 12725660.444444444,
+        "second_mean": 14534246.399999999,
+        "answer_label": "second half higher",
+        "window_start": 0,
+        "window_end": 64
+      },
+      "figure": "figures/aiops_memory_pressure.png"
+    }
+  ]
+}
