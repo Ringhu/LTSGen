@@ -1,0 +1,1733 @@
+{
+  "input": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/rewrites/natural_qcc_failure_domain_rewrites.jsonl",
+  "model": "gpt-5.5",
+  "n_cases": 72,
+  "n_reviews": 72,
+  "reviews": [
+    {
+      "id": "grid2op_broad::rte_case14_realistic_chronic4_trace_2048_nooverflow::w768_1280::grid_trend_max_rho",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例读起来像正常的电网调度时序判断问题，场景中清楚解释了 x0、x1、x2 的含义，并说明了线路负载压力超过 1.0 的业务含义。问题只询问 x0 在线路负载压力上的总体趋势，证据给出了起点、终点、净变化和波动尺度，足以支持确定性答案“基本平稳”。没有依赖隐藏元数据或未解释的时间轴，选项也较自然。",
+      "suggested_scene_zh": "一名电网调度员正在查看一段电网运行时序。x0 表示最大线路负载压力，x1 表示总需求，x2 表示发电裕度。线路负载压力超过 1.0 通常意味着存在过载风险。",
+      "suggested_question_zh": "在这段电网运行窗口中，最大线路负载压力总体上是在上升、下降、混合变化，还是基本平稳？",
+      "suggested_options_zh": [
+        "上升",
+        "下降",
+        "混合变化",
+        "基本平稳"
+      ],
+      "large_scale_rule_zh": "保留。该题应保持为自然语言趋势判断题：场景需解释变量含义，问题只询问可由证据直接判断的总体趋势；若使用“基本平稳”等标签，应在证据中给出净变化与波动尺度等可读依据，避免依赖隐藏阈值或内部窗口编号。",
+      "source": "grid2op",
+      "task_family": "grid_trend_max_rho",
+      "split": "dev",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "grid2op_broad_cf::h2048_c-1_t512_line4::post1665_1793::grid_counterfactual_mean_stress",
+      "decision": "revise",
+      "naturalness_score": 4,
+      "answerability_score": 3,
+      "accuracy_risk": "medium",
+      "problem_tags": [
+        "material_without_threshold",
+        "counterfactual_baseline_needs_clarity",
+        "global_local_time_axis_clutter"
+      ],
+      "reason_zh": "问题整体像正常的电网调度判断题，场景也说明了 x0 是“干预减事实”的压力差，因此方向关系基本可用。但选项 C 使用“没有实质变化”，而题面没有给出“实质变化”的阈值；证据中均值为 -0.01 并直接给出结论，但读者无法仅凭题面知道多小算不实质。该例属于反事实比较题，虽然基线解释较清楚，但仍建议把判断标准写成人类可读的近似不变或给出阈值。全局步与局部片段信息有些冗余，但不是致命问题。",
+      "suggested_scene_zh": "一名电网调度员正在比较断开某条线路后的反事实运行与事实运行。在该事件后的一个时间片段中，x0 表示“干预情形的最大线路负载压力减去事实情形的最大线路负载压力”。因此，x0 的平均值为正表示断线后平均压力更高，为负表示更低，接近 0 表示两种情形平均压力基本相同。该片段中 x0 的平均差约为 -0.01。",
+      "suggested_question_zh": "在这个事件后片段里，断开线路对平均最大线路负载压力的影响最接近哪一种？",
+      "suggested_options_zh": [
+        "干预情形的平均压力更高",
+        "干预情形的平均压力更低",
+        "两种情形的平均压力基本相同",
+        "无法根据给定信息判断"
+      ],
+      "large_scale_rule_zh": "对于反事实均值差问题，应在场景中明确差值方向，例如“干预减事实”，并避免使用未定义阈值的“显著、实质、明显”等程度词；若需要选择“基本不变”，应给出近似值或明确判定阈值。",
+      "source": "grid2op",
+      "task_family": "grid_counterfactual_mean_stress",
+      "split": "dev",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "grid2op_broad::rte_case14_realistic_chronic4_trace_2048_nooverflow::w512_1024::grid_anomaly_max_rho",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 4,
+      "accuracy_risk": "low",
+      "problem_tags": [
+        "局部时间轴需明确",
+        "尖峰显著性依赖证据说明"
+      ],
+      "reason_zh": "该例整体像正常的电网时序分析问题，而不是明显的校验槽位提示。场景说明了 x0、x1、x2 的含义，也说明 x0 超过 1.0 代表过载风险；问题要求在早期、中期、后期三段中定位最强孤立线路负载压力尖峰，选项自然且互斥。证据明确说明三等分的是当前局部窗口，并给出最强孤立压力尖峰位于局部窗口第 153 步附近，因此可支持“早期”。主要小风险是“孤立尖峰/明显尖峰”的判定依赖 z 分数等证据，若没有证据会显得阈值不完全透明；但本例证据已经提供了足够支持。",
+      "suggested_scene_zh": "一名电网调度员正在查看一个长度为 512 步的电网时序窗口。x0 表示最大线路负载压力，x1 表示总需求，x2 表示发电裕度；其中 x0 高于 1.0 通常意味着存在过载风险。",
+      "suggested_question_zh": "如果把这个局部时间窗口按时间顺序平均分为早期、中期和后期三段，x0 中最强的孤立线路负载压力尖峰出现在其中哪一段？",
+      "suggested_options_zh": [
+        "早期",
+        "中期",
+        "后期",
+        "没有明显尖峰"
+      ],
+      "large_scale_rule_zh": "此类题目应在场景或证据中明确说明所使用的是局部窗口时间轴，并清楚定义变量含义；若询问“最强”“明显”“孤立尖峰”等判断，应提供可读的支持信息，例如峰值位置、z 分数或三等分规则，避免依赖隐藏元数据或未说明阈值。",
+      "source": "grid2op",
+      "task_family": "grid_anomaly_max_rho",
+      "split": "dev",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "grid2op_broad::rte_case14_realistic_chronic4_trace_2048_nooverflow::w1280_1536::grid_cross_variable_stress",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例整体像正常的电网运行复盘问题，而不是明显的验证槽位提示。场景中解释了 x0、x1、x2 的含义，并说明压力超过 1.0 的业务含义；证据明确给出绝对相关系数、弱关联阈值和相近判定阈值，因此无需依赖隐藏元数据即可判断选项。问题表述中的“更应该关注”略带决策化，但选项和证据能清楚支持“两者相近”的答案，风险较低。",
+      "suggested_scene_zh": "一名电网调度员正在查看某段运行时序数据。最大线路负载压力用于反映线路接近或超过容量的程度；总需求和发电裕度是可能与线路压力共同变化的两个运行指标。压力超过 1.0 表示存在过载风险。",
+      "suggested_question_zh": "根据这段数据中与最大线路负载压力的绝对相关性，调度员应认为总需求和发电裕度哪一个更值得优先关注，还是两者关联强度相近？",
+      "suggested_options_zh": [
+        "总需求与线路压力的关联更强",
+        "发电裕度与线路压力的关联更强",
+        "两者与线路压力的关联都可用，且强度相近",
+        "两者与线路压力的关联都较弱"
+      ],
+      "large_scale_rule_zh": "若问题要求比较变量与目标时序的关联强弱，场景或证据必须明确变量含义、使用的统计量、弱关联阈值以及“相近”的判定规则；避免只给内部变量名或要求读者推断隐藏阈值。",
+      "source": "grid2op",
+      "task_family": "grid_cross_variable_stress",
+      "split": "dev",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "grid2op_broad_cf::h2048_c-1_t512_line1::post577_705::grid_counterfactual_overload_exposure",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例整体像正常的电网运行分析问题，变量含义、过载阈值、事实与干预情形、时间窗口和“过载暴露”的定义都已说明。证据直接给出事实暴露为 0.00、干预暴露约为 0.80，足以支持选项判断。虽然属于反事实干预问题，但证据中的对比关系明确，不需要额外元数据或重新计算。",
+      "suggested_scene_zh": "一名电网调度员正在查看某次断线事件后的运行窗口。x0 表示最大线路负载压力，x1 表示总需求，x2 表示发电裕度；当 x0 超过 1.0 时表示存在过载风险。该局部窗口覆盖全局第 577 到 705 步，用来比较事实运行与断线干预运行在同一事件后窗口中的过载暴露。过载暴露定义为窗口内 x0 超过 1.0 的时间步比例。",
+      "suggested_question_zh": "与事实运行相比，在这个事件后窗口中，断线干预会使过载暴露更高、更低，还是基本相同？",
+      "suggested_options_zh": [
+        "干预情形的过载暴露更高",
+        "干预情形的过载暴露更低",
+        "干预情形与事实情形的过载暴露相近",
+        "无法判断"
+      ],
+      "large_scale_rule_zh": "保留此类样例的条件是：场景中必须明确变量含义、阈值定义、事实与干预对比对象以及所用时间窗口；证据应直接给出或清楚支持暴露比例差异。若仅依赖隐藏的线路编号、全局时间索引或未解释的反事实设定，则应修改或拒绝。",
+      "source": "grid2op",
+      "task_family": "grid_counterfactual_overload_exposure",
+      "split": "test",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "grid2op_broad::rte_case14_realistic_chronic2_trace_2048_nooverflow::w512_1024::grid_volatility_total_load",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例整体像正常的电网时序分析问题：场景说明了 x1 是总需求，问题询问窗口中总需求波动最大的时间段，选项也是人类可理解的早期/中期/后期/三段相近。证据明确说明将窗口三等分并比较标准差，且支持槽给出了三段标准差，因此可由证据和确定性支持槽回答。没有依赖未解释的内部 ID 或隐藏元数据。",
+      "suggested_scene_zh": "一名电网调度员正在查看一段电网运行时序。x0 表示最大线路负载压力，x1 表示总需求，x2 表示发电裕度；其中压力超过 1.0 表示存在过载风险。",
+      "suggested_question_zh": "如果把这段时间窗口平均分成早期、中期和后期三段，哪一段的总需求波动最大？",
+      "suggested_options_zh": [
+        "早期",
+        "后期",
+        "中期",
+        "三段相近"
+      ],
+      "large_scale_rule_zh": "对于按时间段比较波动性的样例，应在题面或证据中明确说明分段方式和波动性度量，例如“将窗口三等分并比较标准差”；避免只说“最不稳定”而不说明判断依据。",
+      "source": "grid2op",
+      "task_family": "grid_volatility_total_load",
+      "split": "test",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "grid2op_broad::rte_case14_realistic_chronic2_trace_2048_nooverflow::w1024_1536::grid_anomaly_max_rho",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例整体像正常的电网时序分析问题：场景说明了 x0 为最大线路负载压力，并说明压力超过 1.0 的含义；问题要求在早、中、后三段中定位最强孤立尖峰，选项简洁且人类可读。证据明确说明三段是按当前局部窗口等分，并给出尖峰出现在局部窗口第 446 步、窗口长度为 512，因此可确定属于后期。没有依赖未给出的外部元数据来作答，准确性风险较低。唯一轻微问题是“孤立尖峰”的判定依赖 z 分数/显著性等检测逻辑，但证据已直接给出检测结果，因此不影响答题。",
+      "suggested_scene_zh": "一名电网调度员正在查看一个电网运行时序窗口。x0 表示最大线路负载压力，x1 表示总需求，x2 表示发电裕度。压力超过 1.0 通常表示存在过载风险。",
+      "suggested_question_zh": "如果把当前时间窗口按顺序三等分，x0 中最强的孤立线路负载压力尖峰出现在早期、中期还是后期？",
+      "suggested_options_zh": [
+        "早期",
+        "中期",
+        "后期",
+        "没有明显尖峰"
+      ],
+      "large_scale_rule_zh": "保留此类样例时，应在场景或证据中明确早期/中期/后期是对当前局部窗口按时间等分，而不是依赖全局时间索引；若题目使用“最强尖峰”“孤立尖峰”等检测性表述，证据中应提供可直接支持答案的检测结果。",
+      "source": "grid2op",
+      "task_family": "grid_anomaly_max_rho",
+      "split": "test",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "grid2op_broad::rte_case14_realistic_chronic2_trace_2048_nooverflow::w0_2048::grid_volatility_total_load",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题表述基本像正常的电网时序分析问题，询问总需求在哪个时间段波动最大；变量 x1 已定义为总需求，选项为早期/中期/后期/三段相近，含义清楚。证据明确说明将窗口按时间三等分并比较标准差，支持槽也给出三段标准差和确定答案，因此可从给定信息回答。唯一轻微不足是场景中仍使用 x0/x1/x2 变量名，略偏数据集化，但已配有中文解释，不影响理解。",
+      "suggested_scene_zh": "一名电网调度员正在查看一段电网运行时序数据。其中，总需求表示系统负荷随时间的变化情况；最大线路负载压力超过 1.0 时表示存在过载风险。",
+      "suggested_question_zh": "如果把这段时间窗口按时间平均分成早期、中期和后期，哪一段的总需求波动最大？",
+      "suggested_options_zh": [
+        "早期",
+        "中期",
+        "后期",
+        "三段波动相近"
+      ],
+      "large_scale_rule_zh": "此类样本可保留：只要场景清楚定义目标变量，问题自然询问某时间段的波动性，并且证据或支持槽明确说明按时间三等分、用标准差比较并给出确定结果，即具有较低风险。",
+      "source": "grid2op",
+      "task_family": "grid_volatility_total_load",
+      "split": "test",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "grid2op_broad_cf::h2048_c-1_t512_line1::post769_1025::grid_counterfactual_peak_stress",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例基本像正常的电网调度反事实分析问题，而不是明显的验证槽提示。场景明确说明了 x0 在该反事实样本中表示“干预后减事实”的最大线路负载压力差，且正值表示断线后压力更高；证据也给出差值范围 0.37 到 0.56，足以支持选项 C。全局步和局部窗口虽稍显技术化，但已解释清楚，不影响作答。",
+      "suggested_scene_zh": "一名电网调度员正在查看断线事件后的反事实时序窗口。该窗口覆盖全局第 769 到 1025 步，断线发生在全局第 512 步。在这个反事实对比中，x0 表示“断线干预后的最大线路负载压力 − 事实运行中的最大线路负载压力”；x0 为正表示断线后压力更高，x0 为负表示断线后压力更低。",
+      "suggested_question_zh": "在这个事件后窗口中，断线干预对最大线路负载压力的主要影响是什么？",
+      "suggested_options_zh": [
+        "断线干预下压力更低",
+        "干预情形与事实情形压力基本相同",
+        "断线干预下压力更高",
+        "无法判断"
+      ],
+      "large_scale_rule_zh": "反事实时序题应在场景中直接说明差值的方向含义，例如“干预后减事实”以及正负值分别代表什么；问题应询问可由该差值直接判断的影响方向，避免依赖隐藏的线路 ID、内部片段名或未解释的全局/局部时间轴。",
+      "source": "grid2op",
+      "task_family": "grid_counterfactual_peak_stress",
+      "split": "test",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "grid2op_broad_cf::h2048_c-1_t512_line1::post1729_1857::grid_counterfactual_mean_stress",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [
+        "选项B的“实质变化”阈值略不明确",
+        "场景中x0先作为原始压力再作为差值说明，略有混淆但可理解"
+      ],
+      "reason_zh": "该例整体像正常的电网调度反事实分析问题，而不是明显的验证槽提示。场景说明了变量含义、断线事件、时间窗口以及关键的反事实定义：x0为干预减事实的最大线路负载压力，因此均值为正表示干预后平均压力更高。证据直接给出平均差为0.07，足以支持答案。主要小问题是选项B“没有实质变化”没有给出阈值，严格来说可能引入模糊判断；另外x0在变量定义中先说是压力，随后又说这里表示压力差，读者需要注意上下文切换。但这些问题不影响根据证据作答。",
+      "suggested_scene_zh": "一名 Grid2Op 电网调度员正在查看一次断线反事实分析的事件后时序窗口。断线发生在全局第512步；当前窗口覆盖全局第1729到1857步。此处关注的 x0 不是原始压力值，而是“断线干预情形的最大线路负载压力 − 事实运行情形的最大线路负载压力”。因此，x0 的平均值为正表示断线后平均最大线路负载压力更高，为负表示更低。",
+      "suggested_question_zh": "在这个事件后窗口中，断开线路对平均最大线路负载压力有什么影响？",
+      "suggested_options_zh": [
+        "干预情形的平均压力更低",
+        "平均差接近零，基本不变",
+        "无法根据给定信息判断",
+        "干预情形的平均压力更高"
+      ],
+      "large_scale_rule_zh": "反事实时序题应在场景中明确说明变量是原始值还是“干预减事实”的差值，并避免使用没有阈值定义的程度词；若选项包含“无实质变化”，应改为“平均差接近零”或给出明确阈值。",
+      "source": "grid2op",
+      "task_family": "grid_counterfactual_mean_stress",
+      "split": "test",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "grid2op_broad::rte_case14_realistic_chronic2_trace_2048_nooverflow::w1664_1920::grid_temporal_lead_lag",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例整体像一个正常的电网时序分析问题，而不是明显的验证槽位提示。场景中解释了 x0、x1 的含义，并明确说明本题只比较总需求和最大线路负载压力；证据直接给出最强候选滞后为 0 且相关系数很高，并说明应选择同步/无稳定领先方，因此答案可由给定证据和规则确定。没有依赖未展示的内部元数据。作为 lead-lag 题，关系判定依据也足够明确，风险较低。",
+      "suggested_scene_zh": "一名电网调度员正在查看一个电网运行时序窗口。x0 表示最大线路负载压力，x1 表示总需求，x2 表示发电裕度。压力超过 1.0 表示存在过载风险。本题只比较 x1 总需求和 x0 最大线路负载压力。若最强相关关系出现在滞后 0，则表示两者主要同步变化，应选择“没有稳定领先方”。",
+      "suggested_question_zh": "在这个时序窗口中，总需求和最大线路负载压力之间是否存在稳定的先后关系？",
+      "suggested_options_zh": [
+        "最大线路负载压力领先总需求",
+        "总需求领先最大线路负载压力",
+        "相关性太弱，无法判断先后",
+        "两者主要同步变化，没有稳定领先方"
+      ],
+      "large_scale_rule_zh": "对于 lead-lag 类样例，场景应明确说明被比较变量、滞后的含义以及滞后 0 的解释；证据需给出足以支持选项的最强滞后和相关强度。若最强关系在滞后 0，应表述为同步或无稳定领先方，而不是强行判定某一变量领先。",
+      "source": "grid2op",
+      "task_family": "grid_temporal_lead_lag",
+      "split": "test",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "grid2op_broad::rte_case14_realistic_chronic2_trace_2048_nooverflow::w640_896::grid_extrema_max_rho",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题表述自然，符合电网调度员查看时间窗口并判断最大线路负载压力峰值位置的场景。变量含义清楚，早期/中期/后期的划分在证据中明确为当前局部窗口三等分，证据也给出了峰值约 1.12 出现在局部窗口第 169 步附近，因此可由给定信息确定为中期。不依赖隐藏元数据或未说明阈值。",
+      "suggested_scene_zh": "一名电网调度员正在查看一个电网运行时序窗口。x0 表示最大线路负载压力，x1 表示总需求，x2 表示发电裕度。压力超过 1.0 表示存在过载风险。",
+      "suggested_question_zh": "如果把这个时间窗口按时间顺序三等分为早期、中期和后期，x0 的最高点出现在其中哪一段？",
+      "suggested_options_zh": [
+        "中期",
+        "早期",
+        "后期",
+        "没有清晰极值"
+      ],
+      "large_scale_rule_zh": "对于这类极值位置题，应在场景或证据中明确说明时间窗口的划分方式，并提供峰值所在的局部时间位置；避免只给内部窗口编号或全局索引而不解释其与早中晚分段的关系。",
+      "source": "grid2op",
+      "task_family": "grid_extrema_max_rho",
+      "split": "test",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "grid2op_broad::rte_case14_realistic_chronic0_trace_2048_nooverflow::w1280_1792::grid_temporal_lead_lag",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例读起来像正常的电网时序分析问题，而不是明显的校验槽位提示。场景清楚定义了 x0、x1、x2，并明确本题只比较总需求和最大线路负载压力；同时解释了滞后 0 的含义和选择规则。证据直接给出最强候选滞后为 0、相关系数为 0.96，因此可以从题面和证据判断应选择“同步变化，没有稳定领先方”。没有依赖隐藏元数据或未解释的阈值，选项也较自然。",
+      "suggested_scene_zh": "一名电网调度员正在查看一段电网运行时序。x0 表示最大线路负载压力，x1 表示总需求，x2 表示发电裕度；压力超过 1.0 表示存在过载风险。本题只比较 x1 总需求与 x0 最大线路负载压力。若两者最强关系出现在滞后 0，表示同步变化，应选择“没有稳定领先方”。",
+      "suggested_question_zh": "在这段时序中，总需求和最大线路负载压力之间是否表现出清晰的先后关系？",
+      "suggested_options_zh": [
+        "最大线路负载压力领先总需求",
+        "总需求领先最大线路负载压力",
+        "同步变化，没有稳定领先方",
+        "相关性太弱，无法判断先后"
+      ],
+      "large_scale_rule_zh": "对于 lead-lag 类样例，必须在场景或证据中明确说明滞后值的含义、比较的变量以及如何处理滞后 0；如果证据显示最强关系在滞后 0 且相关性足够强，应表述为同步或无稳定领先方，而不是强行判定某个变量领先。",
+      "source": "grid2op",
+      "task_family": "grid_temporal_lead_lag",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "grid2op_broad::rte_case14_realistic_chronic3_trace_2048_nooverflow::w0_2048::grid_window_total_load",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题表述自然，像电网调度员在比较一个时序窗口内前后两半的平均总需求；变量 x1 已清楚定义为总需求，证据直接给出前半段和后半段均值，因此可由场景和证据确定答案。不依赖隐藏元数据、内部阈值或未解释的时间轴。",
+      "suggested_scene_zh": "一名电网调度员正在查看一个电网时序窗口。x0 表示最大线路负载压力，x1 表示总需求，x2 表示发电裕度；压力超过 1.0 表示存在过载风险。",
+      "suggested_question_zh": "这个电网时序窗口中，哪一半的平均总需求更高？",
+      "suggested_options_zh": [
+        "A. 后半段更高",
+        "B. 前半段更高",
+        "C. 前后两半相近",
+        "D. 无法判断"
+      ],
+      "large_scale_rule_zh": "保留此类样例：变量含义清楚、比较对象明确、证据直接给出前后两段统计量，且问题不依赖隐藏元数据或额外阈值。",
+      "source": "grid2op",
+      "task_family": "grid_window_total_load",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "grid2op_broad::rte_case14_realistic_chronic3_trace_2048_nooverflow::w768_1024::grid_trend_max_rho",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题表述自然，符合电网调度场景下对线路负载压力趋势的判断；变量含义清楚，选项为人类可理解的趋势类别。证据明确给出起点、终点、净变化和波动尺度，足以支持按确定性槽位选择答案。窗口编号等内部时间轴仅出现在支持槽中，没有影响题面理解。",
+      "suggested_scene_zh": "一名电网调度员正在查看一段电网运行时序。x0 表示最大线路负载压力，x1 表示总需求，x2 表示发电裕度。压力超过 1.0 表示存在过载风险。",
+      "suggested_question_zh": "这段时间内，最大线路负载压力总体是在上升、下降，还是基本平稳？",
+      "suggested_options_zh": [
+        "下降",
+        "上升",
+        "基本平稳",
+        "混合变化"
+      ],
+      "large_scale_rule_zh": "保留此类样例：只要场景说明变量含义，问题询问自然的总体趋势，证据给出足够的起止值或趋势依据，并且不要求读者理解隐藏时间索引或未说明阈值，即可视为可回答、低风险样例。",
+      "source": "grid2op",
+      "task_family": "grid_trend_max_rho",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "grid2op_broad_cf::h1024_c-1_t256_line1::post833_961::grid_counterfactual_overload_exposure",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题整体像正常的电网调度分析问题，变量含义、过载阈值和“过载暴露”的定义都已说明。虽然涉及反事实干预和全局时间步，但场景明确说明断线发生时间、当前窗口范围以及比较对象；证据也直接给出事实与干预下的暴露比例，因此可由给定信息回答。没有明显依赖隐藏元数据或内部编号的问题。",
+      "suggested_scene_zh": "一名电网调度员正在比较某个时间窗口内的实际运行与断线干预情形。x0 表示最大线路负载压力，x1 表示总需求，x2 表示发电裕度；当 x0 大于 1.0 时表示存在过载风险。断线干预发生在全局第 256 步，本窗口覆盖全局第 833 到 961 步。过载暴露定义为该窗口内 x0 超过 1.0 的时间步比例。",
+      "suggested_question_zh": "与实际运行相比，断线干预在这个窗口内会使过载暴露更高、更低，还是基本相同？",
+      "suggested_options_zh": [
+        "干预情形的过载暴露更低",
+        "干预情形的过载暴露更高",
+        "干预情形与实际运行的过载暴露相近",
+        "无法判断"
+      ],
+      "large_scale_rule_zh": "涉及反事实或干预比较的样例，应在场景或证据中明确给出比较对象、时间窗口、指标定义和可用于判断的结果值；避免只依赖内部存储的干预元数据或不解释的片段标签。",
+      "source": "grid2op",
+      "task_family": "grid_counterfactual_overload_exposure",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "grid2op_broad::rte_case14_realistic_chronic3_trace_2048_nooverflow::w1280_1536::grid_domain_stress_context",
+      "decision": "reject",
+      "naturalness_score": 4,
+      "answerability_score": 2,
+      "accuracy_risk": "high",
+      "problem_tags": [
+        "gold_evidence_contradiction",
+        "threshold_rule_conflict",
+        "degree_label_requires_consistent_thresholds"
+      ],
+      "reason_zh": "问题和场景整体比较自然，变量含义也基本清楚；但证据中的分档规则与给出的结论/金答案直接冲突。证据写明“峰值达到或超过 1.0 为高压力”，同时又给出峰值 1.07，却断言支持“中等电网压力”。这会使样例无法可靠作答，即使不重新计算答案，读者也会发现规则、数值和答案不一致。因此应拒绝或回到生成端修正规则/答案/支持槽。",
+      "suggested_scene_zh": "一名电网调度员正在查看一个电网运行时序窗口。x0 表示最大线路负载压力，x1 表示总需求，x2 表示发电裕度。请根据明确给出的压力分档规则判断该窗口的运行压力状态。",
+      "suggested_question_zh": "根据该窗口的最大线路负载压力统计值和分档规则，最合适的运行压力状态是哪一类？",
+      "suggested_options_zh": [
+        "A. 高电网压力",
+        "B. 中等电网压力",
+        "C. 低电网压力",
+        "D. 电网压力不清楚"
+      ],
+      "large_scale_rule_zh": "批量生成此类样例时，必须保证分档阈值、支持槽数值、证据解释和金答案完全一致。尤其是使用“峰值达到/超过某阈值即为高压力”这类规则时，只要支持槽峰值越过阈值，金答案和证据结论就不能标为中等或低压力；若希望答案为中等，应修改阈值规则或使用与金答案一致的统计量。",
+      "source": "grid2op",
+      "task_family": "grid_domain_stress_context",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "grid2op_broad::rte_case14_realistic_chronic3_trace_2048_nooverflow::w1280_1792::grid_domain_stress_context",
+      "decision": "revise",
+      "naturalness_score": 4,
+      "answerability_score": 1,
+      "accuracy_risk": "high",
+      "problem_tags": [
+        "证据规则与金标答案矛盾",
+        "阈值分档不一致",
+        "峰值超过高压力阈值却标为中等",
+        "答案不可由当前规则稳定推出"
+      ],
+      "reason_zh": "题目表述整体像正常的电网运行状态判断问题，变量含义也基本清楚。但证据中的分档规则写明“峰值最大线路负载压力达到或超过 1.0 为高压力”，同时给出的峰值为 1.07；按该规则应落入高压力，而证据和金标却给出“中等电网压力”。这不是简单措辞问题，而是规则、数值和答案之间直接冲突，导致读者无法根据题面可靠选择金标答案。建议改为使用均值分档规则，或修正答案/证据，使阈值、统计量和金标一致。",
+      "suggested_scene_zh": "一名电网调度员正在查看一个电网运行时序窗口。x0 表示最大线路负载压力，x1 表示总需求，x2 表示发电裕度。这里用窗口内 x0 的平均值来概括整体运行压力。",
+      "suggested_question_zh": "按照平均最大线路负载压力的分档规则：平均值达到或超过 1.0 为高压力，低于 0.70 为低压力，其余为中等压力。已知本窗口 x0 平均值为 0.91，这个窗口最符合哪种运行压力状态？",
+      "suggested_options_zh": [
+        "高电网压力",
+        "中等电网压力",
+        "低电网压力",
+        "电网压力不清楚"
+      ],
+      "large_scale_rule_zh": "批量生成此类样本时，必须确保题目中使用的统计量、证据中的阈值规则、支持槽数值和金标答案完全一致。如果规则使用峰值且峰值达到高压力阈值，就不能把答案标为中等；若希望答案为中等，应改用均值规则或调整阈值/数值。",
+      "source": "grid2op",
+      "task_family": "grid_domain_stress_context",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "grid2op_broad::rte_case14_realistic_chronic0_trace_2048_nooverflow::w1280_1792::grid_window_total_load",
+      "decision": "revise",
+      "naturalness_score": 4,
+      "answerability_score": 3,
+      "accuracy_risk": "medium",
+      "problem_tags": [
+        "相近选项缺少判定阈值",
+        "问题措辞偏向严格比较但答案为相近",
+        "需要明确依据均值差异判断"
+      ],
+      "reason_zh": "场景和变量解释基本自然，问题也像正常电网时序分析问题。证据给出了前后两半的总需求均值，因此可以比较。但当前问题问“哪一半平均总需求更高”，按严格数值比较后半段 259.20 高于前半段 257.89；而金答案是“前后两半相近”。如果没有给出“相近”的阈值或业务判定规则，读者无法确定应选 B 还是 D。因此建议修改问题或场景，明确这是按实际差异是否可忽略来判断，或给出相近阈值。",
+      "suggested_scene_zh": "一名电网调度员正在查看一个电网时序窗口。x0 表示最大线路负载压力，x1 表示总需求，x2 表示发电裕度。该问题关注 x1 在窗口前半段和后半段的平均水平；若两段均值差异很小，可视为前后相近。",
+      "suggested_question_zh": "根据该窗口中 x1 总需求的前后两半均值，哪种描述最合适？",
+      "suggested_options_zh": [
+        "前半段明显更高",
+        "后半段明显更高",
+        "无法判断",
+        "前后两半相近"
+      ],
+      "large_scale_rule_zh": "对于包含“相近、明显更高、基本一致”等程度判断的时间序列问答，应在场景、问题或证据中给出可理解的判定标准，例如明确阈值、相对差异范围，或将问题表述为“根据给出的摘要判断最合适的描述”，避免严格数值比较与语义标签冲突。",
+      "source": "grid2op",
+      "task_family": "grid_window_total_load",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "grid2op_broad_cf::h2048_c-1_t512_line3::post769_897::grid_counterfactual_peak_stress",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [
+        "counterfactual_setting"
+      ],
+      "reason_zh": "该样例整体像正常的电网运行反事实分析问题，而不是明显的校验槽位提示。场景明确说明 x0 是“干预后减去事实”的最大线路负载压力差值，并解释正值代表断线后压力更高；证据也直接给出差值范围为 0.44 到 0.55，因此问题可由场景和证据稳定回答。全局步与局部窗口虽较技术化，但已解释清楚，不构成不可答问题。选项语义清晰，答案风险低。",
+      "suggested_scene_zh": "一名 Grid2Op 电网调度员正在查看某次断线后的电网时序窗口。x0 表示“断线干预后的最大线路负载压力减去事实运行中的最大线路负载压力”，因此 x0 为正表示断线后压力更高，x0 为负表示断线后压力更低。该窗口位于断线事件之后，覆盖全局第 769 到 897 步。",
+      "suggested_question_zh": "在这个事件后窗口里，断开线路对最大线路负载压力的主要影响是什么？",
+      "suggested_options_zh": [
+        "断线干预下压力更低",
+        "干预情形与事实情形压力基本相同",
+        "断线干预下压力更高",
+        "无法判断"
+      ],
+      "large_scale_rule_zh": "反事实时序题应在场景中明确说明变量是原始值还是“干预减事实”的差值，并解释正负号含义；若问题涉及事件后窗口，应给出足够清楚的时间范围，避免依赖隐藏的 segment_tag、line_id 或未解释的全局/局部时间轴。",
+      "source": "grid2op",
+      "task_family": "grid_counterfactual_peak_stress",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "grid2op_broad_cf::h2048_c-1_t512_line3::post1281_1409::grid_counterfactual_mean_stress",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [
+        "counterfactual",
+        "uses_x_variable_names",
+        "global_local_time_axes"
+      ],
+      "reason_zh": "该样例总体可保留。问题是自然的电网调度反事实问题，场景明确说明 x0 在这里表示“干预后减事实”的最大线路负载压力差，证据也直接给出平均差为 0.50，因此可由给定信息确定答案。主要小问题是场景同时使用 x0/x1/x2、全局步数和局部窗口等数据集式表述，略显技术化；此外选项中的“没有实质变化”未给出阈值，但本例证据为明显正值，风险较低。",
+      "suggested_scene_zh": "一名电网调度员正在比较某条线路断开后的反事实运行与事实运行。在当前事件后时间窗口中，关注指标是最大线路负载压力；这里使用“干预情形减去事实情形”的平均差值来判断影响。差值为正表示断线后平均压力更高，差值为负表示更低。",
+      "suggested_question_zh": "在这个事件后时间窗口中，断开线路对平均最大线路负载压力有什么影响？",
+      "suggested_options_zh": [
+        "干预情形的平均压力更低",
+        "干预情形与事实情形的平均压力基本没有变化",
+        "无法根据给定信息判断",
+        "干预情形的平均压力更高"
+      ],
+      "large_scale_rule_zh": "反事实时序样例应在场景中清楚说明比较方向，例如“干预减事实”或“事实减干预”，并避免依赖未解释的内部编号、局部/全局时间轴或隐藏元数据；若出现“无实质变化”等选项，应有明确阈值或证据中给出的差异足够明显。",
+      "source": "grid2op",
+      "task_family": "grid_counterfactual_mean_stress",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "grid2op_broad::rte_case14_realistic_chronic3_trace_2048_nooverflow::w1024_1280::grid_anomaly_max_rho",
+      "decision": "revise",
+      "naturalness_score": 3,
+      "answerability_score": 2,
+      "accuracy_risk": "medium",
+      "problem_tags": [
+        "局部时间轴不清",
+        "孤立尖峰判定标准不明",
+        "证据与答案表述不直观",
+        "依赖隐藏阈值或内部判定",
+        "边界事件解释不足"
+      ],
+      "reason_zh": "问题整体像领域问题，但“最强孤立尖峰”和“没有明显尖峰”的判定需要未说明的阈值或规则。证据中说绝对 z 分数为 3.66 且在局部窗口第 -1 步附近，却支持“没有明显尖峰”，这对普通读者不够可解释；第 -1 步也属于不清楚的局部时间轴表达。若答案依赖 event_prominence 很小、边缘排除或 anomaly_injected=false 等支持槽，应在自然语言证据中说明，否则从场景和选项难以稳定回答。",
+      "suggested_scene_zh": "一名电网调度员正在查看一个电网时序窗口。x0 表示最大线路负载压力，x1 表示总需求，x2 表示发电裕度。x0 超过 1.0 代表可能存在过载风险。本题只关注 x0 在该窗口内是否出现清楚、孤立的压力尖峰。",
+      "suggested_question_zh": "将这个时间窗口按顺序分成早期、中期和后期三段后，x0 是否出现了清楚的孤立压力尖峰？如果有，它主要出现在第几段？",
+      "suggested_options_zh": [
+        "早期",
+        "没有明显尖峰",
+        "中期",
+        "后期"
+      ],
+      "large_scale_rule_zh": "对于尖峰/异常定位题，题干或证据必须用自然语言说明“明显尖峰”的判定依据，例如峰值是否在窗口内部、是否有足够突出度、是否超过给定阈值；不要只给局部索引、内部标记或未解释的 z 分数。若事件位于窗口边界外或被规则排除，应直接说明其不算作窗口内明显尖峰。",
+      "source": "grid2op",
+      "task_family": "grid_anomaly_max_rho",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "grid2op_broad::rte_case14_realistic_chronic3_trace_2048_nooverflow::w0_256::grid_extrema_max_rho",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例整体像正常的电网时序分析问题：场景说明了 x0 的含义，并明确按当前窗口三等分为早期、中期、后期。证据给出最高点约在局部窗口第 239 步、窗口长度为 256，因此可直接支持“后期”。没有依赖隐藏元数据或未解释的全局时间轴；“局部窗口”在证据中也有说明。选项中的“没有清晰极值”略显不必要，因为最大值通常总是存在，但不影响可答性。",
+      "suggested_scene_zh": "一名电网调度员正在查看一个电网运行时序窗口。x0 表示最大线路负载压力，x1 表示总需求，x2 表示发电裕度；压力超过 1.0 表示可能存在过载风险。",
+      "suggested_question_zh": "如果把当前时序窗口按时间平均分成早期、中期和后期，x0 的最高值出现在其中哪一段？",
+      "suggested_options_zh": [
+        "早期",
+        "中期",
+        "没有清晰极值",
+        "后期"
+      ],
+      "large_scale_rule_zh": "对于这类极值位置题，场景需清楚定义目标变量和时间窗口；问题应明确分段规则；证据需给出极值所在的局部窗口位置和窗口长度，避免依赖未说明的全局索引或内部元数据。",
+      "source": "grid2op",
+      "task_family": "grid_extrema_max_rho",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "grid2op_broad::rte_case14_realistic_chronic3_trace_2048_nooverflow::w896_1152::grid_cross_variable_stress",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [
+        "选项措辞略抽象"
+      ],
+      "reason_zh": "该样例整体可保留。场景说明了 x0、x1、x2 的含义，并给出过载风险阈值；证据中明确给出绝对相关系数、弱相关阈值和相近判定阈值，因此问题可由可见信息确定回答。问题本身基本像调度复盘中的自然判断，但“更应该关注总需求还是发电裕度”与选项 C“二者相近”之间稍有不完全贴合，且英文选项中的 companion signal 略偏数据集术语。整体风险低。",
+      "suggested_scene_zh": "一名电网调度员正在复盘某段电网时序数据。最大线路负载压力用于衡量过载风险，压力超过 1.0 表示存在过载风险；同时记录了总需求和发电裕度。",
+      "suggested_question_zh": "根据与最大线路负载压力的绝对相关性，总需求和发电裕度哪一个更值得作为过载复盘的辅助信号？",
+      "suggested_options_zh": [
+        "总需求的关联更强",
+        "发电裕度的关联更强",
+        "两者的关联都足够强，且强度相近",
+        "两者的关联都太弱，不适合作为辅助信号"
+      ],
+      "large_scale_rule_zh": "跨变量关联类问题应在题面或证据中明确变量含义、比较指标和判定阈值；避免只写 x0/x1/x2 或使用“stronger companion signal”等内部化措辞。若答案依赖“相近”“较强”“较弱”等等级，必须给出可见的数值阈值或规则。",
+      "source": "grid2op",
+      "task_family": "grid_cross_variable_stress",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_021::traffic_signal_counterfactual_queue",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题读起来像正常的交通工程判断题，询问自适应信号相对固定信号基线是否改善排队；证据明确给出两种策略下的平均队列数值，且选项与“队列更高/相同/混合/更低”的判断一致。虽然属于反事实比较，但证据已直接提供固定基线和自适应策略的均值，因此无需依赖隐藏元数据或重新计算。",
+      "suggested_scene_zh": "交通工程师正在比较同一交通窗口下两种信号控制方案的平均排队长度：自适应信号策略与匹配的固定信号基线。较低的平均队列表示排队状况更好。",
+      "suggested_question_zh": "与固定信号基线相比，自适应信号策略对平均排队长度有什么影响？",
+      "suggested_options_zh": [
+        "自适应信号下平均队列更高",
+        "两种策略的平均队列基本相同",
+        "影响不一致或无法明确判断",
+        "自适应信号下平均队列更低"
+      ],
+      "large_scale_rule_zh": "反事实或基线比较题必须在场景或证据中明确说明两种条件及其可比较指标；若只依赖隐藏的匹配关系、内部事件编号或未解释的时间轴，应标为需修改或拒绝。",
+      "source": "traffic",
+      "task_family": "traffic_signal_counterfactual_queue",
+      "split": "dev",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_021::traffic_combined_stress_context",
+      "decision": "revise",
+      "naturalness_score": 3,
+      "answerability_score": 4,
+      "accuracy_risk": "low",
+      "problem_tags": [
+        "slot-like phrasing",
+        "hidden_metadata_boolean",
+        "unclear_event_timing_relevance",
+        "derived_score_needs_context"
+      ],
+      "reason_zh": "题目基本可回答，因为证据明确给出了综合压力分数 3.72 以及分数区间规则，对应选项也清楚。但当前表述较像在询问数据槽位：如“综合交通压力分数”“事件时段”“严重事件标记为 true”等，尤其 true 标记属于内部布尔字段，未在场景中自然解释。事件位于“中期”对判断的实际作用也不够清楚。建议把场景改成工程师已得到一个可解释的综合压力评分，并直接给出阈值规则，避免暴露内部 flag 或 support slot。",
+      "suggested_scene_zh": "交通工程师正在评估一段交通运行窗口。该窗口的平均车速、排队长度和车道占有率已被汇总成一个综合交通压力分数；分数越高，表示拥堵压力越大。本窗口的综合压力分数为 3.72。判定规则是：分数达到或超过 6.0 为严重综合拥堵；分数从 3.0 到低于 6.0 为中等综合拥堵；低于 3.0 通常为稳定综合交通状态，除非现场证据本身不清楚。",
+      "suggested_question_zh": "根据上述综合压力分数和判定规则，这个交通窗口最可能处于哪种运行状态？",
+      "suggested_options_zh": [
+        "A. 中等综合拥堵",
+        "B. 严重综合拥堵",
+        "C. 稳定综合交通状态",
+        "D. 综合状态不清楚"
+      ],
+      "large_scale_rule_zh": "大规模审核时，若题目依赖派生分数，应在场景或证据中用自然语言说明该分数的含义和阈值；避免直接出现 true/false 标记、内部事件索引、窗口编号等元数据。若事件时段不会改变答案，题干中不应强调它。",
+      "source": "traffic",
+      "task_family": "traffic_combined_stress_context",
+      "split": "dev",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_030::traffic_event_impact_relation",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例整体像正常的交通领域判断题，场景说明了平均车速、队列长度和车道占有率是对齐时间序列，问题询问事件窗口内平均车速和队列长度哪个变化更强。证据明确给出事件窗口变化分数、判定阈值以及两个变量的分数，因此无需额外元数据即可确定选项。唯一轻微不足是“交通事件”本身没有具体描述，但本题目标是比较事件窗口响应强度，证据已经足够支撑。",
+      "suggested_scene_zh": "交通工程师正在查看一段交通事件窗口内的时间序列数据，包括平均车速、排队长度和车道占有率。通常，排队更短、车速更高表示交通流更顺畅。",
+      "suggested_question_zh": "在这个交通事件窗口内，平均车速和排队长度相比，哪一个变化更强？",
+      "suggested_options_zh": [
+        "队列长度变化更强",
+        "平均车速和队列长度都明显变化，强度相近",
+        "平均车速变化更强",
+        "没有清晰的事件响应"
+      ],
+      "large_scale_rule_zh": "保留此类样例：只要场景交代变量含义，问题自然地询问事件窗口内的响应强弱，证据明确给出变化分数和判定阈值，就可以认为可回答。若只出现内部事件编号、未解释的时间轴或缺少强弱判定阈值，则应修改或拒绝。",
+      "source": "traffic",
+      "task_family": "traffic_event_impact_relation",
+      "split": "test",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_035::traffic_incident_anomaly",
+      "decision": "revise",
+      "naturalness_score": 4,
+      "answerability_score": 3,
+      "accuracy_risk": "medium",
+      "problem_tags": [
+        "evidence_relies_on_detector_flag",
+        "early_middle_late_not_defined",
+        "limited_observable_trace_evidence",
+        "controlled_event_internal_wording"
+      ],
+      "reason_zh": "问题整体像正常交通领域问题，变量含义也清楚。但当前证据主要依赖“事故检测器未标记受控事件”这一支持槽，而不是可读的时序表现；“受控事件”也略像内部标注语。选项中的早期/中期/后期没有说明按窗口三等分还是其他阈值划分，若答案不是“无事件”会有歧义。建议改写为基于检测摘要和可读时序判断，并明确时间段划分。",
+      "suggested_scene_zh": "交通工程师正在查看一个长度为 256 个采样点的交通窗口，平均车速、排队长度和车道占有率已按时间对齐记录。通常，车速明显下降、排队长度和车道占有率明显升高会提示事故式扰动。本窗口的检测摘要未标记出明显事故事件。",
+      "suggested_question_zh": "根据这段交通窗口和检测摘要，是否存在明显的事故式扰动？如果存在，它大致出现在窗口的哪个阶段？",
+      "suggested_options_zh": [
+        "没有明显交通事件",
+        "早期，即窗口前约三分之一",
+        "中期，即窗口中间约三分之一",
+        "后期，即窗口后约三分之一"
+      ],
+      "large_scale_rule_zh": "对于事故/异常定位类样本，应避免只暴露内部标志词如 controlled_event；场景或证据中应提供人类可理解的检测摘要或时序现象。若选项使用早期/中期/后期，需明确对应窗口三等分或具体时间范围。",
+      "source": "traffic",
+      "task_family": "traffic_incident_anomaly",
+      "split": "test",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_035::traffic_domain_congestion_context",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 4,
+      "accuracy_risk": "low",
+      "problem_tags": [
+        "轻微信号矛盾判定未定义"
+      ],
+      "reason_zh": "该样例整体像正常的交通领域判断题，场景、变量、选项和证据中的拥堵分档规则都比较清楚。答案可由证据中的阈值直接支持：最大队列达到 8，符合严重拥堵条件。唯一小问题是规则提到“信号矛盾时视为状态不清楚”，但没有明确什么算矛盾；同时平均车道占有率接近 0 而最大队列为 8，可能让读者疑惑。不过证据已经明确给出支持严重拥堵的判据，因此风险较低，可以保留。",
+      "suggested_scene_zh": "交通工程师正在查看一段交通系统时间窗口，窗口内记录了平均车速、最大排队长度和平均车道占有率。通常，车速越高、队列越短，交通流越顺畅。",
+      "suggested_question_zh": "根据给定的拥堵分档规则，这个时间窗口最符合哪种交通状态？",
+      "suggested_options_zh": [
+        "A. 中等拥堵",
+        "B. 严重拥堵",
+        "C. 自由流交通",
+        "D. 交通状态不清楚"
+      ],
+      "large_scale_rule_zh": "这类题应在题面或证据中明确给出拥堵等级的阈值规则，并避免使用未定义的“矛盾”“异常”等判定条件；若保留这类条件，应说明哪些变量组合会触发“不清楚”。",
+      "source": "traffic",
+      "task_family": "traffic_domain_congestion_context",
+      "split": "test",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_035::traffic_event_recovery_context",
+      "decision": "revise",
+      "naturalness_score": 4,
+      "answerability_score": 2,
+      "accuracy_risk": "high",
+      "problem_tags": [
+        "gold_conflicts_with_evidence_rule",
+        "missing_decision_rule_for_option_C",
+        "ambiguous_event_definition",
+        "hidden_no_incident_metadata",
+        "undefined_close_far_thresholds",
+        "all_zero_speed_context_unclear"
+      ],
+      "reason_zh": "问题表述整体像正常交通分析问题，但当前证据与金答案存在明显风险。证据中的恢复规则只明确了“车速恢复、车速过冲、持续拥堵”的判定条件，没有说明何时选择“没有事件恢复”。同时给出的事件前、事件中、事件后平均车速全为 0.00；按证据里“事件后车速接近事件前水平”这一规则，反而可能被判为“车速恢复”，与金答案“没有事件恢复”冲突。support_slots 里有 event_label='no pronounced incident'，但场景和问题没有自然说明“没有明显事件”应如何对应选项 C，因此依赖了未充分呈现的元信息。建议修改证据/场景，明确这是无明显事件或无可恢复变化的窗口，并给出选项 C 的判定规则。",
+      "suggested_scene_zh": "交通工程师正在查看一段交通系统窗口，平均车速、排队长度和车道占有率都按同一时间轴记录。该窗口被分成事件前、事件中和事件后三个阶段，用来判断是否出现了明显交通事件以及事件后车速是否恢复。",
+      "suggested_question_zh": "已知事件前、事件中和事件后的平均车速都为 0.00，且没有观察到明显的车速下降或恢复过程。根据这些信息，事件后的交通状态最符合哪一种判断？",
+      "suggested_options_zh": [
+        "车速恢复",
+        "持续拥堵",
+        "没有事件恢复",
+        "车速过冲"
+      ],
+      "large_scale_rule_zh": "事件恢复类样本应在可见证据中明确列出事件前、事件中、事件后的关键数值，并为每个候选项提供可操作的判定规则；如果答案是“没有事件恢复”或“无明显事件”，必须在场景或证据中自然说明没有显著事件/没有可恢复变化，而不能只依赖隐藏的 event_label 或 answer_label。避免使用未定义阈值的“接近、明显低于、远低于”等描述，除非给出具体阈值或足够清楚的定性证据。",
+      "source": "traffic",
+      "task_family": "traffic_event_recovery_context",
+      "split": "test",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_000::traffic_domain_congestion_context",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 4,
+      "accuracy_risk": "low",
+      "problem_tags": [
+        "轻微信号矛盾判定未定义"
+      ],
+      "reason_zh": "题目整体像正常的交通领域判断问题，场景、变量、选项和证据都清楚；证据中给出了拥堵分档阈值以及本窗口的平均车速、最大队列等统计量，因此可以直接按规则选择“严重拥堵”。唯一小问题是规则里提到“信号矛盾时视为状态不清楚”，但没有定义什么算矛盾；不过本例已有最大队列达到严重拥堵阈值，且证据明确支持严重拥堵，因此不影响主要可答性。",
+      "suggested_scene_zh": "交通工程师正在查看一段交通系统窗口，其中平均车速、排队长度和车道占有率都作为对齐的时间序列记录。通常情况下，队列越短、车速越高，交通流越顺畅。",
+      "suggested_question_zh": "根据给定的拥堵分档规则，这个交通窗口最符合哪种交通状态？",
+      "suggested_options_zh": [
+        "A. 中等拥堵",
+        "B. 严重拥堵",
+        "C. 自由流交通",
+        "D. 交通状态不清楚"
+      ],
+      "large_scale_rule_zh": "此类样本应在题面或证据中明确给出所有分类阈值；如果设置“状态不清楚/信号矛盾”选项，应明确定义矛盾条件，避免依赖未说明的领域常识或隐藏元数据。",
+      "source": "traffic",
+      "task_family": "traffic_domain_congestion_context",
+      "split": "test",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_030::traffic_speed_trend",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [
+        "options_wording_mild_mismatch"
+      ],
+      "reason_zh": "该样例整体像正常的交通领域趋势判断问题，场景、变量和证据都说明是在看平均车速的总体变化。证据明确给出平均车速从约 0.00 到约 41.08，并说明整体为上升趋势，因此可由提供信息回答。轻微问题是题干用“改善、恶化、稳定”表述，而选项用“下降、上升、基本平稳、混合变化”，语义可以对应但不完全一致；建议统一为趋势方向表述或把选项改成改善/恶化。",
+      "suggested_scene_zh": "交通工程师正在查看一段交通系统窗口，平均车速、排队长度和车道占有率作为对齐的时间序列被记录。这里重点关注平均车速的总体变化方向。",
+      "suggested_question_zh": "在这个时间窗口内，平均车速整体呈什么趋势？",
+      "suggested_options_zh": [
+        "下降",
+        "上升",
+        "基本平稳",
+        "混合变化"
+      ],
+      "large_scale_rule_zh": "趋势类交通题应避免使用未解释的内部时间索引或事件标签；题干应明确关注哪个变量及其整体方向，选项应与题干语义一致，并能直接由起点、终点或明确趋势证据支持。",
+      "source": "traffic",
+      "task_family": "traffic_speed_trend",
+      "split": "test",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_035::traffic_counterfactual_event_gap",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [
+        "matched_baseline_slightly_underexplained",
+        "counterfactual_but_supported_by_evidence"
+      ],
+      "reason_zh": "该样例整体像正常的交通分析问题，变量含义清楚，问题询问事件窗口内平均车速与匹配基线的比较，证据明确给出事实均值、基线均值和差值为 0.00，因此可直接支持选项 B。轻微问题是“匹配基线”没有在场景中解释其构造方式，但由于题目只要求根据已给基线数值判断高低或相近，且证据充分，风险较低。",
+      "suggested_scene_zh": "交通工程师正在查看一段交通系统窗口，其中平均车速、排队长度和车道占有率都作为对齐的时间序列记录。系统还提供了该窗口对应的基线平均车速，用于比较事件期间的车速是否发生变化。",
+      "suggested_question_zh": "在该交通窗口内，实际平均车速与基线平均车速相比如何？",
+      "suggested_options_zh": [
+        "事件窗口平均车速低于基线",
+        "事件窗口平均车速与基线相近",
+        "事件窗口平均车速高于基线",
+        "事件影响方向不一致"
+      ],
+      "large_scale_rule_zh": "保留此类样例的条件是：场景中说明要比较实际事件窗口与基线，问题使用人类可理解的变量名称而非内部编号，证据明确给出事实均值、基线均值和差值，并且选项只要求判断低于、相近、高于或混合。若“基线”没有任何解释且证据也不给出基线值，或需要依赖未说明阈值来判断“明显差异”，则应修订或拒绝。",
+      "source": "traffic",
+      "task_family": "traffic_counterfactual_event_gap",
+      "split": "test",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_007::traffic_event_impact_relation",
+      "decision": "revise",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [
+        "问题预设存在交通事件",
+        "事件窗口表述略不自然"
+      ],
+      "reason_zh": "样例总体可回答：场景说明了变量含义，证据明确给出变化分数和判定阈值，选项也能对应结论。但问题中的“在这个交通事件窗口内”预设存在明确交通事件，而支持槽里 event_index 为 null、event_label 为“no pronounced incident”，容易让读者觉得场景与答案“没有清晰事件响应”略矛盾。建议改成“这段观察窗口/疑似事件窗口”来避免预设确有事件。",
+      "suggested_scene_zh": "交通工程师正在查看一段交通系统观测窗口，其中平均车速、排队长度和车道占有率都作为对齐的时间序列记录。通常情况下，排队更短、车速更高表示交通流更顺畅。",
+      "suggested_question_zh": "在这段观测窗口内，平均车速和排队长度哪一个表现出更明显的变化？",
+      "suggested_options_zh": [
+        "没有清晰事件响应",
+        "平均车速变化更明显",
+        "排队长度变化更明显",
+        "平均车速和排队长度都明显变化"
+      ],
+      "large_scale_rule_zh": "当支持信息显示没有明确事件或事件索引为空时，问题不要预设“发生了某个事件”；应使用“观测窗口”“疑似事件窗口”或“该时间段”等中性表述，并在证据中提供判定阈值和可读的变量变化指标。",
+      "source": "traffic",
+      "task_family": "traffic_event_impact_relation",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_013::traffic_cross_congestion_relation",
+      "decision": "revise",
+      "naturalness_score": 4,
+      "answerability_score": 2,
+      "accuracy_risk": "high",
+      "problem_tags": [
+        "evidence_numeric_rule_conflict",
+        "gold_evidence_inconsistency",
+        "threshold_sensitive_label",
+        "options_depend_on_threshold"
+      ],
+      "reason_zh": "问题本身比较自然，场景和变量也基本清楚。但证据给出的判定规则是“两者差值低于0.05视为相近”，同时给出的绝对相关系数为0.541和0.618，二者差值并不低于0.05；证据结论却说“两组强度相近”，与规则和数值不一致。虽然支持槽中给了gold标签，但该样例对读者来说存在明显的数值规则冲突，答案可验证性较差，准确性风险高。建议修正规则阈值、相关系数或金标选项，使三者一致。",
+      "suggested_scene_zh": "交通工程师正在查看同一时间窗口内的交通监测序列，包括平均车速、队列长度和车道占有率。系统提供了车速分别与队列长度、车道占有率之间的绝对相关系数，并用这些数值判断哪一组拥堵伴随关系更强。",
+      "suggested_question_zh": "根据给定的绝对相关系数和相近性判定规则，车速与哪一个指标的耦合更强？",
+      "suggested_options_zh": [
+        "两组耦合都达到可用水平，且强度相近",
+        "车速与队列长度的耦合更强",
+        "车速与车道占有率的耦合更强",
+        "两组耦合都未达到可用水平"
+      ],
+      "large_scale_rule_zh": "批量检查此类相关性比较样例时，应确保判定阈值、证据中的数值差异、文字结论和gold答案完全一致；若使用“相近”“可用”等程度标签，必须在题面或证据中明确阈值，并避免出现数值按规则指向一个选项、支持槽却给出另一个选项的情况。",
+      "source": "traffic",
+      "task_family": "traffic_cross_congestion_relation",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_017::traffic_cross_congestion_relation",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例整体像正常的交通拥堵诊断问题，而不是明显的验证器槽位提示。场景说明了平均车速、队列长度和车道占有率的含义，问题询问车速与哪一类拥堵伴随信号耦合更强，符合领域语境。证据中明确给出了绝对相关系数、可用阈值和相近差值阈值，因此选项 C/D 中涉及的“相近”和“低于可用阈值”是可判定的。没有依赖未解释的时间轴、内部 ID 或隐藏元数据；support_slots 中的窗口和事件字段未被问题使用，不影响答题。",
+      "suggested_scene_zh": "交通工程师正在查看一段交通系统时间窗口，其中平均车速、排队长度和车道占有率作为对齐的时间序列记录。通常，队列越短、车速越高，表示交通流越顺畅。",
+      "suggested_question_zh": "在这段数据中，车速与排队长度的关联更强，还是与车道占有率的关联更强？",
+      "suggested_options_zh": [
+        "车速与排队长度的关联更强",
+        "车速与车道占有率的关联更强",
+        "两组关联都达到可用程度，且强度相近",
+        "两组关联都较弱，未达到可用程度"
+      ],
+      "large_scale_rule_zh": "保留此类样例的前提是：场景中清楚定义变量含义，问题使用自然领域语言询问变量关系；若选项涉及“强、弱、相近、可用”等程度判断，必须在证据或题面中提供明确阈值或判定规则，避免依赖隐藏元数据或未说明的内部时间索引。",
+      "source": "traffic",
+      "task_family": "traffic_cross_congestion_relation",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_022::traffic_speed_queue_lead_lag",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例整体像正常的交通工程复盘问题，而不是明显的验证槽位提示。场景中解释了正负滞后的含义、相关强度阈值和稳定性余量，证据也明确给出最强滞后、同步相关以及提升幅度，因此可以不依赖隐藏元数据作答。选项与问题匹配，金答案由证据中的稳定性规则直接支持。唯一轻微不足是场景略偏技术化，但对于时间序列先后关系任务是可接受的。",
+      "suggested_scene_zh": "交通工程师正在查看一段交通系统窗口，其中平均车速、排队长度和车道占有率都作为对齐的时间序列记录。更低的排队长度和更高的车速通常表示交通流更顺畅。本次复盘关注车速变化与排队长度变化谁更早出现：正滞后表示车速更早变化，负滞后表示排队长度更早变化。若绝对相关强度低于 0.35，则认为关系太弱；若最强滞后相对同步相关的绝对强度提升小于 0.05，则认为没有稳定的方向性领先。",
+      "suggested_question_zh": "在这个时间窗口中，车速变化和排队长度变化是否表现出清晰的先后关系？",
+      "suggested_options_zh": [
+        "车速变化领先排队长度变化",
+        "排队长度变化领先车速变化",
+        "相关性太弱，不能用于判断",
+        "没有稳定的方向性领先"
+      ],
+      "large_scale_rule_zh": "保留此类样例时，应在场景或证据中明确说明滞后符号的含义、相关性可用阈值和稳定性判定阈值；证据需直接给出最强滞后、对应相关、同步相关和提升幅度，避免依赖隐藏时间轴、内部事件编号或未解释的元数据。",
+      "source": "traffic",
+      "task_family": "traffic_speed_queue_lead_lag",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_034::traffic_queue_volatility",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例表述自然，符合交通工程师查看时间序列窗口并判断排队长度波动区段的常见场景。变量含义清楚，问题没有暴露内部槽位或元数据；证据明确说明按时间三等分并比较排队长度标准差，选项也与早期、 中期、后期及三段相近对应，因此可由给定证据和支持槽确定答案，风险较低。",
+      "suggested_scene_zh": "交通工程师正在查看一段交通系统窗口，其中平均车速、排队长度和车道占有率都作为对齐的时间序列记录。更低队列和更高速度通常表示交通流更好。",
+      "suggested_question_zh": "运维人员应该把窗口的哪一段视为排队长度波动最大的部分？",
+      "suggested_options_zh": [
+        "早期",
+        "后期",
+        "中期",
+        "三段相近"
+      ],
+      "large_scale_rule_zh": "保留此类样例：场景给出清楚的领域变量，问题以自然语言询问时间窗口中哪个区段波动最大，证据明确说明窗口三等分并基于标准差比较得到答案，且不依赖隐藏元数据或未解释阈值。",
+      "source": "traffic",
+      "task_family": "traffic_queue_volatility",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_033::traffic_speed_periodicity",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例整体像正常的交通时序分析问题，场景、变量和选项清楚。问题中的“自相关分档规则”略偏规则提示式，但证据明确给出了分档阈值、峰值滞后和分数，因此可以直接从证据判断周期类型，不依赖隐藏元数据。答案风险较低。",
+      "suggested_scene_zh": "交通工程师正在查看一段交通系统时间窗口，平均车速、排队长度和车道占有率被记录为对齐的时间序列。较低的排队长度和较高的平均车速通常表示交通流更顺畅。",
+      "suggested_question_zh": "根据平均车速序列的自相关峰值，这段交通速度更符合哪种运行周期模式？",
+      "suggested_options_zh": [
+        "中等周期",
+        "长周期",
+        "短周期",
+        "没有明显周期"
+      ],
+      "large_scale_rule_zh": "保留此类样例时，应在证据中明确给出周期判定阈值和实际自相关峰值位置，避免只给出“短/中/长周期”等需要隐含阈值的标签。问题表述可偏自然决策问法，少用“按照分档规则”这类验证槽提示。",
+      "source": "traffic",
+      "task_family": "traffic_speed_periodicity",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_027::traffic_signal_counterfactual_queue",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题表述像正常的交通工程判断题，场景、变量和证据都能支持比较固定信号基线与自适应信号策略下的平均队列长度。证据直接给出两种策略的平均队列均为 2.54，因此无需额外元数据或隐含阈值即可选择“没有实质队列变化”。反事实关系在证据中表达清楚，风险较低。",
+      "suggested_scene_zh": "交通工程师正在比较同一交通窗口下两种信号控制策略的表现：固定信号基线和自适应信号策略。记录包括平均车速、队列长度和车道占有率；通常队列越短、车速越高表示交通流越好。",
+      "suggested_question_zh": "与固定信号基线相比，自适应信号策略下的平均队列长度有什么变化？",
+      "suggested_options_zh": [
+        "自适应信号下平均队列更低",
+        "两种策略下平均队列基本相同",
+        "自适应信号下平均队列更高",
+        "影响不一致或难以判断"
+      ],
+      "large_scale_rule_zh": "对于反事实交通控制题，场景或证据必须明确说明要比较的两种策略、目标变量以及对应统计值；若只给出内部窗口编号、未解释的基线来源，或需要未声明阈值判断“显著改善”，应标为修改或拒绝。",
+      "source": "traffic",
+      "task_family": "traffic_signal_counterfactual_queue",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_022::traffic_queue_volatility",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该问题读起来像正常的交通运维分析问题，变量含义清楚，询问排队长度在窗口中哪一段波动最大。证据明确说明将窗口按时间三等分并比较标准差，且支持槽给出了三段标准差和确定答案，因此可回答性强。选项也与早期、中期、后期及三段相近的判断一致，没有依赖隐藏元数据或未解释的时间轴。",
+      "suggested_scene_zh": "交通工程师正在查看一段交通系统窗口，其中平均车速、排队长度和车道占有率都作为对齐的时间序列记录。更低队列和更高速度通常表示交通流更好。",
+      "suggested_question_zh": "按时间把窗口分成早期、中期和后期三段后，哪一段的排队长度波动最大？",
+      "suggested_options_zh": [
+        "早期",
+        "后期",
+        "三段相近",
+        "中期"
+      ],
+      "large_scale_rule_zh": "对于波动性类问题，应在题面或证据中明确说明比较依据，例如按相同时间段计算标准差；避免只使用“波动最大”等模糊表述而不说明分段方式或变量含义。",
+      "source": "traffic",
+      "task_family": "traffic_queue_volatility",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_019::traffic_window_speed",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题表述自然，符合交通工程场景中的常见比较任务；变量含义清楚，问题直接询问窗口前半段与后半段的平均车速高低。证据明确给出了两半窗口的平均车速数值，可直接支持选项判断，不依赖隐藏元数据、内部编号或未说明阈值。",
+      "suggested_scene_zh": "交通工程师正在查看一段交通系统窗口，其中平均车速、排队长度和车道占有率都作为对齐的时间序列记录。更低队列和更高速度通常表示交通流更好。",
+      "suggested_question_zh": "这个窗口中哪一半的平均车速更高？",
+      "suggested_options_zh": [
+        "后半段更高",
+        "前后两半相近",
+        "无法判断",
+        "前半段更高"
+      ],
+      "large_scale_rule_zh": "保留这类样本：只要场景说明了变量含义，问题以自然语言询问前后窗口均值比较，且证据明确给出两个窗口均值或足以直接判断大小关系，就属于低风险、可回答的时间序列问答。",
+      "source": "traffic",
+      "task_family": "traffic_window_speed",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_009::traffic_counterfactual_event_gap",
+      "decision": "revise",
+      "naturalness_score": 4,
+      "answerability_score": 4,
+      "accuracy_risk": "medium",
+      "problem_tags": [
+        "counterfactual_baseline_underexplained",
+        "event_window_underdescribed",
+        "meaningfully_different_threshold_unclear"
+      ],
+      "reason_zh": "整体像正常的交通领域问题，且证据直接给出了事件窗口平均车速、基线平均车速和差值，因此可以根据证据作答。但“匹配基线”的来源没有在场景中解释，属于反事实/基线类问题中较容易依赖隐藏元数据的表述；“明显差异”也暗含阈值，虽然本例差距很大但措辞仍不够稳妥。建议改成直接询问事件窗口平均车速相对给定基线是高、低还是接近，并在场景中说明基线是用于比较的参考水平。",
+      "suggested_scene_zh": "交通工程师正在查看一次交通事件期间的监测窗口。该窗口记录了平均车速、排队长度和车道占有率，并提供了一个用于比较的匹配基线平均车速。较低的排队长度和较高的平均车速通常表示交通流更顺畅。",
+      "suggested_question_zh": "在该交通事件窗口内，实际平均车速与给定的匹配基线平均车速相比如何？",
+      "suggested_options_zh": [
+        "事件窗口平均车速高于基线",
+        "事件窗口平均车速与基线相近",
+        "事件影响方向不一致，无法归为单一方向",
+        "事件窗口平均车速低于基线"
+      ],
+      "large_scale_rule_zh": "对于反事实或匹配基线类样本，应在场景或证据中明确说明基线是可用于比较的参考值，避免只出现内部变量名、隐藏匹配逻辑或未解释的事件窗口。问题应直接询问可由证据判断的方向性比较，尽量避免“明显”“显著”等需要额外阈值的措辞，除非阈值已在题面给出。",
+      "source": "traffic",
+      "task_family": "traffic_counterfactual_event_gap",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_028::traffic_speed_extrema",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题表述自然，符合交通工程师查看平均车速时间序列并判断最低点所在时段的常见问法。变量含义清楚，早期/中期/后期的划分在题干和证据中都有说明，证据明确给出最低平均车速出现在早期，因此可由给定信息回答。没有依赖隐藏元数据、内部编号或未解释阈值。",
+      "suggested_scene_zh": "交通工程师正在查看一段交通系统窗口，其中平均车速、排队长度和车道占有率都作为对齐的时间序列记录。更低队列和更高速度通常表示交通流更好。",
+      "suggested_question_zh": "把这个交通窗口按时间分成早期、中期和后期后，最低平均车速出现在什么位置？",
+      "suggested_options_zh": [
+        "中期",
+        "后期",
+        "没有清晰极值",
+        "早期"
+      ],
+      "large_scale_rule_zh": "对于极值位置类问题，应在题干或证据中明确说明时间窗口如何划分，并使用可理解的变量名称；只要证据明确指出极值所在区段，就可以保留。",
+      "source": "traffic",
+      "task_family": "traffic_speed_extrema",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_023::traffic_speed_extrema",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题表述自然，像交通工程场景中的常规分析问题；变量含义清楚，选项为早中晚三段，证据明确说明窗口被三等分且最低平均车速位于早期。无需依赖隐藏元数据或未解释阈值，答案可由证据和支持槽确定。",
+      "suggested_scene_zh": "交通工程师正在查看一段交通系统窗口，其中平均车速、排队长度和车道占有率都作为对齐的时间序列记录。更低队列和更高速度通常表示交通流更好。",
+      "suggested_question_zh": "把这个交通窗口按时间分成早期、中期和后期后，最低平均车速出现在什么位置？",
+      "suggested_options_zh": [
+        "中期",
+        "早期",
+        "后期",
+        "没有清晰极值"
+      ],
+      "large_scale_rule_zh": "保留这类题：只要场景说明时间窗口和变量含义，问题用自然语言询问极值所在的早/中/晚分段，且证据明确给出三等分规则和极值所在分段，就可判为低风险可保留。",
+      "source": "traffic",
+      "task_family": "traffic_speed_extrema",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_007::traffic_combined_stress_context",
+      "decision": "reject",
+      "naturalness_score": 4,
+      "answerability_score": 2,
+      "accuracy_risk": "high",
+      "problem_tags": [
+        "evidence_gold_conflict",
+        "threshold_label_inconsistency",
+        "deterministic_support_conflict",
+        "answerability_issue"
+      ],
+      "reason_zh": "题目表述整体像正常交通领域问题，变量含义也基本清楚。但证据中的判定规则与给出的结论明显冲突：规则写明综合压力分数 3.0 到低于 6.0 属于“中等综合拥堵”，而本例分数为 4.07，却在证据和 gold 中标为“稳定综合交通状态”。即使有“无明显交通事件”和严重事件标记为 false，也没有说明这些事件信息可以覆盖压力分数阈值。因此读者依据题面和证据会倾向选择 C，而不是 gold A。该例不能可靠地从当前场景、规则和证据中回答，应拒绝或重新生成一致的规则/分数/答案。",
+      "suggested_scene_zh": "交通工程师正在查看一段交通系统窗口，其中平均车速、排队长度和车道占有率都作为对齐的时间序列记录。综合交通压力分数越高，通常表示交通运行越紧张；事件信息用于判断是否存在明显事故或严重扰动。",
+      "suggested_question_zh": "根据给出的综合交通压力分数和事件证据，这个交通窗口最可能处于哪种运行状态？",
+      "suggested_options_zh": [
+        "稳定综合交通状态",
+        "严重综合拥堵",
+        "中等综合拥堵",
+        "综合状态不清楚"
+      ],
+      "large_scale_rule_zh": "批量检查此类样本时，必须确保题面或证据中的数值阈值、事件规则、支持槽中的分数和最终答案标签完全一致。若分数落入某一阈值区间，答案应与该区间对应；如果事件信息可以覆盖或修正压力分数判断，必须在证据中明确说明覆盖条件。不得让 deterministic answer_label 与公开证据规则相矛盾。",
+      "source": "traffic",
+      "task_family": "traffic_combined_stress_context",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_029::traffic_incident_anomaly",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例读起来像正常的交通领域判断问题，而不是明显的验证槽位提示。场景说明了变量含义，问题中的早期/中期/后期划分也在证据中明确解释为局部窗口三等分；证据直接给出最强扰动位于局部窗口第135步附近，并说明支持中期，因此可以从给定信息确定答案。未依赖未展示的外部元数据或内部ID，风险较低。",
+      "suggested_scene_zh": "交通工程师正在查看一段交通系统窗口，其中平均车速、排队长度和车道占有率都作为对齐的时间序列记录。更低的排队长度和更高的平均车速通常表示交通流更顺畅。",
+      "suggested_question_zh": "如果把这个交通窗口按时间三等分，最明显的事故式交通扰动出现在早期、中期还是后期？",
+      "suggested_options_zh": [
+        "早期",
+        "后期",
+        "没有明显交通事件",
+        "中期"
+      ],
+      "large_scale_rule_zh": "保留此类样例：只要题目中的时间分段规则在场景或证据中明确说明，变量含义清楚，并且证据直接给出事件所在位置及其对应分段，就可以视为自然且可回答。",
+      "source": "traffic",
+      "task_family": "traffic_incident_anomaly",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "traffic_broad::traffic_scenario_002::traffic_event_recovery_context",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 4,
+      "accuracy_risk": "low",
+      "problem_tags": [
+        "轻微选项重叠",
+        "接近程度无明确阈值"
+      ],
+      "reason_zh": "该样例整体像正常的交通场景判断题，而不是明显的验证器槽位提示。场景说明了平均车速、队列长度和车道占有率，问题聚焦事件前、中、后的平均车速，证据给出了恢复判定规则和三个均值，因此可以从文本中作答。主要小问题是“持续拥堵”和“没有事件恢复”语义上有一定重叠；此外“接近”“明显低于”没有给出严格阈值，但给定数值差异很大，实际判断风险较低。",
+      "suggested_scene_zh": "交通工程师正在查看一次交通事件前后的一段监测窗口。系统记录了平均车速、排队长度和车道占有率；通常车速越高、队列越短，说明交通流越好。",
+      "suggested_question_zh": "只根据事件前、事件中和事件后的平均车速，事件后的交通状态应归为哪一类？",
+      "suggested_options_zh": [
+        "A. 持续拥堵",
+        "B. 车速恢复",
+        "C. 车速过冲",
+        "D. 无法判断恢复状态"
+      ],
+      "large_scale_rule_zh": "大规模构造同类样例时，应在题面或证据中直接给出事件前、事件中、事件后的统计值和清晰的分类规则；避免依赖隐藏的事件索引、内部标签或未解释的时间轴。若使用“接近”“明显低于”等程度词，最好提供阈值，或确保数值差异足够大且选项之间不重叠。",
+      "source": "traffic",
+      "task_family": "traffic_event_recovery_context",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_021::water_event_recovery_context",
+      "decision": "reject",
+      "naturalness_score": 3,
+      "answerability_score": 2,
+      "accuracy_risk": "high",
+      "problem_tags": [
+        "gold_evidence_inconsistent",
+        "rule_application_conflict",
+        "verifier_slot_style",
+        "ambiguous_event_recovery_label"
+      ],
+      "reason_zh": "题目整体场景可理解，但问题表述偏像按规则验算的槽位提示。更严重的是，证据中给出的三阶段均值与恢复规则无法支持标注答案“水压恢复”：证据写明事件前均值 77.61、事件中均值 77.76、事件后均值 77.60，而规则要求“水压恢复”必须满足事件中低于事件前、事件后高于事件中且不超过事件前；这些条件与给定数值不一致。因此读者根据明示证据会得到与 gold/support label 不同的判断，存在高准确性风险，应拒绝或重做该样本。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一次服务事件前、中、后三个阶段的水压变化。x0 表示水压，x1 表示管道流量，x2 表示水箱蓄水量；本题只需根据 x0 的阶段均值判断事件后的水压状态。",
+      "suggested_question_zh": "根据给出的事件前、事件中、事件后三个阶段的水压均值和判定规则，事件后的水压状态应归为哪一类？",
+      "suggested_options_zh": [
+        "A. 持续水压压力",
+        "B. 水压过冲",
+        "C. 水压恢复",
+        "D. 无法判定事件恢复"
+      ],
+      "large_scale_rule_zh": "大规模生成时，应确保规则、阶段均值、支持槽中的答案标签三者严格一致；若定义“恢复”需要事件中均值低于事件前且事件后均值回升，则生成的数值必须满足这些条件，否则应调整答案标签或重新采样数值。",
+      "source": "water",
+      "task_family": "water_event_recovery_context",
+      "split": "dev",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_006::water_domain_resilience_context",
+      "decision": "reject",
+      "naturalness_score": 4,
+      "answerability_score": 1,
+      "accuracy_risk": "high",
+      "problem_tags": [
+        "gold_evidence_conflict",
+        "missing_rule_for_option",
+        "hidden_metadata_dependency",
+        "unsupported_domain_label",
+        "ambiguous_service_state_rule"
+      ],
+      "reason_zh": "问题本身较自然，但证据中的服务状态规则只说明：最低水压低于 50 是低水压风险；高于该下限且没有漏水压力证据则是稳定供水。给出的最低水压为 55.48，且证据没有提供任何“漏水压力下的网络”的判定规则或漏水压力证据。因此选项 A 无法从场景和证据中推出，反而与已给规则不一致。若金答案依赖 support_slots 中的 event_index、event_label 或数据集内部事件标注，则属于隐藏元数据依赖，不应保留。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务窗口。x0 是水压，x1 是管道流量，x2 是水箱蓄水量。服务状态规则为：若最低水压低于 50，则判为低水压风险；若最低水压不低于 50 且没有明确漏水压力证据，则判为稳定供水服务；若存在明确漏水压力证据，则判为漏水压力下的网络。",
+      "suggested_question_zh": "根据上述服务状态规则和本窗口的压力、流量摘要，这个供水网络窗口最符合哪种服务状态？",
+      "suggested_options_zh": [
+        "漏水压力下的网络",
+        "低水压风险",
+        "稳定供水服务",
+        "水力状态不清楚"
+      ],
+      "large_scale_rule_zh": "批量检查时，若答案标签涉及“漏水”“故障”“压力异常”等领域状态，证据必须给出可执行的判定规则或明确观测证据；不能只在 support_slots 中存放事件标签、时间索引或内部标注来支撑答案。若规则推出的自然答案与 gold_answer 冲突，应标为高风险并拒绝或重写。",
+      "source": "water",
+      "task_family": "water_domain_resilience_context",
+      "split": "dev",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_026::water_combined_stress_context",
+      "decision": "reject",
+      "naturalness_score": 3,
+      "answerability_score": 1,
+      "accuracy_risk": "high",
+      "problem_tags": [
+        "rule_evidence_mismatch",
+        "event_timing_contradiction",
+        "unclear_threshold_label",
+        "slot_like_flag",
+        "answer_not_supported_by_evidence"
+      ],
+      "reason_zh": "题目整体像领域决策问题，但证据中的判定规则与给出的事实不一致：规则说“评分低于 -50 且窗口中段出现事件”时才按严重低压标记判断，而本例证据明确说事件位于“后期”。因此无法从现有证据推出金答案“中等综合压力”。此外，“严重低压标记”“事件位于中段/后期”等标签依赖未解释的内部阈值或支持槽，读者无法独立理解其含义。由于核心判定条件矛盾，不能仅靠改写问题解决，应拒绝或重生成证据。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务窗口。已知该窗口的综合压力分数为 -69.72，事件发生在规则所要求的时间段内，且未触发严重低水压标记。x0 表示水压，x1 表示管道流量，x2 表示水箱蓄水量；低水压可能提示供水风险。",
+      "suggested_question_zh": "根据给出的综合压力判定规则，这个供水服务窗口最可能属于哪种运行状态？",
+      "suggested_options_zh": [
+        "严重综合压力",
+        "稳定综合状态",
+        "综合状态不清楚",
+        "中等综合压力"
+      ],
+      "large_scale_rule_zh": "批量生成此类样本时，证据中的判定规则、事件时间标签和支持槽必须完全一致；如果规则要求“窗口中段事件”，就不能同时给出“后期事件”。所有用于分类的标记和时间标签都应以自然语言解释清楚，避免只暴露内部布尔槽或未定义阈值。",
+      "source": "water",
+      "task_family": "water_combined_stress_context",
+      "split": "dev",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_021::water_domain_resilience_context",
+      "decision": "revise",
+      "naturalness_score": 4,
+      "answerability_score": 2,
+      "accuracy_risk": "high",
+      "problem_tags": [
+        "evidence_missing_rule_for_gold",
+        "option_requires_unstated_threshold",
+        "unclear_leak_stress_definition",
+        "gold_not_supported_by_visible_evidence"
+      ],
+      "reason_zh": "题目整体像正常的供水运维判断问题，但可答性不足。证据只说明了“最低水压低于 50”为低水压风险，以及“水压高于该下限且没有漏水压力证据”为稳定供水；却没有解释什么数值或现象构成“漏水压力下的网络”。虽然给出了平均流量 9.92，但没有流量阈值或规则说明它为何代表漏水压力。因此从可见场景和证据无法可靠推出选项 B，存在较高准确性风险。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务窗口。x0 是水压，x1 是管道流量，x2 是水箱蓄水量。低水压可能表示供水风险；在水压未低于风险线时，异常偏高的管道流量也可能表示网络存在漏水压力。",
+      "suggested_question_zh": "根据给出的服务状态规则和本窗口统计值，这个供水网络窗口最符合哪种服务状态？",
+      "suggested_options_zh": [
+        "低水压风险",
+        "漏水压力下的网络",
+        "稳定供水服务",
+        "水力状态不清楚"
+      ],
+      "large_scale_rule_zh": "对于这类样本，所有候选状态都必须在场景或证据中有明确、可操作的判定规则；如果金答案依赖某个阈值或领域含义，例如“漏水压力”对应的流量阈值，则必须显式给出，不能依赖隐藏元数据或未说明的内部规则。",
+      "source": "water",
+      "task_family": "water_domain_resilience_context",
+      "split": "dev",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_006::water_leak_anomaly",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例整体像正常的供水运维判断问题，变量含义已说明，早期/中期/后期的划分在问题和证据中都有解释。证据明确给出最强疑似漏水扰动位于局部窗口第199步附近，并说明三等分窗口，因此可由证据和支持槽确定为后期。没有依赖隐藏元数据或未说明阈值，风险较低。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务时间窗口。x0 是水压，x1 是管道流量，x2 是水箱蓄水量。低水压可能表示供水风险。",
+      "suggested_question_zh": "将这个服务窗口按时间平均分为早期、中期和后期后，最强的疑似漏水压力扰动出现在哪一段？",
+      "suggested_options_zh": [
+        "早期",
+        "后期",
+        "中期",
+        "没有明显疑似漏水扰动"
+      ],
+      "large_scale_rule_zh": "保留。此类题目应在场景或证据中明确说明时间窗口如何划分，并给出可定位事件所在区段的证据；避免只依赖隐藏的窗口索引或检测器内部元数据。",
+      "source": "water",
+      "task_family": "water_leak_anomaly",
+      "split": "dev",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_031::water_cross_pressure_relation",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该例子读起来像正常的供水网络诊断问题，变量含义清楚，问题目标明确。证据中给出了用于判断“耦合更强/相近/太弱”的绝对相关系数和阈值规则，因此无需依赖隐藏元数据即可从给定信息确定选项。没有明显的内部 ID、未解释时间轴或模糊阈值问题。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务窗口。x0 是水压，x1 是管道流量，x2 是水箱蓄水量。低水压可能表示供水风险。",
+      "suggested_question_zh": "做水力诊断时，水压与管道流量的耦合更强，还是与水箱蓄水量的耦合更强？",
+      "suggested_options_zh": [
+        "水压与水箱蓄水量耦合更强",
+        "两组水力关系强度相近",
+        "水压与管道流量耦合更强",
+        "两组水力关系都低于可用阈值"
+      ],
+      "large_scale_rule_zh": "保留此类样本时，应确保场景中变量含义清楚，问题采用自然领域表述，并在证据中明确给出相关系数、阈值和相近判定规则；不要让“强耦合”“可用耦合”等标签依赖未公开的隐藏阈值。",
+      "source": "water",
+      "task_family": "water_cross_pressure_relation",
+      "split": "dev",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_000::water_event_impact_relation",
+      "decision": "revise",
+      "naturalness_score": 4,
+      "answerability_score": 2,
+      "accuracy_risk": "high",
+      "problem_tags": [
+        "evidence_threshold_conflict",
+        "option_semantics_unclear",
+        "deterministic_rule_inconsistent",
+        "event_window_underexplained"
+      ],
+      "reason_zh": "题面整体像正常的供水运维问题，变量含义也清楚。但证据中写明“低于 1.00 视为响应不清晰”，而水压分数 0.033、流量分数 0.613 都低于 1.00；按这条规则应更接近“没有清晰事件响应”，却又给出“流量扰动更强”。这会让读者无法稳定判断选 C 还是选 D，属于规则与答案冲突。若任务只想比较两个分数大小，应删除或改写 1.00 的清晰响应阈值，并明确即使整体响应较弱也按相对变化强度选择。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一次服务事件窗口。x0 表示水压，x1 表示管道流量，x2 表示水箱蓄水量。本题只比较水压和管道流量在该窗口内的相对变化强度。",
+      "suggested_question_zh": "在这个供水服务事件窗口内，水压和管道流量相比，哪一个变化幅度更大？",
+      "suggested_options_zh": [
+        "水压变化更大",
+        "水压和流量变化强度相近",
+        "流量变化更大",
+        "两者都没有可比较的变化"
+      ],
+      "large_scale_rule_zh": "批量生成这类事件影响题时，必须保证阈值规则、选项含义和金标一致。如果设置“低于某阈值即无清晰响应”，则所有低于阈值的情况不能再标为某变量扰动更强；若目标是相对比较大小，则不要引入会覆盖答案的“无清晰响应”阈值，或明确先比较相对分数再判断选项。",
+      "source": "water",
+      "task_family": "water_event_impact_relation",
+      "split": "test",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_000::water_pressure_flow_lead_lag",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "题目整体像正常的供水运维判断问题，变量含义清楚，问题只比较水压与管道流量。场景明确说明滞后 0 表示同步变化，且最强关系在滞后 0 时应选择没有稳定领先方；证据也直接给出最强候选滞后为 0、相关系数很强，因此答案可由证据和规则确定。轻微不足是 x0/x1/x2 的变量标号略有数据集槽位感，但不影响理解或作答。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务窗口中的监测数据。这里关注水压和管道流量的变化关系：低水压可能提示供水风险，管道流量反映用水或输送变化。本题只比较水压与管道流量。如果两者最强的对应关系出现在滞后 0，表示主要是同步变化，应判断为没有稳定领先方。",
+      "suggested_question_zh": "在这个服务窗口中，水压变化和管道流量变化之间是否存在清晰的先后关系？",
+      "suggested_options_zh": [
+        "水压变化领先流量变化",
+        "流量变化领先水压变化",
+        "相关性太弱，无法判断先后",
+        "没有稳定领先方"
+      ],
+      "large_scale_rule_zh": "可保留此类题：只要场景中明确变量含义、说明滞后 0 的含义，并且证据给出最强滞后及相关强度，就可以从证据稳定判断是否存在领先关系。批量生成时应避免依赖未展示的内部事件编号、窗口索引或未解释的时间轴。",
+      "source": "water",
+      "task_family": "water_pressure_flow_lead_lag",
+      "split": "test",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_015::water_flow_volatility",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例读起来像正常的供水运维问题，变量含义已说明，问题要求判断管道流量在哪个时间段波动最大。证据明确说明窗口被三等分，并用各段标准差比较，支持槽也给出了三段标准差和确定答案，因此可回答性强、风险低。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务窗口。x0 是水压，x1 是管道流量，x2 是水箱蓄水量。低水压可能表示供水风险。",
+      "suggested_question_zh": "运维人员应该把窗口的哪一段视为管道流量波动最大的部分？",
+      "suggested_options_zh": [
+        "中期",
+        "后期",
+        "早期",
+        "三段相近"
+      ],
+      "large_scale_rule_zh": "保留：场景清楚定义变量，问题自然，选项为人类可理解的时间段；证据明确说明按时间三等分并比较标准差，支持槽可确定答案，无需隐藏元数据或额外阈值。",
+      "source": "water",
+      "task_family": "water_flow_volatility",
+      "split": "test",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_020::water_window_pressure",
+      "decision": "revise",
+      "naturalness_score": 4,
+      "answerability_score": 4,
+      "accuracy_risk": "medium",
+      "problem_tags": [
+        "question_zh_untranslated",
+        "evidence_zh_untranslated",
+        "ambiguous_similarity_threshold",
+        "internal_variable_name"
+      ],
+      "reason_zh": "题目整体像正常的供水运维问题，变量 x0/x1/x2 也在场景中解释了，因此基本可读、可答。主要问题是中文题干和中文证据仍是英文；另外选项包含“前后两半相近”，但没有说明多大差异算“相近”，如果只看均值 74.40 和 74.72，判断相近依赖隐含阈值。虽然证据直接给出了 deterministic 标签为 similar halves，可降低不可答风险，但作为自然语言 QA 仍建议改写为基于“汇总结果/均值差异很小”的判断，避免读者自行推断阈值。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务时间窗口内的运行数据。x0 表示水压，x1 表示管道流量，x2 表示水箱蓄水量。该窗口中，x0 的前半段平均值为 74.40，后半段平均值为 74.72。",
+      "suggested_question_zh": "根据这个服务窗口内水压 x0 的前后半段平均值，哪种描述最合适？",
+      "suggested_options_zh": [
+        "A. 前半段明显更高",
+        "B. 后半段明显更高",
+        "C. 前后两半基本相近",
+        "D. 信息不足，无法判断"
+      ],
+      "large_scale_rule_zh": "涉及“更高/更低/相近”等窗口比较时，应在场景或证据中给出可直接使用的统计量，并避免让答题者依赖未说明的相似度阈值；若 gold 来自规则标签，应把问题表述为选择最符合已给汇总结果的描述。",
+      "source": "water",
+      "task_family": "water_window_pressure",
+      "split": "test",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_015::water_leak_anomaly",
+      "decision": "revise",
+      "naturalness_score": 4,
+      "answerability_score": 4,
+      "accuracy_risk": "medium",
+      "problem_tags": [
+        "evidence_contains_None_placeholder",
+        "unexplained_detector_threshold",
+        "local_window_reference_needs_plain_language"
+      ],
+      "reason_zh": "题目本身比较像自然的运维判断问题，选项也清楚。但证据中出现“第 None 步”这种占位符/内部表示，不适合给普通答题者阅读；同时“疑似漏水扰动检测器”没有说明判定依据，若没有可见时间序列或更具体证据，答案主要依赖隐藏的确定性槽位。由于证据明确支持“没有明显疑似漏水扰动”，该例可通过改写保留，但应删除 None，并用自然语言说明本窗口内未检测到明显压力扰动。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务时间窗口。x0 表示水压，x1 表示管道流量，x2 表示水箱蓄水量。持续或突出的低水压异常可能提示疑似漏水或供水风险。",
+      "suggested_question_zh": "如果把这个服务窗口按时间平均分为早期、中期和后期，最明显的疑似漏水压力扰动出现在哪一段？",
+      "suggested_options_zh": [
+        "早期",
+        "中期",
+        "没有明显疑似漏水扰动",
+        "后期"
+      ],
+      "large_scale_rule_zh": "批量构造这类题时，应避免在证据中暴露 None、null、内部索引或检测器占位符；若没有检测到事件，应直接写成“该窗口内未发现明显疑似漏水压力扰动”。若要求判断早/中/晚，必须说明窗口被等分，且证据应以人类可理解的方式指出事件所在时间段或明确说明无明显事件。",
+      "source": "water",
+      "task_family": "water_leak_anomaly",
+      "split": "test",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_010::water_min_pressure_extrema",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例整体像正常的供水运维问题：场景说明了水压、流量和蓄水量的含义，问题询问水压最低点落在服务窗口的早/中/后哪一段，选项也清晰。证据明确说明早中后三等分当前局部窗口，且最低水压出现在局部窗口第 0 步附近，因此可由给定证据直接回答。support_slots 中的 event_index/event_label 与本题最低点判断无关，虽然可能造成轻微干扰，但未暴露在题面中，也不影响证据支持的答案。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务时间窗口。x0 表示水压，x1 表示管道流量，x2 表示水箱蓄水量。低水压可能提示供水风险。",
+      "suggested_question_zh": "如果把这个服务窗口按时间平均分成早期、中期和后期，水压的最低点出现在其中哪一段？",
+      "suggested_options_zh": [
+        "早期",
+        "中期",
+        "后期",
+        "没有清晰极值"
+      ],
+      "large_scale_rule_zh": "极值位置类问题应在题面或证据中明确说明时间窗口如何划分，并提供极值出现的位置依据；避免暴露无关内部索引或与当前判断无关的事件标签。",
+      "source": "water",
+      "task_family": "water_min_pressure_extrema",
+      "split": "test",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_008::water_pressure_trend",
+      "decision": "revise",
+      "naturalness_score": 4,
+      "answerability_score": 4,
+      "accuracy_risk": "low",
+      "problem_tags": [
+        "main_signal_ambiguous",
+        "evidence_zh_not_localized",
+        "unused_internal_support_metadata"
+      ],
+      "reason_zh": "整体是自然的供水运维趋势判断题，也能从证据中的起止水压判断答案。但题干里的“主要监测信号”不如直接说明是“水压 x0”，否则需要读者推断主信号是哪一个。中文证据仍为英文，需本地化。support_slots 中的 window_start、event_index、event_label 等内部字段未用于题面，若暴露给用户会增加元数据感；当前不影响作答，但建议精简。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务窗口。x0 表示水压，x1 表示管道流量，x2 表示水箱蓄水量。低水压可能表示供水风险。",
+      "suggested_question_zh": "在这个服务窗口内，水压 x0 的整体趋势是什么？",
+      "suggested_options_zh": [
+        "A. 上升",
+        "B. 下降",
+        "C. 基本平稳",
+        "D. 混合变化"
+      ],
+      "large_scale_rule_zh": "趋势类题目应在题干中明确指定被判断的变量，例如“水压 x0”，避免使用“主要监测信号”等需要额外推断的说法；证据应使用与题目一致的语言，并只保留人类可理解的起止值、整体趋势等信息，避免暴露内部索引或事件标签。",
+      "source": "water",
+      "task_family": "water_pressure_trend",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_029::water_leak_counterfactual_pressure",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例读起来像正常的供水运维判断问题，不像验证槽位提示。场景说明了变量含义，问题明确比较漏水场景与无漏水基线下的平均水压，证据直接给出两者均为 77.45，因此可由证据和选项确定答案。虽然属于反事实比较，但基线和漏水场景数值都已明示，关系清楚，风险低。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务窗口。x0 是水压，x1 是管道流量，x2 是水箱蓄水量。低水压可能表示供水风险。",
+      "suggested_question_zh": "与无漏水基线相比，漏水场景下该窗口的平均水压是更低、更高，还是基本相同？",
+      "suggested_options_zh": [
+        "平均水压基本相同",
+        "漏水下水压更低",
+        "漏水下水压更高",
+        "水压变化方向不一致"
+      ],
+      "large_scale_rule_zh": "反事实类样例应在场景或证据中明确给出事实场景与基线场景的可比指标；若证据直接提供两者数值且差异方向清楚，可以保留。避免依赖隐藏阈值、内部事件编号或未解释的时间轴。",
+      "source": "water",
+      "task_family": "water_leak_counterfactual_pressure",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_028::water_event_recovery_context",
+      "decision": "reject",
+      "naturalness_score": 3,
+      "answerability_score": 1,
+      "accuracy_risk": "high",
+      "problem_tags": [
+        "规则与数值不一致",
+        "gold答案无法由证据推出",
+        "事件阶段含义不清",
+        "问题偏模板化",
+        "恢复/压力状态阈值不充分"
+      ],
+      "reason_zh": "该题表面上是供水压力恢复判断，但证据中的规则与给出的三阶段均值无法推出标注答案。规则称“持续水压压力”需要事件后水压未高于事件中且仍低于事件前；但给出的均值为事件前 74.62、事件中 74.71、事件后 74.70，事件后并不低于事件前，且事件中也没有低于事件前，因此不满足恢复规则中对低压事件的前提。若严格按证据，四个选项都不清楚适用，gold B 只能依赖内部支持槽而非可见证据。问题中的“三阶段均值规则”也略像验证槽提示，但主要问题是答案不可由场景和证据确定。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一次服务窗口中的水压变化。x0 表示水压，x1 表示管道流量，x2 表示水箱蓄水量。低水压可能表示供水风险。系统将水压窗口分为事件前、事件中和事件后三个阶段，并用各阶段的平均水压判断事件后的状态。",
+      "suggested_question_zh": "根据给出的三阶段平均水压和判定规则，事件后的水压状态应判断为哪一种？",
+      "suggested_options_zh": [
+        "A. 水压恢复",
+        "B. 持续水压压力",
+        "C. 水压过冲",
+        "D. 没有可判定的事件恢复"
+      ],
+      "large_scale_rule_zh": "批量生成此类题目时，必须确保可见证据中的规则、数值和标注答案完全一致；尤其是恢复类规则要明确事件是否确实为低压事件，并避免出现事件中均值高于事件前均值却仍要求判断为低压持续的情况。",
+      "source": "water",
+      "task_family": "water_event_recovery_context",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_012::water_min_pressure_extrema",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例读起来像正常的供水运维问题，场景、变量含义和选项都清楚。问题只要求判断水压最低点位于窗口的早期、中期还是后期，证据明确说明三等分规则，并给出最低水压出现在局部窗口第 0 步附近，因此可直接支持答案。没有明显依赖隐藏元数据或未解释阈值的问题。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务窗口。x0 是水压，x1 是管道流量，x2 是水箱蓄水量。低水压可能表示供水风险。",
+      "suggested_question_zh": "如果把这个服务窗口按时间平均分成早期、中期和后期，水压的最低点出现在哪一段？",
+      "suggested_options_zh": [
+        "A. 中期",
+        "B. 后期",
+        "C. 早期",
+        "D. 没有清晰极值"
+      ],
+      "large_scale_rule_zh": "保留这类题：只要场景说明变量含义，问题明确按窗口三等分定位极值，证据给出极值所在位置并能对应到选项，就属于自然且可回答的极值定位问答。",
+      "source": "water",
+      "task_family": "water_min_pressure_extrema",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_023::water_event_impact_relation",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "题目整体像正常的供水运维判断问题，变量含义清楚，证据中明确给出了事件窗口变化分数、阈值和判定规则，因此可以从给定信息直接判断。轻微不足是“供水服务事件窗口”中的事件本身描述较泛，且选项中的“扰动更强”依赖证据里的阈值规则，但这些规则已经明示，风险较低。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务窗口。x0 表示水压，x1 表示管道流量，x2 表示水箱蓄水量。低水压可能意味着供水风险。",
+      "suggested_question_zh": "在这个服务窗口内，水压和管道流量哪一个出现了更清晰的变化？",
+      "suggested_options_zh": [
+        "水压变化更清晰",
+        "没有清晰事件响应",
+        "管道流量变化更清晰",
+        "水压和管道流量都明显变化"
+      ],
+      "large_scale_rule_zh": "保留此类样本的前提是：场景中说明变量含义，证据中明确给出事件窗口变化分数及阈值规则，问题不依赖隐藏事件类型、内部索引或未解释的时间轴。若只问“哪个变化更强”，必须在证据中说明何为清晰响应、何为强度相近。",
+      "source": "water",
+      "task_family": "water_event_impact_relation",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_019::water_pressure_periodicity",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [
+        "轻微规则化表述"
+      ],
+      "reason_zh": "该样例整体可保留。场景说明了 x0、x1、x2 的含义，问题聚焦水压的运行周期模式，选项也符合人类可读的分类。证据中明确给出了自相关分数阈值和滞后区间规则，并给出最强峰的滞后与分数，因此可以确定答案。唯一小问题是“按照自相关分档规则”略像规则验证题，而不是完全自然的运维提问，但不影响可答性。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务窗口。x0 表示水压，x1 表示管道流量，x2 表示水箱蓄水量。低水压可能提示供水风险。",
+      "suggested_question_zh": "根据该窗口的水压自相关结果，水压更像呈现哪种运行周期模式？",
+      "suggested_options_zh": [
+        "短周期",
+        "没有明显周期",
+        "中等周期",
+        "长周期"
+      ],
+      "large_scale_rule_zh": "大规模构造此类题目时，应在证据中直接给出周期判定规则、关键自相关峰的滞后和分数，并避免只依赖隐藏元数据或未解释的时间轴单位；问题表述应尽量像运维人员的自然判断，而不是显式要求核对内部槽位。",
+      "source": "water",
+      "task_family": "water_pressure_periodicity",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_013::water_leak_counterfactual_pressure",
+      "decision": "revise",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [
+        "选项措辞轻微不贴合领域",
+        "反事实基线但证据充分"
+      ],
+      "reason_zh": "题目整体像正常的供水运维判断问题，变量含义清楚，证据直接给出了漏水场景与无漏水基线的平均水压，因此可以回答。主要问题是选项 D 的英文“policy effect”不符合漏水场景语境，容易显得像模板残留；建议改成更自然的“变化方向不明确/无法判断”。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务窗口。x0 表示水压，x1 表示管道流量，x2 表示水箱蓄水量。低水压可能意味着供水服务风险。",
+      "suggested_question_zh": "与无漏水基线相比，漏水场景下该窗口的平均水压有什么变化？",
+      "suggested_options_zh": [
+        "平均水压基本相同",
+        "漏水场景下平均水压更低",
+        "漏水场景下平均水压更高",
+        "平均水压变化方向不明确"
+      ],
+      "large_scale_rule_zh": "对于反事实类题目，只有在场景或证据中明确给出事实场景与基线场景的可比数值或关系时才保留；避免使用“policy effect”等与具体领域不匹配的模板化措辞。",
+      "source": "water",
+      "task_family": "water_leak_counterfactual_pressure",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_017::water_flow_volatility",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题表述自然，符合供水运维场景；变量含义清楚，x1 明确为管道流量。题目询问窗口中哪一段管道流量波动最大，选项为早期/中期/后期/三段相近，和证据中“按时间三等分并比较标准差”的判定方式一致。答案可由证据和支持槽确定，不依赖隐藏元数据或未解释阈值。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务窗口。x0 是水压，x1 是管道流量，x2 是水箱蓄水量。低水压可能表示供水风险。",
+      "suggested_question_zh": "运维人员应该把这个窗口中的哪一段视为管道流量波动最大的部分？",
+      "suggested_options_zh": [
+        "A. 早期",
+        "B. 中期",
+        "C. 后期",
+        "D. 三段相近"
+      ],
+      "large_scale_rule_zh": "保留此类样本：场景应说明变量含义，问题应以自然语言询问某变量在窗口不同时间段中的波动性比较，并明确三等分或在证据中说明比较方法；避免使用内部索引、未解释的时间轴或需要额外阈值才能判断的程度标签。",
+      "source": "water",
+      "task_family": "water_flow_volatility",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_003::water_cross_pressure_relation",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例整体像正常的供水运维诊断问题，变量含义在场景中已解释，问题也明确询问水压与管道流量或水箱蓄水量哪一组关系更强。证据给出了绝对相关系数、弱相关阈值和相近差值阈值，因此四个选项都可由证据和支持槽确定，不依赖隐藏元数据。唯一轻微不足是选项中的“可用阈值”需要依赖证据说明，但证据已明确给出，不影响可回答性。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务窗口。x0 表示水压，x1 表示管道流量，x2 表示水箱蓄水量。低水压可能提示供水风险。",
+      "suggested_question_zh": "在这个窗口内，水压与管道流量的关系更强，还是与水箱蓄水量的关系更强？",
+      "suggested_options_zh": [
+        "水压与水箱蓄水量耦合更强",
+        "两组关系强度相近",
+        "水压与管道流量耦合更强",
+        "两组关系都太弱，难以用于判断"
+      ],
+      "large_scale_rule_zh": "保留此类样例：只要场景解释了变量含义，问题是自然的领域诊断表述，证据明确给出相关系数及判断阈值，并且不需要额外隐藏元数据即可选择答案。",
+      "source": "water",
+      "task_family": "water_cross_pressure_relation",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_008::water_counterfactual_event_gap",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [
+        "counterfactual_baseline_lightly_explained"
+      ],
+      "reason_zh": "问题整体像正常的供水运维判断题，变量含义清楚，证据直接给出了事件窗口水压均值、匹配基线均值和差值，因此可以从给定信息确定应选择“相近”。唯一小问题是“匹配基线”的构造没有解释，但本题只需要比较已给出的均值和差值，不依赖额外元数据或隐藏阈值。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一次服务窗口。x0 表示水压，x1 表示管道流量，x2 表示水箱蓄水量。低水压可能提示供水风险。系统还给出了该窗口的匹配基线，用于对比正常情况下的水压水平。",
+      "suggested_question_zh": "在事件窗口内，实际水压与匹配基线相比如何？",
+      "suggested_options_zh": [
+        "事件窗口水压低于基线",
+        "事件窗口水压高于基线",
+        "事件影响方向不一致",
+        "事件窗口水压与基线相近"
+      ],
+      "large_scale_rule_zh": "保留此类样本的前提是：场景或证据明确说明比较对象是事件窗口实际值与匹配基线，并直接给出可比较的统计量或差值；避免只写内部变量名或未解释的事件编号；若使用“明显差异”等表述，应有明确阈值，或像本例一样差值为零/接近零使判断不依赖隐藏阈值。",
+      "source": "water",
+      "task_family": "water_counterfactual_event_gap",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_019::water_counterfactual_event_gap",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例整体像正常的供水运维判断问题，变量含义清楚，问题聚焦于事件窗口内水压与匹配基线的比较。证据直接给出了事件窗口水压均值、基线均值和差值，足以支持选项判断。虽然“匹配基线”的构造方式未详细说明，但本题只要求根据已给均值比较方向，且差值为 0.00，因此可答性强、风险低。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一次服务窗口。x0 表示水压，x1 表示管道流量，x2 表示水箱蓄水量。低水压可能提示供水风险。",
+      "suggested_question_zh": "在该事件窗口内，水压均值与匹配基线相比如何？",
+      "suggested_options_zh": [
+        "事件窗口水压低于基线",
+        "事件窗口水压高于基线",
+        "事件影响呈混合状态",
+        "事件窗口水压与基线相近"
+      ],
+      "large_scale_rule_zh": "保留这类样例：只要场景说明了变量含义，问题自然地询问事件窗口与基线的比较，且证据明确给出事件均值、基线均值和差值，就可以判定为可回答。若需要未说明的阈值、隐藏事件类型或基线构造细节才能判断，则应改写或降级风险。",
+      "source": "water",
+      "task_family": "water_counterfactual_event_gap",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "water_broad::water_scenario_008::water_combined_stress_context",
+      "decision": "revise",
+      "naturalness_score": 4,
+      "answerability_score": 2,
+      "accuracy_risk": "high",
+      "problem_tags": [
+        "规则与证据不一致",
+        "事件时段条件矛盾",
+        "答案依赖内部支持槽",
+        "变量标记含义不够自然"
+      ],
+      "reason_zh": "题目整体像正常的供水运行状态判断题，选项也比较自然；但证据中的规则写明“评分低于 -50 且窗口中段出现事件”才在严重低压标记为 false 时归为中等综合压力，而同一证据又说明事件位于“早期”。这会导致读者无法按明示规则推出金标答案 A。若金标来自内部确定性槽，则当前自然语言证据没有充分支持它，存在较高准确性风险。需要把规则改成与 early 事件一致，或把事件标签改成中段，并避免让答案依赖未解释的内部槽位。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务窗口。x0 表示水压，x1 表示管道流量，x2 表示水箱蓄水量。系统会结合综合压力分数、事件发生时段和严重低压标记来判断该窗口的运行状态。",
+      "suggested_question_zh": "根据给出的综合压力评分规则和本窗口信息，这个供水服务窗口最可能处于哪种运行状态？",
+      "suggested_options_zh": [
+        "A. 中等综合压力",
+        "B. 严重综合压力",
+        "C. 稳定综合状态",
+        "D. 综合状态不清楚"
+      ],
+      "large_scale_rule_zh": "大规模审核时，应确保分类规则中的所有触发条件与证据值一致；如果规则要求“中段事件”，证据就不能写成“早期事件”，除非规则明确说明早期事件同样适用。凡是自然语言证据不能直接推出金标、需要依赖隐藏支持槽或内部标签的样例，应标为修订或拒绝。",
+      "source": "water",
+      "task_family": "water_combined_stress_context",
+      "split": "train",
+      "review_scope": "gpt55_candidate"
+    }
+  ]
+}

@@ -1,0 +1,1452 @@
+{
+  "source_dir": "/home/cris/Research/LTSGEN/.research/fredqa-native-rerun-20260512",
+  "report": "/home/cris/Research/LTSGEN/docs/case-studies/20260512-fredqa-native-rerun-zh/fredqa_native_rerun_report_zh.md",
+  "notion_report": "/home/cris/Research/LTSGEN/docs/case-studies/20260512-fredqa-native-rerun-zh/fredqa_native_rerun_report_zh_notion.md",
+  "github_branch": "fredqa-rerun-zh-20260512",
+  "github_raw_base": "https://raw.githubusercontent.com/Ringhu/LTSGen/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-native-rerun-zh/figures",
+  "selected_cases": [
+    {
+      "idx": "832",
+      "tag": "OpenTSLM 原生多变量救回 fixed 逐变量失败",
+      "focus": "检验原生多变量 checkpoint 是否比逐变量 caption 更能保留跨变量证据"
+    },
+    {
+      "idx": "392",
+      "tag": "OpenTSLM 原生多变量不如 fixed 逐变量",
+      "focus": "检验把多条序列一次性压缩成一个 caption 是否会丢失变量级细节"
+    },
+    {
+      "idx": "111",
+      "tag": "ChatTS 原生多变量对，OpenTSLM 原生多变量错",
+      "focus": "比较 ChatTS 多 token prompt 与 OpenTSLM 原生多变量 caption 的失败差异"
+    },
+    {
+      "idx": "210",
+      "tag": "OpenTSLM 原生多变量对，ChatTS 原生多变量错",
+      "focus": "定位 OpenTSLM 原生多变量 caption 的相对优势样本"
+    },
+    {
+      "idx": "481",
+      "tag": "两个原生多变量 caption 都错，但 numbers 对",
+      "focus": "caption 压缩丢失精确日期、窗口、差值、比值或排序证据"
+    },
+    {
+      "idx": "701",
+      "tag": "三种 caption 都错，但 numbers 对",
+      "focus": "逐变量 caption、OpenTSLM 原生多变量、ChatTS 原生多变量都没有保留下游所需证据"
+    },
+    {
+      "idx": "115",
+      "tag": "meta-only 错，但 OpenTSLM 原生多变量 caption 对",
+      "focus": "排除题干先验后，OpenTSLM 原生多变量 caption 是否真正提供证据"
+    },
+    {
+      "idx": "396",
+      "tag": "meta-only 错，但 ChatTS 原生多变量 caption 对",
+      "focus": "排除题干先验后，ChatTS 原生多变量 caption 是否真正提供证据"
+    },
+    {
+      "idx": "587",
+      "tag": "caption-only 对，但 caption+numbers 反而错",
+      "focus": "检验多证据融合是否非单调，caption 加 numbers 后是否被干扰"
+    },
+    {
+      "idx": "6",
+      "tag": "meta、numbers、三种 caption 全错",
+      "focus": "失败不只是 caption 生成问题，还可能是公式执行、领域机制或长题干定位失败"
+    }
+  ],
+  "figures": {
+    "overall": "fredqa_native_overall_accuracy.png",
+    "hard": "fredqa_native_meta_wrong_accuracy.png",
+    "native_hard_rescue": "fredqa_native_hard_subset_rescue.png",
+    "nvars": "fredqa_native_by_nvars_accuracy.png",
+    "attribute": "fredqa_native_by_attribute_accuracy.png",
+    "832": "fredqa_native_832.png",
+    "392": "fredqa_native_392.png",
+    "111": "fredqa_native_111.png",
+    "210": "fredqa_native_210.png",
+    "481": "fredqa_native_481.png",
+    "701": "fredqa_native_701.png",
+    "115": "fredqa_native_115.png",
+    "396": "fredqa_native_396.png",
+    "587": "fredqa_native_587.png",
+    "6": "fredqa_native_6.png"
+  },
+  "counts": {
+    "qa": 604,
+    "per_var": 1393,
+    "fixed": 1393,
+    "op_native": 604,
+    "chatts_native": 604,
+    "pred": 4832
+  },
+  "summary_accuracy": {
+    "meta_only": {
+      "correct": 485,
+      "n": 604,
+      "accuracy": 0.8029801324503312
+    },
+    "numbers": {
+      "correct": 495,
+      "n": 604,
+      "accuracy": 0.8195364238410596
+    },
+    "opentslm_fixed_caption": {
+      "correct": 486,
+      "n": 604,
+      "accuracy": 0.804635761589404
+    },
+    "opentslm_fixed_caption_plus": {
+      "correct": 497,
+      "n": 604,
+      "accuracy": 0.8228476821192053
+    },
+    "opentslm_native_caption": {
+      "correct": 490,
+      "n": 604,
+      "accuracy": 0.8112582781456954
+    },
+    "opentslm_native_caption_plus": {
+      "correct": 496,
+      "n": 604,
+      "accuracy": 0.8211920529801324
+    },
+    "chatts_native_caption": {
+      "correct": 488,
+      "n": 604,
+      "accuracy": 0.8079470198675497
+    },
+    "chatts_native_caption_plus": {
+      "correct": 504,
+      "n": 604,
+      "accuracy": 0.8344370860927153
+    }
+  },
+  "summary_patterns": {
+    "fixed_wrong_native_right": 17,
+    "fixed_right_native_wrong": 13,
+    "opentslm_fixed_wrong_chatts_native_right": 21,
+    "opentslm_native_wrong_chatts_native_right": 17,
+    "both_native_caption_wrong_numbers_right": 11,
+    "all_caption_wrong_numbers_right": 7,
+    "numbers_rescue_meta_wrong": 28,
+    "fixed_rescue_meta_wrong": 21,
+    "native_rescue_meta_wrong": 19,
+    "chatts_native_rescue_meta_wrong": 24,
+    "meta_numbers_captions_all_wrong": 78,
+    "caption_and_numbers_wrong_meta_right": 4
+  },
+  "meta_only_filtered": {
+    "n": 119,
+    "ids": [
+      "1017",
+      "1028",
+      "1046",
+      "1068",
+      "1081",
+      "1087",
+      "1091",
+      "1102",
+      "1105",
+      "111",
+      "1118",
+      "1141",
+      "1145",
+      "1147",
+      "115",
+      "1186",
+      "1189",
+      "1209",
+      "1211",
+      "1212",
+      "1234",
+      "1248",
+      "1261",
+      "1277",
+      "1289",
+      "1293",
+      "1305",
+      "140",
+      "147",
+      "148",
+      "17",
+      "182",
+      "184",
+      "210",
+      "233",
+      "242",
+      "249",
+      "252",
+      "332",
+      "333",
+      "366",
+      "372",
+      "392",
+      "396",
+      "439",
+      "440",
+      "472",
+      "481",
+      "498",
+      "519",
+      "52",
+      "525",
+      "534",
+      "536",
+      "540",
+      "560",
+      "563",
+      "570",
+      "574",
+      "587",
+      "6",
+      "622",
+      "629",
+      "639",
+      "640",
+      "671",
+      "673",
+      "68",
+      "681",
+      "686",
+      "695",
+      "701",
+      "718",
+      "728",
+      "750",
+      "752",
+      "756",
+      "762",
+      "769",
+      "77",
+      "773",
+      "775",
+      "784",
+      "789",
+      "79",
+      "797",
+      "806",
+      "820",
+      "826",
+      "830",
+      "831",
+      "832",
+      "846",
+      "848",
+      "853",
+      "864",
+      "867",
+      "868",
+      "870",
+      "871",
+      "873",
+      "881",
+      "883",
+      "884",
+      "890",
+      "892",
+      "893",
+      "896",
+      "903",
+      "904",
+      "92",
+      "924",
+      "929",
+      "931",
+      "943",
+      "964",
+      "99",
+      "992",
+      "997"
+    ],
+    "accuracy": {
+      "meta_only": {
+        "correct": 0,
+        "n": 119,
+        "accuracy": 0.0
+      },
+      "numbers": {
+        "correct": 28,
+        "n": 119,
+        "accuracy": 0.23529411764705882
+      },
+      "opentslm_fixed_caption": {
+        "correct": 21,
+        "n": 119,
+        "accuracy": 0.17647058823529413
+      },
+      "opentslm_fixed_caption_plus": {
+        "correct": 29,
+        "n": 119,
+        "accuracy": 0.24369747899159663
+      },
+      "opentslm_native_caption": {
+        "correct": 19,
+        "n": 119,
+        "accuracy": 0.15966386554621848
+      },
+      "opentslm_native_caption_plus": {
+        "correct": 27,
+        "n": 119,
+        "accuracy": 0.226890756302521
+      },
+      "chatts_native_caption": {
+        "correct": 24,
+        "n": 119,
+        "accuracy": 0.20168067226890757
+      },
+      "chatts_native_caption_plus": {
+        "correct": 34,
+        "n": 119,
+        "accuracy": 0.2857142857142857
+      }
+    },
+    "by_nvars": {
+      "1": {
+        "meta_only": {
+          "correct": 0,
+          "n": 27,
+          "accuracy": 0.0
+        },
+        "numbers": {
+          "correct": 5,
+          "n": 27,
+          "accuracy": 0.18518518518518517
+        },
+        "opentslm_fixed_caption": {
+          "correct": 2,
+          "n": 27,
+          "accuracy": 0.07407407407407407
+        },
+        "opentslm_fixed_caption_plus": {
+          "correct": 3,
+          "n": 27,
+          "accuracy": 0.1111111111111111
+        },
+        "opentslm_native_caption": {
+          "correct": 5,
+          "n": 27,
+          "accuracy": 0.18518518518518517
+        },
+        "opentslm_native_caption_plus": {
+          "correct": 3,
+          "n": 27,
+          "accuracy": 0.1111111111111111
+        },
+        "chatts_native_caption": {
+          "correct": 4,
+          "n": 27,
+          "accuracy": 0.14814814814814814
+        },
+        "chatts_native_caption_plus": {
+          "correct": 3,
+          "n": 27,
+          "accuracy": 0.1111111111111111
+        }
+      },
+      "2": {
+        "meta_only": {
+          "correct": 0,
+          "n": 41,
+          "accuracy": 0.0
+        },
+        "numbers": {
+          "correct": 10,
+          "n": 41,
+          "accuracy": 0.24390243902439024
+        },
+        "opentslm_fixed_caption": {
+          "correct": 10,
+          "n": 41,
+          "accuracy": 0.24390243902439024
+        },
+        "opentslm_fixed_caption_plus": {
+          "correct": 11,
+          "n": 41,
+          "accuracy": 0.2682926829268293
+        },
+        "opentslm_native_caption": {
+          "correct": 8,
+          "n": 41,
+          "accuracy": 0.1951219512195122
+        },
+        "opentslm_native_caption_plus": {
+          "correct": 8,
+          "n": 41,
+          "accuracy": 0.1951219512195122
+        },
+        "chatts_native_caption": {
+          "correct": 9,
+          "n": 41,
+          "accuracy": 0.21951219512195122
+        },
+        "chatts_native_caption_plus": {
+          "correct": 16,
+          "n": 41,
+          "accuracy": 0.3902439024390244
+        }
+      },
+      "3": {
+        "meta_only": {
+          "correct": 0,
+          "n": 32,
+          "accuracy": 0.0
+        },
+        "numbers": {
+          "correct": 7,
+          "n": 32,
+          "accuracy": 0.21875
+        },
+        "opentslm_fixed_caption": {
+          "correct": 6,
+          "n": 32,
+          "accuracy": 0.1875
+        },
+        "opentslm_fixed_caption_plus": {
+          "correct": 9,
+          "n": 32,
+          "accuracy": 0.28125
+        },
+        "opentslm_native_caption": {
+          "correct": 4,
+          "n": 32,
+          "accuracy": 0.125
+        },
+        "opentslm_native_caption_plus": {
+          "correct": 11,
+          "n": 32,
+          "accuracy": 0.34375
+        },
+        "chatts_native_caption": {
+          "correct": 7,
+          "n": 32,
+          "accuracy": 0.21875
+        },
+        "chatts_native_caption_plus": {
+          "correct": 9,
+          "n": 32,
+          "accuracy": 0.28125
+        }
+      },
+      "4": {
+        "meta_only": {
+          "correct": 0,
+          "n": 15,
+          "accuracy": 0.0
+        },
+        "numbers": {
+          "correct": 6,
+          "n": 15,
+          "accuracy": 0.4
+        },
+        "opentslm_fixed_caption": {
+          "correct": 3,
+          "n": 15,
+          "accuracy": 0.2
+        },
+        "opentslm_fixed_caption_plus": {
+          "correct": 6,
+          "n": 15,
+          "accuracy": 0.4
+        },
+        "opentslm_native_caption": {
+          "correct": 2,
+          "n": 15,
+          "accuracy": 0.13333333333333333
+        },
+        "opentslm_native_caption_plus": {
+          "correct": 5,
+          "n": 15,
+          "accuracy": 0.3333333333333333
+        },
+        "chatts_native_caption": {
+          "correct": 4,
+          "n": 15,
+          "accuracy": 0.26666666666666666
+        },
+        "chatts_native_caption_plus": {
+          "correct": 6,
+          "n": 15,
+          "accuracy": 0.4
+        }
+      },
+      "5": {
+        "meta_only": {
+          "correct": 0,
+          "n": 4,
+          "accuracy": 0.0
+        },
+        "numbers": {
+          "correct": 0,
+          "n": 4,
+          "accuracy": 0.0
+        },
+        "opentslm_fixed_caption": {
+          "correct": 0,
+          "n": 4,
+          "accuracy": 0.0
+        },
+        "opentslm_fixed_caption_plus": {
+          "correct": 0,
+          "n": 4,
+          "accuracy": 0.0
+        },
+        "opentslm_native_caption": {
+          "correct": 0,
+          "n": 4,
+          "accuracy": 0.0
+        },
+        "opentslm_native_caption_plus": {
+          "correct": 0,
+          "n": 4,
+          "accuracy": 0.0
+        },
+        "chatts_native_caption": {
+          "correct": 0,
+          "n": 4,
+          "accuracy": 0.0
+        },
+        "chatts_native_caption_plus": {
+          "correct": 0,
+          "n": 4,
+          "accuracy": 0.0
+        }
+      }
+    },
+    "by_attribute": {
+      "Abductive Reasoning": {
+        "meta_only": {
+          "correct": 0,
+          "n": 41,
+          "accuracy": 0.0
+        },
+        "numbers": {
+          "correct": 6,
+          "n": 41,
+          "accuracy": 0.14634146341463414
+        },
+        "opentslm_fixed_caption": {
+          "correct": 3,
+          "n": 41,
+          "accuracy": 0.07317073170731707
+        },
+        "opentslm_fixed_caption_plus": {
+          "correct": 5,
+          "n": 41,
+          "accuracy": 0.12195121951219512
+        },
+        "opentslm_native_caption": {
+          "correct": 1,
+          "n": 41,
+          "accuracy": 0.024390243902439025
+        },
+        "opentslm_native_caption_plus": {
+          "correct": 5,
+          "n": 41,
+          "accuracy": 0.12195121951219512
+        },
+        "chatts_native_caption": {
+          "correct": 6,
+          "n": 41,
+          "accuracy": 0.14634146341463414
+        },
+        "chatts_native_caption_plus": {
+          "correct": 6,
+          "n": 41,
+          "accuracy": 0.14634146341463414
+        }
+      },
+      "Causal Reasoning - Counterfactual": {
+        "meta_only": {
+          "correct": 0,
+          "n": 35,
+          "accuracy": 0.0
+        },
+        "numbers": {
+          "correct": 10,
+          "n": 35,
+          "accuracy": 0.2857142857142857
+        },
+        "opentslm_fixed_caption": {
+          "correct": 9,
+          "n": 35,
+          "accuracy": 0.2571428571428571
+        },
+        "opentslm_fixed_caption_plus": {
+          "correct": 10,
+          "n": 35,
+          "accuracy": 0.2857142857142857
+        },
+        "opentslm_native_caption": {
+          "correct": 8,
+          "n": 35,
+          "accuracy": 0.22857142857142856
+        },
+        "opentslm_native_caption_plus": {
+          "correct": 10,
+          "n": 35,
+          "accuracy": 0.2857142857142857
+        },
+        "chatts_native_caption": {
+          "correct": 8,
+          "n": 35,
+          "accuracy": 0.22857142857142856
+        },
+        "chatts_native_caption_plus": {
+          "correct": 14,
+          "n": 35,
+          "accuracy": 0.4
+        }
+      },
+      "Analogical Reasoning": {
+        "meta_only": {
+          "correct": 0,
+          "n": 32,
+          "accuracy": 0.0
+        },
+        "numbers": {
+          "correct": 5,
+          "n": 32,
+          "accuracy": 0.15625
+        },
+        "opentslm_fixed_caption": {
+          "correct": 2,
+          "n": 32,
+          "accuracy": 0.0625
+        },
+        "opentslm_fixed_caption_plus": {
+          "correct": 3,
+          "n": 32,
+          "accuracy": 0.09375
+        },
+        "opentslm_native_caption": {
+          "correct": 1,
+          "n": 32,
+          "accuracy": 0.03125
+        },
+        "opentslm_native_caption_plus": {
+          "correct": 2,
+          "n": 32,
+          "accuracy": 0.0625
+        },
+        "chatts_native_caption": {
+          "correct": 3,
+          "n": 32,
+          "accuracy": 0.09375
+        },
+        "chatts_native_caption_plus": {
+          "correct": 4,
+          "n": 32,
+          "accuracy": 0.125
+        }
+      },
+      "Inductive Reasoning": {
+        "meta_only": {
+          "correct": 0,
+          "n": 31,
+          "accuracy": 0.0
+        },
+        "numbers": {
+          "correct": 8,
+          "n": 31,
+          "accuracy": 0.25806451612903225
+        },
+        "opentslm_fixed_caption": {
+          "correct": 5,
+          "n": 31,
+          "accuracy": 0.16129032258064516
+        },
+        "opentslm_fixed_caption_plus": {
+          "correct": 6,
+          "n": 31,
+          "accuracy": 0.1935483870967742
+        },
+        "opentslm_native_caption": {
+          "correct": 3,
+          "n": 31,
+          "accuracy": 0.0967741935483871
+        },
+        "opentslm_native_caption_plus": {
+          "correct": 4,
+          "n": 31,
+          "accuracy": 0.12903225806451613
+        },
+        "chatts_native_caption": {
+          "correct": 6,
+          "n": 31,
+          "accuracy": 0.1935483870967742
+        },
+        "chatts_native_caption_plus": {
+          "correct": 8,
+          "n": 31,
+          "accuracy": 0.25806451612903225
+        }
+      },
+      "Causal Reasoning - Interventional": {
+        "meta_only": {
+          "correct": 0,
+          "n": 17,
+          "accuracy": 0.0
+        },
+        "numbers": {
+          "correct": 8,
+          "n": 17,
+          "accuracy": 0.47058823529411764
+        },
+        "opentslm_fixed_caption": {
+          "correct": 6,
+          "n": 17,
+          "accuracy": 0.35294117647058826
+        },
+        "opentslm_fixed_caption_plus": {
+          "correct": 10,
+          "n": 17,
+          "accuracy": 0.5882352941176471
+        },
+        "opentslm_native_caption": {
+          "correct": 6,
+          "n": 17,
+          "accuracy": 0.35294117647058826
+        },
+        "opentslm_native_caption_plus": {
+          "correct": 8,
+          "n": 17,
+          "accuracy": 0.47058823529411764
+        },
+        "chatts_native_caption": {
+          "correct": 8,
+          "n": 17,
+          "accuracy": 0.47058823529411764
+        },
+        "chatts_native_caption_plus": {
+          "correct": 9,
+          "n": 17,
+          "accuracy": 0.5294117647058824
+        }
+      },
+      "Deductive Reasoning": {
+        "meta_only": {
+          "correct": 0,
+          "n": 15,
+          "accuracy": 0.0
+        },
+        "numbers": {
+          "correct": 3,
+          "n": 15,
+          "accuracy": 0.2
+        },
+        "opentslm_fixed_caption": {
+          "correct": 2,
+          "n": 15,
+          "accuracy": 0.13333333333333333
+        },
+        "opentslm_fixed_caption_plus": {
+          "correct": 3,
+          "n": 15,
+          "accuracy": 0.2
+        },
+        "opentslm_native_caption": {
+          "correct": 2,
+          "n": 15,
+          "accuracy": 0.13333333333333333
+        },
+        "opentslm_native_caption_plus": {
+          "correct": 3,
+          "n": 15,
+          "accuracy": 0.2
+        },
+        "chatts_native_caption": {
+          "correct": 1,
+          "n": 15,
+          "accuracy": 0.06666666666666667
+        },
+        "chatts_native_caption_plus": {
+          "correct": 3,
+          "n": 15,
+          "accuracy": 0.2
+        }
+      },
+      "Causal Reasoning - Associational": {
+        "meta_only": {
+          "correct": 0,
+          "n": 11,
+          "accuracy": 0.0
+        },
+        "numbers": {
+          "correct": 1,
+          "n": 11,
+          "accuracy": 0.09090909090909091
+        },
+        "opentslm_fixed_caption": {
+          "correct": 1,
+          "n": 11,
+          "accuracy": 0.09090909090909091
+        },
+        "opentslm_fixed_caption_plus": {
+          "correct": 1,
+          "n": 11,
+          "accuracy": 0.09090909090909091
+        },
+        "opentslm_native_caption": {
+          "correct": 2,
+          "n": 11,
+          "accuracy": 0.18181818181818182
+        },
+        "opentslm_native_caption_plus": {
+          "correct": 2,
+          "n": 11,
+          "accuracy": 0.18181818181818182
+        },
+        "chatts_native_caption": {
+          "correct": 1,
+          "n": 11,
+          "accuracy": 0.09090909090909091
+        },
+        "chatts_native_caption_plus": {
+          "correct": 2,
+          "n": 11,
+          "accuracy": 0.18181818181818182
+        }
+      }
+    }
+  },
+  "native_hard_subset": {
+    "n": 119,
+    "ids": [
+      "6",
+      "17",
+      "52",
+      "68",
+      "77",
+      "79",
+      "92",
+      "99",
+      "111",
+      "115",
+      "140",
+      "147",
+      "148",
+      "182",
+      "184",
+      "210",
+      "233",
+      "242",
+      "249",
+      "252",
+      "332",
+      "333",
+      "366",
+      "372",
+      "392",
+      "396",
+      "439",
+      "440",
+      "472",
+      "481",
+      "498",
+      "519",
+      "525",
+      "534",
+      "536",
+      "540",
+      "560",
+      "563",
+      "570",
+      "574",
+      "587",
+      "622",
+      "629",
+      "639",
+      "640",
+      "671",
+      "673",
+      "681",
+      "686",
+      "695",
+      "701",
+      "718",
+      "728",
+      "750",
+      "752",
+      "756",
+      "762",
+      "769",
+      "773",
+      "775",
+      "784",
+      "789",
+      "797",
+      "806",
+      "820",
+      "826",
+      "830",
+      "831",
+      "832",
+      "846",
+      "848",
+      "853",
+      "864",
+      "867",
+      "868",
+      "870",
+      "871",
+      "873",
+      "881",
+      "883",
+      "884",
+      "890",
+      "892",
+      "893",
+      "896",
+      "903",
+      "904",
+      "924",
+      "929",
+      "931",
+      "943",
+      "964",
+      "992",
+      "997",
+      "1017",
+      "1028",
+      "1046",
+      "1068",
+      "1081",
+      "1087",
+      "1091",
+      "1102",
+      "1105",
+      "1118",
+      "1141",
+      "1145",
+      "1147",
+      "1186",
+      "1189",
+      "1209",
+      "1211",
+      "1212",
+      "1234",
+      "1248",
+      "1261",
+      "1277",
+      "1289",
+      "1293",
+      "1305"
+    ],
+    "by_condition": {
+      "opentslm_native_caption": {
+        "correct": 19,
+        "n": 119,
+        "accuracy": 0.15966386554621848,
+        "ids": [
+          "115",
+          "210",
+          "728",
+          "806",
+          "830",
+          "831",
+          "832",
+          "853",
+          "864",
+          "924",
+          "943",
+          "964",
+          "997",
+          "1068",
+          "1091",
+          "1118",
+          "1209",
+          "1212",
+          "1234"
+        ]
+      },
+      "opentslm_native_caption_plus": {
+        "correct": 27,
+        "n": 119,
+        "accuracy": 0.226890756302521,
+        "ids": [
+          "115",
+          "210",
+          "392",
+          "396",
+          "481",
+          "701",
+          "756",
+          "830",
+          "832",
+          "853",
+          "883",
+          "892",
+          "896",
+          "903",
+          "904",
+          "924",
+          "929",
+          "943",
+          "1017",
+          "1068",
+          "1087",
+          "1105",
+          "1118",
+          "1145",
+          "1209",
+          "1212",
+          "1289"
+        ]
+      },
+      "chatts_native_caption": {
+        "correct": 24,
+        "n": 119,
+        "accuracy": 0.20168067226890757,
+        "ids": [
+          "111",
+          "115",
+          "392",
+          "396",
+          "540",
+          "587",
+          "728",
+          "806",
+          "830",
+          "831",
+          "853",
+          "864",
+          "884",
+          "924",
+          "929",
+          "943",
+          "1068",
+          "1081",
+          "1105",
+          "1141",
+          "1145",
+          "1209",
+          "1212",
+          "1289"
+        ]
+      },
+      "chatts_native_caption_plus": {
+        "correct": 34,
+        "n": 119,
+        "accuracy": 0.2857142857142857,
+        "ids": [
+          "115",
+          "210",
+          "249",
+          "392",
+          "396",
+          "481",
+          "540",
+          "701",
+          "728",
+          "750",
+          "769",
+          "806",
+          "820",
+          "830",
+          "832",
+          "864",
+          "868",
+          "883",
+          "892",
+          "903",
+          "904",
+          "924",
+          "943",
+          "992",
+          "1017",
+          "1028",
+          "1068",
+          "1087",
+          "1105",
+          "1118",
+          "1141",
+          "1209",
+          "1212",
+          "1289"
+        ]
+      }
+    },
+    "overlap": {
+      "either_native_caption": {
+        "correct": 31,
+        "n": 119,
+        "accuracy": 0.2605042016806723,
+        "ids": [
+          "111",
+          "115",
+          "210",
+          "392",
+          "396",
+          "540",
+          "587",
+          "728",
+          "806",
+          "830",
+          "831",
+          "832",
+          "853",
+          "864",
+          "884",
+          "924",
+          "929",
+          "943",
+          "964",
+          "997",
+          "1068",
+          "1081",
+          "1091",
+          "1105",
+          "1118",
+          "1141",
+          "1145",
+          "1209",
+          "1212",
+          "1234",
+          "1289"
+        ]
+      },
+      "both_native_caption": {
+        "correct": 12,
+        "n": 119,
+        "accuracy": 0.10084033613445378,
+        "ids": [
+          "115",
+          "728",
+          "806",
+          "830",
+          "831",
+          "853",
+          "864",
+          "924",
+          "943",
+          "1068",
+          "1209",
+          "1212"
+        ]
+      },
+      "opentslm_only_native_caption": {
+        "correct": 7,
+        "n": 119,
+        "accuracy": 0.058823529411764705,
+        "ids": [
+          "210",
+          "832",
+          "964",
+          "997",
+          "1091",
+          "1118",
+          "1234"
+        ]
+      },
+      "chatts_only_native_caption": {
+        "correct": 12,
+        "n": 119,
+        "accuracy": 0.10084033613445378,
+        "ids": [
+          "111",
+          "392",
+          "396",
+          "540",
+          "587",
+          "884",
+          "929",
+          "1081",
+          "1105",
+          "1141",
+          "1145",
+          "1289"
+        ]
+      },
+      "neither_native_caption": {
+        "correct": 88,
+        "n": 119,
+        "accuracy": 0.7394957983193278,
+        "ids": [
+          "6",
+          "17",
+          "52",
+          "68",
+          "77",
+          "79",
+          "92",
+          "99",
+          "140",
+          "147",
+          "148",
+          "182",
+          "184",
+          "233",
+          "242",
+          "249",
+          "252",
+          "332",
+          "333",
+          "366",
+          "372",
+          "439",
+          "440",
+          "472",
+          "481",
+          "498",
+          "519",
+          "525",
+          "534",
+          "536",
+          "560",
+          "563",
+          "570",
+          "574",
+          "622",
+          "629",
+          "639",
+          "640",
+          "671",
+          "673",
+          "681",
+          "686",
+          "695",
+          "701",
+          "718",
+          "750",
+          "752",
+          "756",
+          "762",
+          "769",
+          "773",
+          "775",
+          "784",
+          "789",
+          "797",
+          "820",
+          "826",
+          "846",
+          "848",
+          "867",
+          "868",
+          "870",
+          "871",
+          "873",
+          "881",
+          "883",
+          "890",
+          "892",
+          "893",
+          "896",
+          "903",
+          "904",
+          "931",
+          "992",
+          "1017",
+          "1028",
+          "1046",
+          "1087",
+          "1102",
+          "1147",
+          "1186",
+          "1189",
+          "1211",
+          "1248",
+          "1261",
+          "1277",
+          "1293",
+          "1305"
+        ]
+      },
+      "either_native_caption_plus": {
+        "correct": 39,
+        "n": 119,
+        "accuracy": 0.3277310924369748,
+        "ids": [
+          "115",
+          "210",
+          "249",
+          "392",
+          "396",
+          "481",
+          "540",
+          "701",
+          "728",
+          "750",
+          "756",
+          "769",
+          "806",
+          "820",
+          "830",
+          "832",
+          "853",
+          "864",
+          "868",
+          "883",
+          "892",
+          "896",
+          "903",
+          "904",
+          "924",
+          "929",
+          "943",
+          "992",
+          "1017",
+          "1028",
+          "1068",
+          "1087",
+          "1105",
+          "1118",
+          "1141",
+          "1145",
+          "1209",
+          "1212",
+          "1289"
+        ]
+      },
+      "both_native_caption_plus": {
+        "correct": 22,
+        "n": 119,
+        "accuracy": 0.18487394957983194,
+        "ids": [
+          "115",
+          "210",
+          "392",
+          "396",
+          "481",
+          "701",
+          "830",
+          "832",
+          "883",
+          "892",
+          "903",
+          "904",
+          "924",
+          "943",
+          "1017",
+          "1068",
+          "1087",
+          "1105",
+          "1118",
+          "1209",
+          "1212",
+          "1289"
+        ]
+      },
+      "opentslm_only_native_caption_plus": {
+        "correct": 5,
+        "n": 119,
+        "accuracy": 0.04201680672268908,
+        "ids": [
+          "756",
+          "853",
+          "896",
+          "929",
+          "1145"
+        ]
+      },
+      "chatts_only_native_caption_plus": {
+        "correct": 12,
+        "n": 119,
+        "accuracy": 0.10084033613445378,
+        "ids": [
+          "249",
+          "540",
+          "728",
+          "750",
+          "769",
+          "806",
+          "820",
+          "864",
+          "868",
+          "992",
+          "1028",
+          "1141"
+        ]
+      },
+      "neither_native_caption_plus": {
+        "correct": 80,
+        "n": 119,
+        "accuracy": 0.6722689075630253,
+        "ids": [
+          "6",
+          "17",
+          "52",
+          "68",
+          "77",
+          "79",
+          "92",
+          "99",
+          "111",
+          "140",
+          "147",
+          "148",
+          "182",
+          "184",
+          "233",
+          "242",
+          "252",
+          "332",
+          "333",
+          "366",
+          "372",
+          "439",
+          "440",
+          "472",
+          "498",
+          "519",
+          "525",
+          "534",
+          "536",
+          "560",
+          "563",
+          "570",
+          "574",
+          "587",
+          "622",
+          "629",
+          "639",
+          "640",
+          "671",
+          "673",
+          "681",
+          "686",
+          "695",
+          "718",
+          "752",
+          "762",
+          "773",
+          "775",
+          "784",
+          "789",
+          "797",
+          "826",
+          "831",
+          "846",
+          "848",
+          "867",
+          "870",
+          "871",
+          "873",
+          "881",
+          "884",
+          "890",
+          "893",
+          "931",
+          "964",
+          "997",
+          "1046",
+          "1081",
+          "1091",
+          "1102",
+          "1147",
+          "1186",
+          "1189",
+          "1211",
+          "1234",
+          "1248",
+          "1261",
+          "1277",
+          "1293",
+          "1305"
+        ]
+      }
+    }
+  }
+}

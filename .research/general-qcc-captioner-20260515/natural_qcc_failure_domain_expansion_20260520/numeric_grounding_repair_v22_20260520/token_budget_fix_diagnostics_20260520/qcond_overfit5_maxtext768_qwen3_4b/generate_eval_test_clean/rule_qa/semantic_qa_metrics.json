@@ -1,0 +1,40 @@
+{
+  "predictions_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/numeric_grounding_repair_v22_20260520/token_budget_fix_diagnostics_20260520/qcond_overfit5_maxtext768_qwen3_4b/generate_eval_test_clean/predictions.jsonl",
+  "gold_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/merged_v2/natural_qcc_crossdomain_failure_expanded_v2_positive.jsonl",
+  "caption_field": "pred_caption",
+  "splits": [
+    "train",
+    "dev"
+  ],
+  "metrics": {
+    "n": 5,
+    "accuracy": 0.8,
+    "empty_answer_rate": 0.0,
+    "by_source": {
+      "aiopslab_official_v3": {
+        "n": 5,
+        "accuracy": 0.8
+      }
+    },
+    "by_task_family": {
+      "aiops_official_cross_signal_relation": {
+        "n": 2,
+        "accuracy": 0.5
+      },
+      "aiops_official_memory_extrema": {
+        "n": 2,
+        "accuracy": 1.0
+      },
+      "aiops_official_window_memory": {
+        "n": 1,
+        "accuracy": 1.0
+      }
+    },
+    "reason_distribution": {
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}network\\ rx\\-tx\\ coupling": 2,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}early": 2,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}similar\\ halves": 1
+    }
+  },
+  "claim_scope": "deterministic_semantic_bridge_diagnostic_not_llm_judge"
+}

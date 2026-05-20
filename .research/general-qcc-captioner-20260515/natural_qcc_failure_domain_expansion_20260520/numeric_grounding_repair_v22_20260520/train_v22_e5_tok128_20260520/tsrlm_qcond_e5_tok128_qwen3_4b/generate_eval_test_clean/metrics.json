@@ -1,0 +1,21 @@
+{
+  "raw_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/numeric_grounding_repair_v22_20260520/sft_evidence_only_v22/natural_qcc_failure_domain_expanded_v22_numeric_grounding_test_raw.jsonl",
+  "checkpoint_dir": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/numeric_grounding_repair_v22_20260520/train_v22_e5_tok128_20260520/tsrlm_qcond_e5_tok128_qwen3_4b/final_model",
+  "load_state": {
+    "missing_keys": 399,
+    "unexpected_keys": 0,
+    "loaded_state_keys": 563
+  },
+  "caption_metrics": {
+    "n": 35,
+    "by_source": {
+      "aiopslab_official_v3": 5,
+      "citylearn": 2,
+      "grid2op": 10,
+      "traffic": 12,
+      "water": 6
+    },
+    "empty_caption_rate": 1.0,
+    "mean_caption_chars": 0.0
+  }
+}

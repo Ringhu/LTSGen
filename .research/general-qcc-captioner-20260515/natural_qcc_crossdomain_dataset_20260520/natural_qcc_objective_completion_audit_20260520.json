@@ -1,0 +1,151 @@
+{
+  "objective": "Run the new natural TS-QA construction through data asset evaluation, QCC caption training, no-question control training, generated-caption QA, and improvement/comparison analysis.",
+  "paths": {
+    "dataset_summary": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_crossdomain_dataset_summary.json",
+    "no_question_summary": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft_no_question/natural_qcc_crossdomain_no_question_summary.json",
+    "probe_results": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/probe_eval/natural_qcc_probe_results.json",
+    "qcond_audit": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_gpu_smoke_result_audit.json",
+    "qcond_caption_quality": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.json",
+    "no_question_audit": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_gpu_smoke_result_audit.json",
+    "no_question_caption_quality": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.json",
+    "compare_audit": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.json",
+    "manifest": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_gpu_result_manifest_20260520.json",
+    "remote_access": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_remote_gpu_access_check_20260520.json"
+  },
+  "dataset": {
+    "schema_gate_pass": true,
+    "positive_n": 55,
+    "by_source": {
+      "aiopslab_official_v3": 12,
+      "citylearn": 9,
+      "grid2op": 12,
+      "traffic": 11,
+      "water": 11
+    },
+    "by_split": {
+      "dev": 11,
+      "test": 13,
+      "train": 31
+    }
+  },
+  "probe": {
+    "exists": true,
+    "accuracy": {
+      "natural_oracle": 1.0,
+      "generic_caption": 0.0182,
+      "statistical_caption": 0.0,
+      "question_only": 0.1273
+    },
+    "max_non_oracle": 0.1273,
+    "oracle_load_bearing": true
+  },
+  "qcond": {
+    "audit_exists": true,
+    "audit_pass": true,
+    "generated_accuracy": 0.0,
+    "generated_rows": 13,
+    "decision_status": "smoke_no_improvement_over_local_non_oracle_baselines",
+    "beats_all_non_oracle_baselines": false,
+    "beats_question_only": false,
+    "claim_scope": "Smoke-level training result only; not a full method claim."
+  },
+  "qcond_caption_quality": {
+    "exists": true,
+    "rows": 13,
+    "quality_gate_pass": false,
+    "evidence_shape_rate": 0.3846,
+    "numeric_evidence_rate": 0.3846,
+    "answer_label_only_rate": 0.5385,
+    "too_short_rate": 0.5385
+  },
+  "no_question": {
+    "audit_exists": true,
+    "audit_pass": true,
+    "generated_accuracy": 0.0,
+    "generated_rows": 13,
+    "decision_status": "smoke_no_improvement_over_local_non_oracle_baselines",
+    "beats_all_non_oracle_baselines": false,
+    "beats_question_only": false,
+    "claim_scope": "Smoke-level training result only; not a full method claim."
+  },
+  "no_question_caption_quality": {
+    "exists": true,
+    "rows": 13,
+    "quality_gate_pass": false,
+    "evidence_shape_rate": 0.4615,
+    "numeric_evidence_rate": 0.6154,
+    "answer_label_only_rate": 0.3846,
+    "too_short_rate": 0.5385
+  },
+  "compare": {
+    "exists": true,
+    "status": "no_qconditioning_gap",
+    "complete": true,
+    "qcond_accuracy": 0.0,
+    "no_question_accuracy": 0.0,
+    "qcond_minus_no_question": 0.0,
+    "min_gap": 0.05,
+    "claim_scope": "Report as training/interface failure or insufficient conditioning signal."
+  },
+  "manifest": {
+    "exists": true,
+    "manifest_pass": true,
+    "unsafe_path_detected": false,
+    "required_missing": []
+  },
+  "remote_access": {
+    "exists": true,
+    "any_access_pass": true,
+    "profiles": [
+      {
+        "profile": "3090",
+        "reachable": true,
+        "access_pass": true,
+        "stderr_tail": ""
+      }
+    ]
+  },
+  "completion_checks": {
+    "dataset_schema_gate_pass": true,
+    "positive_dataset_rows_present": true,
+    "sft_split_files_present": true,
+    "no_question_control_gate_pass": true,
+    "probe_results_present": true,
+    "oracle_evidence_baseline_present": true,
+    "non_oracle_baselines_present": true,
+    "oracle_caption_load_bearing": true,
+    "qcond_gpu_audit_pass": true,
+    "no_question_gpu_audit_pass": true,
+    "qcond_generated_metrics_present": true,
+    "no_question_generated_metrics_present": true,
+    "qcond_caption_quality_audit_present": true,
+    "no_question_caption_quality_audit_present": true,
+    "qcond_vs_no_question_comparison_complete": true,
+    "safe_result_manifest_pass": true,
+    "safe_result_manifest_has_no_unsafe_paths": true
+  },
+  "result_checks": {
+    "qcond_accuracy": 0.0,
+    "no_question_accuracy": 0.0,
+    "qcond_minus_no_question": 0.0,
+    "min_gap": 0.05,
+    "qcond_beats_all_non_oracle_baselines": false,
+    "qcond_beats_question_only": false,
+    "qcond_caption_quality_gate_pass": false,
+    "qcond_caption_evidence_shape_rate": 0.3846,
+    "qcond_caption_answer_label_only_rate": 0.5385,
+    "no_question_caption_quality_gate_pass": false,
+    "no_question_caption_evidence_shape_rate": 0.4615,
+    "no_question_caption_answer_label_only_rate": 0.3846,
+    "compare_status": "no_qconditioning_gap"
+  },
+  "decision": {
+    "objective_complete": true,
+    "status": "complete_negative_signal",
+    "summary_zh": "目标完成，但 q-conditioned generated-caption QA 没有证明优于基线或 no-question 对照。",
+    "claim_scope": "Completed smoke with negative result; report failure plainly.",
+    "blockers": [],
+    "qcond_beats_no_question": false,
+    "qcond_gap_meets_min": false
+  }
+}

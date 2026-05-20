@@ -1,0 +1,97 @@
+{
+  "run": "natural_qcc_failure_domain_expansion_20260520",
+  "status": "complete",
+  "scope": "data_expansion_and_training_input_preparation",
+  "final_positive_pool": {
+    "path": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/merged_v2/natural_qcc_crossdomain_failure_expanded_v2_positive.jsonl",
+    "n": 124,
+    "by_source": {
+      "aiopslab_official_v3": 12,
+      "citylearn": 9,
+      "grid2op": 31,
+      "traffic": 41,
+      "water": 31
+    },
+    "by_split": {
+      "train": 69,
+      "dev": 20,
+      "test": 35
+    },
+    "answer_distribution": {
+      "A": 23,
+      "B": 37,
+      "C": 30,
+      "D": 34
+    },
+    "duplicate_id_count": 0,
+    "missing_required_count": 0
+  },
+  "reviewer_gate": {
+    "model": "gpt-5.5",
+    "batch_1": {
+      "candidates": 72,
+      "keep": 49,
+      "revise": 17,
+      "reject": 6,
+      "accuracy_risk": {
+        "low": 53,
+        "medium": 7,
+        "high": 12
+      }
+    },
+    "batch_2": {
+      "candidates": 32,
+      "keep": 20,
+      "revise": 12,
+      "reject": 0,
+      "accuracy_risk": {
+        "low": 21,
+        "medium": 5,
+        "high": 6
+      }
+    },
+    "positive_kept": 69
+  },
+  "sft": {
+    "path": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2",
+    "qcond_train": 89,
+    "qcond_test": 35,
+    "no_question_train": 89,
+    "no_question_test": 35,
+    "schema_gate_pass": true
+  },
+  "target_caption_quality": {
+    "path": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/target_caption_quality_audit.json",
+    "n": 35,
+    "quality_gate_pass": true,
+    "evidence_shape_rate": 0.8857,
+    "numeric_evidence_rate": 0.8857,
+    "answer_label_only_rate": 0.0,
+    "option_letter_leak_rate": 0.0,
+    "failure_reasons": {
+      "no_numeric_evidence": 4
+    }
+  },
+  "semantic_qa": {
+    "path": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/target_semantic_qa/semantic_qa_metrics.json",
+    "n": 35,
+    "accuracy": 1.0,
+    "empty_answer_rate": 0.0
+  },
+  "probe": {
+    "path": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/probe_eval_v2/natural_qcc_probe_results.json",
+    "natural_oracle_accuracy": 1.0,
+    "natural_evidence_no_label_accuracy": 0.5968,
+    "generic_caption_accuracy": 0.0323,
+    "statistical_caption_accuracy": 0.0,
+    "question_only_accuracy": 0.0726,
+    "nearest_qcond_accuracy": 0.2286,
+    "nearest_no_question_accuracy": 0.1714
+  },
+  "not_claimed": [
+    "trained_model_success",
+    "paper_method_success",
+    "large_scale_benchmark_completion"
+  ],
+  "recommended_next_step": "Run qcond vs no-question evidence-only training on sft_evidence_only_v2 with the previous e5/tok128 setting and compare against the 55-row baseline."
+}

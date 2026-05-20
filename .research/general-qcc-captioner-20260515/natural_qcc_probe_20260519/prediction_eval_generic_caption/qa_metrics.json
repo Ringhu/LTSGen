@@ -1,0 +1,202 @@
+{
+  "predictions_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/natural_qcc_probe_positive.jsonl",
+  "gold_jsonl": "/tmp/ltsgen-question-repair-20260519/.research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/natural_qcc_probe_positive.jsonl",
+  "caption_field": "generic_caption",
+  "splits": [
+    "dev",
+    "test"
+  ],
+  "metrics": {
+    "n": 43,
+    "accuracy": 0.0233,
+    "empty_answer_rate": 0.8837,
+    "mean_caption_chars": 114.8,
+    "by_source": {
+      "aiopslab_official_v3": {
+        "n": 3,
+        "accuracy": 0.0,
+        "empty_answer_rate": 1.0
+      },
+      "citylearn": {
+        "n": 8,
+        "accuracy": 0.0,
+        "empty_answer_rate": 1.0
+      },
+      "finrl_scaled": {
+        "n": 8,
+        "accuracy": 0.0,
+        "empty_answer_rate": 1.0
+      },
+      "grid2op": {
+        "n": 8,
+        "accuracy": 0.0,
+        "empty_answer_rate": 1.0
+      },
+      "traffic": {
+        "n": 8,
+        "accuracy": 0.125,
+        "empty_answer_rate": 0.625
+      },
+      "water": {
+        "n": 8,
+        "accuracy": 0.0,
+        "empty_answer_rate": 0.75
+      }
+    },
+    "by_split": {
+      "dev": {
+        "n": 19,
+        "accuracy": 0.0526,
+        "empty_answer_rate": 0.8421
+      },
+      "test": {
+        "n": 24,
+        "accuracy": 0.0,
+        "empty_answer_rate": 0.9167
+      }
+    },
+    "by_task_family": {
+      "aiops_official_network_volatility": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "aiops_official_window_memory": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "city_anomaly_total_load": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "city_domain_demand_context": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "city_extrema_total_load": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "city_volatility_total_load": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "city_window_total_load": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "fin_domain_market_regime": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "fin_drawdown_price": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "fin_extrema_price": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "fin_volatility_returns": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "fin_volume_anomaly": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "fin_window_return": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "grid_counterfactual_peak_stress": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "grid_cross_variable_stress": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "grid_temporal_lead_lag": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "grid_trend_max_rho": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "grid_volatility_total_load": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "grid_window_total_load": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "traffic_queue_volatility": {
+        "n": 2,
+        "accuracy": 0.5
+      },
+      "traffic_signal_counterfactual_queue": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "traffic_speed_extrema": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "traffic_speed_periodicity": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "traffic_speed_queue_lead_lag": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "traffic_speed_trend": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "traffic_window_speed": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "water_combined_stress_context": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "water_counterfactual_event_gap": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "water_domain_resilience_context": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "water_event_recovery_context": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "water_flow_volatility": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "water_leak_counterfactual_pressure": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "water_pressure_periodicity": {
+        "n": 1,
+        "accuracy": 0.0
+      }
+    },
+    "pred_answer_distribution": {
+      "EMPTY": 38,
+      "C": 4,
+      "D": 1
+    },
+    "reason_distribution": {
+      "no_label_match": 38,
+      "option_label_text": 5
+    }
+  }
+}

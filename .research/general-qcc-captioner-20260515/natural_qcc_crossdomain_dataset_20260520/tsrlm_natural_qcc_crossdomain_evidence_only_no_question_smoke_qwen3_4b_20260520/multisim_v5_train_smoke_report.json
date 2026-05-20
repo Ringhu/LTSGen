@@ -1,0 +1,12 @@
+{
+  "train_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft_evidence_only/natural_qcc_crossdomain_evidence_only_no_question_train_sft.jsonl",
+  "eval_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft_evidence_only/natural_qcc_crossdomain_evidence_only_no_question_test_sft.jsonl",
+  "output_dir": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_evidence_only_no_question_smoke_qwen3_4b_20260520",
+  "source_group_key": "merge_source_name",
+  "target_num_vars": 4,
+  "ts_num_vars": 4,
+  "max_steps": -1,
+  "train_rows": 42,
+  "eval_rows": 13,
+  "final_model": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_evidence_only_no_question_smoke_qwen3_4b_20260520/final_model"
+}

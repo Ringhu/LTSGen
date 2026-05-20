@@ -1,0 +1,73 @@
+{
+  "train_sft": ".research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/sft/natural_qcc_expansion_train_sft.jsonl",
+  "eval_sft": ".research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/sft/natural_qcc_expansion_test_sft.jsonl",
+  "eval_raw": ".research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/sft/natural_qcc_expansion_test_raw.jsonl",
+  "gold_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/natural_qcc_expansion_positive.jsonl",
+  "model_path": "/cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507",
+  "model_path_exists": false,
+  "path_checks": {
+    ".research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/sft/natural_qcc_expansion_train_sft.jsonl": true,
+    ".research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/sft/natural_qcc_expansion_test_sft.jsonl": true,
+    ".research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/sft/natural_qcc_expansion_test_raw.jsonl": true,
+    ".research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/natural_qcc_expansion_positive.jsonl": true
+  },
+  "train_summary": {
+    "path": ".research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/sft/natural_qcc_expansion_train_sft.jsonl",
+    "exists": true,
+    "n": 10,
+    "missing_required_count": 0,
+    "missing_required_examples": [],
+    "value_dim_counts": {
+      "4": 10
+    },
+    "split_counts": {
+      "": 10
+    }
+  },
+  "eval_summary": {
+    "path": ".research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/sft/natural_qcc_expansion_test_sft.jsonl",
+    "exists": true,
+    "n": 10,
+    "missing_required_count": 0,
+    "missing_required_examples": [],
+    "value_dim_counts": {
+      "4": 10
+    },
+    "split_counts": {
+      "": 10
+    }
+  },
+  "raw_eval_summary": {
+    "path": ".research/general-qcc-captioner-20260515/natural_qcc_expansion_dataset_20260519/sft/natural_qcc_expansion_test_raw.jsonl",
+    "exists": true,
+    "n": 10,
+    "missing_required_count": 0,
+    "missing_required_examples": [],
+    "value_dim_counts": {
+      "4": 10
+    },
+    "split_counts": {
+      "test": 10
+    }
+  },
+  "cuda": {
+    "torch_import": false,
+    "cuda_available": false,
+    "devices": [],
+    "error": "ModuleNotFoundError(\"No module named 'torch'\")"
+  },
+  "min_gpu_mem_gb": 20.0,
+  "max_gpu_mem_gb": 0.0,
+  "has_required_gpu_memory": false,
+  "bridge_type": "prefix",
+  "bridge_supported_by_current_tsrlm": true,
+  "tsrlm_config_constructible": true,
+  "tsrlm_config_error": "",
+  "python_modules": {
+    "torch": false,
+    "transformers": false,
+    "peft": false
+  },
+  "evaluator_exists": true,
+  "preflight_pass": false
+}

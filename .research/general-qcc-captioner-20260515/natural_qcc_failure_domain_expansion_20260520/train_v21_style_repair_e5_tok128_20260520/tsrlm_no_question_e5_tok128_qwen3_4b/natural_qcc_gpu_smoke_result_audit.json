@@ -1,0 +1,188 @@
+{
+  "run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v21_style_repair_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b",
+  "preflight_json": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v21_style_repair_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b/preflight.json",
+  "pipeline_summary_json": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v21_style_repair_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b/natural_qcc_smoke_pipeline_summary.json",
+  "predictions_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v21_style_repair_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b/generate_eval_test_clean/predictions.jsonl",
+  "qa_metrics_json": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v21_style_repair_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b/generate_eval_test_clean/rule_qa/semantic_qa_metrics.json",
+  "qa_metric_kind": "semantic",
+  "probe_results_json": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/probe_eval_v2/natural_qcc_probe_results.json",
+  "checks": {
+    "preflight_exists": true,
+    "preflight_pass": true,
+    "pipeline_summary_exists": true,
+    "pipeline_complete": true,
+    "predictions_exist": true,
+    "prediction_rows_positive": true,
+    "qa_metrics_exists": true,
+    "qa_rows_positive": true,
+    "baseline_probe_exists": true,
+    "baseline_has_question_only": true
+  },
+  "audit_pass": true,
+  "generated_qa_metrics": {
+    "n": 35,
+    "accuracy": 0.1143,
+    "empty_answer_rate": 0.6571,
+    "by_source": {
+      "aiopslab_official_v3": {
+        "n": 5,
+        "accuracy": 0.2
+      },
+      "citylearn": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "grid2op": {
+        "n": 10,
+        "accuracy": 0.2
+      },
+      "traffic": {
+        "n": 12,
+        "accuracy": 0.0833
+      },
+      "water": {
+        "n": 6,
+        "accuracy": 0.0
+      }
+    },
+    "by_task_family": {
+      "aiops_official_cpu_trend": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "aiops_official_cross_signal_relation": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "aiops_official_network_volatility": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "aiops_official_window_memory": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "city_anomaly_total_load": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "city_cross_variable_load": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "grid_anomaly_max_rho": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "grid_counterfactual_mean_stress": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "grid_counterfactual_overload_exposure": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "grid_counterfactual_peak_stress": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "grid_extrema_max_rho": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "grid_temporal_lead_lag": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "grid_volatility_total_load": {
+        "n": 2,
+        "accuracy": 0.5
+      },
+      "grid_window_total_load": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "traffic_counterfactual_event_gap": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "traffic_cross_congestion_relation": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "traffic_domain_congestion_context": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "traffic_event_impact_relation": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "traffic_incident_anomaly": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "traffic_signal_counterfactual_queue": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "traffic_speed_extrema": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "traffic_speed_trend": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "traffic_window_speed": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "water_combined_stress_context": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "water_counterfactual_event_gap": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "water_flow_volatility": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "water_min_pressure_extrema": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "water_pressure_flow_lead_lag": {
+        "n": 1,
+        "accuracy": 0.0
+      }
+    },
+    "reason_distribution": {
+      "no_semantic_match": 23,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}network\\ rx\\-tx\\ coupling": 1,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}late": 9,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}early": 2
+    }
+  },
+  "baseline_accuracy": {
+    "natural_oracle": 1.0,
+    "generic_caption": 0.0323,
+    "statistical_caption": 0.0,
+    "question_only": 0.0726
+  },
+  "decision": {
+    "status": "smoke_improves_over_local_non_oracle_baselines",
+    "summary_zh": "generated caption 在当前 AIOps smoke 子集上超过所有本地非 oracle 基线。",
+    "next_action_zh": "把结果作为单源 smoke 证据记录；下一步扩到跨域 reviewer-positive 数据后复验。",
+    "baseline_max_non_oracle": 0.0726,
+    "beats_generic_caption": true,
+    "beats_statistical_caption": true,
+    "beats_question_only": true,
+    "beats_all_non_oracle_baselines": true,
+    "oracle_gap": 0.8857,
+    "claim_scope": "Smoke-level training result only; not a full method claim."
+  },
+  "beats_question_only": true
+}

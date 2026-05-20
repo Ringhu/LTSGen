@@ -1,0 +1,48 @@
+{
+  "local_head": "bbca48565ae90060204ef634d7765301becebaa5",
+  "branch": "codex/question-repair-20260519-ready",
+  "profiles": [
+    {
+      "profile": "3090",
+      "ssh_target": "3090",
+      "remote_root": "/cluster/home/hulining/LTSGEN",
+      "python": "/cluster/home/hulining/anaconda3/envs/opentslm/bin/python3",
+      "ssh_options": {
+        "ssh_config_used": true,
+        "identity_file_used": true,
+        "known_hosts_used": true
+      },
+      "expected_branch": "codex/question-repair-20260519-ready",
+      "returncode": 0,
+      "reachable": true,
+      "access_pass": true,
+      "parsed": {
+        "gpus": [
+          "0, NVIDIA GeForce RTX 3090, 24576 MiB",
+          "1, NVIDIA GeForce RTX 3090, 24576 MiB",
+          "2, NVIDIA GeForce RTX 3090, 24576 MiB",
+          "3, NVIDIA GeForce RTX 3090, 24576 MiB",
+          "4, NVIDIA GeForce RTX 3090, 24576 MiB",
+          "5, NVIDIA GeForce RTX 3090, 24576 MiB",
+          "6, NVIDIA GeForce RTX 3090, 24576 MiB",
+          "7, NVIDIA GeForce RTX 3090, 24576 MiB"
+        ],
+        "hostname": "head2",
+        "root_exists": true,
+        "git_branch": "missing",
+        "git_head": "missing",
+        "python_exists": true,
+        "python_modules_json": {
+          "peft": true,
+          "torch": true,
+          "transformers": true
+        },
+        "torch_cuda_available": true,
+        "torch_cuda_device_count": 8
+      },
+      "stdout_tail": "hostname=head2\nroot_exists=1\ngit_branch=missing\ngit_head=missing\npython_exists=1\npython_modules_json={\"peft\": true, \"torch\": true, \"transformers\": true}\ntorch_cuda_available=true\ntorch_cuda_device_count=8\ngpu=0, NVIDIA GeForce RTX 3090, 24576 MiB\ngpu=1, NVIDIA GeForce RTX 3090, 24576 MiB\ngpu=2, NVIDIA GeForce RTX 3090, 24576 MiB\ngpu=3, NVIDIA GeForce RTX 3090, 24576 MiB\ngpu=4, NVIDIA GeForce RTX 3090, 24576 MiB\ngpu=5, NVIDIA GeForce RTX 3090, 24576 MiB\ngpu=6, NVIDIA GeForce RTX 3090, 24576 MiB\ngpu=7, NVIDIA GeForce RTX 3090, 24576 MiB\n",
+      "stderr_tail": ""
+    }
+  ],
+  "any_access_pass": true
+}

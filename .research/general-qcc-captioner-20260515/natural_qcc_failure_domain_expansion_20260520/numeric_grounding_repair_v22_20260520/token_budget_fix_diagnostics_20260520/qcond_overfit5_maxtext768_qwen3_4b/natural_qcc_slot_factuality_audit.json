@@ -1,0 +1,78 @@
+{
+  "predictions_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/numeric_grounding_repair_v22_20260520/token_budget_fix_diagnostics_20260520/qcond_overfit5_maxtext768_qwen3_4b/generate_eval_test_clean/predictions.jsonl",
+  "gold_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/numeric_grounding_repair_v22_20260520/sft_evidence_only_v22/natural_qcc_failure_domain_expanded_v22_numeric_grounding_train_raw.jsonl",
+  "caption_field": "pred_caption",
+  "splits": null,
+  "metrics": {
+    "n": 5,
+    "slot_value_pass_rate": 0.2,
+    "slot_value_recall": 0.6,
+    "direction_applicable_n": 4,
+    "direction_pass_rate": 0.75,
+    "horizon_applicable_n": 5,
+    "horizon_pass_rate": 1.0,
+    "overall_slot_factuality_rate": 0.2,
+    "failure_reasons": {
+      "slot_value_mismatch": 4,
+      "direction_mismatch": 1
+    },
+    "by_source": {
+      "aiopslab_official_v3": {
+        "n": 5,
+        "slot_value_pass_rate": 0.2,
+        "slot_value_recall": 0.6,
+        "direction_applicable_n": 4,
+        "direction_pass_rate": 0.75,
+        "horizon_applicable_n": 5,
+        "horizon_pass_rate": 1.0,
+        "overall_slot_factuality_rate": 0.2,
+        "failure_reasons": {
+          "slot_value_mismatch": 4,
+          "direction_mismatch": 1
+        }
+      }
+    },
+    "by_task_family": {
+      "aiops_official_cross_signal_relation": {
+        "n": 2,
+        "slot_value_pass_rate": 0.0,
+        "slot_value_recall": 0.5,
+        "direction_applicable_n": 2,
+        "direction_pass_rate": 0.5,
+        "horizon_applicable_n": 2,
+        "horizon_pass_rate": 1.0,
+        "overall_slot_factuality_rate": 0.0,
+        "failure_reasons": {
+          "slot_value_mismatch": 2,
+          "direction_mismatch": 1
+        }
+      },
+      "aiops_official_memory_extrema": {
+        "n": 2,
+        "slot_value_pass_rate": 0.5,
+        "slot_value_recall": 0.75,
+        "direction_applicable_n": 2,
+        "direction_pass_rate": 1.0,
+        "horizon_applicable_n": 2,
+        "horizon_pass_rate": 1.0,
+        "overall_slot_factuality_rate": 0.5,
+        "failure_reasons": {
+          "slot_value_mismatch": 1
+        }
+      },
+      "aiops_official_window_memory": {
+        "n": 1,
+        "slot_value_pass_rate": 0.0,
+        "slot_value_recall": 0.5,
+        "direction_applicable_n": 0,
+        "direction_pass_rate": 0.0,
+        "horizon_applicable_n": 1,
+        "horizon_pass_rate": 1.0,
+        "overall_slot_factuality_rate": 0.0,
+        "failure_reasons": {
+          "slot_value_mismatch": 1
+        }
+      }
+    }
+  }
+}

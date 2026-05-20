@@ -1,0 +1,286 @@
+{
+  "qcond_run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520",
+  "no_question_run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520",
+  "compare_audit": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.json",
+  "objective_audit": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_objective_completion_audit_20260520.json",
+  "qcond": {
+    "audit_pass": true,
+    "decision_status": "smoke_no_improvement_over_local_non_oracle_baselines",
+    "generated_accuracy": 0.0,
+    "generated_rows": 13,
+    "pipeline_complete": true,
+    "predictions_exist": true,
+    "qa_metrics_exists": true
+  },
+  "qcond_caption_quality": {
+    "exists": true,
+    "quality_gate_pass": false,
+    "rows": 13,
+    "evidence_shape_rate": 0.3846,
+    "answer_label_only_rate": 0.5385,
+    "numeric_evidence_rate": 0.3846
+  },
+  "no_question": {
+    "audit_pass": true,
+    "decision_status": "smoke_no_improvement_over_local_non_oracle_baselines",
+    "generated_accuracy": 0.0,
+    "generated_rows": 13,
+    "pipeline_complete": true,
+    "predictions_exist": true,
+    "qa_metrics_exists": true
+  },
+  "no_question_caption_quality": {
+    "exists": true,
+    "quality_gate_pass": false,
+    "rows": 13,
+    "evidence_shape_rate": 0.4615,
+    "answer_label_only_rate": 0.3846,
+    "numeric_evidence_rate": 0.6154
+  },
+  "compare_decision": {
+    "status": "no_qconditioning_gap",
+    "summary_zh": "q-conditioned generated-caption QA 没有超过 no-question 对照，不能作为 QCC conditioning 成功。",
+    "claim_scope": "Report as training/interface failure or insufficient conditioning signal.",
+    "min_gap": 0.05,
+    "qcond_accuracy": 0.0,
+    "no_question_accuracy": 0.0,
+    "qcond_minus_no_question": 0.0
+  },
+  "files": [
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/preflight.json",
+      "exists": true,
+      "required": true,
+      "bytes": 7056
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_smoke_pipeline_plan.json",
+      "exists": true,
+      "required": false,
+      "bytes": 3276
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_smoke_pipeline_summary.json",
+      "exists": true,
+      "required": true,
+      "bytes": 32735
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/multisim_v5_train_smoke_report.json",
+      "exists": true,
+      "required": false,
+      "bytes": 760
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_gpu_smoke_result_audit.json",
+      "exists": true,
+      "required": true,
+      "bytes": 4300
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_gpu_smoke_result_audit.md",
+      "exists": true,
+      "required": true,
+      "bytes": 1689
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.json",
+      "exists": true,
+      "required": true,
+      "bytes": 3455
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.md",
+      "exists": true,
+      "required": true,
+      "bytes": 1437
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.rows.jsonl",
+      "exists": true,
+      "required": true,
+      "bytes": 6447,
+      "rows": 13
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/metrics.json",
+      "exists": true,
+      "required": false,
+      "bytes": 660
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/predictions.jsonl",
+      "exists": true,
+      "required": true,
+      "bytes": 14069,
+      "rows": 13
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/qa_metrics.json",
+      "exists": true,
+      "required": true,
+      "bytes": 2418
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/qa_predictions.jsonl",
+      "exists": true,
+      "required": true,
+      "bytes": 5519,
+      "rows": 13
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/NATURAL_QCC_PREDICTION_QA_20260519_ZH.md",
+      "exists": true,
+      "required": false,
+      "bytes": 934
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/preflight.json",
+      "exists": true,
+      "required": true,
+      "bytes": 7272
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_smoke_pipeline_plan.json",
+      "exists": true,
+      "required": false,
+      "bytes": 3504
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_smoke_pipeline_summary.json",
+      "exists": true,
+      "required": true,
+      "bytes": 32361
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/multisim_v5_train_smoke_report.json",
+      "exists": true,
+      "required": false,
+      "bytes": 832
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_gpu_smoke_result_audit.json",
+      "exists": true,
+      "required": true,
+      "bytes": 4360
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_gpu_smoke_result_audit.md",
+      "exists": true,
+      "required": true,
+      "bytes": 1701
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.json",
+      "exists": true,
+      "required": true,
+      "bytes": 3433
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.md",
+      "exists": true,
+      "required": true,
+      "bytes": 1424
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.rows.jsonl",
+      "exists": true,
+      "required": true,
+      "bytes": 6240,
+      "rows": 13
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/generate_eval_test_clean/metrics.json",
+      "exists": true,
+      "required": false,
+      "bytes": 696
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/generate_eval_test_clean/predictions.jsonl",
+      "exists": true,
+      "required": true,
+      "bytes": 14236,
+      "rows": 13
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/qa_metrics.json",
+      "exists": true,
+      "required": true,
+      "bytes": 2430
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/qa_predictions.jsonl",
+      "exists": true,
+      "required": true,
+      "bytes": 5316,
+      "rows": 13
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/NATURAL_QCC_PREDICTION_QA_20260519_ZH.md",
+      "exists": true,
+      "required": false,
+      "bytes": 946
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.json",
+      "exists": true,
+      "required": true,
+      "bytes": 1763
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.md",
+      "exists": true,
+      "required": true,
+      "bytes": 783
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_objective_completion_audit_20260520.json",
+      "exists": true,
+      "required": true,
+      "bytes": 6210
+    },
+    {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_objective_completion_audit_20260520.md",
+      "exists": true,
+      "required": true,
+      "bytes": 2341
+    }
+  ],
+  "required_missing": [],
+  "unsafe_path_detected": false,
+  "pathspec": [
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/preflight.json",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_smoke_pipeline_plan.json",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_smoke_pipeline_summary.json",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/multisim_v5_train_smoke_report.json",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_gpu_smoke_result_audit.json",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_gpu_smoke_result_audit.md",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.json",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.md",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.rows.jsonl",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/metrics.json",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/predictions.jsonl",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/qa_metrics.json",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/qa_predictions.jsonl",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/NATURAL_QCC_PREDICTION_QA_20260519_ZH.md",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/preflight.json",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_smoke_pipeline_plan.json",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_smoke_pipeline_summary.json",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/multisim_v5_train_smoke_report.json",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_gpu_smoke_result_audit.json",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_gpu_smoke_result_audit.md",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.json",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.md",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/natural_qcc_caption_quality_audit.rows.jsonl",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/generate_eval_test_clean/metrics.json",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/generate_eval_test_clean/predictions.jsonl",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/qa_metrics.json",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/qa_predictions.jsonl",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_no_question_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/NATURAL_QCC_PREDICTION_QA_20260519_ZH.md",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.json",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audit_20260520.md",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_objective_completion_audit_20260520.json",
+    ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_objective_completion_audit_20260520.md"
+  ],
+  "manifest_pass": true
+}

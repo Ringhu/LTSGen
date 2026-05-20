@@ -1,0 +1,67 @@
+{
+  "input_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_expansion_candidates_20260519/natural_qcc_expansion_candidates.jsonl",
+  "output_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_expansion_rewrites_20260519/natural_qcc_expansion_rewrites.jsonl",
+  "lint_json": ".research/general-qcc-captioner-20260515/natural_qcc_expansion_rewrites_20260519/natural_qcc_expansion_rewrites_lint.json",
+  "summary": {
+    "n": 25,
+    "by_source": {
+      "aiopslab_official_v3": 25
+    },
+    "by_split": {
+      "dev": 5,
+      "test": 10,
+      "train": 10
+    },
+    "by_status": {
+      "candidate": 25
+    },
+    "by_task_family": {
+      "aiops_official_cross_signal_relation": 5,
+      "aiops_official_window_memory": 5,
+      "aiops_official_cpu_trend": 5,
+      "aiops_official_network_volatility": 5,
+      "aiops_official_memory_extrema": 5
+    },
+    "by_abstract_primitive": {
+      "cross_variable_relation": 5,
+      "window_comparison": 5,
+      "trend": 5,
+      "volatility": 5,
+      "extrema": 5
+    },
+    "by_answer": {
+      "B": 6,
+      "D": 9,
+      "C": 6,
+      "A": 4
+    },
+    "issue_counts": {}
+  },
+  "by_id": {
+    "aiopslab_official::port_misconfig_seed0_text-service::case001::aiops_official_cross_signal_relation": [],
+    "aiopslab_official::port_misconfig_seed0_text-service::case001::aiops_official_window_memory": [],
+    "aiopslab_official::port_misconfig_seed0_text-service::case001::aiops_official_cpu_trend": [],
+    "aiopslab_official::port_misconfig_seed0_text-service::case001::aiops_official_network_volatility": [],
+    "aiopslab_official::port_misconfig_seed0_text-service::case001::aiops_official_memory_extrema": [],
+    "aiopslab_official::port_misconfig_seed0_user-service::case000::aiops_official_memory_extrema": [],
+    "aiopslab_official::scale_pod_zero_seed0_user-service::case005::aiops_official_memory_extrema": [],
+    "aiopslab_official::scale_pod_zero_seed0_user-service::case005::aiops_official_window_memory": [],
+    "aiopslab_official::scale_pod_zero_seed0_user-service::case005::aiops_official_cross_signal_relation": [],
+    "aiopslab_official::port_misconfig_seed0_user-service::case000::aiops_official_network_volatility": [],
+    "aiopslab_official::port_misconfig_seed0_user-service::case000::aiops_official_cross_signal_relation": [],
+    "aiopslab_official::port_misconfig_seed0_user-service::case000::aiops_official_window_memory": [],
+    "aiopslab_official::scale_pod_zero_seed0_user-service::case005::aiops_official_cpu_trend": [],
+    "aiopslab_official::scale_pod_zero_seed0_user-service::case005::aiops_official_network_volatility": [],
+    "aiopslab_official::port_misconfig_seed0_user-service::case000::aiops_official_cpu_trend": [],
+    "aiopslab_official::scale_pod_zero_seed2_user-service::case006::aiops_official_network_volatility": [],
+    "aiopslab_official::port_misconfig_seed0_post-storage-service::case002::aiops_official_cross_signal_relation": [],
+    "aiopslab_official::port_misconfig_seed0_post-storage-service::case002::aiops_official_network_volatility": [],
+    "aiopslab_official::scale_pod_zero_seed2_user-service::case006::aiops_official_memory_extrema": [],
+    "aiopslab_official::port_misconfig_seed0_post-storage-service::case002::aiops_official_memory_extrema": [],
+    "aiopslab_official::port_misconfig_seed0_post-storage-service::case002::aiops_official_cpu_trend": [],
+    "aiopslab_official::scale_pod_zero_seed2_user-service::case006::aiops_official_cpu_trend": [],
+    "aiopslab_official::scale_pod_zero_seed2_user-service::case006::aiops_official_cross_signal_relation": [],
+    "aiopslab_official::port_misconfig_seed0_post-storage-service::case002::aiops_official_window_memory": [],
+    "aiopslab_official::scale_pod_zero_seed2_user-service::case006::aiops_official_window_memory": []
+  }
+}

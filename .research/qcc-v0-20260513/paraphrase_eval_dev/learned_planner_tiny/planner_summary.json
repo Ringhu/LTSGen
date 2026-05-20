@@ -1,0 +1,24 @@
+{
+  "train_split": "tiny_overfit",
+  "n_train": 32,
+  "eval_splits": {
+    "dev_paraphrase": {
+      "n_items": 48,
+      "planner_operator_accuracy": 0.9583,
+      "planner_error_count": 2,
+      "planner_errors": [
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_t128_line5::cf_peak_rho_direction::slot_v4::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 373, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_t128_line5::cf_peak_rho_direction::slot_v4::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 373, what is the delta between intervention and factual max_rho?"
+        }
+      ]
+    }
+  },
+  "n_predictions_all_eval_splits": 48
+}

@@ -1,0 +1,361 @@
+{
+  "dry_run": false,
+  "run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v2_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b",
+  "steps": {
+    "preflight": {
+      "cmd": [
+        "/cluster/home/hulining/anaconda3/envs/opentslm/bin/python3",
+        "scripts/eval/check_natural_qcc_gpu_smoke_preflight.py",
+        "--train_sft",
+        ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_train_sft.jsonl",
+        "--eval_sft",
+        ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_test_sft.jsonl",
+        "--eval_raw",
+        ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_test_raw.jsonl",
+        "--gold_jsonl",
+        ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/merged_v2/natural_qcc_crossdomain_failure_expanded_v2_positive.jsonl",
+        "--model_path",
+        "Qwen/Qwen3-4B",
+        "--bridge_type",
+        "prefix",
+        "--min_gpu_mem_gb",
+        "20.0",
+        "--out",
+        ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v2_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b/preflight.json"
+      ],
+      "cmd_string": "/cluster/home/hulining/anaconda3/envs/opentslm/bin/python3 scripts/eval/check_natural_qcc_gpu_smoke_preflight.py --train_sft .research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_train_sft.jsonl --eval_sft .research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_test_sft.jsonl --eval_raw .research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_test_raw.jsonl --gold_jsonl .research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/merged_v2/natural_qcc_crossdomain_failure_expanded_v2_positive.jsonl --model_path Qwen/Qwen3-4B --bridge_type prefix --min_gpu_mem_gb 20.0 --out .research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v2_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b/preflight.json",
+      "cwd": "/cluster/home/hulining/LTSGEN_v2_e5_tok128_20260520",
+      "dry_run": false,
+      "returncode": 0,
+      "stdout_tail": "| 31%   48C    P0            109W /  350W |       1MiB /  24576MiB |      0%      Default |\\n|                                         |                        |                  N/A |\\n+-----------------------------------------+------------------------+----------------------+\\n|   1  NVIDIA GeForce RTX 3090        Off |   00000000:1B:00.0 Off |                  N/A |\\n| 33%   31C    P8             17W /  350W |       4MiB /  24576MiB |      0%      Default |\\n|                                         |                        |                  N/A |\\n+-----------------------------------------+------------------------+----------------------+\\n|   2  NVIDIA GeForce RTX 3090        Off |   00000000:3D:00.0 Off |                  N/A |\\n| 30%   35C    P0            103W /  350W |       1MiB /  24576MiB |      0%      Default |\\n|                                         |                        |                  N/A |\\n+-----------------------------------------+------------------------+----------------------+\\n|   3  NVIDIA GeForce RTX 3090        Off |   00000000:3E:00.0 Off |                  N/A |\\n| 30%   38C    P0            111W /  350W |       1MiB /  24576MiB |      0%      Default |\\n|                                         |                        |                  N/A |\\n+-----------------------------------------+------------------------+----------------------+\\n|   4  NVIDIA GeForce RTX 3090        Off |   00000000:88:00.0 Off |                  N/A |\\n| 33%   36C    P0            109W /  350W |       1MiB /  24576MiB |      0%      Default |\\n|                                         |                        |                  N/A |\\n+-----------------------------------------+------------------------+----------------------+\\n|   5  NVIDIA GeForce RTX 3090        Off |   00000000:89:00.0 Off |                  N/A |\\n| 30%   40C    P0            112W /  350W |       1MiB /  24576MiB |      0%      Default |\\n|                                         |                        |                  N/A |\\n+-----------------------------------------+------------------------+----------------------+\\n|   6  NVIDIA GeForce RTX 3090        Off |   00000000:B1:00.0 Off |                  N/A |\\n| 30%   32C    P0             99W /  350W |       1MiB /  24576MiB |      2%      Default |\\n|                                         |                        |                  N/A |\\n+-----------------------------------------+------------------------+----------------------+\\n|   7  NVIDIA GeForce RTX 3090        Off |   00000000:B2:00.0 Off |                  N/A |\\n| 30%   36C    P0            102W /  350W |       1MiB /  24576MiB |      0%      Default |\\n|                                         |                        |                  N/A |\\n+-----------------------------------------+------------------------+----------------------+\\n                                                                                         \\n+-----------------------------------------------------------------------------------------+\\n| Processes:                                                                              |\\n|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |\\n|        ID   ID                                                               Usage      |\\n|=========================================================================================|\\n|  No running processes found                                                             |\\n+-----------------------------------------------------------------------------------------+\"\n  },\n  \"min_gpu_mem_gb\": 20.0,\n  \"max_gpu_mem_gb\": 23.68,\n  \"has_required_gpu_memory\": true,\n  \"bridge_type\": \"prefix\",\n  \"bridge_supported_by_current_tsrlm\": true,\n  \"tsrlm_config_constructible\": true,\n  \"tsrlm_config_error\": \"\",\n  \"python_modules\": {\n    \"torch\": true,\n    \"transformers\": true,\n    \"peft\": true\n  },\n  \"evaluator_exists\": true,\n  \"preflight_pass\": true\n}\n",
+      "stderr_tail": "",
+      "skipped": false
+    },
+    "train": {
+      "cmd": [
+        "/cluster/home/hulining/anaconda3/envs/opentslm/bin/python3",
+        "tslm/scripts/train_multisim_v5_smoke.py",
+        "--train_jsonl",
+        ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_train_sft.jsonl",
+        "--eval_jsonl",
+        ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_test_sft.jsonl",
+        "--llm_name_or_path",
+        "Qwen/Qwen3-4B",
+        "--output_dir",
+        ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v2_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b",
+        "--trust_remote_code",
+        "--bridge_type",
+        "prefix",
+        "--ts_num_vars",
+        "4",
+        "--target_num_vars",
+        "4",
+        "--freeze_llm",
+        "--save_trainable_only",
+        "--bf16",
+        "--num_train_epochs",
+        "5.0",
+        "--per_device_train_batch_size",
+        "1",
+        "--per_device_eval_batch_size",
+        "1",
+        "--gradient_accumulation_steps",
+        "2",
+        "--source_group_key",
+        "merge_source_name"
+      ],
+      "cmd_string": "/cluster/home/hulining/anaconda3/envs/opentslm/bin/python3 tslm/scripts/train_multisim_v5_smoke.py --train_jsonl .research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_train_sft.jsonl --eval_jsonl .research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_test_sft.jsonl --llm_name_or_path Qwen/Qwen3-4B --output_dir .research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v2_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b --trust_remote_code --bridge_type prefix --ts_num_vars 4 --target_num_vars 4 --freeze_llm --save_trainable_only --bf16 --num_train_epochs 5.0 --per_device_train_batch_size 1 --per_device_eval_batch_size 1 --gradient_accumulation_steps 2 --source_group_key merge_source_name",
+      "cwd": "/cluster/home/hulining/LTSGEN_v2_e5_tok128_20260520",
+      "dry_run": false,
+      "returncode": 0,
+      "stdout_tail": "', 'epoch': '4.337'}\n{'loss': '0.2234', 'grad_norm': '1.48', 'learning_rate': '2.752e-05', 'epoch': '4.36'}\n{'loss': '0.763', 'grad_norm': '2.452', 'learning_rate': '2.661e-05', 'epoch': '4.382'}\n{'loss': '0.5098', 'grad_norm': '4.444', 'learning_rate': '2.569e-05', 'epoch': '4.404'}\n{'loss': '0.3126', 'grad_norm': '1.772', 'learning_rate': '2.477e-05', 'epoch': '4.427'}\n{'loss': '0.944', 'grad_norm': '3.818', 'learning_rate': '2.385e-05', 'epoch': '4.449'}\n{'eval_loss': '0.4378', 'eval_runtime': '3.073', 'eval_samples_per_second': '11.39', 'eval_steps_per_second': '11.39', 'epoch': '4.449'}\n{'loss': '0.8265', 'grad_norm': '3.021', 'learning_rate': '2.294e-05', 'epoch': '4.472'}\n{'loss': '0.4673', 'grad_norm': '2.741', 'learning_rate': '2.202e-05', 'epoch': '4.494'}\n{'loss': '0.4197', 'grad_norm': '2.378', 'learning_rate': '2.11e-05', 'epoch': '4.517'}\n{'loss': '0.1178', 'grad_norm': '1.144', 'learning_rate': '2.018e-05', 'epoch': '4.539'}\n{'loss': '0.1736', 'grad_norm': '1.391', 'learning_rate': '1.927e-05', 'epoch': '4.562'}\n{'loss': '0.5387', 'grad_norm': '12.12', 'learning_rate': '1.835e-05', 'epoch': '4.584'}\n{'loss': '0.4327', 'grad_norm': '1.418', 'learning_rate': '1.743e-05', 'epoch': '4.607'}\n{'loss': '0.4005', 'grad_norm': '1.706', 'learning_rate': '1.651e-05', 'epoch': '4.629'}\n{'loss': '0.288', 'grad_norm': '1.11', 'learning_rate': '1.56e-05', 'epoch': '4.652'}\n{'loss': '0.4607', 'grad_norm': '2.229', 'learning_rate': '1.468e-05', 'epoch': '4.674'}\n{'loss': '0.4552', 'grad_norm': '2.336', 'learning_rate': '1.376e-05', 'epoch': '4.697'}\n{'loss': '0.2544', 'grad_norm': '1.783', 'learning_rate': '1.284e-05', 'epoch': '4.719'}\n{'loss': '0.2808', 'grad_norm': '1.494', 'learning_rate': '1.193e-05', 'epoch': '4.742'}\n{'loss': '0.4254', 'grad_norm': '1.737', 'learning_rate': '1.101e-05', 'epoch': '4.764'}\n{'loss': '0.1722', 'grad_norm': '4.55', 'learning_rate': '1.009e-05', 'epoch': '4.787'}\n{'loss': '0.1862', 'grad_norm': '1.177', 'learning_rate': '9.174e-06', 'epoch': '4.809'}\n{'loss': '0.2056', 'grad_norm': '1.191', 'learning_rate': '8.257e-06', 'epoch': '4.831'}\n{'loss': '0.2631', 'grad_norm': '1.367', 'learning_rate': '7.339e-06', 'epoch': '4.854'}\n{'loss': '0.2709', 'grad_norm': '1.436', 'learning_rate': '6.422e-06', 'epoch': '4.876'}\n{'loss': '0.6175', 'grad_norm': '2.921', 'learning_rate': '5.505e-06', 'epoch': '4.899'}\n{'loss': '0.8231', 'grad_norm': '3.719', 'learning_rate': '4.587e-06', 'epoch': '4.921'}\n{'loss': '0.2875', 'grad_norm': '1.506', 'learning_rate': '3.67e-06', 'epoch': '4.944'}\n{'loss': '0.3519', 'grad_norm': '1.986', 'learning_rate': '2.752e-06', 'epoch': '4.966'}\n{'loss': '0.6993', 'grad_norm': '3.837', 'learning_rate': '1.835e-06', 'epoch': '4.989'}\n{'loss': '0.1519', 'grad_norm': '0.891', 'learning_rate': '9.174e-07', 'epoch': '5'}\n{'eval_loss': '0.4434', 'eval_runtime': '3.115', 'eval_samples_per_second': '11.23', 'eval_steps_per_second': '11.23', 'epoch': '5'}\n{'train_runtime': '211.9', 'train_samples_per_second': '2.1', 'train_steps_per_second': '1.062', 'train_loss': '1.395', 'epoch': '5'}\n{\n  \"train_jsonl\": \".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_train_sft.jsonl\",\n  \"eval_jsonl\": \".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_test_sft.jsonl\",\n  \"output_dir\": \".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v2_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b\",\n  \"source_group_key\": \"merge_source_name\",\n  \"target_num_vars\": 4,\n  \"ts_num_vars\": 4,\n  \"max_steps\": -1,\n  \"train_rows\": 89,\n  \"eval_rows\": 35,\n  \"final_model\": \".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v2_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b/final_model\"\n}\n",
+      "stderr_tail": "\n                                                 \n\n 92%|█████████▏| 208/225 [03:14<00:16,  1.03it/s]\n 93%|█████████▎| 209/225 [03:15<00:15,  1.06it/s]\n                                                 \n\n 93%|█████████▎| 209/225 [03:15<00:15,  1.06it/s]\n 93%|█████████▎| 210/225 [03:16<00:13,  1.08it/s]\n                                                 \n\n 93%|█████████▎| 210/225 [03:16<00:13,  1.08it/s]\n 94%|█████████▍| 211/225 [03:17<00:12,  1.10it/s]\n                                                 \n\n 94%|█████████▍| 211/225 [03:17<00:12,  1.10it/s]\n 94%|█████████▍| 212/225 [03:18<00:11,  1.11it/s]\n                                                 \n\n 94%|█████████▍| 212/225 [03:18<00:11,  1.11it/s]\n 95%|█████████▍| 213/225 [03:18<00:10,  1.12it/s]\n                                                 \n\n 95%|█████████▍| 213/225 [03:18<00:10,  1.12it/s]\n 95%|█████████▌| 214/225 [03:19<00:09,  1.13it/s]\n                                                 \n\n 95%|█████████▌| 214/225 [03:19<00:09,  1.13it/s]\n 96%|█████████▌| 215/225 [03:20<00:08,  1.13it/s]\n                                                 \n\n 96%|█████████▌| 215/225 [03:20<00:08,  1.13it/s]\n 96%|█████████▌| 216/225 [03:21<00:07,  1.14it/s]\n                                                 \n\n 96%|█████████▌| 216/225 [03:21<00:07,  1.14it/s]\n 96%|█████████▋| 217/225 [03:22<00:07,  1.14it/s]\n                                                 \n\n 96%|█████████▋| 217/225 [03:22<00:07,  1.14it/s]\n 97%|█████████▋| 218/225 [03:23<00:06,  1.14it/s]\n                                                 \n\n 97%|█████████▋| 218/225 [03:23<00:06,  1.14it/s]\n 97%|█████████▋| 219/225 [03:24<00:05,  1.15it/s]\n                                                 \n\n 97%|█████████▋| 219/225 [03:24<00:05,  1.15it/s]\n 98%|█████████▊| 220/225 [03:24<00:04,  1.15it/s]\n                                                 \n\n 98%|█████████▊| 220/225 [03:24<00:04,  1.15it/s]\n 98%|█████████▊| 221/225 [03:25<00:03,  1.17it/s]\n                                                 \n\n 98%|█████████▊| 221/225 [03:25<00:03,  1.17it/s]\n 99%|█████████▊| 222/225 [03:26<00:02,  1.19it/s]\n                                                 \n\n 99%|█████████▊| 222/225 [03:26<00:02,  1.19it/s]\n 99%|█████████▉| 223/225 [03:27<00:01,  1.18it/s]\n                                                 \n\n 99%|█████████▉| 223/225 [03:27<00:01,  1.18it/s]\n100%|█████████▉| 224/225 [03:28<00:00,  1.17it/s]\n                                                 \n\n100%|█████████▉| 224/225 [03:28<00:00,  1.17it/s]\n100%|██████████| 225/225 [03:28<00:00,  1.37it/s]\n                                                 \n\n100%|██████████| 225/225 [03:28<00:00,  1.37it/s]\n\n  0%|          | 0/35 [00:00<?, ?it/s]\u001b[A\n\n  6%|▌         | 2/35 [00:00<00:01, 17.84it/s]\u001b[A\n\n 11%|█▏        | 4/35 [00:00<00:02, 11.21it/s]\u001b[A\n\n 17%|█▋        | 6/35 [00:00<00:02, 10.02it/s]\u001b[A\n\n 23%|██▎       | 8/35 [00:00<00:02,  9.55it/s]\u001b[A\n\n 29%|██▊       | 10/35 [00:00<00:02, 10.31it/s]\u001b[A\n\n 34%|███▍      | 12/35 [00:01<00:02, 10.94it/s]\u001b[A\n\n 40%|████      | 14/35 [00:01<00:01, 11.39it/s]\u001b[A\n\n 46%|████▌     | 16/35 [00:01<00:01, 11.69it/s]\u001b[A\n\n 51%|█████▏    | 18/35 [00:01<00:01, 11.92it/s]\u001b[A\n\n 57%|█████▋    | 20/35 [00:01<00:01, 12.07it/s]\u001b[A\n\n 63%|██████▎   | 22/35 [00:01<00:01, 12.20it/s]\u001b[A\n\n 69%|██████▊   | 24/35 [00:02<00:00, 12.26it/s]\u001b[A\n\n 74%|███████▍  | 26/35 [00:02<00:00, 12.34it/s]\u001b[A\n\n 80%|████████  | 28/35 [00:02<00:00, 12.37it/s]\u001b[A\n\n 86%|████████▌ | 30/35 [00:02<00:00, 12.36it/s]\u001b[A\n\n 91%|█████████▏| 32/35 [00:02<00:00, 12.37it/s]\u001b[A\n\n 97%|█████████▋| 34/35 [00:02<00:00, 12.41it/s]\u001b[A\n                                                 \n\n                                               \n\u001b[A\n100%|██████████| 225/225 [03:31<00:00,  1.37it/s]\n\n100%|██████████| 35/35 [00:02<00:00, 12.41it/s]\u001b[A\n\n                                               \u001b[A\n                                                 \n\n100%|██████████| 225/225 [03:31<00:00,  1.37it/s]\n100%|██████████| 225/225 [03:31<00:00,  1.06it/s]\n",
+      "skipped": false
+    },
+    "generate": {
+      "cmd": [
+        "/cluster/home/hulining/anaconda3/envs/opentslm/bin/python3",
+        "tslm/scripts/generate_multisim_v5_smoke.py",
+        "--raw_jsonl",
+        ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_test_raw.jsonl",
+        "--checkpoint_dir",
+        ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v2_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b/final_model",
+        "--out_dir",
+        ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v2_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b/generate_eval_test_clean",
+        "--batch_size",
+        "1",
+        "--max_new_tokens",
+        "128",
+        "--clean_max_sentences",
+        "3"
+      ],
+      "cmd_string": "/cluster/home/hulining/anaconda3/envs/opentslm/bin/python3 tslm/scripts/generate_multisim_v5_smoke.py --raw_jsonl .research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_test_raw.jsonl --checkpoint_dir .research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v2_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b/final_model --out_dir .research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v2_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b/generate_eval_test_clean --batch_size 1 --max_new_tokens 128 --clean_max_sentences 3",
+      "cwd": "/cluster/home/hulining/LTSGEN_v2_e5_tok128_20260520",
+      "dry_run": false,
+      "returncode": 0,
+      "stdout_tail": "{\n  \"raw_jsonl\": \".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_test_raw.jsonl\",\n  \"checkpoint_dir\": \".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v2_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b/final_model\",\n  \"load_state\": {\n    \"missing_keys\": 399,\n    \"unexpected_keys\": 0,\n    \"loaded_state_keys\": 563\n  },\n  \"caption_metrics\": {\n    \"n\": 35,\n    \"by_source\": {\n      \"aiopslab_official_v3\": 5,\n      \"citylearn\": 2,\n      \"grid2op\": 10,\n      \"traffic\": 12,\n      \"water\": 6\n    },\n    \"empty_caption_rate\": 0.0,\n    \"mean_caption_chars\": 126.5\n  }\n}\n",
+      "stderr_tail": "`torch_dtype` is deprecated! Use `dtype` instead!\n\nLoading weights:   0%|          | 0/398 [00:00<?, ?it/s]\nLoading weights: 100%|██████████| 398/398 [00:00<00:00, 4703.75it/s]\n/cluster/home/hulining/anaconda3/envs/opentslm/lib/python3.12/site-packages/torch/nn/modules/transformer.py:379: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True\n  warnings.warn(\n/cluster/home/hulining/LTSGEN_v2_e5_tok128_20260520/tslm/scripts/generate_multisim_v5_smoke.py:149: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.\n  state = torch.load(ckpt / \"pytorch_model.bin\", map_location=\"cpu\")\nThe following generation flags are not valid and may be ignored: ['top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.\n",
+      "skipped": false
+    },
+    "qa": {
+      "cmd": [
+        "/cluster/home/hulining/anaconda3/envs/opentslm/bin/python3",
+        "scripts/eval/evaluate_natural_qcc_semantic_predictions.py",
+        "--predictions_jsonl",
+        ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v2_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b/generate_eval_test_clean/predictions.jsonl",
+        "--gold_jsonl",
+        ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/merged_v2/natural_qcc_crossdomain_failure_expanded_v2_positive.jsonl",
+        "--out_dir",
+        ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v2_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b/generate_eval_test_clean/rule_qa",
+        "--caption_field",
+        "pred_caption",
+        "--splits",
+        "test"
+      ],
+      "cmd_string": "/cluster/home/hulining/anaconda3/envs/opentslm/bin/python3 scripts/eval/evaluate_natural_qcc_semantic_predictions.py --predictions_jsonl .research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v2_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b/generate_eval_test_clean/predictions.jsonl --gold_jsonl .research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/merged_v2/natural_qcc_crossdomain_failure_expanded_v2_positive.jsonl --out_dir .research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v2_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b/generate_eval_test_clean/rule_qa --caption_field pred_caption --splits test",
+      "cwd": "/cluster/home/hulining/LTSGEN_v2_e5_tok128_20260520",
+      "dry_run": false,
+      "returncode": 0,
+      "stdout_tail": "ccuracy\": 0.2\n      },\n      \"citylearn\": {\n        \"n\": 2,\n        \"accuracy\": 0.0\n      },\n      \"grid2op\": {\n        \"n\": 10,\n        \"accuracy\": 0.3\n      },\n      \"traffic\": {\n        \"n\": 12,\n        \"accuracy\": 0.0\n      },\n      \"water\": {\n        \"n\": 6,\n        \"accuracy\": 0.1667\n      }\n    },\n    \"by_task_family\": {\n      \"aiops_official_cpu_trend\": {\n        \"n\": 2,\n        \"accuracy\": 0.0\n      },\n      \"aiops_official_cross_signal_relation\": {\n        \"n\": 1,\n        \"accuracy\": 1.0\n      },\n      \"aiops_official_network_volatility\": {\n        \"n\": 1,\n        \"accuracy\": 0.0\n      },\n      \"aiops_official_window_memory\": {\n        \"n\": 1,\n        \"accuracy\": 0.0\n      },\n      \"city_anomaly_total_load\": {\n        \"n\": 1,\n        \"accuracy\": 0.0\n      },\n      \"city_cross_variable_load\": {\n        \"n\": 1,\n        \"accuracy\": 0.0\n      },\n      \"grid_anomaly_max_rho\": {\n        \"n\": 1,\n        \"accuracy\": 0.0\n      },\n      \"grid_counterfactual_mean_stress\": {\n        \"n\": 1,\n        \"accuracy\": 1.0\n      },\n      \"grid_counterfactual_overload_exposure\": {\n        \"n\": 1,\n        \"accuracy\": 0.0\n      },\n      \"grid_counterfactual_peak_stress\": {\n        \"n\": 1,\n        \"accuracy\": 1.0\n      },\n      \"grid_extrema_max_rho\": {\n        \"n\": 2,\n        \"accuracy\": 0.0\n      },\n      \"grid_temporal_lead_lag\": {\n        \"n\": 1,\n        \"accuracy\": 1.0\n      },\n      \"grid_volatility_total_load\": {\n        \"n\": 2,\n        \"accuracy\": 0.0\n      },\n      \"grid_window_total_load\": {\n        \"n\": 1,\n        \"accuracy\": 0.0\n      },\n      \"traffic_counterfactual_event_gap\": {\n        \"n\": 2,\n        \"accuracy\": 0.0\n      },\n      \"traffic_cross_congestion_relation\": {\n        \"n\": 1,\n        \"accuracy\": 0.0\n      },\n      \"traffic_domain_congestion_context\": {\n        \"n\": 2,\n        \"accuracy\": 0.0\n      },\n      \"traffic_event_impact_relation\": {\n        \"n\": 2,\n        \"accuracy\": 0.0\n      },\n      \"traffic_incident_anomaly\": {\n        \"n\": 1,\n        \"accuracy\": 0.0\n      },\n      \"traffic_signal_counterfactual_queue\": {\n        \"n\": 1,\n        \"accuracy\": 0.0\n      },\n      \"traffic_speed_extrema\": {\n        \"n\": 1,\n        \"accuracy\": 0.0\n      },\n      \"traffic_speed_trend\": {\n        \"n\": 1,\n        \"accuracy\": 0.0\n      },\n      \"traffic_window_speed\": {\n        \"n\": 1,\n        \"accuracy\": 0.0\n      },\n      \"water_combined_stress_context\": {\n        \"n\": 1,\n        \"accuracy\": 0.0\n      },\n      \"water_counterfactual_event_gap\": {\n        \"n\": 1,\n        \"accuracy\": 0.0\n      },\n      \"water_flow_volatility\": {\n        \"n\": 2,\n        \"accuracy\": 0.0\n      },\n      \"water_min_pressure_extrema\": {\n        \"n\": 1,\n        \"accuracy\": 0.0\n      },\n      \"water_pressure_flow_lead_lag\": {\n        \"n\": 1,\n        \"accuracy\": 1.0\n      }\n    },\n    \"reason_distribution\": {\n      \"no_semantic_match\": 19,\n      \"semantic_context_pattern:(?:\\\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\\\s+in|places)\\\\b|\\\\bthis\\\\s+supports\\\\b)[^.\\\\n]{0,120}network\\\\ rx\\\\-tx\\\\ coupling\": 1,\n      \"semantic_context_pattern:(?:\\\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\\\s+in|places)\\\\b|\\\\bthis\\\\s+supports\\\\b)[^.\\\\n]{0,120}late\": 1,\n      \"ambiguous_label_list\": 8,\n      \"semantic_context_pattern:(?:\\\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\\\s+in|places)\\\\b|\\\\bthis\\\\s+supports\\\\b)[^.\\\\n]{0,120}the\\\\ intervention\\\\ raises\\\\ the\\\\ stress\": 1,\n      \"semantic_context_pattern:(?:\\\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\\\s+in|places)\\\\b|\\\\bthis\\\\s+supports\\\\b)[^.\\\\n]{0,120}average\\\\ stress\\\\ is\\\\ higher\\\\ after\\\\ the\\\\ intervention\": 1,\n      \"semantic_context_pattern:(?:\\\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\\\s+in|places)\\\\b|\\\\bthis\\\\s+supports\\\\b)[^.\\\\n]{0,120}there\\\\ is\\\\ no\\\\ stable\\\\ timing\\\\ lead\": 2,\n      \"semantic_plain_pattern:middle\": 2\n    }\n  },\n  \"claim_scope\": \"deterministic_semantic_bridge_diagnostic_not_llm_judge\"\n}\n",
+      "stderr_tail": "",
+      "skipped": false
+    }
+  },
+  "preflight": {
+    "train_sft": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_train_sft.jsonl",
+    "eval_sft": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_test_sft.jsonl",
+    "eval_raw": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_test_raw.jsonl",
+    "gold_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/merged_v2/natural_qcc_crossdomain_failure_expanded_v2_positive.jsonl",
+    "model_path": "Qwen/Qwen3-4B",
+    "model_path_exists": false,
+    "model_is_hf_id": true,
+    "model_reference_ok": true,
+    "path_checks": {
+      ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_train_sft.jsonl": true,
+      ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_test_sft.jsonl": true,
+      ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_test_raw.jsonl": true,
+      ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/merged_v2/natural_qcc_crossdomain_failure_expanded_v2_positive.jsonl": true
+    },
+    "train_summary": {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_train_sft.jsonl",
+      "exists": true,
+      "n": 89,
+      "missing_required_count": 0,
+      "missing_required_examples": [],
+      "value_dim_counts": {
+        "4": 7,
+        "3": 82
+      },
+      "split_counts": {
+        "": 89
+      }
+    },
+    "eval_summary": {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_test_sft.jsonl",
+      "exists": true,
+      "n": 35,
+      "missing_required_count": 0,
+      "missing_required_examples": [],
+      "value_dim_counts": {
+        "4": 5,
+        "3": 30
+      },
+      "split_counts": {
+        "": 35
+      }
+    },
+    "raw_eval_summary": {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v2/natural_qcc_failure_domain_expanded_v2_evidence_only_no_question_test_raw.jsonl",
+      "exists": true,
+      "n": 35,
+      "missing_required_count": 0,
+      "missing_required_examples": [],
+      "value_dim_counts": {
+        "4": 5,
+        "3": 30
+      },
+      "split_counts": {
+        "test": 35
+      }
+    },
+    "cuda": {
+      "torch_import": true,
+      "cuda_available": true,
+      "devices": [
+        {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 3090",
+          "total_memory_gb": 23.68
+        }
+      ],
+      "nvidia_smi_returncode": 0,
+      "nvidia_smi_tail": "us-Id          Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |\n|                                         |                        |               MIG M. |\n|=========================================+========================+======================|\n|   0  NVIDIA GeForce RTX 3090        Off |   00000000:1A:00.0 Off |                  N/A |\n| 31%   48C    P0            109W /  350W |       1MiB /  24576MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n|   1  NVIDIA GeForce RTX 3090        Off |   00000000:1B:00.0 Off |                  N/A |\n| 33%   31C    P8             17W /  350W |       4MiB /  24576MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n|   2  NVIDIA GeForce RTX 3090        Off |   00000000:3D:00.0 Off |                  N/A |\n| 30%   35C    P0            103W /  350W |       1MiB /  24576MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n|   3  NVIDIA GeForce RTX 3090        Off |   00000000:3E:00.0 Off |                  N/A |\n| 30%   38C    P0            111W /  350W |       1MiB /  24576MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n|   4  NVIDIA GeForce RTX 3090        Off |   00000000:88:00.0 Off |                  N/A |\n| 33%   36C    P0            109W /  350W |       1MiB /  24576MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n|   5  NVIDIA GeForce RTX 3090        Off |   00000000:89:00.0 Off |                  N/A |\n| 30%   40C    P0            112W /  350W |       1MiB /  24576MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n|   6  NVIDIA GeForce RTX 3090        Off |   00000000:B1:00.0 Off |                  N/A |\n| 30%   32C    P0             99W /  350W |       1MiB /  24576MiB |      2%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n|   7  NVIDIA GeForce RTX 3090        Off |   00000000:B2:00.0 Off |                  N/A |\n| 30%   36C    P0            102W /  350W |       1MiB /  24576MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n                                                                                         \n+-----------------------------------------------------------------------------------------+\n| Processes:                                                                              |\n|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |\n|        ID   ID                                                               Usage      |\n|=========================================================================================|\n|  No running processes found                                                             |\n+-----------------------------------------------------------------------------------------+"
+    },
+    "min_gpu_mem_gb": 20.0,
+    "max_gpu_mem_gb": 23.68,
+    "has_required_gpu_memory": true,
+    "bridge_type": "prefix",
+    "bridge_supported_by_current_tsrlm": true,
+    "tsrlm_config_constructible": true,
+    "tsrlm_config_error": "",
+    "python_modules": {
+      "torch": true,
+      "transformers": true,
+      "peft": true
+    },
+    "evaluator_exists": true,
+    "preflight_pass": true
+  },
+  "qa_metrics": {
+    "n": 35,
+    "accuracy": 0.1429,
+    "empty_answer_rate": 0.7714,
+    "by_source": {
+      "aiopslab_official_v3": {
+        "n": 5,
+        "accuracy": 0.2
+      },
+      "citylearn": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "grid2op": {
+        "n": 10,
+        "accuracy": 0.3
+      },
+      "traffic": {
+        "n": 12,
+        "accuracy": 0.0
+      },
+      "water": {
+        "n": 6,
+        "accuracy": 0.1667
+      }
+    },
+    "by_task_family": {
+      "aiops_official_cpu_trend": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "aiops_official_cross_signal_relation": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "aiops_official_network_volatility": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "aiops_official_window_memory": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "city_anomaly_total_load": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "city_cross_variable_load": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "grid_anomaly_max_rho": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "grid_counterfactual_mean_stress": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "grid_counterfactual_overload_exposure": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "grid_counterfactual_peak_stress": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "grid_extrema_max_rho": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "grid_temporal_lead_lag": {
+        "n": 1,
+        "accuracy": 1.0
+      },
+      "grid_volatility_total_load": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "grid_window_total_load": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "traffic_counterfactual_event_gap": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "traffic_cross_congestion_relation": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "traffic_domain_congestion_context": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "traffic_event_impact_relation": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "traffic_incident_anomaly": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "traffic_signal_counterfactual_queue": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "traffic_speed_extrema": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "traffic_speed_trend": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "traffic_window_speed": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "water_combined_stress_context": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "water_counterfactual_event_gap": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "water_flow_volatility": {
+        "n": 2,
+        "accuracy": 0.0
+      },
+      "water_min_pressure_extrema": {
+        "n": 1,
+        "accuracy": 0.0
+      },
+      "water_pressure_flow_lead_lag": {
+        "n": 1,
+        "accuracy": 1.0
+      }
+    },
+    "reason_distribution": {
+      "no_semantic_match": 19,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}network\\ rx\\-tx\\ coupling": 1,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}late": 1,
+      "ambiguous_label_list": 8,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}the\\ intervention\\ raises\\ the\\ stress": 1,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}average\\ stress\\ is\\ higher\\ after\\ the\\ intervention": 1,
+      "semantic_context_pattern:(?:\\b(?:supporting|supports|indicating|indicates|therefore|so|falls\\s+in|places)\\b|\\bthis\\s+supports\\b)[^.\\n]{0,120}there\\ is\\ no\\ stable\\ timing\\ lead": 2,
+      "semantic_plain_pattern:middle": 2
+    }
+  },
+  "complete": true
+}

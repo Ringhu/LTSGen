@@ -1,0 +1,82 @@
+{
+  "train_split": "tiny_overfit",
+  "n_train": 32,
+  "eval_splits": {
+    "tiny_overfit": {
+      "n_items": 32,
+      "planner_operator_accuracy": 1.0,
+      "planner_error_count": 0,
+      "planner_errors": []
+    },
+    "dev": {
+      "n_items": 118,
+      "planner_operator_accuracy": 0.9746,
+      "planner_error_count": 3,
+      "planner_errors": [
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line3::cf_intervention_max_rho_value_slot::expanded_v1::83dc109eb3",
+          "pred_operator": "delta_cf_max_rho",
+          "error": "Could not parse question: At local_t=492, what is intervention_max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line4::cf_intervention_max_rho_value_slot::expanded_v1::d4b66ebe1a",
+          "pred_operator": "delta_cf_max_rho",
+          "error": "Could not parse question: At local_t=492, what is intervention_max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h512_c-1_t128_line2::cf_intervention_max_rho_value_slot::expanded_v1::8c046af3af",
+          "pred_operator": "delta_cf_max_rho",
+          "error": "Could not parse question: At local_t=492, what is intervention_max_rho?"
+        }
+      ]
+    },
+    "train": {
+      "n_items": 470,
+      "planner_operator_accuracy": 0.983,
+      "planner_error_count": 8,
+      "planner_errors": [
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line1::cf_intervention_max_rho_value_slot::expanded_v1::da8525b2ea",
+          "pred_operator": "delta_cf_max_rho",
+          "error": "Could not parse question: At local_t=492, what is intervention_max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line1::cf_intervention_max_rho_value_slot::expanded_v1::b962f9254e",
+          "pred_operator": "delta_cf_max_rho",
+          "error": "Could not parse question: At local_t=591, what is intervention_max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line3::cf_intervention_max_rho_value_slot::expanded_v1::96c8b08e38",
+          "pred_operator": "delta_cf_max_rho",
+          "error": "Could not parse question: At local_t=591, what is intervention_max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line4::cf_intervention_max_rho_value_slot::expanded_v1::6e1b5ee92e",
+          "pred_operator": "delta_cf_max_rho",
+          "error": "Could not parse question: At local_t=591, what is intervention_max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h512_c-1_t128_line0::cf_intervention_max_rho_value_slot::expanded_v1::4c2065a12b",
+          "pred_operator": "delta_cf_max_rho",
+          "error": "Could not parse question: At local_t=492, what is intervention_max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h512_c-1_t128_line1::cf_intervention_max_rho_value_slot::expanded_v1::87422b28c7",
+          "pred_operator": "delta_cf_max_rho",
+          "error": "Could not parse question: At local_t=492, what is intervention_max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h512_c-1_t128_line3::cf_intervention_max_rho_value_slot::expanded_v1::4e0c89f18d",
+          "pred_operator": "delta_cf_max_rho",
+          "error": "Could not parse question: At local_t=492, what is intervention_max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h512_c-1_t128_line4::cf_intervention_max_rho_value_slot::expanded_v1::9a8bdcab76",
+          "pred_operator": "delta_cf_max_rho",
+          "error": "Could not parse question: At local_t=492, what is intervention_max_rho?"
+        }
+      ]
+    }
+  },
+  "n_predictions_all_eval_splits": 620
+}

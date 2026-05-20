@@ -1,0 +1,116 @@
+{
+  "predictions_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft_evidence_only/natural_qcc_crossdomain_evidence_only_test_sft.jsonl",
+  "gold_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/natural_qcc_crossdomain_positive.jsonl",
+  "caption_field": "target_caption",
+  "splits": [
+    "test"
+  ],
+  "metrics": {
+    "n": 13,
+    "mean_caption_chars": 186.2,
+    "numeric_evidence_rate": 1.0,
+    "evidence_shape_rate": 1.0,
+    "answer_label_only_rate": 0.0,
+    "option_letter_leak_rate": 0.0,
+    "jsonish_output_rate": 0.0,
+    "too_short_rate": 0.0,
+    "by_source": {
+      "aiopslab_official_v3": {
+        "n": 5,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0,
+        "numeric_evidence_rate": 1.0
+      },
+      "citylearn": {
+        "n": 2,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0,
+        "numeric_evidence_rate": 1.0
+      },
+      "grid2op": {
+        "n": 2,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0,
+        "numeric_evidence_rate": 1.0
+      },
+      "traffic": {
+        "n": 3,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0,
+        "numeric_evidence_rate": 1.0
+      },
+      "water": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0,
+        "numeric_evidence_rate": 1.0
+      }
+    },
+    "by_task_family": {
+      "aiops_official_cpu_trend": {
+        "n": 2,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "aiops_official_cross_signal_relation": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "aiops_official_network_volatility": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "aiops_official_window_memory": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "city_anomaly_total_load": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "city_cross_variable_load": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "grid_extrema_max_rho": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "grid_window_total_load": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "traffic_counterfactual_event_gap": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "traffic_event_impact_relation": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "traffic_signal_counterfactual_queue": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "water_combined_stress_context": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      }
+    },
+    "failure_reasons": {},
+    "min_evidence_shape_rate": 0.8,
+    "max_answer_label_only_rate": 0.2,
+    "quality_gate_pass": true
+  }
+}

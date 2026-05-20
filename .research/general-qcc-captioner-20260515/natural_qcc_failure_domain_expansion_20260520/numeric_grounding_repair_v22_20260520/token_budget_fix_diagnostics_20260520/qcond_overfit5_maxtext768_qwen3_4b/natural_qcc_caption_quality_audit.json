@@ -1,0 +1,48 @@
+{
+  "predictions_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/numeric_grounding_repair_v22_20260520/token_budget_fix_diagnostics_20260520/qcond_overfit5_maxtext768_qwen3_4b/generate_eval_test_clean/predictions.jsonl",
+  "gold_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/merged_v2/natural_qcc_crossdomain_failure_expanded_v2_positive.jsonl",
+  "caption_field": "pred_caption",
+  "splits": [
+    "train",
+    "dev"
+  ],
+  "metrics": {
+    "n": 5,
+    "mean_caption_chars": 285.0,
+    "numeric_evidence_rate": 1.0,
+    "evidence_shape_rate": 1.0,
+    "answer_label_only_rate": 0.0,
+    "option_letter_leak_rate": 0.0,
+    "jsonish_output_rate": 0.0,
+    "too_short_rate": 0.0,
+    "by_source": {
+      "aiopslab_official_v3": {
+        "n": 5,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0,
+        "numeric_evidence_rate": 1.0
+      }
+    },
+    "by_task_family": {
+      "aiops_official_cross_signal_relation": {
+        "n": 2,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "aiops_official_memory_extrema": {
+        "n": 2,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "aiops_official_window_memory": {
+        "n": 1,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      }
+    },
+    "failure_reasons": {},
+    "min_evidence_shape_rate": 0.8,
+    "max_answer_label_only_rate": 0.2,
+    "quality_gate_pass": true
+  }
+}

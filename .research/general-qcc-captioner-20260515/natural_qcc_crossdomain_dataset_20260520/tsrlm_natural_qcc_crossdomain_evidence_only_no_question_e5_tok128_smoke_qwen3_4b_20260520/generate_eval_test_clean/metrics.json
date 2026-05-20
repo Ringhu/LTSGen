@@ -1,0 +1,21 @@
+{
+  "raw_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft_evidence_only/natural_qcc_crossdomain_evidence_only_no_question_test_raw.jsonl",
+  "checkpoint_dir": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_evidence_only_no_question_e5_tok128_smoke_qwen3_4b_20260520/final_model",
+  "load_state": {
+    "missing_keys": 399,
+    "unexpected_keys": 0,
+    "loaded_state_keys": 563
+  },
+  "caption_metrics": {
+    "n": 13,
+    "by_source": {
+      "aiopslab_official_v3": 5,
+      "citylearn": 2,
+      "grid2op": 2,
+      "traffic": 3,
+      "water": 1
+    },
+    "empty_caption_rate": 0.0,
+    "mean_caption_chars": 317.9
+  }
+}

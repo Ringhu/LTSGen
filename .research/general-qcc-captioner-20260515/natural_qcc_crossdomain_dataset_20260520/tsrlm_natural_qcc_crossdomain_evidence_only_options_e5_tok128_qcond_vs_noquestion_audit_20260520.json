@@ -1,0 +1,37 @@
+{
+  "qcond": {
+    "run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_evidence_only_options_e5_tok128_smoke_qwen3_4b_20260520",
+    "audit_json": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_evidence_only_options_e5_tok128_smoke_qwen3_4b_20260520/natural_qcc_gpu_smoke_result_audit.json",
+    "qa_metrics_json": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_evidence_only_options_e5_tok128_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/semantic_qa_metrics.json",
+    "qa_metric_kind": "semantic",
+    "audit_exists": true,
+    "audit_pass": true,
+    "generated_accuracy": 0.0769,
+    "generated_rows": 13,
+    "empty_answer_rate": 0.6923,
+    "decision_status": "smoke_no_improvement_over_local_non_oracle_baselines",
+    "claim_scope": "Smoke-level training result only; not a full method claim."
+  },
+  "no_question": {
+    "run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_evidence_only_no_question_e5_tok128_smoke_qwen3_4b_20260520",
+    "audit_json": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_evidence_only_no_question_e5_tok128_smoke_qwen3_4b_20260520/natural_qcc_gpu_smoke_result_audit.json",
+    "qa_metrics_json": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_evidence_only_no_question_e5_tok128_smoke_qwen3_4b_20260520/generate_eval_test_clean/rule_qa/semantic_qa_metrics.json",
+    "qa_metric_kind": "semantic",
+    "audit_exists": true,
+    "audit_pass": true,
+    "generated_accuracy": 0.1538,
+    "generated_rows": 13,
+    "empty_answer_rate": 0.6154,
+    "decision_status": "smoke_improves_over_local_non_oracle_baselines",
+    "claim_scope": "Smoke-level training result only; not a full method claim."
+  },
+  "decision": {
+    "status": "no_qconditioning_gap",
+    "summary_zh": "q-conditioned generated-caption QA 没有超过 no-question 对照，不能作为 QCC conditioning 成功。",
+    "claim_scope": "Report as training/interface failure or insufficient conditioning signal.",
+    "min_gap": 0.05,
+    "qcond_accuracy": 0.0769,
+    "no_question_accuracy": 0.1538,
+    "qcond_minus_no_question": -0.0769
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "n_examples": 620,
+  "duplicate_id_count": 0,
+  "missing_required_field_count": 0,
+  "verification_failure_count": 0,
+  "by_domain": {
+    "grid2op_real": 224,
+    "grid2op_real_cf": 176,
+    "citylearn_real": 220
+  },
+  "by_task_family": {
+    "rho_value_slot": 64,
+    "load_average_value_slot": 48,
+    "generator_average_value_slot": 48,
+    "quarter_total_load_mean_value_slot": 64,
+    "cf_delta_max_rho_value_slot": 88,
+    "cf_intervention_max_rho_value_slot": 88,
+    "building_load_value_slot": 110,
+    "quarter_net_electricity_mean_value_slot": 44,
+    "outdoor_temperature_value_slot": 66
+  },
+  "by_split": {
+    "train": 470,
+    "dev": 118,
+    "tiny_overfit": 32
+  },
+  "schema_gate_pass": true,
+  "failures": [],
+  "missing": []
+}
