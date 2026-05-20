@@ -12,7 +12,14 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from scripts.eval.audit_natural_qcc_gpu_smoke_result import as_float, load_json, rel  # noqa: E402
+try:
+    from scripts.eval.audit_natural_qcc_gpu_smoke_result import as_float, load_json, rel  # noqa: E402
+except ModuleNotFoundError:
+    # Some remote Python environments have an installed `scripts` package that
+    # shadows this repo's namespace package. Fall back to importing from the
+    # sibling eval directory so the audit can run from an archived worktree.
+    sys.path.insert(0, str(ROOT / "scripts/eval"))
+    from audit_natural_qcc_gpu_smoke_result import as_float, load_json, rel  # type: ignore  # noqa: E402
 
 BASE = ROOT / ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520"
 DEFAULT_QCOND = BASE / "tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520"

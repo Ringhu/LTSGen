@@ -1,0 +1,58 @@
+{
+  "run_name": "natural_qcc_failure_domain_v2_e5_tok128_20260520",
+  "status": "complete_smoke_positive_quality_not_passed",
+  "data": {
+    "positive_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/merged_v2/natural_qcc_crossdomain_failure_expanded_v2_positive.jsonl",
+    "positive_rows": 124,
+    "train_rows": 89,
+    "test_rows": 35
+  },
+  "config": {
+    "model": "Qwen/Qwen3-4B",
+    "bridge_type": "prefix",
+    "num_train_epochs": 5,
+    "max_new_tokens": 128,
+    "clean_max_sentences": 3,
+    "gradient_accumulation_steps": 2,
+    "qa_evaluator": "semantic"
+  },
+  "runs": {
+    "qcond": {
+      "run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v2_e5_tok128_20260520/tsrlm_qcond_e5_tok128_qwen3_4b",
+      "pipeline_complete": true,
+      "audit_pass": true,
+      "semantic_qa_accuracy": 0.3143,
+      "empty_answer_rate": 0.4,
+      "caption_quality_gate_pass": false,
+      "evidence_shape_rate": 0.6857,
+      "answer_label_only_rate": 0.2
+    },
+    "no_question": {
+      "run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v2_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b",
+      "pipeline_complete": true,
+      "audit_pass": true,
+      "semantic_qa_accuracy": 0.1429,
+      "empty_answer_rate": 0.7714,
+      "caption_quality_gate_pass": false,
+      "evidence_shape_rate": 0.3429,
+      "answer_label_only_rate": 0.3143
+    }
+  },
+  "comparison": {
+    "qcond_minus_no_question": 0.1714,
+    "decision": "qconditioning_gap_positive",
+    "claim_scope": "Cross-domain smoke only; not a full method claim."
+  },
+  "old_55_row_reference": {
+    "qcond_accuracy": 0.2308,
+    "no_question_accuracy": 0.1538,
+    "gap": 0.077
+  },
+  "main_failure_modes": [
+    "qcond caption quality gate failed due to answer-label-only, no-numeric-evidence, and too-short outputs.",
+    "Grid2Op and Water have low evidence-shape rates.",
+    "Some qcond raw generations contain Chinese continuation or prompt echo despite English-only targets.",
+    "Both runs remain far below oracle evidence semantic QA."
+  ],
+  "recommended_next_step": "Run a v2.1 targeted repair focused on output cleaning and Grid2Op/Water evidence target quality before further scale-up."
+}
