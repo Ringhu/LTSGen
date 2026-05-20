@@ -26,12 +26,23 @@ def smoke_audit_path(run_dir: Path) -> Path:
 
 def run_summary(run_dir: Path) -> dict[str, Any]:
     audit = load_json(smoke_audit_path(run_dir))
-    qa_metrics = load_json(run_dir / "generate_eval_test_clean/rule_qa/qa_metrics.json")
+    strict_path = run_dir / "generate_eval_test_clean/rule_qa/qa_metrics.json"
+    semantic_path = run_dir / "generate_eval_test_clean/rule_qa/semantic_qa_metrics.json"
+    if semantic_path.exists():
+        qa_metrics = load_json(semantic_path)
+        qa_metric_kind = "semantic"
+        qa_metrics_path = semantic_path
+    else:
+        qa_metrics = load_json(strict_path)
+        qa_metric_kind = "strict"
+        qa_metrics_path = strict_path
     generated = (qa_metrics or {}).get("metrics", {})
     decision = (audit or {}).get("decision", {})
     return {
         "run_dir": rel(run_dir),
         "audit_json": rel(smoke_audit_path(run_dir)),
+        "qa_metrics_json": rel(qa_metrics_path),
+        "qa_metric_kind": qa_metric_kind,
         "audit_exists": audit is not None,
         "audit_pass": bool(audit and audit.get("audit_pass")),
         "generated_accuracy": as_float(generated.get("accuracy")),

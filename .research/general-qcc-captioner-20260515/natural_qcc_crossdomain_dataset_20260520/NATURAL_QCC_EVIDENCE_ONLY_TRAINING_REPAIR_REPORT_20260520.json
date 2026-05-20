@@ -1,0 +1,118 @@
+{
+  "objective": "按照判断的原因逐个修改，在保证数据质量的同时观察训练效果是否提升。",
+  "status": "complete_positive_smoke_signal_with_limits",
+  "base_dir": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520",
+  "data_quality": {
+    "evidence_only": {
+      "summary": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft_evidence_only/natural_qcc_crossdomain_evidence_only_summary.json",
+      "schema_gate_pass": true,
+      "positive_rows": 55,
+      "train_rows": 42,
+      "test_rows": 13,
+      "target_semantic_qa": 1.0,
+      "target_quality_gate_pass": true,
+      "target_answer_label_only_rate": 0.0
+    },
+    "evidence_only_options": {
+      "summary": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft_evidence_only_options/natural_qcc_crossdomain_evidence_only_summary.json",
+      "schema_gate_pass": true,
+      "target_semantic_qa": 1.0,
+      "target_quality_gate_pass": true
+    }
+  },
+  "runs": {
+    "evidence_only_e1_qcond": {
+      "run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_evidence_only_smoke_qwen3_4b_20260520",
+      "train_rows": 42,
+      "eval_rows": 13,
+      "qa_accuracy": 0.0,
+      "empty_answer_rate": 0.9231,
+      "quality_gate_pass": true,
+      "evidence_shape_rate": 1.0,
+      "answer_label_only_rate": 0.0,
+      "numeric_evidence_rate": 1.0
+    },
+    "evidence_only_e1_no_question": {
+      "run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_evidence_only_no_question_smoke_qwen3_4b_20260520",
+      "train_rows": 42,
+      "eval_rows": 13,
+      "qa_accuracy": 0.0,
+      "empty_answer_rate": 1.0,
+      "quality_gate_pass": true,
+      "evidence_shape_rate": 1.0,
+      "answer_label_only_rate": 0.0,
+      "numeric_evidence_rate": 1.0
+    },
+    "evidence_only_e5_tok128_qcond": {
+      "run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_evidence_only_e5_tok128_smoke_qwen3_4b_20260520",
+      "train_rows": 42,
+      "eval_rows": 13,
+      "qa_accuracy": 0.2308,
+      "empty_answer_rate": 0.5385,
+      "quality_gate_pass": true,
+      "evidence_shape_rate": 0.9231,
+      "answer_label_only_rate": 0.0769,
+      "numeric_evidence_rate": 0.9231
+    },
+    "evidence_only_e5_tok128_no_question": {
+      "run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_evidence_only_no_question_e5_tok128_smoke_qwen3_4b_20260520",
+      "train_rows": 42,
+      "eval_rows": 13,
+      "qa_accuracy": 0.1538,
+      "empty_answer_rate": 0.6154,
+      "quality_gate_pass": true,
+      "evidence_shape_rate": 1.0,
+      "answer_label_only_rate": 0.0,
+      "numeric_evidence_rate": 1.0
+    },
+    "evidence_only_options_e5_tok128_qcond": {
+      "run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_evidence_only_options_e5_tok128_smoke_qwen3_4b_20260520",
+      "train_rows": 42,
+      "eval_rows": 13,
+      "qa_accuracy": 0.0769,
+      "empty_answer_rate": 0.6923,
+      "quality_gate_pass": true,
+      "evidence_shape_rate": 0.9231,
+      "answer_label_only_rate": 0.0769,
+      "numeric_evidence_rate": 0.9231
+    }
+  },
+  "comparisons": {
+    "e1": {
+      "status": "no_qconditioning_gap",
+      "summary_zh": "q-conditioned generated-caption QA 没有超过 no-question 对照，不能作为 QCC conditioning 成功。",
+      "claim_scope": "Report as training/interface failure or insufficient conditioning signal.",
+      "min_gap": 0.05,
+      "qcond_accuracy": 0.0,
+      "no_question_accuracy": 0.0,
+      "qcond_minus_no_question": 0.0
+    },
+    "e5_tok128": {
+      "status": "qconditioning_gap_positive",
+      "summary_zh": "q-conditioned generated-caption QA 明显高于 no-question 对照，可作为 smoke-level Q-conditioning 正信号。",
+      "claim_scope": "Cross-domain smoke only; not a full method claim.",
+      "min_gap": 0.05,
+      "qcond_accuracy": 0.2308,
+      "no_question_accuracy": 0.1538,
+      "qcond_minus_no_question": 0.07700000000000001
+    },
+    "options_e5_tok128": {
+      "status": "no_qconditioning_gap",
+      "summary_zh": "q-conditioned generated-caption QA 没有超过 no-question 对照，不能作为 QCC conditioning 成功。",
+      "claim_scope": "Report as training/interface failure or insufficient conditioning signal.",
+      "min_gap": 0.05,
+      "qcond_accuracy": 0.0769,
+      "no_question_accuracy": 0.1538,
+      "qcond_minus_no_question": -0.0769
+    }
+  },
+  "diagnosis": {
+    "cleanup_bug": {
+      "qcond_changed_rate": 0.9231,
+      "qcond_reclean_quality_gate_pass": true,
+      "qcond_reclean_semantic_qa": 0.0
+    },
+    "best_run_interpretation": "训练轮数和生成长度是本轮最有效的改动；只加选项反而降低 QA，说明当前小样本下选项文本会增加负担或过拟合风险。"
+  },
+  "final_conclusion_zh": "在 reviewer-positive 55 条数据不扩增、不降低质量的前提下，evidence-only 目标和更长训练/生成把 qcond semantic QA 从 0.0000 提升到 0.2308，no-question 为 0.1538，q-conditioning gap 为 0.0770。结果是 smoke-level 正信号，但 test 只有 13 条，不能作为完整方法成功。"
+}

@@ -161,13 +161,32 @@ def main() -> None:
     parser.add_argument("--run_dir", type=Path, default=DEFAULT_RUN_DIR)
     parser.add_argument("--probe_results", type=Path, default=DEFAULT_PROBE)
     parser.add_argument("--out", type=Path, default=None)
+    parser.add_argument(
+        "--qa_metrics",
+        choices=["auto", "strict", "semantic"],
+        default="auto",
+        help="Which generated-caption QA metrics file to audit.",
+    )
     args = parser.parse_args()
 
     run_dir = args.run_dir
     preflight = load_json(run_dir / "preflight.json")
     pipeline = load_json(run_dir / "natural_qcc_smoke_pipeline_summary.json")
     predictions = run_dir / "generate_eval_test_clean/predictions.jsonl"
-    qa_metrics_path = run_dir / "generate_eval_test_clean/rule_qa/qa_metrics.json"
+    strict_metrics_path = run_dir / "generate_eval_test_clean/rule_qa/qa_metrics.json"
+    semantic_metrics_path = run_dir / "generate_eval_test_clean/rule_qa/semantic_qa_metrics.json"
+    if args.qa_metrics == "semantic":
+        qa_metrics_path = semantic_metrics_path
+        qa_metric_kind = "semantic"
+    elif args.qa_metrics == "strict":
+        qa_metrics_path = strict_metrics_path
+        qa_metric_kind = "strict"
+    elif semantic_metrics_path.exists():
+        qa_metrics_path = semantic_metrics_path
+        qa_metric_kind = "semantic"
+    else:
+        qa_metrics_path = strict_metrics_path
+        qa_metric_kind = "strict"
     qa_summary = load_json(qa_metrics_path)
     probe = load_json(args.probe_results)
 
@@ -198,6 +217,7 @@ def main() -> None:
         "pipeline_summary_json": rel(run_dir / "natural_qcc_smoke_pipeline_summary.json"),
         "predictions_jsonl": rel(predictions),
         "qa_metrics_json": rel(qa_metrics_path),
+        "qa_metric_kind": qa_metric_kind,
         "probe_results_json": rel(args.probe_results),
         "checks": checks,
         "audit_pass": audit_pass,

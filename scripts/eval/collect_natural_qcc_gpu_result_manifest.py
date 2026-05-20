@@ -21,7 +21,7 @@ DEFAULT_COMPARE = BASE / "tsrlm_natural_qcc_crossdomain_qcond_vs_noquestion_audi
 DEFAULT_OBJECTIVE = BASE / "natural_qcc_objective_completion_audit_20260520.json"
 DEFAULT_OUT = BASE / "natural_qcc_gpu_result_manifest_20260520.json"
 
-SAFE_RELATIVE_FILES = (
+COMMON_SAFE_RELATIVE_FILES = (
     "preflight.json",
     "natural_qcc_smoke_pipeline_plan.json",
     "natural_qcc_smoke_pipeline_summary.json",
@@ -33,10 +33,18 @@ SAFE_RELATIVE_FILES = (
     "natural_qcc_caption_quality_audit.rows.jsonl",
     "generate_eval_test_clean/metrics.json",
     "generate_eval_test_clean/predictions.jsonl",
+)
+STRICT_QA_SAFE_RELATIVE_FILES = (
     "generate_eval_test_clean/rule_qa/qa_metrics.json",
     "generate_eval_test_clean/rule_qa/qa_predictions.jsonl",
     "generate_eval_test_clean/rule_qa/NATURAL_QCC_PREDICTION_QA_20260519_ZH.md",
 )
+SEMANTIC_QA_SAFE_RELATIVE_FILES = (
+    "generate_eval_test_clean/rule_qa/semantic_qa_metrics.json",
+    "generate_eval_test_clean/rule_qa/semantic_qa_predictions.jsonl",
+    "generate_eval_test_clean/rule_qa/NATURAL_QCC_SEMANTIC_PREDICTION_QA_20260520_ZH.md",
+)
+SAFE_RELATIVE_FILES = COMMON_SAFE_RELATIVE_FILES + STRICT_QA_SAFE_RELATIVE_FILES + SEMANTIC_QA_SAFE_RELATIVE_FILES
 
 
 def rel(path: Path) -> str:
@@ -72,7 +80,9 @@ def file_item(path: Path, *, required: bool) -> dict[str, Any]:
     return item
 
 
-def run_items(run_dir: Path) -> list[dict[str, Any]]:
+def run_items(run_dir: Path, *, qa_kind: str = "strict") -> list[dict[str, Any]]:
+    qa_files = SEMANTIC_QA_SAFE_RELATIVE_FILES if qa_kind == "semantic" else STRICT_QA_SAFE_RELATIVE_FILES
+    safe_files = COMMON_SAFE_RELATIVE_FILES + qa_files
     required = {
         "preflight.json",
         "natural_qcc_smoke_pipeline_summary.json",
@@ -82,10 +92,10 @@ def run_items(run_dir: Path) -> list[dict[str, Any]]:
         "natural_qcc_caption_quality_audit.md",
         "natural_qcc_caption_quality_audit.rows.jsonl",
         "generate_eval_test_clean/predictions.jsonl",
-        "generate_eval_test_clean/rule_qa/qa_metrics.json",
-        "generate_eval_test_clean/rule_qa/qa_predictions.jsonl",
+        qa_files[0],
+        qa_files[1],
     }
-    return [file_item(run_dir / name, required=name in required) for name in SAFE_RELATIVE_FILES]
+    return [file_item(run_dir / name, required=name in required) for name in safe_files]
 
 
 def audit_items(compare_audit: Path, objective_audit: Path) -> list[dict[str, Any]]:
@@ -139,10 +149,11 @@ def main() -> None:
     parser.add_argument("--objective_audit", type=Path, default=DEFAULT_OBJECTIVE)
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     parser.add_argument("--pathspec_out", type=Path, default=None)
+    parser.add_argument("--qa_kind", choices=["strict", "semantic"], default="strict")
     args = parser.parse_args()
 
-    qcond_items = run_items(args.qcond_run_dir)
-    noq_items = run_items(args.no_question_run_dir)
+    qcond_items = run_items(args.qcond_run_dir, qa_kind=args.qa_kind)
+    noq_items = run_items(args.no_question_run_dir, qa_kind=args.qa_kind)
     compare_items = audit_items(args.compare_audit, args.objective_audit)
     all_items = qcond_items + noq_items + compare_items
     required_missing = [item["path"] for item in all_items if item["required"] and not item["exists"]]

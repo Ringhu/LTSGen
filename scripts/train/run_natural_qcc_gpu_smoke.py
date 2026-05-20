@@ -89,6 +89,12 @@ def main() -> None:
     parser.add_argument("--max_new_tokens", type=int, default=48)
     parser.add_argument("--clean_max_sentences", type=int, default=2)
     parser.add_argument("--min_gpu_mem_gb", type=float, default=20.0)
+    parser.add_argument(
+        "--qa_evaluator",
+        choices=["strict", "semantic"],
+        default="strict",
+        help="Use the strict answer-label bridge or deterministic semantic bridge for generated-caption QA.",
+    )
     parser.add_argument("--dry_run", action="store_true")
     parser.add_argument("--skip_preflight", action="store_true")
     args = parser.parse_args()
@@ -168,25 +174,31 @@ def main() -> None:
             "--clean_max_sentences",
             str(args.clean_max_sentences),
         ],
-        "qa": [
-            sys.executable,
-            "scripts/eval/evaluate_natural_qcc_predictions.py",
-            "--predictions_jsonl",
-            rel(generate_dir / "predictions.jsonl"),
-            "--gold_jsonl",
-            rel(args.gold_jsonl),
-            "--out_dir",
-            rel(ruleqa_dir),
-            "--caption_field",
-            "pred_caption",
-            "--splits",
-            "test",
-        ],
     }
+    qa_script = (
+        "scripts/eval/evaluate_natural_qcc_semantic_predictions.py"
+        if args.qa_evaluator == "semantic"
+        else "scripts/eval/evaluate_natural_qcc_predictions.py"
+    )
+    commands["qa"] = [
+        sys.executable,
+        qa_script,
+        "--predictions_jsonl",
+        rel(generate_dir / "predictions.jsonl"),
+        "--gold_jsonl",
+        rel(args.gold_jsonl),
+        "--out_dir",
+        rel(ruleqa_dir),
+        "--caption_field",
+        "pred_caption",
+        "--splits",
+        "test",
+    ]
 
     plan = {
         "dry_run": args.dry_run,
         "run_dir": rel(args.run_dir),
+        "qa_evaluator": args.qa_evaluator,
         "commands": {name: " ".join(shlex.quote(part) for part in cmd) for name, cmd in commands.items()},
     }
     write_json(pipeline_plan, plan)
@@ -211,7 +223,8 @@ def main() -> None:
             print(json.dumps(results, ensure_ascii=False, indent=2))
             raise SystemExit(int(result["returncode"]))
 
-    qa_metrics = maybe_load_json(ruleqa_dir / "qa_metrics.json")
+    qa_metrics_name = "semantic_qa_metrics.json" if args.qa_evaluator == "semantic" else "qa_metrics.json"
+    qa_metrics = maybe_load_json(ruleqa_dir / qa_metrics_name)
     if qa_metrics:
         results["qa_metrics"] = qa_metrics.get("metrics", qa_metrics)
     results["complete"] = not args.dry_run and all(

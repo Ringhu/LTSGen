@@ -1,0 +1,12 @@
+{
+  "predictions_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_clean/predictions.jsonl",
+  "out_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/tsrlm_natural_qcc_crossdomain_smoke_qwen3_4b_20260520/generate_eval_test_reclean/predictions.jsonl",
+  "max_sentences": 2,
+  "metrics": {
+    "n": 13,
+    "changed_rows": 12,
+    "changed_rate": 0.9231,
+    "mean_original_chars": 56.8,
+    "mean_recleaned_chars": 141.6
+  }
+}
