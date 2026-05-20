@@ -1,0 +1,57 @@
+{
+  "pass": true,
+  "checks": {
+    "summary_n_matches": true,
+    "all_domains_present": true,
+    "min_per_domain_met": true,
+    "sft_count_matches": true,
+    "no_empty_caption": true,
+    "no_missing_chinese": true,
+    "answer_support_caption_consistent": true
+  },
+  "issue_count": 0,
+  "issues": [],
+  "n_rows": 60,
+  "by_domain": {
+    "grid2op": 10,
+    "citylearn": 10,
+    "traffic": 10,
+    "water": 10,
+    "aiopslab": 10,
+    "finrl": 10
+  },
+  "by_source_tier": {
+    "real_grid2op_pair_adapter": 2,
+    "controlled_scenario_first_generator": 58
+  },
+  "by_domain_source_tier": {
+    "aiopslab": {
+      "controlled_scenario_first_generator": 10
+    },
+    "citylearn": {
+      "controlled_scenario_first_generator": 10
+    },
+    "finrl": {
+      "controlled_scenario_first_generator": 10
+    },
+    "grid2op": {
+      "real_grid2op_pair_adapter": 2,
+      "controlled_scenario_first_generator": 8
+    },
+    "traffic": {
+      "controlled_scenario_first_generator": 10
+    },
+    "water": {
+      "controlled_scenario_first_generator": 10
+    }
+  },
+  "answer_distribution": {
+    "B": 12,
+    "A": 19,
+    "C": 17,
+    "D": 12
+  },
+  "rows_path": ".research/general-qcc-captioner-20260515/scenario_first_multidomain_smoke_v2_20260520/scenario_first_multidomain_smoke_v2.jsonl",
+  "sft_path": ".research/general-qcc-captioner-20260515/scenario_first_multidomain_smoke_v2_20260520/scenario_first_multidomain_smoke_v2_sft.jsonl",
+  "summary_path": ".research/general-qcc-captioner-20260515/scenario_first_multidomain_smoke_v2_20260520/scenario_first_multidomain_smoke_v2_summary.json"
+}
