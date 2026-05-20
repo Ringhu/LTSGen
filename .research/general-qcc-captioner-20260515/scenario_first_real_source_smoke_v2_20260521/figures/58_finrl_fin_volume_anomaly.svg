@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="360" viewBox="0 0 920 360">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="72" y="28" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">finrl / fin_volume_anomaly</text>
+<text x="72" y="49" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">source: local_historical_ohlcv_smoke; per-variable min-max normalized for display</text>
+<line x1="72" y1="60.0" x2="890" y2="60.0" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="72" y1="115.5" x2="890" y2="115.5" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="72" y1="171.0" x2="890" y2="171.0" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="72" y1="226.5" x2="890" y2="226.5" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="72" y1="282.0" x2="890" y2="282.0" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="72" y1="60" x2="72" y2="282" stroke="#374151" stroke-width="1.2"/>
+<line x1="72" y1="282" x2="890" y2="282" stroke="#374151" stroke-width="1.2"/>
+<polyline points="72.0,110.1 98.4,214.5 124.8,129.0 151.2,261.2 177.5,205.0 203.9,81.7 230.3,217.8 256.7,243.7 283.1,60.0 309.5,205.5 335.9,187.5 362.3,225.8 388.6,231.5 415.0,235.7 441.4,245.2 467.8,236.7 494.2,229.1 520.6,225.8 547.0,257.4 573.4,247.0 599.7,261.2 626.1,223.4 652.5,205.0 678.9,282.0 705.3,220.1 731.7,258.9 758.1,227.2 784.5,264.5 810.8,223.0 837.2,218.2 863.6,222.5 890.0,224.8" fill="none" stroke="#2563eb" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<line x1="72" y1="306" x2="96" y2="306" stroke="#2563eb" stroke-width="3"/>
+<text x="103" y="310" font-family="Arial, sans-serif" font-size="12" fill="#111827">x0 目标资产价格</text>
+<polyline points="72.0,110.1 98.4,214.5 124.8,129.0 151.2,261.2 177.5,205.0 203.9,81.7 230.3,217.8 256.7,243.7 283.1,60.0 309.5,205.5 335.9,187.5 362.3,225.8 388.6,231.5 415.0,235.7 441.4,245.2 467.8,236.7 494.2,229.1 520.6,225.8 547.0,257.4 573.4,247.0 599.7,261.2 626.1,223.4 652.5,205.0 678.9,282.0 705.3,220.1 731.7,258.9 758.1,227.2 784.5,264.5 810.8,223.0 837.2,218.2 863.6,222.5 890.0,224.8" fill="none" stroke="#dc2626" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<line x1="464" y1="306" x2="488" y2="306" stroke="#dc2626" stroke-width="3"/>
+<text x="495" y="310" font-family="Arial, sans-serif" font-size="12" fill="#111827">x1 市场背景价格信号</text>
+<polyline points="72.0,207.0 98.4,134.4 124.8,223.9 151.2,228.9 177.5,167.4 203.9,153.8 230.3,133.9 256.7,166.5 283.1,65.7 309.5,60.0 335.9,129.6 362.3,190.6 388.6,88.1 415.0,165.9 441.4,219.5 467.8,158.8 494.2,208.0 520.6,214.8 547.0,205.2 573.4,201.8 599.7,207.9 626.1,262.8 652.5,199.6 678.9,177.5 705.3,222.8 731.7,208.1 758.1,282.0 784.5,123.1 810.8,227.5 837.2,204.9 863.6,268.5 890.0,170.9" fill="none" stroke="#16a34a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<line x1="72" y1="324" x2="96" y2="324" stroke="#16a34a" stroke-width="3"/>
+<text x="103" y="328" font-family="Arial, sans-serif" font-size="12" fill="#111827">x2 交易量</text>
+<text x="72" y="346" font-family="Arial, sans-serif" font-size="11" fill="#6b7280">row id: real_source_smoke::finrl::07::fin_volume_anomaly::finrl_broad::MSFT::w16_48::fin_volume_anomaly</text>
+</svg>
