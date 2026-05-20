@@ -10,11 +10,16 @@ from typing import Any
 
 
 TRUNCATE_MARKERS = [
-    re.compile(r"\bHuman\b\s*:?", re.IGNORECASE),
-    re.compile(r"\bAssistant\b\s*:?", re.IGNORECASE),
-    re.compile(r"\bUser\b\s*:?", re.IGNORECASE),
-    re.compile(r"\bQuestion\b\s*:?", re.IGNORECASE),
-    re.compile(r"\bOptions?\b\s*:?", re.IGNORECASE),
+    re.compile(r"\bHuman\s*:", re.IGNORECASE),
+    re.compile(r"\bAssistant\s*:", re.IGNORECASE),
+    re.compile(r"\bUser\s*:", re.IGNORECASE),
+    re.compile(r"\bQuestion\s*:", re.IGNORECASE),
+    re.compile(r"\bOptions?\s*:", re.IGNORECASE),
+    re.compile(r"\bScene\s*:", re.IGNORECASE),
+    re.compile(r"\bVariables\s*:", re.IGNORECASE),
+    re.compile(r"\bYou are a (?:question-conditioned )?time-series evidence captioner\b", re.IGNORECASE),
+    re.compile(r"\bGiven the time series\b", re.IGNORECASE),
+    re.compile(r"\bDo not output\b", re.IGNORECASE),
 ]
 
 LEADING_ARTIFACT_RE = re.compile(
@@ -26,6 +31,22 @@ LEADING_ANSWER_RE = re.compile(
     flags=re.IGNORECASE,
 )
 TIME_SERIES_EVIDENCE_RE = re.compile(r"\bTime[- ]series evidence\s*:\s*", flags=re.IGNORECASE)
+CJK_RE = re.compile(r"[\u3400-\u9fff]+")
+
+
+def truncate_cjk_continuation(text: str) -> str:
+    match = CJK_RE.search(text)
+    if not match:
+        return text
+    prefix = text[: match.start()].strip()
+    suffix = text[match.end() :].strip()
+    if re.search(r"[.!?]\s*$", prefix):
+        return prefix
+    if len(prefix) >= 80 and re.search(r"\d", prefix):
+        return prefix.rstrip(" ,;:")
+    if suffix:
+        return re.sub(r"\s+", " ", f"{prefix} {suffix}").strip()
+    return prefix
 
 
 def load_jsonl(path: Path, *, limit: int = 0) -> list[dict[str, Any]]:
@@ -80,6 +101,7 @@ def clean_caption(text: str, max_sentences: int = 1) -> str:
         match = marker.search(text)
         if match and match.start() > 0:
             text = text[: match.start()].strip()
+    text = truncate_cjk_continuation(text)
     text = TIME_SERIES_EVIDENCE_RE.sub("Evidence: ", text)
     text = re.sub(r"\s+", " ", text)
     parts = [part.strip() for part in re.split(r"(?<=[.!?])\s+", text) if part.strip()]

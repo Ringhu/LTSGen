@@ -5,7 +5,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from scripts.generate.build_natural_qcc_evidence_only_sft import evidence_text, transform_row
+from scripts.generate.build_natural_qcc_evidence_only_sft import evidence_text, style_repaired_evidence_text, transform_row
 
 
 class BuildNaturalQccEvidenceOnlySftTest(unittest.TestCase):
@@ -86,6 +86,38 @@ class BuildNaturalQccEvidenceOnlySftTest(unittest.TestCase):
         self.assertNotIn("Question:", out["prompt"])
         self.assertIn("Scene: A traffic operator reviews a window.", out["prompt"])
         self.assertFalse(out["meta"]["question_conditioned"])
+
+    def test_style_repair_adds_uniform_numeric_evidence(self):
+        row = {
+            "id": "row1",
+            "values": [[0.0, 1.0]],
+            "scene_en": "A water operator reviews a service window.",
+            "variables_en": ["x0 pressure", "x1 flow"],
+            "question": "Which part is most variable?",
+            "options": ["A. middle", "B. early", "C. late", "D. similar thirds"],
+            "natural_evidence_caption": "The window is split into three equal sections and selects early.",
+            "answer": "B",
+            "answer_label": "early",
+            "task_family": "water_flow_volatility",
+            "merge_source_name": "water",
+            "support_slots": {
+                "region_stds": {"early": 18.410378, "middle": 1.814184, "late": 1.822276},
+                "answer_label": "early",
+                "window_start": 0,
+                "window_end": 256,
+            },
+            "meta": {},
+        }
+
+        evidence = style_repaired_evidence_text(row)
+        out = transform_row(row, prompt_control="qcond", style_repair=True)
+
+        self.assertIn("Evidence:", evidence)
+        self.assertIn("Decision rule:", evidence)
+        self.assertIn("Therefore, early.", evidence)
+        self.assertIn("early=18.41", evidence)
+        self.assertIn("Evidence, Decision rule, Therefore", out["prompt"])
+        self.assertTrue(out["meta"]["style_repair"])
 
 
 if __name__ == "__main__":
