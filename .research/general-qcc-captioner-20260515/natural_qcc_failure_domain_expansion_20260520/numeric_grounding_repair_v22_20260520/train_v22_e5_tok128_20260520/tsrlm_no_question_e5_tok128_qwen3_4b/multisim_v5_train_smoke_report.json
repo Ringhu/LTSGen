@@ -1,0 +1,12 @@
+{
+  "train_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/numeric_grounding_repair_v22_20260520/sft_evidence_only_v22/natural_qcc_failure_domain_expanded_v22_numeric_grounding_no_question_train_sft.jsonl",
+  "eval_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/numeric_grounding_repair_v22_20260520/sft_evidence_only_v22/natural_qcc_failure_domain_expanded_v22_numeric_grounding_no_question_test_sft.jsonl",
+  "output_dir": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/numeric_grounding_repair_v22_20260520/train_v22_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b",
+  "source_group_key": "merge_source_name",
+  "target_num_vars": 4,
+  "ts_num_vars": 4,
+  "max_steps": -1,
+  "train_rows": 89,
+  "eval_rows": 35,
+  "final_model": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/numeric_grounding_repair_v22_20260520/train_v22_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b/final_model"
+}

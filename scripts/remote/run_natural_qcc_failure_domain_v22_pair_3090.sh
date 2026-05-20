@@ -36,6 +36,7 @@ COMPARE_OUT_REL="$TRAIN_REL/natural_qcc_failure_domain_expanded_v22_e5_tok128_qc
 
 cd "$ROOT"
 export CUDA_VISIBLE_DEVICES
+export PYTHONPATH="$ROOT/tslm:$ROOT:${PYTHONPATH:-}"
 
 run_one() {
   local mode="$1"
