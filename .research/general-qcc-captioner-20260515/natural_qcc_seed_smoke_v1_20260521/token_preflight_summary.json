@@ -1,0 +1,85 @@
+{
+  "tokenizer": "local_regex_proxy",
+  "max_text_length": 768,
+  "max_prompt_length": 640,
+  "n": 72,
+  "zero_output_kept": 0,
+  "output_truncated": 0,
+  "prompt_truncated": 0,
+  "eos_only_supervision": 0,
+  "min_output_kept_tokens": 26,
+  "max_needed_tokens": 305,
+  "mean_prompt_tokens": 214.35,
+  "mean_output_tokens": 40.83,
+  "bad_phrase_counts": {
+    "Answer label": 0,
+    "the rule maps this to": 0,
+    "supports the answer": 0
+  },
+  "gate_pass": true,
+  "examples": [
+    {
+      "id": "self_contained_reasoning_v3::grid2op::scenario_first_pilot::grid2op::line_disconnection::000::grid_line_disconnection_counterfactual_risk::self_contained_grid_counterfactual_risk",
+      "prompt_full_tokens": 222,
+      "prompt_kept_tokens": 222,
+      "prompt_truncated": false,
+      "output_full_tokens": 43,
+      "output_kept_tokens": 43,
+      "output_truncated": false,
+      "labels_non_ignored": 44,
+      "needed_tokens": 267,
+      "supervised_text_preview": "Across the compact blocks the outage-minus-normal stress difference stays close to zero Mean x0 is -0.01 with 0.0 of blocks above +0.05 0.0 below -0.05 and maximum absolute difference 0.01 Those values support the risk is broadly unchanged decision under"
+    },
+    {
+      "id": "self_contained_reasoning_v3::grid2op::scenario_first_pilot::grid2op::line_disconnection::006::grid_line_disconnection_counterfactual_risk::self_contained_grid_counterfactual_risk",
+      "prompt_full_tokens": 222,
+      "prompt_kept_tokens": 222,
+      "prompt_truncated": false,
+      "output_full_tokens": 43,
+      "output_kept_tokens": 43,
+      "output_truncated": false,
+      "labels_non_ignored": 44,
+      "needed_tokens": 267,
+      "supervised_text_preview": "Across the compact blocks the outage-minus-normal stress difference stays close to zero Mean x0 is 0.00 with 0.0 of blocks above +0.05 0.0 below -0.05 and maximum absolute difference 0.00 Those values support the risk is broadly unchanged decision under"
+    },
+    {
+      "id": "self_contained_reasoning_v3::grid2op::scenario_first_pilot::grid2op::line_disconnection::012::grid_line_disconnection_counterfactual_risk::self_contained_grid_counterfactual_risk",
+      "prompt_full_tokens": 222,
+      "prompt_kept_tokens": 222,
+      "prompt_truncated": false,
+      "output_full_tokens": 45,
+      "output_kept_tokens": 45,
+      "output_truncated": false,
+      "labels_non_ignored": 46,
+      "needed_tokens": 269,
+      "supervised_text_preview": "Across the compact blocks the outage run is consistently less stressful than the matched normal run Mean x0 is -0.11 with 0.0 of blocks above +0.05 100.0 below -0.05 and maximum absolute difference 0.12 Those values support the risk decreases"
+    },
+    {
+      "id": "self_contained_reasoning_v3::grid2op::scenario_first_pilot::grid2op::line_disconnection::030::grid_line_disconnection_counterfactual_risk::self_contained_grid_counterfactual_risk",
+      "prompt_full_tokens": 222,
+      "prompt_kept_tokens": 222,
+      "prompt_truncated": false,
+      "output_full_tokens": 45,
+      "output_kept_tokens": 45,
+      "output_truncated": false,
+      "labels_non_ignored": 46,
+      "needed_tokens": 269,
+      "supervised_text_preview": "Across the compact blocks the outage run is consistently more stressful than the matched normal run Mean x0 is 0.15 with 100.0 of blocks above +0.05 0.0 below -0.05 and maximum absolute difference 0.16 Those values support the risk increases"
+    },
+    {
+      "id": "self_contained_reasoning_v3::grid2op::scenario_first_pilot::grid2op::line_disconnection::042::grid_line_disconnection_counterfactual_risk::self_contained_grid_counterfactual_risk",
+      "prompt_full_tokens": 222,
+      "prompt_kept_tokens": 222,
+      "prompt_truncated": false,
+      "output_full_tokens": 45,
+      "output_kept_tokens": 45,
+      "output_truncated": false,
+      "labels_non_ignored": 46,
+      "needed_tokens": 269,
+      "supervised_text_preview": "Across the compact blocks the outage run is consistently more stressful than the matched normal run Mean x0 is 0.12 with 100.0 of blocks above +0.05 0.0 below -0.05 and maximum absolute difference 0.14 Those values support the risk increases"
+    }
+  ],
+  "zero_output_examples": [],
+  "output_truncated_examples": [],
+  "prompt_truncated_examples": []
+}

@@ -1,0 +1,110 @@
+{
+  "claim_scope": "local proxy control; validates evaluation chain, not Qwen SFT method performance",
+  "qcond": {
+    "n": 72,
+    "non_empty_rate": 1.0,
+    "exact_target_match_rate": 1.0,
+    "evidence_shape_rate": 1.0,
+    "answer_focused_rate": 1.0,
+    "quality_pass_rate": 1.0,
+    "answer_label_only_rate": 0.0,
+    "option_letter_leak_rate": 0.0,
+    "jsonish_output_rate": 0.0,
+    "mean_caption_chars": 260.9,
+    "mean_target_number_recall": 1.0,
+    "mean_target_keyword_recall": 1.0,
+    "by_domain": {
+      "aiopslab": {
+        "n": 12,
+        "quality_pass_rate": 1.0,
+        "answer_focused_rate": 1.0,
+        "mean_target_number_recall": 1.0
+      },
+      "citylearn": {
+        "n": 12,
+        "quality_pass_rate": 1.0,
+        "answer_focused_rate": 1.0,
+        "mean_target_number_recall": 1.0
+      },
+      "finrl": {
+        "n": 12,
+        "quality_pass_rate": 1.0,
+        "answer_focused_rate": 1.0,
+        "mean_target_number_recall": 1.0
+      },
+      "grid2op": {
+        "n": 12,
+        "quality_pass_rate": 1.0,
+        "answer_focused_rate": 1.0,
+        "mean_target_number_recall": 1.0
+      },
+      "traffic": {
+        "n": 12,
+        "quality_pass_rate": 1.0,
+        "answer_focused_rate": 1.0,
+        "mean_target_number_recall": 1.0
+      },
+      "water": {
+        "n": 12,
+        "quality_pass_rate": 1.0,
+        "answer_focused_rate": 1.0,
+        "mean_target_number_recall": 1.0
+      }
+    }
+  },
+  "no_question": {
+    "n": 72,
+    "non_empty_rate": 1.0,
+    "exact_target_match_rate": 0.0,
+    "evidence_shape_rate": 1.0,
+    "answer_focused_rate": 0.0,
+    "quality_pass_rate": 0.0,
+    "answer_label_only_rate": 0.0,
+    "option_letter_leak_rate": 0.0,
+    "jsonish_output_rate": 0.0,
+    "mean_caption_chars": 234.7,
+    "mean_target_number_recall": 0.1609,
+    "mean_target_keyword_recall": 0.0731,
+    "by_domain": {
+      "aiopslab": {
+        "n": 12,
+        "quality_pass_rate": 0.0,
+        "answer_focused_rate": 0.0,
+        "mean_target_number_recall": 0.3611
+      },
+      "citylearn": {
+        "n": 12,
+        "quality_pass_rate": 0.0,
+        "answer_focused_rate": 0.0,
+        "mean_target_number_recall": 0.0555
+      },
+      "finrl": {
+        "n": 12,
+        "quality_pass_rate": 0.0,
+        "answer_focused_rate": 0.0,
+        "mean_target_number_recall": 0.0
+      },
+      "grid2op": {
+        "n": 12,
+        "quality_pass_rate": 0.0,
+        "answer_focused_rate": 0.0,
+        "mean_target_number_recall": 0.382
+      },
+      "traffic": {
+        "n": 12,
+        "quality_pass_rate": 0.0,
+        "answer_focused_rate": 0.0,
+        "mean_target_number_recall": 0.0
+      },
+      "water": {
+        "n": 12,
+        "quality_pass_rate": 0.0,
+        "answer_focused_rate": 0.0,
+        "mean_target_number_recall": 0.1667
+      }
+    }
+  },
+  "qcond_minus_no_question_quality_pass": 1.0,
+  "qcond_minus_no_question_answer_focus": 1.0,
+  "gate_pass": true
+}

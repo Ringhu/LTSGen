@@ -1,0 +1,6 @@
+{
+  "torch_available": false,
+  "transformers_available": false,
+  "model_path": "/cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507",
+  "model_path_exists": false
+}

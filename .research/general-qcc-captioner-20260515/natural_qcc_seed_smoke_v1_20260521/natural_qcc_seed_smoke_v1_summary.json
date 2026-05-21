@@ -1,0 +1,325 @@
+{
+  "claim_scope": "local_proxy_smoke_not_qwen_sft",
+  "inputs": {
+    "self_rows": ".research/general-qcc-captioner-20260515/self_contained_reasoning_qa_v3_20260521/self_contained_reasoning_tsqa.jsonl",
+    "case_rows": ".research/general-qcc-captioner-20260515/natural_qcc_case_quality_v2_20260521/natural_qcc_case_quality_v2.jsonl"
+  },
+  "outputs": {
+    "out_dir": ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_v1_20260521"
+  },
+  "n_rows": 72,
+  "preflight": {
+    "tokenizer": "local_regex_proxy",
+    "max_text_length": 768,
+    "max_prompt_length": 640,
+    "n": 72,
+    "zero_output_kept": 0,
+    "output_truncated": 0,
+    "prompt_truncated": 0,
+    "eos_only_supervision": 0,
+    "min_output_kept_tokens": 26,
+    "max_needed_tokens": 305,
+    "mean_prompt_tokens": 214.35,
+    "mean_output_tokens": 40.83,
+    "bad_phrase_counts": {
+      "Answer label": 0,
+      "the rule maps this to": 0,
+      "supports the answer": 0
+    },
+    "gate_pass": true,
+    "examples": [
+      {
+        "id": "self_contained_reasoning_v3::grid2op::scenario_first_pilot::grid2op::line_disconnection::000::grid_line_disconnection_counterfactual_risk::self_contained_grid_counterfactual_risk",
+        "prompt_full_tokens": 222,
+        "prompt_kept_tokens": 222,
+        "prompt_truncated": false,
+        "output_full_tokens": 43,
+        "output_kept_tokens": 43,
+        "output_truncated": false,
+        "labels_non_ignored": 44,
+        "needed_tokens": 267,
+        "supervised_text_preview": "Across the compact blocks the outage-minus-normal stress difference stays close to zero Mean x0 is -0.01 with 0.0 of blocks above +0.05 0.0 below -0.05 and maximum absolute difference 0.01 Those values support the risk is broadly unchanged decision under"
+      },
+      {
+        "id": "self_contained_reasoning_v3::grid2op::scenario_first_pilot::grid2op::line_disconnection::006::grid_line_disconnection_counterfactual_risk::self_contained_grid_counterfactual_risk",
+        "prompt_full_tokens": 222,
+        "prompt_kept_tokens": 222,
+        "prompt_truncated": false,
+        "output_full_tokens": 43,
+        "output_kept_tokens": 43,
+        "output_truncated": false,
+        "labels_non_ignored": 44,
+        "needed_tokens": 267,
+        "supervised_text_preview": "Across the compact blocks the outage-minus-normal stress difference stays close to zero Mean x0 is 0.00 with 0.0 of blocks above +0.05 0.0 below -0.05 and maximum absolute difference 0.00 Those values support the risk is broadly unchanged decision under"
+      },
+      {
+        "id": "self_contained_reasoning_v3::grid2op::scenario_first_pilot::grid2op::line_disconnection::012::grid_line_disconnection_counterfactual_risk::self_contained_grid_counterfactual_risk",
+        "prompt_full_tokens": 222,
+        "prompt_kept_tokens": 222,
+        "prompt_truncated": false,
+        "output_full_tokens": 45,
+        "output_kept_tokens": 45,
+        "output_truncated": false,
+        "labels_non_ignored": 46,
+        "needed_tokens": 269,
+        "supervised_text_preview": "Across the compact blocks the outage run is consistently less stressful than the matched normal run Mean x0 is -0.11 with 0.0 of blocks above +0.05 100.0 below -0.05 and maximum absolute difference 0.12 Those values support the risk decreases"
+      },
+      {
+        "id": "self_contained_reasoning_v3::grid2op::scenario_first_pilot::grid2op::line_disconnection::030::grid_line_disconnection_counterfactual_risk::self_contained_grid_counterfactual_risk",
+        "prompt_full_tokens": 222,
+        "prompt_kept_tokens": 222,
+        "prompt_truncated": false,
+        "output_full_tokens": 45,
+        "output_kept_tokens": 45,
+        "output_truncated": false,
+        "labels_non_ignored": 46,
+        "needed_tokens": 269,
+        "supervised_text_preview": "Across the compact blocks the outage run is consistently more stressful than the matched normal run Mean x0 is 0.15 with 100.0 of blocks above +0.05 0.0 below -0.05 and maximum absolute difference 0.16 Those values support the risk increases"
+      },
+      {
+        "id": "self_contained_reasoning_v3::grid2op::scenario_first_pilot::grid2op::line_disconnection::042::grid_line_disconnection_counterfactual_risk::self_contained_grid_counterfactual_risk",
+        "prompt_full_tokens": 222,
+        "prompt_kept_tokens": 222,
+        "prompt_truncated": false,
+        "output_full_tokens": 45,
+        "output_kept_tokens": 45,
+        "output_truncated": false,
+        "labels_non_ignored": 46,
+        "needed_tokens": 269,
+        "supervised_text_preview": "Across the compact blocks the outage run is consistently more stressful than the matched normal run Mean x0 is 0.12 with 100.0 of blocks above +0.05 0.0 below -0.05 and maximum absolute difference 0.14 Those values support the risk increases"
+      }
+    ],
+    "zero_output_examples": [],
+    "output_truncated_examples": [],
+    "prompt_truncated_examples": []
+  },
+  "overfit": {
+    "model_type": "local_memory_captioner",
+    "claim_scope": "overfit/save-load path diagnostic, not generalization",
+    "n_train": 24,
+    "model_path": ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_v1_20260521/overfit/local_memory_captioner.json",
+    "before_save": {
+      "n": 24,
+      "non_empty_rate": 1.0,
+      "exact_target_match_rate": 1.0,
+      "evidence_shape_rate": 1.0,
+      "answer_focused_rate": 1.0,
+      "quality_pass_rate": 1.0,
+      "answer_label_only_rate": 0.0,
+      "option_letter_leak_rate": 0.0,
+      "jsonish_output_rate": 0.0,
+      "mean_caption_chars": 247.3,
+      "mean_target_number_recall": 1.0,
+      "mean_target_keyword_recall": 1.0,
+      "by_domain": {
+        "aiopslab": {
+          "n": 4,
+          "quality_pass_rate": 1.0,
+          "answer_focused_rate": 1.0,
+          "mean_target_number_recall": 1.0
+        },
+        "citylearn": {
+          "n": 4,
+          "quality_pass_rate": 1.0,
+          "answer_focused_rate": 1.0,
+          "mean_target_number_recall": 1.0
+        },
+        "finrl": {
+          "n": 4,
+          "quality_pass_rate": 1.0,
+          "answer_focused_rate": 1.0,
+          "mean_target_number_recall": 1.0
+        },
+        "grid2op": {
+          "n": 4,
+          "quality_pass_rate": 1.0,
+          "answer_focused_rate": 1.0,
+          "mean_target_number_recall": 1.0
+        },
+        "traffic": {
+          "n": 4,
+          "quality_pass_rate": 1.0,
+          "answer_focused_rate": 1.0,
+          "mean_target_number_recall": 1.0
+        },
+        "water": {
+          "n": 4,
+          "quality_pass_rate": 1.0,
+          "answer_focused_rate": 1.0,
+          "mean_target_number_recall": 1.0
+        }
+      }
+    },
+    "after_load": {
+      "n": 24,
+      "non_empty_rate": 1.0,
+      "exact_target_match_rate": 1.0,
+      "evidence_shape_rate": 1.0,
+      "answer_focused_rate": 1.0,
+      "quality_pass_rate": 1.0,
+      "answer_label_only_rate": 0.0,
+      "option_letter_leak_rate": 0.0,
+      "jsonish_output_rate": 0.0,
+      "mean_caption_chars": 247.3,
+      "mean_target_number_recall": 1.0,
+      "mean_target_keyword_recall": 1.0,
+      "by_domain": {
+        "aiopslab": {
+          "n": 4,
+          "quality_pass_rate": 1.0,
+          "answer_focused_rate": 1.0,
+          "mean_target_number_recall": 1.0
+        },
+        "citylearn": {
+          "n": 4,
+          "quality_pass_rate": 1.0,
+          "answer_focused_rate": 1.0,
+          "mean_target_number_recall": 1.0
+        },
+        "finrl": {
+          "n": 4,
+          "quality_pass_rate": 1.0,
+          "answer_focused_rate": 1.0,
+          "mean_target_number_recall": 1.0
+        },
+        "grid2op": {
+          "n": 4,
+          "quality_pass_rate": 1.0,
+          "answer_focused_rate": 1.0,
+          "mean_target_number_recall": 1.0
+        },
+        "traffic": {
+          "n": 4,
+          "quality_pass_rate": 1.0,
+          "answer_focused_rate": 1.0,
+          "mean_target_number_recall": 1.0
+        },
+        "water": {
+          "n": 4,
+          "quality_pass_rate": 1.0,
+          "answer_focused_rate": 1.0,
+          "mean_target_number_recall": 1.0
+        }
+      }
+    },
+    "save_load_parity": true,
+    "gate_pass": true
+  },
+  "qcond_vs_no_question": {
+    "claim_scope": "local proxy control; validates evaluation chain, not Qwen SFT method performance",
+    "qcond": {
+      "n": 72,
+      "non_empty_rate": 1.0,
+      "exact_target_match_rate": 1.0,
+      "evidence_shape_rate": 1.0,
+      "answer_focused_rate": 1.0,
+      "quality_pass_rate": 1.0,
+      "answer_label_only_rate": 0.0,
+      "option_letter_leak_rate": 0.0,
+      "jsonish_output_rate": 0.0,
+      "mean_caption_chars": 260.9,
+      "mean_target_number_recall": 1.0,
+      "mean_target_keyword_recall": 1.0,
+      "by_domain": {
+        "aiopslab": {
+          "n": 12,
+          "quality_pass_rate": 1.0,
+          "answer_focused_rate": 1.0,
+          "mean_target_number_recall": 1.0
+        },
+        "citylearn": {
+          "n": 12,
+          "quality_pass_rate": 1.0,
+          "answer_focused_rate": 1.0,
+          "mean_target_number_recall": 1.0
+        },
+        "finrl": {
+          "n": 12,
+          "quality_pass_rate": 1.0,
+          "answer_focused_rate": 1.0,
+          "mean_target_number_recall": 1.0
+        },
+        "grid2op": {
+          "n": 12,
+          "quality_pass_rate": 1.0,
+          "answer_focused_rate": 1.0,
+          "mean_target_number_recall": 1.0
+        },
+        "traffic": {
+          "n": 12,
+          "quality_pass_rate": 1.0,
+          "answer_focused_rate": 1.0,
+          "mean_target_number_recall": 1.0
+        },
+        "water": {
+          "n": 12,
+          "quality_pass_rate": 1.0,
+          "answer_focused_rate": 1.0,
+          "mean_target_number_recall": 1.0
+        }
+      }
+    },
+    "no_question": {
+      "n": 72,
+      "non_empty_rate": 1.0,
+      "exact_target_match_rate": 0.0,
+      "evidence_shape_rate": 1.0,
+      "answer_focused_rate": 0.0,
+      "quality_pass_rate": 0.0,
+      "answer_label_only_rate": 0.0,
+      "option_letter_leak_rate": 0.0,
+      "jsonish_output_rate": 0.0,
+      "mean_caption_chars": 234.7,
+      "mean_target_number_recall": 0.1609,
+      "mean_target_keyword_recall": 0.0731,
+      "by_domain": {
+        "aiopslab": {
+          "n": 12,
+          "quality_pass_rate": 0.0,
+          "answer_focused_rate": 0.0,
+          "mean_target_number_recall": 0.3611
+        },
+        "citylearn": {
+          "n": 12,
+          "quality_pass_rate": 0.0,
+          "answer_focused_rate": 0.0,
+          "mean_target_number_recall": 0.0555
+        },
+        "finrl": {
+          "n": 12,
+          "quality_pass_rate": 0.0,
+          "answer_focused_rate": 0.0,
+          "mean_target_number_recall": 0.0
+        },
+        "grid2op": {
+          "n": 12,
+          "quality_pass_rate": 0.0,
+          "answer_focused_rate": 0.0,
+          "mean_target_number_recall": 0.382
+        },
+        "traffic": {
+          "n": 12,
+          "quality_pass_rate": 0.0,
+          "answer_focused_rate": 0.0,
+          "mean_target_number_recall": 0.0
+        },
+        "water": {
+          "n": 12,
+          "quality_pass_rate": 0.0,
+          "answer_focused_rate": 0.0,
+          "mean_target_number_recall": 0.1667
+        }
+      }
+    },
+    "qcond_minus_no_question_quality_pass": 1.0,
+    "qcond_minus_no_question_answer_focus": 1.0,
+    "gate_pass": true
+  },
+  "environment": {
+    "torch_available": false,
+    "transformers_available": false,
+    "model_path": "/cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507",
+    "model_path_exists": false
+  },
+  "gate_pass": true
+}

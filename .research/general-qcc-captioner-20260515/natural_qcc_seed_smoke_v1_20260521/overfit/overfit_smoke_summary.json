@@ -1,0 +1,112 @@
+{
+  "model_type": "local_memory_captioner",
+  "claim_scope": "overfit/save-load path diagnostic, not generalization",
+  "n_train": 24,
+  "model_path": ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_v1_20260521/overfit/local_memory_captioner.json",
+  "before_save": {
+    "n": 24,
+    "non_empty_rate": 1.0,
+    "exact_target_match_rate": 1.0,
+    "evidence_shape_rate": 1.0,
+    "answer_focused_rate": 1.0,
+    "quality_pass_rate": 1.0,
+    "answer_label_only_rate": 0.0,
+    "option_letter_leak_rate": 0.0,
+    "jsonish_output_rate": 0.0,
+    "mean_caption_chars": 247.3,
+    "mean_target_number_recall": 1.0,
+    "mean_target_keyword_recall": 1.0,
+    "by_domain": {
+      "aiopslab": {
+        "n": 4,
+        "quality_pass_rate": 1.0,
+        "answer_focused_rate": 1.0,
+        "mean_target_number_recall": 1.0
+      },
+      "citylearn": {
+        "n": 4,
+        "quality_pass_rate": 1.0,
+        "answer_focused_rate": 1.0,
+        "mean_target_number_recall": 1.0
+      },
+      "finrl": {
+        "n": 4,
+        "quality_pass_rate": 1.0,
+        "answer_focused_rate": 1.0,
+        "mean_target_number_recall": 1.0
+      },
+      "grid2op": {
+        "n": 4,
+        "quality_pass_rate": 1.0,
+        "answer_focused_rate": 1.0,
+        "mean_target_number_recall": 1.0
+      },
+      "traffic": {
+        "n": 4,
+        "quality_pass_rate": 1.0,
+        "answer_focused_rate": 1.0,
+        "mean_target_number_recall": 1.0
+      },
+      "water": {
+        "n": 4,
+        "quality_pass_rate": 1.0,
+        "answer_focused_rate": 1.0,
+        "mean_target_number_recall": 1.0
+      }
+    }
+  },
+  "after_load": {
+    "n": 24,
+    "non_empty_rate": 1.0,
+    "exact_target_match_rate": 1.0,
+    "evidence_shape_rate": 1.0,
+    "answer_focused_rate": 1.0,
+    "quality_pass_rate": 1.0,
+    "answer_label_only_rate": 0.0,
+    "option_letter_leak_rate": 0.0,
+    "jsonish_output_rate": 0.0,
+    "mean_caption_chars": 247.3,
+    "mean_target_number_recall": 1.0,
+    "mean_target_keyword_recall": 1.0,
+    "by_domain": {
+      "aiopslab": {
+        "n": 4,
+        "quality_pass_rate": 1.0,
+        "answer_focused_rate": 1.0,
+        "mean_target_number_recall": 1.0
+      },
+      "citylearn": {
+        "n": 4,
+        "quality_pass_rate": 1.0,
+        "answer_focused_rate": 1.0,
+        "mean_target_number_recall": 1.0
+      },
+      "finrl": {
+        "n": 4,
+        "quality_pass_rate": 1.0,
+        "answer_focused_rate": 1.0,
+        "mean_target_number_recall": 1.0
+      },
+      "grid2op": {
+        "n": 4,
+        "quality_pass_rate": 1.0,
+        "answer_focused_rate": 1.0,
+        "mean_target_number_recall": 1.0
+      },
+      "traffic": {
+        "n": 4,
+        "quality_pass_rate": 1.0,
+        "answer_focused_rate": 1.0,
+        "mean_target_number_recall": 1.0
+      },
+      "water": {
+        "n": 4,
+        "quality_pass_rate": 1.0,
+        "answer_focused_rate": 1.0,
+        "mean_target_number_recall": 1.0
+      }
+    }
+  },
+  "save_load_parity": true,
+  "gate_pass": true
+}

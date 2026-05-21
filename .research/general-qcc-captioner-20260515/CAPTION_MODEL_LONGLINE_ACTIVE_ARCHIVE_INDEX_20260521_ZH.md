@@ -20,6 +20,7 @@ Natural TS-QA/QCC 样例。
 - `scripts/eval/audit_scenario_first_real_source_smoke.py`
 - `scripts/eval/probe_self_contained_reasoning_tsqa_llm.py`
 - `scripts/eval/attribute_self_contained_data_only_errors.py`
+- `scripts/eval/run_natural_qcc_seed_smoke_v1.py`
 - `scripts/report/write_natural_qcc_v3_seed_repair_report.py`
 
 但 consolidation 提交 `dc5e0fc` 曾经为了精简分支删除了一些新近产物。因此这次从
@@ -177,6 +178,20 @@ Natural TS-QA/QCC 样例。
   QA-ready 72/72，caption-train-ready 72/72。
 - 图文报告解释了这一轮做了什么，并包含 reviewer before/after、错误归因、分域 ready 情况、当前架构图和 12 个 case 的时序图链接。
 
+### 9. Natural QCC seed smoke v1
+
+路径：
+
+`.research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_v1_20260521/`
+
+保留原因：
+
+- 这是对 72 条 repaired seed 的本地小闭环 smoke，不是 Qwen/TS-RLM 正式训练结果。
+- 已生成 `combined_qcond_sft.jsonl` 和 `combined_no_question_sft.jsonl`，可直接作为下一步远端 GPU overfit/smoke 输入。
+- 本地 token/collator proxy gate 通过：zero output、output truncation、prompt truncation、EOS-only supervision 都为 0。
+- 24-row overfit/save-load local proxy 通过；72-row qcond vs no-question local proxy 能区分 answer-focused evidence caption 和 generic caption。
+- 图文报告说明了 1-5 步执行结果，并明确本地环境缺少 `torch`、`transformers` 和远端模型目录。
+
 ## 当前 caption-model 训练相关文件
 
 这些文件继续保留在当前分支，因为它们解释了为什么 v2.2 qcond 训练会空生成，以及后续修复标准：
@@ -223,10 +238,11 @@ git checkout <commit-or-branch> -- <path>
 
 更合理的顺序是：
 
-1. 以 `self_contained_reasoning_qa_v3_20260521` 和 `natural_qcc_case_quality_v2_20260521` 为 smoke seed，做一个小规模扩增。
-2. 扩增时继续执行 reviewer gate：变量解释、规则自足、caption 是否围绕答案、英文/中文 caption 是否一致。
-3. 对扩增样本先做 qcond/no-question 小 smoke，验证 caption model 是否能生成非空、自然、可验证的 evidence caption。
-4. 只有 smoke 通过后，再扩大到每域更多真实 simulator/exporter adapter 样本。
+1. 把 `natural_qcc_seed_smoke_v1_20260521/combined_qcond_sft.jsonl` 和
+   `combined_no_question_sft.jsonl` 放到 3090/A100 路径。
+2. 在真实 Qwen/TS-RLM 环境中先跑 12-24 条 overfit + save/load parity。
+3. 再跑 72 条 qcond/no-question GPU smoke，验证 caption model 是否能生成非空、自然、可验证的 evidence caption。
+4. 只有真实 GPU smoke 通过后，再做小规模扩增；扩增时继续执行 reviewer gate。
 
 当前 reviewer gate 已落地为：
 

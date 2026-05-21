@@ -34,6 +34,10 @@ design review:
 - `natural_qcc_v3_seed_repair_report_20260521/`: illustrated Chinese report
   explaining this repair round, with summary figures and links to case-study
   time-series plots.
+- `natural_qcc_seed_smoke_v1_20260521/`: local proxy smoke over the repaired
+  72-row seed set, including qcond/no-question SFT exports, token preflight,
+  24-row overfit/save-load proxy, caption-quality comparison, and an illustrated
+  Chinese report. This is explicitly not a Qwen/TS-RLM training result.
 
 ## Retained In Git
 
@@ -50,6 +54,8 @@ design review:
   repair, scaling, and training decisions.
 - The v3 seed repair generators/reviewer reports needed to reproduce the
   current small smoke-ready seed set.
+- The local seed-smoke harness and outputs used to validate the data/evaluation
+  path before remote GPU training.
 
 ## Excluded From Git
 
