@@ -120,6 +120,11 @@ def main() -> None:
             errors.append({"id": row["id"], "code": "llm_natural_task_mismatch"})
         if tsllm_row.get("natural_task_en") != row.get("natural_task_en") or tsllm_row.get("natural_task_zh") != row.get("natural_task_zh"):
             errors.append({"id": row["id"], "code": "tsllm_natural_task_mismatch"})
+        zh_prompt = llm_row.get("prompt_zh", "")
+        if "You are answering" in zh_prompt or "Time series values:" in zh_prompt or "Return JSON only" in zh_prompt:
+            errors.append({"id": row["id"], "code": "zh_prompt_has_english_wrapper"})
+        if "你正在回答" not in zh_prompt or "时间序列数值:" not in zh_prompt:
+            errors.append({"id": row["id"], "code": "zh_prompt_missing_chinese_wrapper"})
         prompt_text = "\n".join([llm_row.get("prompt_en", ""), llm_row.get("prompt_zh", ""), tsllm_row.get("text_en", ""), tsllm_row.get("text_zh", "")])
         prompt_hits = [pattern for pattern in FORBIDDEN if re.search(re.escape(pattern), prompt_text, flags=re.I)]
         if prompt_hits:

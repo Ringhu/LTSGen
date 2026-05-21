@@ -194,12 +194,22 @@ def csv_values(columns: list[str], values: list[list[float]]) -> str:
 
 def llm_prompt(record: dict[str, Any], *, lang: str = "en") -> str:
     task = natural_public_text(record, lang=lang)
+    series = csv_values(record["time_series"]["columns"], record["time_series"]["values"])
+    if lang == "zh":
+        return (
+            "你正在回答一道原始时间序列多项选择题。\n"
+            "只能使用下面的自然任务说明、答案选项和完整原始时间序列作答。\n\n"
+            f"{task}\n\n"
+            "时间序列数值:\n"
+            f"{series}\n\n"
+            "只返回 JSON：{\"answer\": \"A|B|C|D\", \"answer_label\": \"选项文本\", \"reason\": \"简要理由\"}"
+        )
     return (
         "You are answering a raw time-series multiple-choice question.\n"
         "Use only the natural task description, answer options, and full raw time series shown below.\n\n"
         f"{task}\n\n"
         "Time series values:\n"
-        f"{csv_values(record['time_series']['columns'], record['time_series']['values'])}\n\n"
+        f"{series}\n\n"
         "Return JSON only: {\"answer\": \"A|B|C|D\", \"answer_label\": \"option text\", \"reason\": \"brief\"}"
     )
 

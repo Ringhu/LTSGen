@@ -1,0 +1,319 @@
+{
+  "predictions_jsonl": ".research/general-qcc-captioner-20260515/public_raw_tsqa_v4_20260521/model_eval_20260521/full_gpt54_public_raw_tsqa_v4_39items_bilingual/predictions.jsonl",
+  "n": 78,
+  "accuracy": 0.7308,
+  "wrong_n": 21,
+  "wrong_by_language": {
+    "en": 11,
+    "zh": 10
+  },
+  "wrong_by_domain": {
+    "building_energy": 6,
+    "traffic": 6,
+    "water_service": 4,
+    "service_telemetry": 1,
+    "market": 4
+  },
+  "wrong_by_task_family": {
+    "raw_building_net_load_reserve": 6,
+    "raw_traffic_recovery_reasoning": 6,
+    "raw_water_service_recovery": 4,
+    "raw_aiops_symptom_triage": 1,
+    "raw_finrl_return_drawdown_regime": 4
+  },
+  "by_language": {
+    "en": {
+      "n": 39,
+      "accuracy": 0.7179
+    },
+    "zh": {
+      "n": 39,
+      "accuracy": 0.7436
+    }
+  },
+  "by_domain": {
+    "building_energy": {
+      "n": 8,
+      "accuracy": 0.25
+    },
+    "market": {
+      "n": 20,
+      "accuracy": 0.8
+    },
+    "power_grid": {
+      "n": 14,
+      "accuracy": 1.0
+    },
+    "service_telemetry": {
+      "n": 18,
+      "accuracy": 0.9444
+    },
+    "traffic": {
+      "n": 8,
+      "accuracy": 0.25
+    },
+    "water_service": {
+      "n": 10,
+      "accuracy": 0.6
+    }
+  },
+  "by_task_family": {
+    "raw_aiops_symptom_triage": {
+      "n": 18,
+      "accuracy": 0.9444
+    },
+    "raw_building_net_load_reserve": {
+      "n": 8,
+      "accuracy": 0.25
+    },
+    "raw_finrl_return_drawdown_regime": {
+      "n": 20,
+      "accuracy": 0.8
+    },
+    "raw_grid_counterfactual_risk": {
+      "n": 14,
+      "accuracy": 1.0
+    },
+    "raw_traffic_recovery_reasoning": {
+      "n": 8,
+      "accuracy": 0.25
+    },
+    "raw_water_service_recovery": {
+      "n": 10,
+      "accuracy": 0.6
+    }
+  },
+  "wrong_examples": [
+    {
+      "id": "public_raw_tsqa_v4_00009",
+      "language": "en",
+      "domain": "building_energy",
+      "task_family": "raw_building_net_load_reserve",
+      "gold_answer": "D",
+      "pred_answer": "A",
+      "gold_answer_label": "Use a balanced reserve strategy.",
+      "pred_answer_label": "Reserve more supply for the early part of the window.",
+      "reason": "Compute net load as demand - 0.15*solar_support, then split the 256 points into early (0-84), middle (85-169), and late (170-255). The average net loads are approximately early 5.59, middle 4.96, and late 5.18. Early is highest, and it exceeds the second-highest (late) by about 0.41, which is at least 0.30."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00010",
+      "language": "en",
+      "domain": "building_energy",
+      "task_family": "raw_building_net_load_reserve",
+      "gold_answer": "D",
+      "pred_answer": "A",
+      "gold_answer_label": "Use a balanced reserve strategy.",
+      "pred_answer_label": "Reserve more supply for the early part of the window.",
+      "reason": "Using net grid load = demand - 0.15×solar_support and splitting the 256-point series into early (0-84), middle (85-170), and late (171-255), the average net loads are approximately early 4.91, middle 4.23, and late 4.93. The late portion is only about 0.02 higher than the early portion, far less than the 0.30 threshold, so no portion clearly dominates. Therefore the appropriate strategy is balanced."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00011",
+      "language": "en",
+      "domain": "building_energy",
+      "task_family": "raw_building_net_load_reserve",
+      "gold_answer": "D",
+      "pred_answer": "B",
+      "gold_answer_label": "Use a balanced reserve strategy.",
+      "pred_answer_label": "Reserve more supply for the middle part of the window.",
+      "reason": "Compute net grid load = demand - 0.15*solar_support, then split the 256-point series into early (0-84), middle (85-170), and late (171-255). The average net loads are approximately early 5.05, middle 4.72, and late 5.10. The late portion is highest, but it exceeds the early portion by only about 0.05, which is less than the 0.30 threshold. Therefore a balanced reserve strategy is most appropriate."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00011",
+      "language": "zh",
+      "domain": "building_energy",
+      "task_family": "raw_building_net_load_reserve",
+      "gold_answer": "D",
+      "pred_answer": "C",
+      "gold_answer_label": "采用均衡供能策略",
+      "pred_answer_label": "优先为晚段预留供能",
+      "reason": "将256个时点按早/中/晚三段近似均分为前85、 中85、后86个时点，计算净电网负荷 demand - 0.15×solar_support 的段均值。早段约为4.83，中段约为4.68，晚段约为5.13。晚段最高，且比第二高的早段高约0.30以上，因此应优先为晚段预留供能。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00012",
+      "language": "en",
+      "domain": "building_energy",
+      "task_family": "raw_building_net_load_reserve",
+      "gold_answer": "D",
+      "pred_answer": "B",
+      "gold_answer_label": "Use a balanced reserve strategy.",
+      "pred_answer_label": "Reserve more supply for the middle part of the window.",
+      "reason": "Compute net grid load as demand - 0.15*solar_support, then compare averages over the full sequence split into early, middle, and late thirds. The middle third has the highest average net load (roughly early ≈ 4.86, middle ≈ 4.95, late ≈ 4.85), but it exceeds the second-highest by only about 0.09, which is less than 0.30. Therefore the correct strategy is balanced."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00012",
+      "language": "zh",
+      "domain": "building_energy",
+      "task_family": "raw_building_net_load_reserve",
+      "gold_answer": "D",
+      "pred_answer": "B",
+      "gold_answer_label": "采用均衡供能策略",
+      "pred_answer_label": "优先为中段预留供能",
+      "reason": "将256个时点按时间顺序近似三等分为早段(0-84)、中段(85-169)、晚段(170-255)，按净电网负荷= demand - 0.15×solar_support 计算。早段平均净负荷约为4.95，中段约为4.63，晚段约为4.87，因此最高为早段，其次为晚段，但两者差约0.08，小于0.30，不满足优先预留条件，应采用均衡策略。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00013",
+      "language": "zh",
+      "domain": "traffic",
+      "task_family": "raw_traffic_recovery_reasoning",
+      "gold_answer": "A",
+      "pred_answer": "D",
+      "gold_answer_label": "没有清晰拥堵冲击",
+      "pred_answer_label": "事件后拥堵持续",
+      "reason": "按常见三段等分理解：事件前约0-84，事件中约85-169，事件后约170-255。拥堵分数=queue_length+8*lane_occupancy-0.05*speed。事件前分数大致在6.2左右，事件中明显升至约7.0以上，较事件前高出超过0.50，存在清晰拥堵冲击。事件后分数虽较事件中略有回落，但整体仍约在6.8左右，未回到事件前水平，因此为事件后拥堵持续。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00014",
+      "language": "en",
+      "domain": "traffic",
+      "task_family": "raw_traffic_recovery_reasoning",
+      "gold_answer": "A",
+      "pred_answer": "D",
+      "gold_answer_label": "No clear congestion shock occurs.",
+      "pred_answer_label": "Congestion persists after the event.",
+      "reason": "Using congestion = queue_length + 8*lane_occupancy - 0.05*speed, the series shows a clear event shock: pre-event levels early in the series are around ~5.3–5.7, while the event portion rises to roughly ~6.6–7.0, well above a 0.50 increase. In the post-event portion, congestion falls somewhat but remains elevated around ~5.7–6.0 rather than returning near the pre-event baseline, so congestion persists rather than fully recovering."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00015",
+      "language": "en",
+      "domain": "traffic",
+      "task_family": "raw_traffic_recovery_reasoning",
+      "gold_answer": "A",
+      "pred_answer": "D",
+      "gold_answer_label": "No clear congestion shock occurs.",
+      "pred_answer_label": "Congestion persists after the event.",
+      "reason": "Using congestion score = queue_length + 8*lane_occupancy - 0.05*speed, the series shows a clear event shock: pre-event scores are around 6–7, while the event portion rises to roughly 8–9+, well over the 0.50 threshold. In the post-event portion, scores decline from the peak but remain elevated versus pre-event rather than returning close to baseline, so congestion persists."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00015",
+      "language": "zh",
+      "domain": "traffic",
+      "task_family": "raw_traffic_recovery_reasoning",
+      "gold_answer": "A",
+      "pred_answer": "D",
+      "gold_answer_label": "没有清晰拥堵冲击",
+      "pred_answer_label": "事件后拥堵持续",
+      "reason": "按常见三段等分该完整窗口：事件前(0-85)、事件中(86-170)、事件后(171-255)。拥堵分数=queue_length+8×lane_occupancy-0.05×speed。事件前均值约为6.22，事件中均值约为7.84，提升约1.62>0.50，说明有清晰拥堵冲击。事件后均值约为7.18，虽较事件中回落约0.66，但仍比事件前高约0.96，未恢复到接近事件前水平，因此事件后拥堵持续。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00016",
+      "language": "en",
+      "domain": "traffic",
+      "task_family": "raw_traffic_recovery_reasoning",
+      "gold_answer": "A",
+      "pred_answer": "C",
+      "gold_answer_label": "No clear congestion shock occurs.",
+      "pred_answer_label": "Congestion partially recovers.",
+      "reason": "Using congestion score = queue_length + 8*lane_occupancy - 0.05*speed, the pre-event portion is clearly lower than the event portion by well over 0.50, so a congestion shock exists. In the post-event portion, the score declines from the elevated event level but remains above the pre-event baseline, indicating improvement without full return to normal."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00016",
+      "language": "zh",
+      "domain": "traffic",
+      "task_family": "raw_traffic_recovery_reasoning",
+      "gold_answer": "A",
+      "pred_answer": "D",
+      "gold_answer_label": "没有清晰拥堵冲击",
+      "pred_answer_label": "事件后拥堵持续",
+      "reason": "按时间顺序将序列分为事件前/中/后三级窗口（前0-85，中86-170，后171-255）计算拥堵分数=queue_length+8×lane_occupancy-0.05×speed。事件前平均分约5.36，事件中约7.13，较事件前上升约1.77，超过0.50，说明有清晰拥堵冲击。事件后平均分约6.78，虽较事件中略降，但仍明显高于事件前（高约1.42），未恢复到接近事件前水平，因此事件后拥堵持续。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00019",
+      "language": "en",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "C",
+      "pred_answer": "D",
+      "gold_answer_label": "Service remains stable.",
+      "pred_answer_label": "Manual review is needed.",
+      "reason": "Pressure does not show a single clear disturbance window with very low pressure plus a clear event-driven flow surge and persistently depressed post-event pressure, nor a clear drop-then-rebound pattern. The series has multiple shifts: pressure starts around 72-73, falls into the mid-60s, later rises into the mid/high-70s, then declines again toward the end while flow varies moderately. Because the event pattern and before/during/after recovery state are ambiguous, manual review is the best fit."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00019",
+      "language": "zh",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "C",
+      "pred_answer": "B",
+      "gold_answer_label": "服务保持稳定",
+      "pred_answer_label": "扰动后水压恢复",
+      "reason": "时序中部可见一次明显扰动：压力由前期约72-77下降到后段低点约66-68，同时流量在事件中升高到约13-14。随后压力又回升到约72-77，接近甚至高于事件前水平，因此更符合扰动后恢复，而非事件后持续低压的漏水风险。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00021",
+      "language": "en",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "A",
+      "pred_answer": "B",
+      "gold_answer_label": "Persistent leak pressure risk.",
+      "pred_answer_label": "Pressure recovers after the disturbance.",
+      "reason": "Pressure is high before the event (~73-76), drops markedly during the event to the low-50s with higher flow (~15-18), then rises back afterward into the upper-60s to ~71, close to pre-event levels. That indicates a disturbance with recovery rather than persistently depressed pressure."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00021",
+      "language": "zh",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "A",
+      "pred_answer": "D",
+      "gold_answer_label": "持续漏水压力风险",
+      "pred_answer_label": "需要人工复核",
+      "reason": "序列前段压力约67-70，事件中后段最低降到约51-56，存在明显压降；同时流量升至约15-18，也有升高。但事件后末段压力又回升到约69-71，接近甚至高于事件前，符合恢复特征；不过中间低压持续时间较长、变化较复杂，难直接判为单纯稳定或持续漏水风险，因此更适合人工复核。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00029",
+      "language": "en",
+      "domain": "service_telemetry",
+      "task_family": "raw_aiops_symptom_triage",
+      "gold_answer": "D",
+      "pred_answer": "B",
+      "gold_answer_label": "No dominant symptom is present.",
+      "pred_answer_label": "Prioritize a network-burst pattern.",
+      "reason": "Memory does not grow by at least 15% from the first half to the second half (second-half average is only modestly higher, well under 15%). Network does qualify: receive peaks at 627.606 with a median around the mid-400s? Actually using the full series, transmit especially has peak 630.614 versus a median around the high-300s/low-400s? The strongest clear trigger is receive near 627.606 relative to early/lower typical values, exceeding the required burst threshold better than memory or CPU. CPU never approaches 0.85 (max about 0.422), so CPU saturation does not apply."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00031",
+      "language": "zh",
+      "domain": "market",
+      "task_family": "raw_finrl_return_drawdown_regime",
+      "gold_answer": "A",
+      "pred_answer": "D",
+      "gold_answer_label": "上行状态",
+      "pred_answer_label": "严重回撤风险",
+      "reason": "首价100，尾价183.709，总收益率约+83.71%。历史峰值出现在t=229为194.069，之后最低到尾部附近t=254为182.917，最大回撤约(194.069-182.917)/194.069≈5.75%，未达到20%。因此不触发严重回撤；按收益率规则，总收益率至少+8%，应判为上行状态。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00036",
+      "language": "zh",
+      "domain": "market",
+      "task_family": "raw_finrl_return_drawdown_regime",
+      "gold_answer": "A",
+      "pred_answer": "B",
+      "gold_answer_label": "上行状态",
+      "pred_answer_label": "下行状态",
+      "reason": "首价100，尾价122.311，总收益率=(122.311-100)/100=+22.31%。历史峰值约为126.087，随后最低到尾值122.311，回撤约(126.087-122.311)/126.087=3.00%，未达到20%的严重回撤阈值。虽无严重回撤，但按规则在未触发回撤风险时，总收益率至少+8%应判为上行；不过若严格看首尾窗口趋势为上涨，应为A。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00037",
+      "language": "en",
+      "domain": "market",
+      "task_family": "raw_finrl_return_drawdown_regime",
+      "gold_answer": "D",
+      "pred_answer": "A",
+      "gold_answer_label": "Severe drawdown risk.",
+      "pred_answer_label": "Bullish regime.",
+      "reason": "First price = 100, last price = 116.953, so total return = 16.953%. Maximum drawdown from the running peak is about 33.8% (from 107.822 down to 71.4072), which exceeds 20%, so severe drawdown has priority. Therefore classification is D."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00040",
+      "language": "zh",
+      "domain": "market",
+      "task_family": "raw_finrl_return_drawdown_regime",
+      "gold_answer": "A",
+      "pred_answer": "B",
+      "gold_answer_label": "上行状态",
+      "pred_answer_label": "下行状态",
+      "reason": "首价100，尾价167.007，总收益率约+67.0%。历史峰值为177.806，之后最低到166.291，最大回撤约(177.806-166.291)/177.806≈6.5%，未达到20%。因此不属于严重回撤风险；且总收益率远高于+8%，应判为上行状态。"
+    }
+  ]
+}

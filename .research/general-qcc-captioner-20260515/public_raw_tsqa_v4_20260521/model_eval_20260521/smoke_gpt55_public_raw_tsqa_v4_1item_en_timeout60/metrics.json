@@ -1,0 +1,74 @@
+{
+  "run": {
+    "dataset": ".research/general-qcc-captioner-20260515/public_raw_tsqa_v4_20260521/llm_text_view.jsonl",
+    "provider": "openai",
+    "model": "gpt-5.5",
+    "n_rows": 1,
+    "n_prompts": 1,
+    "languages": {
+      "en": 1
+    },
+    "prompt_chars": {
+      "min": 8248,
+      "max": 8248,
+      "mean": 8248
+    },
+    "by_domain": {
+      "building_energy": 1
+    },
+    "answer_distribution": {
+      "D": 1
+    },
+    "dry_run": false,
+    "elapsed_sec": 60.81,
+    "error_count": 1
+  },
+  "overall": {
+    "n": 1,
+    "accuracy": 0.0,
+    "empty_answer_rate": 1.0,
+    "mean_latency_sec": 0.0
+  },
+  "by_language": {
+    "en": {
+      "n": 1,
+      "accuracy": 0.0
+    }
+  },
+  "by_domain": {
+    "building_energy": {
+      "n": 1,
+      "accuracy": 0.0
+    }
+  },
+  "by_task_family": {
+    "raw_building_net_load_reserve": {
+      "n": 1,
+      "accuracy": 0.0
+    }
+  },
+  "pred_answer_distribution": {
+    "EMPTY": 1
+  },
+  "errors_preview": [
+    {
+      "id": "public_raw_tsqa_v4_00012",
+      "source_canonical_id": "public_raw_tsqa_v4_00012",
+      "language": "en",
+      "domain": "building_energy",
+      "task_family": "raw_building_net_load_reserve",
+      "model": "gpt-5.5",
+      "provider": "openai",
+      "gold_answer": "D",
+      "gold_answer_label": "Use a balanced reserve strategy.",
+      "pred_answer": "",
+      "pred_answer_label": "",
+      "correct": false,
+      "reason": "",
+      "raw_response": "",
+      "error": "TimeoutError('The read operation timed out')",
+      "prompt_chars": 8248,
+      "latency_sec": 0.0
+    }
+  ]
+}
