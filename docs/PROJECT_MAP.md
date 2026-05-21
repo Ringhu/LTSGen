@@ -1,7 +1,12 @@
 # Project Map
 
-This branch is a shared code base, not an artifact branch. Generated data and
-paper materials are intentionally kept out of `shared-qcc-base`.
+This branch is the EMNLP-facing benchmark/data pipeline branch. It keeps the
+shared code needed to reproduce the benchmark assets, plus small generated data,
+audits, reports, and case studies that define the current submission direction.
+
+Generated benchmark assets live here. Large checkpoints, long GPU output trees,
+and model-training diagnostics belong on `caption-model-longline` or external
+storage, with manifests retained when useful.
 
 ## Directory Roles
 
@@ -16,6 +21,8 @@ paper materials are intentionally kept out of `shared-qcc-base`.
 - `scripts/remote/`: remote run helpers that are not tied to one artifact set.
 - `scripts/utils/`: small operational helpers.
 - `tests/`: lightweight regression tests for shared utilities.
+- `.research/`: benchmark contracts, data assets, audits, reports, and archived
+  legacy experiment artifacts.
 - `docs/research/`: historical engineering notes retained for orientation.
 - `archive/`: legacy code and old scripts retained for reference only.
 
@@ -29,5 +36,8 @@ paper materials are intentionally kept out of `shared-qcc-base`.
 ## Practical Rule
 
 If a file is a reusable implementation dependency for both workstreams, keep it
-here. If it is a generated artifact, paper figure, prediction dump, simulator
-trace, or workstream-specific report, keep it on the owning workstream branch.
+here unless it is already maintained on `shared-qcc-base`. If it is a large model
+checkpoint, long GPU output tree, or caption-model-only diagnostic, keep it on
+`caption-model-longline` or external storage. If it is an old benchmark/data
+artifact that is not part of the current EMNLP route, move it under
+`.research/archive/` rather than deleting it.
