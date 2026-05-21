@@ -63,6 +63,8 @@ Oracle evidence 只用于诊断上界或 caption-interface 对照实验。
   },
   "context_en": "A water-service operator is reviewing pressure and flow readings around a disturbance event.",
   "context_zh": "供水运维人员正在查看一次扰动事件前后水压和流量读数。",
+  "natural_task_en": "A water-service operator is reviewing pressure and flow readings around a disturbance event. The full time series below covers the before-during-after disturbance window and is ordered by time. It contains `pressure` (service pressure), `flow` (pipe flow), and `storage` (storage context signal). If pressure falls very low, flow clearly increases during the event, and pressure remains depressed afterward, classify the window as persistent leak pressure risk. If pressure drops during the event but rebounds close to or above the pre-event level afterward, classify it as recovery after disturbance. If there is no earlier risk pattern and post-event pressure stays close to pre-event pressure, classify service as stable; otherwise request manual review. Which service state best describes this disturbance window?",
+  "natural_task_zh": "供水运维人员正在查看一次扰动事件前后水压和流量读数。下面的完整时序覆盖扰动前-扰动中-扰动后窗口，并按时间顺序排列，包含 `pressure`（服务水压）、`flow`（管道流量）和 `storage`（蓄水背景信号）。若水压降得很低、事件中流量明显升高、且事件后水压仍明显低于事件前，则判为持续漏水压力风险。若事件中水压下降但事件后恢复到接近或高于事件前水平，则判为扰动后恢复。若前面风险模式不满足且事件后水压接近事件前，则判为服务稳定；否则需要人工复核。这段扰动窗口最符合哪种供水服务状态？",
   "question_en": "Which service state best describes this disturbance window?",
   "question_zh": "这段扰动窗口最符合哪种供水服务状态？",
   "options_en": {
@@ -85,8 +87,8 @@ Oracle evidence 只用于诊断上界或 caption-interface 对照实验。
 
 再从 canonical record 导出：
 
-- `llm_text_view.jsonl`：完整原始时序文本化 prompt。
-- `tsllm_array_view.jsonl`：原始时序数组 + 文本问题。
+- `llm_text_view.jsonl`：自然任务说明 + 选项 + 完整原始时序文本化 prompt。
+- `tsllm_array_view.jsonl`：原始时序数组 + 自然任务说明 + 选项。
 - `oracle_evidence.jsonl`：oracle caption / upper-bound 条件。
 - `audit_support.jsonl`：support slots、规则 ID、source row、reviewer gate。
 
@@ -107,6 +109,7 @@ Oracle evidence 只用于诊断上界或 caption-interface 对照实验。
 | `context_en` / `context_zh` | 中英文领域背景 |
 | `decision_rule_en` / `decision_rule_zh` | 中英文判定规则 |
 | `question_en` / `question_zh` | 中英文自然 QA 问题 |
+| `natural_task_en` / `natural_task_zh` | 面向模型和报告展示的中英文自然任务说明，将场景、时间轴、变量、判定规则和问题整合为一段流畅说明 |
 | `options_en` / `options_zh` | 中英文 A-D 四个选项 |
 | `answer` | gold letter |
 | `answer_label` / `answer_label_zh` | 中英文 gold option text |
@@ -144,13 +147,27 @@ Oracle evidence 只用于诊断上界或 caption-interface 对照实验。
 - “无需了解任何特定平台背景”
 - “LLM/TS-LLM 在有限上下文里看见关键结构”
 - simulator 内部 ID，例如 `scenario_first_pilot`, `post257_769`, `window_start`
+- `Context:`, `Variables:`, `Decision guide:`, `Question:` 这类分栏模板作为最终模型题面
 
 可以出现：
 
 - 变量自然名，例如 `pressure`, `flow`, `stress_delta`
 - 业务阶段，例如 `before`, `during`, `after` 或 `early`, `middle`, `late`
-- 简洁阈值规则，例如 “if the top period exceeds the second by at least 0.30”
+- 整合进自然任务说明中的简洁阈值规则，例如 “if the top period exceeds the second by at least 0.30”
 - 完整原始时序文本或数组
+
+## Natural task prompt style
+
+主评测 prompt 和报告 case study 默认使用 `natural_task_en` / `natural_task_zh`，而不是把 `context`、`time_axis`、`variables`、`decision_rule`、`question` 拆成表单。
+
+自然任务说明要求：
+
+1. 用一段连贯文本说明领域角色、完整时序、变量含义、时间顺序、判定口径和最终问题。
+2. 保留变量名，因为 LLM text view 和 TS-LLM array view 都需要把自然语言与数组列对齐。
+3. 判定规则可以出现，但必须写成自然任务说明的一部分，不使用分栏式模板。
+4. 每条样本仍保留结构化字段，供审计、转换、prompt 生成和 reviewer 使用。
+5. `llm_text_view` 使用 `natural_task_* + options_* + raw series CSV`。
+6. `tsllm_array_view` 使用同一 `natural_task_* + options_*` 和同一 raw numeric array。
 
 ## 规则表达标准
 
@@ -171,27 +188,19 @@ Oracle evidence 只用于诊断上界或 caption-interface 对照实验。
 ### LLM text-only view
 
 ```text
-Context:
-A water-service operator is reviewing pressure and flow readings around a disturbance event.
-
-Variables:
-- pressure: service pressure.
-- flow: pipe flow.
-
-Time series:
-time,pressure,flow
-0,68.17,12.10
-1,70.18,12.04
-...
-
-Question:
-Which service state best describes the event window?
+A water-service operator is reviewing pressure and flow readings around a disturbance event. The full time series below contains `pressure` (service pressure) and `flow` (pipe flow), ordered around the disturbance. If pressure drops during the event but rebounds close to or above the pre-event level afterward, classify it as recovery after disturbance. Which service state best describes this disturbance window?
 
 Options:
 A. persistent leak pressure risk
 B. pressure recovers after disturbance
 C. stable service
 D. manual review needed
+
+Time series:
+time,pressure,flow
+0,68.17,12.10
+1,70.18,12.04
+...
 
 Return only the option letter and label.
 ```
@@ -202,7 +211,8 @@ Return only the option letter and label.
 {
   "timeseries": [[68.17, 12.10], [70.18, 12.04]],
   "columns": ["pressure", "flow"],
-  "text": "Which service state best describes the event window? Options: A..."
+  "natural_task_en": "A water-service operator is reviewing pressure and flow readings around a disturbance event...",
+  "options_en": {"A": "persistent leak pressure risk", "B": "pressure recovers after disturbance"}
 }
 ```
 
