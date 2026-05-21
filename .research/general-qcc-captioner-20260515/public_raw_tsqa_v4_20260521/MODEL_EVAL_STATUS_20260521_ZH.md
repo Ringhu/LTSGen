@@ -97,6 +97,7 @@ python3 scripts/eval/evaluate_public_raw_tsqa_llm.py \
 |---|---:|---|---:|---:|
 | `pilot_gpt55_public_raw_tsqa_v4_2items_en_nojson` | 2 | EN | 1.0000 | 45.575s |
 | `pilot_gpt55_public_raw_tsqa_v4_2items_zh_nojson` | 2 | ZH | 1.0000 | 29.859s |
+| `pilot_gpt55_public_raw_tsqa_v4_6items_bilingual_nojson` | 12 | EN+ZH | 1.0000 | 22.782s |
 
 结论：脚本已支持 `gpt-5.5`，当前代理路径可连通，但正式跑应使用低并发、长 timeout、`--resume`，并暂时关闭 JSON response_format。
 
@@ -132,6 +133,10 @@ A100 评测脚本已经补齐并通过 `bash -n`：
 
 `scripts/remote/run_public_raw_tsqa_qwen_eval_a100.sh`
 
+结果打包脚本：
+
+`scripts/remote/package_public_raw_tsqa_qwen_eval_a100.sh`
+
 默认行为：
 
 - 在 A100 上启动 vLLM OpenAI-compatible server。
@@ -154,6 +159,18 @@ MAX_ITEMS=0 \
 CONCURRENCY=2 \
 scripts/remote/run_public_raw_tsqa_qwen_eval_a100.sh
 ```
+
+评测完成后，在 A100 上打包结果：
+
+```bash
+ROOT=/cluster/home/user1/hulining/LTSGEN \
+RUN_NAME=full_qwen3_4b_public_raw_tsqa_v4_39items_bilingual \
+scripts/remote/package_public_raw_tsqa_qwen_eval_a100.sh
+```
+
+打包脚本会检查 `prompt_report.json`、`prompt_preview.jsonl`、`predictions.jsonl`、`metrics.json`，打印模型、样本数、accuracy 和 error count，再生成：
+
+`$RUN_DIR.tar.gz`
 
 如果 A100 上已有 vLLM 服务：
 

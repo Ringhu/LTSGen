@@ -1,0 +1,83 @@
+{
+  "run": {
+    "dataset": ".research/general-qcc-captioner-20260515/public_raw_tsqa_v4_20260521/llm_text_view.jsonl",
+    "provider": "openai",
+    "model": "gpt-5.5",
+    "n_rows": 6,
+    "n_prompts": 12,
+    "languages": {
+      "en": 6,
+      "zh": 6
+    },
+    "prompt_chars": {
+      "min": 7439,
+      "max": 9873,
+      "mean": 8772.8
+    },
+    "by_domain": {
+      "power_grid": 3,
+      "building_energy": 1,
+      "market": 2
+    },
+    "answer_distribution": {
+      "C": 1,
+      "B": 1,
+      "A": 2,
+      "D": 2
+    },
+    "dry_run": false,
+    "elapsed_sec": 273.39,
+    "error_count": 0
+  },
+  "overall": {
+    "n": 12,
+    "accuracy": 1.0,
+    "empty_answer_rate": 0.0,
+    "mean_latency_sec": 22.782
+  },
+  "by_language": {
+    "en": {
+      "n": 6,
+      "accuracy": 1.0
+    },
+    "zh": {
+      "n": 6,
+      "accuracy": 1.0
+    }
+  },
+  "by_domain": {
+    "building_energy": {
+      "n": 2,
+      "accuracy": 1.0
+    },
+    "market": {
+      "n": 4,
+      "accuracy": 1.0
+    },
+    "power_grid": {
+      "n": 6,
+      "accuracy": 1.0
+    }
+  },
+  "by_task_family": {
+    "raw_building_net_load_reserve": {
+      "n": 2,
+      "accuracy": 1.0
+    },
+    "raw_finrl_return_drawdown_regime": {
+      "n": 4,
+      "accuracy": 1.0
+    },
+    "raw_grid_counterfactual_risk": {
+      "n": 6,
+      "accuracy": 1.0
+    }
+  },
+  "pred_answer_distribution": {
+    "C": 2,
+    "B": 2,
+    "A": 4,
+    "D": 4
+  },
+  "errors_preview": []
+}
