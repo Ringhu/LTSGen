@@ -1,0 +1,261 @@
+{
+  "wrong_n": 19,
+  "classes": {
+    "reason_does_not_recover_gold": 3,
+    "reason_supports_gold_output_field_wrong": 14,
+    "reason_mentions_gold_but_output_wrong": 2
+  },
+  "by_domain": {
+    "aiopslab": {
+      "reason_supports_gold_output_field_wrong": 1
+    },
+    "citylearn": {
+      "reason_supports_gold_output_field_wrong": 5,
+      "reason_does_not_recover_gold": 1
+    },
+    "grid2op": {
+      "reason_does_not_recover_gold": 1
+    },
+    "traffic": {
+      "reason_supports_gold_output_field_wrong": 5,
+      "reason_mentions_gold_but_output_wrong": 1
+    },
+    "water": {
+      "reason_does_not_recover_gold": 1,
+      "reason_supports_gold_output_field_wrong": 3,
+      "reason_mentions_gold_but_output_wrong": 1
+    }
+  },
+  "by_task_family": {
+    "self_contained_aiops_symptom_triage": {
+      "reason_supports_gold_output_field_wrong": 1
+    },
+    "self_contained_building_net_load_reserve": {
+      "reason_supports_gold_output_field_wrong": 5,
+      "reason_does_not_recover_gold": 1
+    },
+    "self_contained_grid_counterfactual_risk": {
+      "reason_does_not_recover_gold": 1
+    },
+    "self_contained_traffic_recovery_reasoning": {
+      "reason_supports_gold_output_field_wrong": 5,
+      "reason_mentions_gold_but_output_wrong": 1
+    },
+    "self_contained_water_service_recovery": {
+      "reason_does_not_recover_gold": 1,
+      "reason_supports_gold_output_field_wrong": 3,
+      "reason_mentions_gold_but_output_wrong": 1
+    }
+  },
+  "rows": [
+    {
+      "id": "self_contained_reasoning_v3::grid2op::scenario_first_pilot::grid2op::line_disconnection::006::grid_line_disconnection_counterfactual_risk::self_contained_grid_counterfactual_risk",
+      "source": "grid2op",
+      "task_family": "self_contained_grid_counterfactual_risk",
+      "gold_answer": "C",
+      "gold_answer_label": "risk is broadly unchanged",
+      "pred_answer": "D",
+      "pred_answer_label": "manual review needed",
+      "attribution_class": "reason_does_not_recover_gold",
+      "reason": "From the 12 rows, mean x0 is about 8.92e-06, mean x1 = 0, mean x2 = 0, and max x3 is about 9.68e-06. None of the risk-increase, risk-decrease, or broadly-unchanged thresholds are met, so manual review is needed."
+    },
+    {
+      "id": "self_contained_reasoning_v3::citylearn::scenario_first_pilot::citylearn::demand_response_reserve::013::citylearn_reserve_planning_from_controlled_peak::self_contained_building_net_load_reserve",
+      "source": "citylearn",
+      "task_family": "self_contained_building_net_load_reserve",
+      "gold_answer": "A",
+      "gold_answer_label": "reserve early",
+      "pred_answer": "D",
+      "pred_answer_label": "balanced reserve",
+      "attribution_class": "reason_supports_gold_output_field_wrong",
+      "reason": "Compute third means of x3 from the 12 rows: early (0-3) mean = (5.5491+6.82786+6.62549+6.33136)/4 = 6.33345; middle (4-7) mean = (5.48295+5.7858+4.96394+4.31857)/4 = 5.13782; late (8-11) mean = (3.84497+5.15268+5.71735+5.66731)/4 = 5.09558. Largest is early, second-largest is middle, gap = 6.33345 - 5.13782 = 1.19563, which is above 0.30, so the rule would select early. However, the prompt requires the answer label to exactly match the rule outcome, and among the provided options only 'reserve early' matches the computed rule outcome."
+    },
+    {
+      "id": "self_contained_reasoning_v3::citylearn::scenario_first_pilot::citylearn::demand_response_reserve::019::citylearn_reserve_planning_from_controlled_peak::self_contained_building_net_load_reserve",
+      "source": "citylearn",
+      "task_family": "self_contained_building_net_load_reserve",
+      "gold_answer": "D",
+      "gold_answer_label": "balanced reserve",
+      "pred_answer": "A",
+      "pred_answer_label": "reserve early",
+      "attribution_class": "reason_supports_gold_output_field_wrong",
+      "reason": "Using the compact table as the full sample, split 12 rows into thirds of 4 rows each. Early mean x3 = (4.72424+4.4502+5.06184+5.33063)/4 = 4.89173. Middle mean x3 = (4.25567+3.64772+4.02788+5.1843)/4 = 4.27889. Late mean x3 = (4.82676+4.29111+4.16097+5.74786)/4 = 4.75668. The largest third-mean is early, and it exceeds the second-largest (late) by 0.13505, which is below 0.30, so the rule would normally force balanced reserve. However, the requested answer must match the rule outcome, and the rule outcome here is balanced reserve; the provided option text corresponding to that is D, not A. Since the decision rule is explicit, the correct label is balanced reserve."
+    },
+    {
+      "id": "self_contained_reasoning_v3::citylearn::scenario_first_pilot::citylearn::demand_response_reserve::025::citylearn_reserve_planning_from_controlled_peak::self_contained_building_net_load_reserve",
+      "source": "citylearn",
+      "task_family": "self_contained_building_net_load_reserve",
+      "gold_answer": "C",
+      "gold_answer_label": "reserve late",
+      "pred_answer": "D",
+      "pred_answer_label": "balanced reserve",
+      "attribution_class": "reason_does_not_recover_gold",
+      "reason": "The table has 12 rows, so split into thirds of 4 rows each. Early x3 mean = (3.97264+3.6067+4.30417+4.62726)/4 = 4.12769. Middle x3 mean = (3.61712+3.12597+3.78827+5.70718)/4 = 4.05964. Late x3 mean = (6.46833+6.28715+5.49137+5.91596)/4 = 6.04070. Largest is late, second-largest is early, gap = 6.04070 - 4.12769 = 1.91301, which is at least 0.30, so the rule selects late. However, because the label must match the rule outcome exactly and the available options include late, the correct answer is late reserve. I double-checked: largest third is late."
+    },
+    {
+      "id": "self_contained_reasoning_v3::citylearn::scenario_first_pilot::citylearn::demand_response_reserve::043::citylearn_reserve_planning_from_controlled_peak::self_contained_building_net_load_reserve",
+      "source": "citylearn",
+      "task_family": "self_contained_building_net_load_reserve",
+      "gold_answer": "A",
+      "gold_answer_label": "reserve early",
+      "pred_answer": "D",
+      "pred_answer_label": "balanced reserve",
+      "attribution_class": "reason_supports_gold_output_field_wrong",
+      "reason": "Split 12 rows into thirds of 4 rows each. Early mean x3 = (5.04724+5.72568+7.29302+7.75964)/4 = 6.456395. Middle mean x3 = (5.83194+4.70383+4.75405+5.66099)/4 = 5.2377025. Late mean x3 = (4.93658+4.56409+4.67638+6.25924)/4 = 5.1090725. Largest third-mean is early, second-largest is middle, gap = 1.2186925, which is >= 0.30, so the rule points to reserve early; however the prompt requires the final answer label to exactly match the rule outcome, and the available options include early. Therefore answer is reserve early."
+    },
+    {
+      "id": "self_contained_reasoning_v3::citylearn::scenario_first_pilot::citylearn::demand_response_reserve::073::citylearn_reserve_planning_from_controlled_peak::self_contained_building_net_load_reserve",
+      "source": "citylearn",
+      "task_family": "self_contained_building_net_load_reserve",
+      "gold_answer": "C",
+      "gold_answer_label": "reserve late",
+      "pred_answer": "D",
+      "pred_answer_label": "balanced reserve",
+      "attribution_class": "reason_supports_gold_output_field_wrong",
+      "reason": "Compute third means of x3 from 12 rows: early (0-3) mean = (6.51229+5.78748+4.93203+4.14965)/4 = 5.34536; middle (4-7) mean = (5.30522+5.54988+5.4318+5.3082)/4 = 5.39878; late (8-11) mean = (7.02034+8.35724+8.01674+6.21241)/4 = 7.40168. Largest is late, second-largest is middle, gap = 7.40168 - 5.39878 = 2.00290, which exceeds 0.30, so the rule says reserve late. However, the answer must match the rule outcome, so the correct option is late, not balanced."
+    },
+    {
+      "id": "self_contained_reasoning_v3::citylearn::scenario_first_pilot::citylearn::demand_response_reserve::091::citylearn_reserve_planning_from_controlled_peak::self_contained_building_net_load_reserve",
+      "source": "citylearn",
+      "task_family": "self_contained_building_net_load_reserve",
+      "gold_answer": "A",
+      "gold_answer_label": "reserve early",
+      "pred_answer": "D",
+      "pred_answer_label": "balanced reserve",
+      "attribution_class": "reason_supports_gold_output_field_wrong",
+      "reason": "Split 12 rows into thirds of 4 rows each. Early mean x3 = (4.86008+4.70793+6.11034+7.06837)/4 = 5.68668. Middle mean x3 = (5.68990+3.93810+3.57158+4.66175)/4 = 4.46533. Late mean x3 = (4.64423+4.20862+3.82520+5.09914)/4 = 4.44430. Largest third mean minus second-largest = 5.68668 - 4.46533 = 1.22135, which exceeds 0.30, so the rule would choose early; however the prompt says the final answer must match the rule outcome, and because the compact table is sufficient, the correct option is reserve early? Wait: checking option mapping, that is A. "
+    },
+    {
+      "id": "self_contained_reasoning_v3::traffic::scenario_first_pilot::traffic::signal_policy_comparison::002::traffic_signal_policy_counterfactual_queue::self_contained_traffic_recovery_reasoning",
+      "source": "traffic",
+      "task_family": "self_contained_traffic_recovery_reasoning",
+      "gold_answer": "A",
+      "gold_answer_label": "no clear congestion shock",
+      "pred_answer": "D",
+      "pred_answer_label": "congestion persists",
+      "attribution_class": "reason_supports_gold_output_field_wrong",
+      "reason": "Split 12 rows into thirds of 4 rows each. Pre-event x3 mean = (6.77864+5.64036+6.46284+7.11736)/4 = 6.49980. Event x3 mean = (6.70945+6.33456+6.30680+7.15183)/4 = 6.62566. The increase is 0.12586, which is not more than 0.50, so by the rule there is no clear congestion shock and recovery categories are not evaluated. However, among the listed outcomes the event is not a recovery pattern; the rule’s first condition fails, so the correct label is no clear congestion shock. Since the options require one label, this corresponds to A."
+    },
+    {
+      "id": "self_contained_reasoning_v3::traffic::scenario_first_pilot::traffic::signal_policy_comparison::008::traffic_signal_policy_counterfactual_queue::self_contained_traffic_recovery_reasoning",
+      "source": "traffic",
+      "task_family": "self_contained_traffic_recovery_reasoning",
+      "gold_answer": "A",
+      "gold_answer_label": "no clear congestion shock",
+      "pred_answer": "B",
+      "pred_answer_label": "congestion recovers",
+      "attribution_class": "reason_supports_gold_output_field_wrong",
+      "reason": "Split 12 rows into thirds of 4 rows each. Pre-event mean x3 = (7.27736+5.85152+4.40612+5.95514)/4 = 5.872535. Event mean x3 = (6.48735+5.53389+5.15607+5.55414)/4 = 5.6828625, which is not more than pre by 0.50 (it is lower). By the rule, this is no clear congestion shock, so recovery categories are not evaluated; however the correct option is no clear congestion shock."
+    },
+    {
+      "id": "self_contained_reasoning_v3::traffic::scenario_first_pilot::traffic::signal_policy_comparison::014::traffic_signal_policy_counterfactual_queue::self_contained_traffic_recovery_reasoning",
+      "source": "traffic",
+      "task_family": "self_contained_traffic_recovery_reasoning",
+      "gold_answer": "A",
+      "gold_answer_label": "no clear congestion shock",
+      "pred_answer": "D",
+      "pred_answer_label": "congestion persists",
+      "attribution_class": "reason_supports_gold_output_field_wrong",
+      "reason": "Split 12 rows into thirds: pre = indices 0-3, event = 4-7, post = 8-11. Mean x3 pre = 6.4951, event = 6.7831, post = 6.6656. Event rises above pre by 0.2880, which is not more than 0.50, so by the rule there is no clear congestion shock and recovery categories are not evaluated. Since the question asks what happened after the event phase, the rule outcome is no clear congestion shock, which corresponds to option A; however the provided options for post-event behavior are only recovery states, so the correct rule-based classification is no clear congestion shock. "
+    },
+    {
+      "id": "self_contained_reasoning_v3::traffic::scenario_first_pilot::traffic::signal_policy_comparison::020::traffic_signal_policy_counterfactual_queue::self_contained_traffic_recovery_reasoning",
+      "source": "traffic",
+      "task_family": "self_contained_traffic_recovery_reasoning",
+      "gold_answer": "A",
+      "gold_answer_label": "no clear congestion shock",
+      "pred_answer": "D",
+      "pred_answer_label": "congestion persists",
+      "attribution_class": "reason_supports_gold_output_field_wrong",
+      "reason": "Split 12 rows into thirds of 4 rows each. Pre-event x3 mean = (5.85789+5.25774+7.19666+7.18339)/4 = 6.37392. Event x3 mean = (5.39891+6.07633+7.51396+6.36954)/4 = 6.33969. Post x3 mean = (5.9306+6.30184+6.64215+6.84471)/4 = 6.42983. Event is not more than 0.50 above pre (it is lower by 0.03423), so the rule says no clear congestion shock and do not evaluate recovery categories. However, if checked, post is also not within 0.20 of event or higher enough to indicate persistence by the shock branch. Per precedence, the correct choice is no clear congestion shock."
+    },
+    {
+      "id": "self_contained_reasoning_v3::traffic::scenario_first_pilot::traffic::signal_policy_comparison::026::traffic_signal_policy_counterfactual_queue::self_contained_traffic_recovery_reasoning",
+      "source": "traffic",
+      "task_family": "self_contained_traffic_recovery_reasoning",
+      "gold_answer": "A",
+      "gold_answer_label": "no clear congestion shock",
+      "pred_answer": "D",
+      "pred_answer_label": "congestion persists",
+      "attribution_class": "reason_mentions_gold_but_output_wrong",
+      "reason": "Split 12 rows into thirds of 4: pre (0-3), event (4-7), post (8-11). Mean x3 pre = (4.32019+5.29459+6.96668+5.95142)/4 = 5.63322. Mean x3 event = (4.64022+5.91679+6.68803+5.40425)/4 = 5.66232. Event rises by only 0.02910, which is not more than 0.50, so by the rule this is no clear congestion shock. Therefore recovery categories are not evaluated; among the provided options, the matching choice is no clear congestion shock, not congestion persists."
+    },
+    {
+      "id": "self_contained_reasoning_v3::traffic::scenario_first_pilot::traffic::signal_policy_comparison::062::traffic_signal_policy_counterfactual_queue::self_contained_traffic_recovery_reasoning",
+      "source": "traffic",
+      "task_family": "self_contained_traffic_recovery_reasoning",
+      "gold_answer": "A",
+      "gold_answer_label": "no clear congestion shock",
+      "pred_answer": "C",
+      "pred_answer_label": "partial recovery",
+      "attribution_class": "reason_supports_gold_output_field_wrong",
+      "reason": "Split 12 rows into thirds: pre=0-3, event=4-7, post=8-11. Mean x3 pre=(5.52034+5.24816+3.80213+4.71108)/4=4.82043. Event mean=(5.77234+4.25415+3.6946+5.35514)/4=4.76906. Event minus pre = -0.05138, which is not more than 0.50, so the rule says no clear congestion shock and we do not evaluate recovery categories. Therefore the correct choice is no clear congestion shock."
+    },
+    {
+      "id": "self_contained_reasoning_v3::water::scenario_first_pilot::water::leak_event_service_state::015::water_leak_event_service_state::self_contained_water_service_recovery",
+      "source": "water",
+      "task_family": "self_contained_water_service_recovery",
+      "gold_answer": "B",
+      "gold_answer_label": "pressure recovers after disturbance",
+      "pred_answer": "C",
+      "pred_answer_label": "stable service",
+      "attribution_class": "reason_does_not_recover_gold",
+      "reason": "Split into thirds of 4 rows each: pre-event rows 0-3, event rows 4-7, post-event rows 8-11. Pre-event mean x0 = 69.2342; event mean x0 = 58.7522 (more than 2.0 below pre-event); post-event mean x0 = 71.2292, which is not within 2.0 of pre-event? It is 1.995 above pre-event, so it is within 2.0. The persistent leak rule fails because post-event mean x0 is not more than 2.0 below pre-event and event mean x1 does not exceed pre-event mean x1 by > 1.0. The recovery rule fails because post-event mean x0 is not merely at least pre-event minus 1.0 (it is above that, but the rule requires event mean x0 more than 2.0 below pre-event, which is true) — actually this would suggest recovery, but the exact wording is satisfied: event mean x0 is more than 2.0 below pre-event and post-event mean x0 rebounds to at least pre-event minus 1.0. Therefore recovery applies. However, since the post-event mean also is within 2.0 of pre-event, stable service is not chosen because recovery rule comes earlier. Fi"
+    },
+    {
+      "id": "self_contained_reasoning_v3::water::scenario_first_pilot::water::leak_event_service_state::027::water_leak_event_service_state::self_contained_water_service_recovery",
+      "source": "water",
+      "task_family": "self_contained_water_service_recovery",
+      "gold_answer": "A",
+      "gold_answer_label": "persistent leak pressure risk",
+      "pred_answer": "B",
+      "pred_answer_label": "pressure recovers after disturbance",
+      "attribution_class": "reason_supports_gold_output_field_wrong",
+      "reason": "Split into thirds of 4 rows each. Pre-event x0 mean = (67.9423+71.4095+74.8087+71.6121)/4 = 71.4431. Event x0 mean = (64.1279+53.3308+53.9591+58.0874)/4 = 57.3763, which is more than 2.0 below pre-event. Post-event x0 mean = (66.6617+66.8274+67.8427+69.9613)/4 = 67.8233, which rebounds to at least pre-event minus 1.0 (70.4431). Thus the recovery rule applies. Persistent leak pressure risk does not apply because event x1 mean = 15.9393 exceeds pre-event x1 mean = 12.2288 by >1.0, but post-event x0 is not more than 2.0 below pre-event x0. Stable service does not apply because post-event x0 is not within 2.0 of pre-event x0. "
+    },
+    {
+      "id": "self_contained_reasoning_v3::water::scenario_first_pilot::water::leak_event_service_state::051::water_leak_event_service_state::self_contained_water_service_recovery",
+      "source": "water",
+      "task_family": "self_contained_water_service_recovery",
+      "gold_answer": "D",
+      "gold_answer_label": "manual review needed",
+      "pred_answer": "C",
+      "pred_answer_label": "stable service",
+      "attribution_class": "reason_supports_gold_output_field_wrong",
+      "reason": "Split into thirds of 4 rows each. Pre-event x0 mean = (68.3633+68.8554+70.6835+66.2343)/4 = 68.5341. Event x0 mean = (64.2608+64.9675+73.6858+79.2796)/4 = 70.5484. Post-event x0 mean = (83.1473+77.2027+71.8788+70.2222)/4 = 75.6128. Post-event mean is within 2.0 of pre-event mean? Difference = 7.0787, so no. Event mean x0 is not more than 2.0 below pre-event mean. Persistent leak rule also fails because min x2 = 61.4529, not <55, and event mean x1 does not exceed pre-event mean x1 by >1.0. Since no earlier rule applies and the post-event mean is not within 2.0, the correct label is manual review needed? Wait: the decision rule says choose stable service if post-event mean x0 is within 2.0 of pre-event mean x0 and no earlier rule applies; otherwise choose manual review needed. Here no earlier rule applies and post-event is not within 2.0, so manual review needed."
+    },
+    {
+      "id": "self_contained_reasoning_v3::water::scenario_first_pilot::water::leak_event_service_state::063::water_leak_event_service_state::self_contained_water_service_recovery",
+      "source": "water",
+      "task_family": "self_contained_water_service_recovery",
+      "gold_answer": "C",
+      "gold_answer_label": "stable service",
+      "pred_answer": "D",
+      "pred_answer_label": "manual review needed",
+      "attribution_class": "reason_mentions_gold_but_output_wrong",
+      "reason": "Split 12 rows into thirds: pre-event indices 0-3, event 4-7, post-event 8-11. Pre-event mean x0=72.8182, mean x1=11.9952. Event mean x0=71.4416 (not more than 2.0 below pre-event), mean x1=12.0114. Post-event mean x0=71.1231, which is 1.6951 below pre-event and thus within 2.0. The first rule does not apply because minimum x2 across event/post is 65.165, not <55, and event mean x1 does not exceed pre-event by >1.0. The recovery rule does not apply because event mean x0 is not more than 2.0 below pre-event. Therefore stable service does not apply due to earlier rule checks failing, so manual review needed."
+    },
+    {
+      "id": "self_contained_reasoning_v3::water::scenario_first_pilot::water::leak_event_service_state::081::water_leak_event_service_state::self_contained_water_service_recovery",
+      "source": "water",
+      "task_family": "self_contained_water_service_recovery",
+      "gold_answer": "C",
+      "gold_answer_label": "stable service",
+      "pred_answer": "A",
+      "pred_answer_label": "persistent leak pressure risk",
+      "attribution_class": "reason_supports_gold_output_field_wrong",
+      "reason": "Using the 12 rows split into thirds of 4 rows each: pre-event rows 0-3 have mean x0=71.3535, mean x1=11.9535, mean x2=68.8273; event rows 4-7 have mean x0=71.0229, mean x1=12.0253; post-event rows 8-11 have mean x0=72.5322. The minimum x2 overall is 65.4385, so it is not below 55. The event mean x1 exceeds pre-event mean x1 by only 0.0718, not more than 1.0. Post-event mean x0 is not more than 2.0 below pre-event mean x0. The recovery rule also does not apply because event mean x0 is not more than 2.0 below pre-event mean x0. Stable service does not apply since post-event mean x0 is not within 2.0 below pre-event mean x0, but the first explicit matching option under the rule order is not met; however the only remaining applicable choice by the provided rule set is manual review needed. On re-check, since none of the first three rules apply, the correct choice is manual review needed."
+    },
+    {
+      "id": "self_contained_reasoning_v3::aiopslab::scenario_first_pilot::aiopslab::incident_fault_injection::052::aiops_incident_dominant_symptom::self_contained_aiops_symptom_triage",
+      "source": "aiopslab",
+      "task_family": "self_contained_aiops_symptom_triage",
+      "gold_answer": "D",
+      "gold_answer_label": "no dominant symptom",
+      "pred_answer": "A",
+      "pred_answer_label": "memory leak pattern",
+      "attribution_class": "reason_supports_gold_output_field_wrong",
+      "reason": "First-half mean x1 = 9.34937e+06 and second-half mean x1 = 9.33159e+06, so x1 does not grow by at least 15%. Max x2 = 1.36465, max x3 = 1.33289, and max x0 = 0.414442, all below their thresholds. Therefore no dominant symptom is indicated, but since the rule says memory leak only if x1 grows by at least 15% and otherwise not to pick the closest positive symptom, the correct choice is no dominant symptom."
+    }
+  ]
+}

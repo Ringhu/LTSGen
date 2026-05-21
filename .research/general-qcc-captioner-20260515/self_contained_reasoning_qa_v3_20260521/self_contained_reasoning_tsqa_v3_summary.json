@@ -1,0 +1,68 @@
+{
+  "n_all": 60,
+  "n_positive_seed_ready": 41,
+  "n_needs_error_attribution": 19,
+  "n_balanced_positive_eval": 12,
+  "by_domain_all": {
+    "grid2op": 10,
+    "citylearn": 10,
+    "traffic": 10,
+    "water": 10,
+    "aiopslab": 10,
+    "finrl": 10
+  },
+  "by_domain_positive_ready": {
+    "grid2op": 9,
+    "citylearn": 4,
+    "traffic": 4,
+    "water": 5,
+    "aiopslab": 9,
+    "finrl": 10
+  },
+  "by_domain_needs_error_attribution": {
+    "grid2op": 1,
+    "citylearn": 6,
+    "traffic": 6,
+    "water": 5,
+    "aiopslab": 1
+  },
+  "answer_distribution_all": {
+    "C": 8,
+    "B": 5,
+    "A": 31,
+    "D": 16
+  },
+  "answer_distribution_positive_ready": {
+    "C": 3,
+    "B": 4,
+    "A": 21,
+    "D": 13
+  },
+  "answer_distribution_balanced_positive_eval": {
+    "D": 3,
+    "A": 3,
+    "C": 3,
+    "B": 3
+  },
+  "leakage_audit_all": {
+    "target_answer_label_phrase_hits": 0,
+    "rule_maps_template_hits": 0,
+    "target_exact_answer_label_hits": 0
+  },
+  "leakage_audit_positive_ready": {
+    "target_answer_label_phrase_hits": 0,
+    "rule_maps_template_hits": 0,
+    "target_exact_answer_label_hits": 0
+  },
+  "inputs": {
+    "v2_rows": ".research/general-qcc-captioner-20260515/self_contained_reasoning_qa_v2_20260521/self_contained_reasoning_tsqa.jsonl",
+    "data_only_probe": ".research/general-qcc-captioner-20260515/self_contained_reasoning_qa_v3_20260521/data_only_probe_full60/self_contained_reasoning_tsqa_gpt_data_only_probe.json"
+  },
+  "outputs": {
+    "all": ".research/general-qcc-captioner-20260515/self_contained_reasoning_qa_v3_20260521/self_contained_reasoning_tsqa.jsonl",
+    "ready": ".research/general-qcc-captioner-20260515/self_contained_reasoning_qa_v3_20260521/self_contained_reasoning_tsqa_v3_ready.jsonl",
+    "needs_error_attribution": ".research/general-qcc-captioner-20260515/self_contained_reasoning_qa_v3_20260521/self_contained_reasoning_tsqa_v3_needs_error_attribution.jsonl",
+    "balanced_positive_eval": ".research/general-qcc-captioner-20260515/self_contained_reasoning_qa_v3_20260521/self_contained_reasoning_tsqa_v3_balanced_positive_eval.jsonl",
+    "sft": ".research/general-qcc-captioner-20260515/self_contained_reasoning_qa_v3_20260521/self_contained_reasoning_tsqa_sft.jsonl"
+  }
+}
