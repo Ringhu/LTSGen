@@ -1,0 +1,418 @@
+{
+  "predictions_jsonl": ".research/general-qcc-captioner-20260515/public_raw_tsqa_v4_20260521/model_eval_20260521/full_hf_qwen25_3b_public_raw_tsqa_v4_39items_bilingual/predictions.jsonl",
+  "n": 78,
+  "accuracy": 0.4359,
+  "wrong_n": 44,
+  "wrong_by_language": {
+    "en": 24,
+    "zh": 20
+  },
+  "wrong_by_domain": {
+    "power_grid": 6,
+    "building_energy": 8,
+    "water_service": 8,
+    "service_telemetry": 12,
+    "market": 10
+  },
+  "wrong_by_task_family": {
+    "raw_grid_counterfactual_risk": 6,
+    "raw_building_net_load_reserve": 8,
+    "raw_water_service_recovery": 8,
+    "raw_aiops_symptom_triage": 12,
+    "raw_finrl_return_drawdown_regime": 10
+  },
+  "by_language": {
+    "en": {
+      "n": 39,
+      "accuracy": 0.3846
+    },
+    "zh": {
+      "n": 39,
+      "accuracy": 0.4872
+    }
+  },
+  "by_domain": {
+    "building_energy": {
+      "n": 8,
+      "accuracy": 0.0
+    },
+    "market": {
+      "n": 20,
+      "accuracy": 0.5
+    },
+    "power_grid": {
+      "n": 14,
+      "accuracy": 0.5714
+    },
+    "service_telemetry": {
+      "n": 18,
+      "accuracy": 0.3333
+    },
+    "traffic": {
+      "n": 8,
+      "accuracy": 1.0
+    },
+    "water_service": {
+      "n": 10,
+      "accuracy": 0.2
+    }
+  },
+  "by_task_family": {
+    "raw_aiops_symptom_triage": {
+      "n": 18,
+      "accuracy": 0.3333
+    },
+    "raw_building_net_load_reserve": {
+      "n": 8,
+      "accuracy": 0.0
+    },
+    "raw_finrl_return_drawdown_regime": {
+      "n": 20,
+      "accuracy": 0.5
+    },
+    "raw_grid_counterfactual_risk": {
+      "n": 14,
+      "accuracy": 0.5714
+    },
+    "raw_traffic_recovery_reasoning": {
+      "n": 8,
+      "accuracy": 1.0
+    },
+    "raw_water_service_recovery": {
+      "n": 10,
+      "accuracy": 0.2
+    }
+  },
+  "wrong_examples": [
+    {
+      "id": "public_raw_tsqa_v4_00000",
+      "language": "en",
+      "domain": "power_grid",
+      "task_family": "raw_grid_counterfactual_risk",
+      "gold_answer": "C",
+      "pred_answer": "A",
+      "gold_answer_label": "The effect is broadly unchanged.",
+      "pred_answer_label": "The planned outage increases stress.",
+      "reason": "The average stress difference is clearly positive and most readings are above +0.05, indicating that the planned outage increases stress."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00000",
+      "language": "zh",
+      "domain": "power_grid",
+      "task_family": "raw_grid_counterfactual_risk",
+      "gold_answer": "C",
+      "pred_answer": "A",
+      "gold_answer_label": "整体影响基本不变",
+      "pred_answer_label": "计划断线会增加压力",
+      "reason": "大部分压力差值为正值，且多数读数高于 +0.05，符合压力上升的定义"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00001",
+      "language": "en",
+      "domain": "power_grid",
+      "task_family": "raw_grid_counterfactual_risk",
+      "gold_answer": "B",
+      "pred_answer": "A",
+      "gold_answer_label": "The planned outage decreases stress.",
+      "pred_answer_label": "The planned outage increases stress.",
+      "reason": "The average stress difference is clearly positive and most readings are above +0.05, indicating an increase in stress."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00001",
+      "language": "zh",
+      "domain": "power_grid",
+      "task_family": "raw_grid_counterfactual_risk",
+      "gold_answer": "B",
+      "pred_answer": "A",
+      "gold_answer_label": "计划断线会降低压力",
+      "pred_answer_label": "选项文本",
+      "reason": "理由是平均压力差大部分时间接近0且波动很小，只有少数几次读数偏离此趋势，表明整体影响基本不变。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00006",
+      "language": "en",
+      "domain": "power_grid",
+      "task_family": "raw_grid_counterfactual_risk",
+      "gold_answer": "C",
+      "pred_answer": "A",
+      "gold_answer_label": "The effect is broadly unchanged.",
+      "pred_answer_label": "The planned outage increases stress.",
+      "reason": "The average stress delta is consistently positive throughout the series, indicating that the planned outage increases line stress compared to normal operation."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00006",
+      "language": "zh",
+      "domain": "power_grid",
+      "task_family": "raw_grid_counterfactual_risk",
+      "gold_answer": "C",
+      "pred_answer": "A",
+      "gold_answer_label": "整体影响基本不变",
+      "pred_answer_label": "需要人工复核",
+      "reason": "平均压力差在大部分时间接近0且波动很小，没有明显的正或负趋势，因此无法确定压力是上升、下降还是基本不变。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00009",
+      "language": "en",
+      "domain": "building_energy",
+      "task_family": "raw_building_net_load_reserve",
+      "gold_answer": "D",
+      "pred_answer": "A",
+      "gold_answer_label": "Use a balanced reserve strategy.",
+      "pred_answer_label": "Use a balanced reserve strategy.",
+      "reason": "The highest average net load does not exceed the second-highest by at least 0.30."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00009",
+      "language": "zh",
+      "domain": "building_energy",
+      "task_family": "raw_building_net_load_reserve",
+      "gold_answer": "D",
+      "pred_answer": "A",
+      "gold_answer_label": "采用均衡供能策略",
+      "pred_answer_label": "选项D",
+      "reason": "通过计算每个时段的平均净负荷，发现中段的平均净负荷最高且高于其他时段，因此优先为中段预留供能策略最为合适。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00010",
+      "language": "en",
+      "domain": "building_energy",
+      "task_family": "raw_building_net_load_reserve",
+      "gold_answer": "D",
+      "pred_answer": "A",
+      "gold_answer_label": "Use a balanced reserve strategy.",
+      "pred_answer_label": "Use a balanced reserve strategy.",
+      "reason": "The highest average net load does not exceed the second-highest by at least 0.30, indicating no clear need to reserve more supply for any specific part of the window."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00010",
+      "language": "zh",
+      "domain": "building_energy",
+      "task_family": "raw_building_net_load_reserve",
+      "gold_answer": "D",
+      "pred_answer": "A",
+      "gold_answer_label": "采用均衡供能策略",
+      "pred_answer_label": "选项A",
+      "reason": "早段的平均净负荷最高且比中段高出0.30以上"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00011",
+      "language": "en",
+      "domain": "building_energy",
+      "task_family": "raw_building_net_load_reserve",
+      "gold_answer": "D",
+      "pred_answer": "A",
+      "gold_answer_label": "Use a balanced reserve strategy.",
+      "pred_answer_label": "Use a balanced reserve strategy.",
+      "reason": "The highest average net load does not exceed the second-highest by at least 0.30, indicating no clear need to reserve more supply for any specific part of the window."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00011",
+      "language": "zh",
+      "domain": "building_energy",
+      "task_family": "raw_building_net_load_reserve",
+      "gold_answer": "D",
+      "pred_answer": "A",
+      "gold_answer_label": "采用均衡供能策略",
+      "pred_answer_label": "选项A",
+      "reason": "通过计算各时间段的平均净负荷，发现早段的净负荷最高且显著高于其他时间段，满足优先预留供能的条件。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00012",
+      "language": "en",
+      "domain": "building_energy",
+      "task_family": "raw_building_net_load_reserve",
+      "gold_answer": "D",
+      "pred_answer": "A",
+      "gold_answer_label": "Use a balanced reserve strategy.",
+      "pred_answer_label": "Use a balanced reserve strategy.",
+      "reason": "The highest average net load does not exceed the second-highest by at least 0.30, indicating no clear need to reserve more supply for any specific part of the window."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00012",
+      "language": "zh",
+      "domain": "building_energy",
+      "task_family": "raw_building_net_load_reserve",
+      "gold_answer": "D",
+      "pred_answer": "A",
+      "gold_answer_label": "采用均衡供能策略",
+      "pred_answer_label": "选项D",
+      "reason": "通过计算每个时段的平均净负荷，发现中段的平均净负荷最高，但并未达到显著高于其他时段的水平，因此均衡策略是最合适的。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00017",
+      "language": "en",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "B",
+      "pred_answer": "A",
+      "gold_answer_label": "Pressure recovers after the disturbance.",
+      "pred_answer_label": "Manual review is needed.",
+      "reason": "The pressure does not consistently fall very low and remain depressed, nor does it recover close to pre-event levels. There is no clear persistent leak pattern, and the pressure returns to near pre-event levels."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00017",
+      "language": "zh",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "B",
+      "pred_answer": "A",
+      "gold_answer_label": "扰动后水压恢复",
+      "pred_answer_label": "选项A|B",
+      "reason": "水压在事件中显著降低且事件后仍低于事件前水平，符合持续漏水压力风险的定义。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00018",
+      "language": "en",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "B",
+      "pred_answer": "A",
+      "gold_answer_label": "Pressure recovers after the disturbance.",
+      "pred_answer_label": "Manual review is needed.",
+      "reason": "Pressure does not consistently fall very low and remain depressed, nor does it rebound close to pre-event levels, indicating no clear persistent leak or recovery pattern."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00018",
+      "language": "zh",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "B",
+      "pred_answer": "A",
+      "gold_answer_label": "扰动后水压恢复",
+      "pred_answer_label": "持续漏水压力风险",
+      "reason": "水压在事件后并未恢复到接近或高于事件前水平，且流量在事件中显著增加，符合持续漏水的压力风险定义。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00019",
+      "language": "en",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "C",
+      "pred_answer": "A",
+      "gold_answer_label": "Service remains stable.",
+      "pred_answer_label": "Manual review is needed.",
+      "reason": "Pressure falls very low during the event and does not rebound close to or above the pre-event level afterward."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00019",
+      "language": "zh",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "C",
+      "pred_answer": "A",
+      "gold_answer_label": "服务保持稳定",
+      "pred_answer_label": "持续漏水压力风险",
+      "reason": "水压在事件后仍然较低，且流量显著增加，符合持续漏水的压力风险定义。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00020",
+      "language": "en",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "B",
+      "pred_answer": "A",
+      "gold_answer_label": "Pressure recovers after the disturbance.",
+      "pred_answer_label": "Manual review is needed.",
+      "reason": "The pressure does not consistently fall very low and remain depressed, nor does it rebound close to pre-event levels. There is no clear persistent leak pattern, and the pressure stabilizes after the disturbance."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00020",
+      "language": "zh",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "B",
+      "pred_answer": "A",
+      "gold_answer_label": "扰动后水压恢复",
+      "pred_answer_label": "选项A|B",
+      "reason": "水压在事件中显著降低且事件后仍低于事件前水平，符合持续漏水压力风险的定义。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00022",
+      "language": "en",
+      "domain": "service_telemetry",
+      "task_family": "raw_aiops_symptom_triage",
+      "gold_answer": "D",
+      "pred_answer": "A",
+      "gold_answer_label": "No dominant symptom is present.",
+      "pred_answer_label": "D",
+      "reason": "No memory growth exceeds 15%, and there's no significant network burst or CPU saturation."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00022",
+      "language": "zh",
+      "domain": "service_telemetry",
+      "task_family": "raw_aiops_symptom_triage",
+      "gold_answer": "D",
+      "pred_answer": "A",
+      "gold_answer_label": "没有主导症状",
+      "pred_answer_label": "选项A",
+      "reason": "内存从前半段到后半段至少增长了15%，因此优先排查内存泄漏模式"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00025",
+      "language": "en",
+      "domain": "service_telemetry",
+      "task_family": "raw_aiops_symptom_triage",
+      "gold_answer": "D",
+      "pred_answer": "A",
+      "gold_answer_label": "No dominant symptom is present.",
+      "pred_answer_label": "D",
+      "reason": "No memory growth exceeds 15%, and there's no significant network burst or CPU saturation."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00025",
+      "language": "zh",
+      "domain": "service_telemetry",
+      "task_family": "raw_aiops_symptom_triage",
+      "gold_answer": "D",
+      "pred_answer": "A",
+      "gold_answer_label": "没有主导症状",
+      "pred_answer_label": "选项A",
+      "reason": "内存从第25步开始增长超过15%，因此优先排查内存泄漏模式"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00026",
+      "language": "en",
+      "domain": "service_telemetry",
+      "task_family": "raw_aiops_symptom_triage",
+      "gold_answer": "D",
+      "pred_answer": "A",
+      "gold_answer_label": "No dominant symptom is present.",
+      "pred_answer_label": "D",
+      "reason": "No memory growth exceeds 15%, no network bursts meet the 2.5 ratio, and no CPU load reaches 0.85 consistently throughout the time series."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00026",
+      "language": "zh",
+      "domain": "service_telemetry",
+      "task_family": "raw_aiops_symptom_triage",
+      "gold_answer": "D",
+      "pred_answer": "A",
+      "gold_answer_label": "没有主导症状",
+      "pred_answer_label": "选项A",
+      "reason": "内存从前半段到后半段至少增长了15%，因此优先排查内存泄漏模式"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00027",
+      "language": "en",
+      "domain": "service_telemetry",
+      "task_family": "raw_aiops_symptom_triage",
+      "gold_answer": "D",
+      "pred_answer": "A",
+      "gold_answer_label": "No dominant symptom is present.",
+      "pred_answer_label": "D",
+      "reason": "No memory growth exceeds 15%, and there's no clear network burst or CPU saturation."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00027",
+      "language": "zh",
+      "domain": "service_telemetry",
+      "task_family": "raw_aiops_symptom_triage",
+      "gold_answer": "D",
+      "pred_answer": "A",
+      "gold_answer_label": "没有主导症状",
+      "pred_answer_label": "选项A",
+      "reason": "内存从前半段到后半段至少增长了15%，因此优先排查内存泄漏模式"
+    }
+  ]
+}

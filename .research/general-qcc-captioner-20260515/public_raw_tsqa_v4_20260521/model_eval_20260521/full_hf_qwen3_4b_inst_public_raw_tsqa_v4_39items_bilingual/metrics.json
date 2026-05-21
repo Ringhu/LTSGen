@@ -1,0 +1,114 @@
+{
+  "run": {
+    "dataset": ".research/general-qcc-captioner-20260515/public_raw_tsqa_v4_20260521/llm_text_view.jsonl",
+    "provider": "hf",
+    "model": "Qwen3-4B-Instruct-2507",
+    "model_path": "/cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507",
+    "n_rows": 39,
+    "n_prompts": 78,
+    "languages": {
+      "en": 39,
+      "zh": 39
+    },
+    "prompt_chars": {
+      "min": 4328,
+      "max": 9873,
+      "mean": 7586.2
+    },
+    "by_domain": {
+      "power_grid": 7,
+      "building_energy": 4,
+      "traffic": 4,
+      "water_service": 5,
+      "service_telemetry": 9,
+      "market": 10
+    },
+    "answer_distribution": {
+      "C": 3,
+      "B": 4,
+      "A": 19,
+      "D": 13
+    },
+    "dry_run": false,
+    "max_new_tokens": 120,
+    "temperature": 0.0,
+    "torch_dtype": "bfloat16",
+    "elapsed_sec": 296.8,
+    "error_count": 0
+  },
+  "overall": {
+    "n": 78,
+    "accuracy": 0.4615,
+    "empty_answer_rate": 0.0,
+    "mean_latency_sec": 3.804
+  },
+  "by_language": {
+    "en": {
+      "n": 39,
+      "accuracy": 0.4103
+    },
+    "zh": {
+      "n": 39,
+      "accuracy": 0.5128
+    }
+  },
+  "by_domain": {
+    "building_energy": {
+      "n": 8,
+      "accuracy": 0.0
+    },
+    "market": {
+      "n": 20,
+      "accuracy": 0.9
+    },
+    "power_grid": {
+      "n": 14,
+      "accuracy": 0.7143
+    },
+    "service_telemetry": {
+      "n": 18,
+      "accuracy": 0.3333
+    },
+    "traffic": {
+      "n": 8,
+      "accuracy": 0.0
+    },
+    "water_service": {
+      "n": 10,
+      "accuracy": 0.2
+    }
+  },
+  "by_task_family": {
+    "raw_aiops_symptom_triage": {
+      "n": 18,
+      "accuracy": 0.3333
+    },
+    "raw_building_net_load_reserve": {
+      "n": 8,
+      "accuracy": 0.0
+    },
+    "raw_finrl_return_drawdown_regime": {
+      "n": 20,
+      "accuracy": 0.9
+    },
+    "raw_grid_counterfactual_risk": {
+      "n": 14,
+      "accuracy": 0.7143
+    },
+    "raw_traffic_recovery_reasoning": {
+      "n": 8,
+      "accuracy": 0.0
+    },
+    "raw_water_service_recovery": {
+      "n": 10,
+      "accuracy": 0.2
+    }
+  },
+  "pred_answer_distribution": {
+    "A": 55,
+    "C": 9,
+    "B": 2,
+    "D": 12
+  },
+  "errors_preview": []
+}

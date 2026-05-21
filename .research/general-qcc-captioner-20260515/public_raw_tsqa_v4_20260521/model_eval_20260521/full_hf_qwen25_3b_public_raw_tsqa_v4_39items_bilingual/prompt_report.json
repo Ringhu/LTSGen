@@ -1,0 +1,35 @@
+{
+  "dataset": ".research/general-qcc-captioner-20260515/public_raw_tsqa_v4_20260521/llm_text_view.jsonl",
+  "provider": "hf",
+  "model": "Qwen2.5-3B-Instruct",
+  "model_path": "/cluster/home/user1/fenghaoran/model/Qwen2.5-3B-Instruct",
+  "n_rows": 39,
+  "n_prompts": 78,
+  "languages": {
+    "en": 39,
+    "zh": 39
+  },
+  "prompt_chars": {
+    "min": 4328,
+    "max": 9873,
+    "mean": 7586.2
+  },
+  "by_domain": {
+    "power_grid": 7,
+    "building_energy": 4,
+    "traffic": 4,
+    "water_service": 5,
+    "service_telemetry": 9,
+    "market": 10
+  },
+  "answer_distribution": {
+    "C": 3,
+    "B": 4,
+    "A": 19,
+    "D": 13
+  },
+  "dry_run": false,
+  "max_new_tokens": 120,
+  "temperature": 0.0,
+  "torch_dtype": "bfloat16"
+}

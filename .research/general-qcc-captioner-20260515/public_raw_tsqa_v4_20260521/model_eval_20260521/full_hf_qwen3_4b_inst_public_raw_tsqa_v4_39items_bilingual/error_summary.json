@@ -1,0 +1,420 @@
+{
+  "predictions_jsonl": ".research/general-qcc-captioner-20260515/public_raw_tsqa_v4_20260521/model_eval_20260521/full_hf_qwen3_4b_inst_public_raw_tsqa_v4_39items_bilingual/predictions.jsonl",
+  "n": 78,
+  "accuracy": 0.4615,
+  "wrong_n": 42,
+  "wrong_by_language": {
+    "en": 23,
+    "zh": 19
+  },
+  "wrong_by_domain": {
+    "power_grid": 4,
+    "building_energy": 8,
+    "traffic": 8,
+    "water_service": 8,
+    "service_telemetry": 12,
+    "market": 2
+  },
+  "wrong_by_task_family": {
+    "raw_grid_counterfactual_risk": 4,
+    "raw_building_net_load_reserve": 8,
+    "raw_traffic_recovery_reasoning": 8,
+    "raw_water_service_recovery": 8,
+    "raw_aiops_symptom_triage": 12,
+    "raw_finrl_return_drawdown_regime": 2
+  },
+  "by_language": {
+    "en": {
+      "n": 39,
+      "accuracy": 0.4103
+    },
+    "zh": {
+      "n": 39,
+      "accuracy": 0.5128
+    }
+  },
+  "by_domain": {
+    "building_energy": {
+      "n": 8,
+      "accuracy": 0.0
+    },
+    "market": {
+      "n": 20,
+      "accuracy": 0.9
+    },
+    "power_grid": {
+      "n": 14,
+      "accuracy": 0.7143
+    },
+    "service_telemetry": {
+      "n": 18,
+      "accuracy": 0.3333
+    },
+    "traffic": {
+      "n": 8,
+      "accuracy": 0.0
+    },
+    "water_service": {
+      "n": 10,
+      "accuracy": 0.2
+    }
+  },
+  "by_task_family": {
+    "raw_aiops_symptom_triage": {
+      "n": 18,
+      "accuracy": 0.3333
+    },
+    "raw_building_net_load_reserve": {
+      "n": 8,
+      "accuracy": 0.0
+    },
+    "raw_finrl_return_drawdown_regime": {
+      "n": 20,
+      "accuracy": 0.9
+    },
+    "raw_grid_counterfactual_risk": {
+      "n": 14,
+      "accuracy": 0.7143
+    },
+    "raw_traffic_recovery_reasoning": {
+      "n": 8,
+      "accuracy": 0.0
+    },
+    "raw_water_service_recovery": {
+      "n": 10,
+      "accuracy": 0.2
+    }
+  },
+  "wrong_examples": [
+    {
+      "id": "public_raw_tsqa_v4_00000",
+      "language": "en",
+      "domain": "power_grid",
+      "task_family": "raw_grid_counterfactual_risk",
+      "gold_answer": "C",
+      "pred_answer": "A",
+      "gold_answer_label": "The effect is broadly unchanged.",
+      "pred_answer_label": "",
+      "reason": ""
+    },
+    {
+      "id": "public_raw_tsqa_v4_00001",
+      "language": "en",
+      "domain": "power_grid",
+      "task_family": "raw_grid_counterfactual_risk",
+      "gold_answer": "B",
+      "pred_answer": "A",
+      "gold_answer_label": "The planned outage decreases stress.",
+      "pred_answer_label": "The planned outage increases stress.",
+      "reason": "The stress_delta values are consistently negative throughout the time series, starting from -0.0927558 and decreasing to -0.116887, with the average stress difference being clearly negative. Most readings are below -0.05, indicating increased stress due to the outage."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00006",
+      "language": "en",
+      "domain": "power_grid",
+      "task_family": "raw_grid_counterfactual_risk",
+      "gold_answer": "C",
+      "pred_answer": "A",
+      "gold_answer_label": "The effect is broadly unchanged.",
+      "pred_answer_label": "The planned outage increases stress.",
+      "reason": "The stress_delta values are consistently positive, starting at 0.000752 and rising to 0.000947, with all values above +0.0007. The average stress difference is clearly positive and most readings are well above +0.05 (in absolute terms, though the scale is small, the trend is consistently positive and increasing). Thus, the outage increases stress."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00006",
+      "language": "zh",
+      "domain": "power_grid",
+      "task_family": "raw_grid_counterfactual_risk",
+      "gold_answer": "C",
+      "pred_answer": "A",
+      "gold_answer_label": "整体影响基本不变",
+      "pred_answer_label": "计划断线会增加压力",
+      "reason": "stress_delta序列中所有值均在0.00075至0.00094之间，始终为正，且绝大多数值高于+0.00075，平均压力差明显为正，符合‘压力上升’的判断标准。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00009",
+      "language": "en",
+      "domain": "building_energy",
+      "task_family": "raw_building_net_load_reserve",
+      "gold_answer": "D",
+      "pred_answer": "C",
+      "gold_answer_label": "Use a balanced reserve strategy.",
+      "pred_answer_label": "Reserve more supply for the late part of the window.",
+      "reason": "Compute net grid load as demand minus 0.15 * solar_support. Divide the time series into early (0-74), middle (75-149), and late (150-255). Calculate average net load for each portion. The late portion has the highest average net load, exceeding the middle by at least 0.30, so reserve more supply for the late part."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00009",
+      "language": "zh",
+      "domain": "building_energy",
+      "task_family": "raw_building_net_load_reserve",
+      "gold_answer": "D",
+      "pred_answer": "C",
+      "gold_answer_label": "采用均衡供能策略",
+      "pred_answer_label": "",
+      "reason": ""
+    },
+    {
+      "id": "public_raw_tsqa_v4_00010",
+      "language": "en",
+      "domain": "building_energy",
+      "task_family": "raw_building_net_load_reserve",
+      "gold_answer": "D",
+      "pred_answer": "C",
+      "gold_answer_label": "Use a balanced reserve strategy.",
+      "pred_answer_label": "Reserve more supply for the late part of the window.",
+      "reason": "Compute net grid load as demand minus 0.15 * solar_support. Divide the time series into early (0-49), middle (50-74), and late (75-155) portions. Calculate average net load for each. The late portion has the highest average net load, exceeding the middle by at least 0.30, so reserve more supply for the late part."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00010",
+      "language": "zh",
+      "domain": "building_energy",
+      "task_family": "raw_building_net_load_reserve",
+      "gold_answer": "D",
+      "pred_answer": "C",
+      "gold_answer_label": "采用均衡供能策略",
+      "pred_answer_label": "",
+      "reason": ""
+    },
+    {
+      "id": "public_raw_tsqa_v4_00011",
+      "language": "en",
+      "domain": "building_energy",
+      "task_family": "raw_building_net_load_reserve",
+      "gold_answer": "D",
+      "pred_answer": "C",
+      "gold_answer_label": "Use a balanced reserve strategy.",
+      "pred_answer_label": "Reserve more supply for the late part of the window.",
+      "reason": "Compute net grid load as demand minus 0.15 * solar_support. Divide the time series into early (0-74), middle (75-149), and late (150-255). Calculate average net load for each portion. The late portion has the highest average net load, exceeding the middle by at least 0.30, so reserve more supply for the late part."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00011",
+      "language": "zh",
+      "domain": "building_energy",
+      "task_family": "raw_building_net_load_reserve",
+      "gold_answer": "D",
+      "pred_answer": "C",
+      "gold_answer_label": "采用均衡供能策略",
+      "pred_answer_label": "",
+      "reason": ""
+    },
+    {
+      "id": "public_raw_tsqa_v4_00012",
+      "language": "en",
+      "domain": "building_energy",
+      "task_family": "raw_building_net_load_reserve",
+      "gold_answer": "D",
+      "pred_answer": "C",
+      "gold_answer_label": "Use a balanced reserve strategy.",
+      "pred_answer_label": "Reserve more supply for the late part of the window.",
+      "reason": "Compute net grid load as demand minus 0.15 * solar_support. Divide the full sequence into early (0-74), middle (75-149), and late (150-255). Calculate average net load for each portion. The late portion has the highest average net load, exceeding the middle by at least 0.30, so reserve more supply for the late part."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00012",
+      "language": "zh",
+      "domain": "building_energy",
+      "task_family": "raw_building_net_load_reserve",
+      "gold_answer": "D",
+      "pred_answer": "C",
+      "gold_answer_label": "采用均衡供能策略",
+      "pred_answer_label": "",
+      "reason": ""
+    },
+    {
+      "id": "public_raw_tsqa_v4_00013",
+      "language": "en",
+      "domain": "traffic",
+      "task_family": "raw_traffic_recovery_reasoning",
+      "gold_answer": "A",
+      "pred_answer": "D",
+      "gold_answer_label": "No clear congestion shock occurs.",
+      "pred_answer_label": "",
+      "reason": ""
+    },
+    {
+      "id": "public_raw_tsqa_v4_00013",
+      "language": "zh",
+      "domain": "traffic",
+      "task_family": "raw_traffic_recovery_reasoning",
+      "gold_answer": "A",
+      "pred_answer": "D",
+      "gold_answer_label": "没有清晰拥堵冲击",
+      "pred_answer_label": "事件后拥堵持续",
+      "reason": "计算事件中（如时间点10-15）和事件前（如时间点0-5）的拥堵分数，发现事件中拥堵分数显著高于事件前，且事件后（如时间点100-155）排队长度、车道占有率仍维持高位，车速缓慢回升，拥堵分数持续高于事件前水平，未见明显恢复，因此判断为事件后拥堵持续。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00014",
+      "language": "en",
+      "domain": "traffic",
+      "task_family": "raw_traffic_recovery_reasoning",
+      "gold_answer": "A",
+      "pred_answer": "D",
+      "gold_answer_label": "No clear congestion shock occurs.",
+      "pred_answer_label": "",
+      "reason": ""
+    },
+    {
+      "id": "public_raw_tsqa_v4_00014",
+      "language": "zh",
+      "domain": "traffic",
+      "task_family": "raw_traffic_recovery_reasoning",
+      "gold_answer": "A",
+      "pred_answer": "D",
+      "gold_answer_label": "没有清晰拥堵冲击",
+      "pred_answer_label": "事件后拥堵持续",
+      "reason": "计算事件中（如时间点70-79）和事件前（如时间点0-9）的拥堵分数，发现事件中阶段（如时间点70-79）的排队长度、车道占有率显著上升，车速下降，拥堵分数明显高于事件前。事件后（时间点80以后）拥堵分数仍维持在较高水平，未出现明显下降，表明拥堵持续存在。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00015",
+      "language": "en",
+      "domain": "traffic",
+      "task_family": "raw_traffic_recovery_reasoning",
+      "gold_answer": "A",
+      "pred_answer": "D",
+      "gold_answer_label": "No clear congestion shock occurs.",
+      "pred_answer_label": "",
+      "reason": ""
+    },
+    {
+      "id": "public_raw_tsqa_v4_00015",
+      "language": "zh",
+      "domain": "traffic",
+      "task_family": "raw_traffic_recovery_reasoning",
+      "gold_answer": "A",
+      "pred_answer": "D",
+      "gold_answer_label": "没有清晰拥堵冲击",
+      "pred_answer_label": "事件后拥堵持续",
+      "reason": "计算事件中（如时间点15-30）和事件前（如时间点0-4）的拥堵分数，发现事件中拥堵分数显著高于事件前，且事件后（时间点30之后）排队长度、车道占有率持续高位，车速下降，拥堵分数未回落至事件前水平，表明拥堵持续存在。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00016",
+      "language": "en",
+      "domain": "traffic",
+      "task_family": "raw_traffic_recovery_reasoning",
+      "gold_answer": "A",
+      "pred_answer": "D",
+      "gold_answer_label": "No clear congestion shock occurs.",
+      "pred_answer_label": "",
+      "reason": ""
+    },
+    {
+      "id": "public_raw_tsqa_v4_00016",
+      "language": "zh",
+      "domain": "traffic",
+      "task_family": "raw_traffic_recovery_reasoning",
+      "gold_answer": "A",
+      "pred_answer": "D",
+      "gold_answer_label": "没有清晰拥堵冲击",
+      "pred_answer_label": "事件后拥堵持续",
+      "reason": "计算事件中（如时间点15-30）和事件前（如时间点0-4）的拥堵分数，发现事件中拥堵分数显著高于事件前，且事件后（时间点30之后）拥堵分数仍持续高于事件前水平，尤其在时间点250之后仍维持较高排队长度和车道占有率，车速下降，表明拥堵未缓解，因此存在持续拥堵。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00017",
+      "language": "en",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "B",
+      "pred_answer": "A",
+      "gold_answer_label": "Pressure recovers after the disturbance.",
+      "pred_answer_label": "Persistent leak pressure risk.",
+      "reason": "Pressure drops significantly during the event (e.g., from 71.05 to 68.97 at time 99), flow increases substantially (e.g., from 11.5 to 12.25 at time 29), and pressure remains depressed throughout the later stages (e.g., drops to 56.7 at time 127 and remains below pre-event levels), indicating a persistent leak pressure risk."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00017",
+      "language": "zh",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "B",
+      "pred_answer": "A",
+      "gold_answer_label": "扰动后水压恢复",
+      "pred_answer_label": "",
+      "reason": ""
+    },
+    {
+      "id": "public_raw_tsqa_v4_00018",
+      "language": "en",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "B",
+      "pred_answer": "A",
+      "gold_answer_label": "Pressure recovers after the disturbance.",
+      "pred_answer_label": "Persistent leak pressure risk.",
+      "reason": "Pressure drops significantly during the event (e.g., from 70.0 to 68.3 at time 69), flow increases substantially (e.g., from 12 to 13+), and pressure remains depressed afterward (e.g., stays below 70.0 for several time steps), indicating a persistent leak pressure risk."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00018",
+      "language": "zh",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "B",
+      "pred_answer": "A",
+      "gold_answer_label": "扰动后水压恢复",
+      "pred_answer_label": "",
+      "reason": ""
+    },
+    {
+      "id": "public_raw_tsqa_v4_00019",
+      "language": "en",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "C",
+      "pred_answer": "B",
+      "gold_answer_label": "Service remains stable.",
+      "pred_answer_label": "Pressure recovers after the disturbance.",
+      "reason": "Pressure initially drops below pre-event levels (e.g., from 72.596 to 67.193 at time 10), but gradually recovers and stabilizes above the pre-event baseline (e.g., reaching 74.8171 at time 66 and remaining around 70–75 thereafter), with flow increasing during the event but returning to normal. This matches the 'recovery after disturbance' pattern."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00019",
+      "language": "zh",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "C",
+      "pred_answer": "A",
+      "gold_answer_label": "服务保持稳定",
+      "pred_answer_label": "",
+      "reason": ""
+    },
+    {
+      "id": "public_raw_tsqa_v4_00020",
+      "language": "en",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "B",
+      "pred_answer": "A",
+      "gold_answer_label": "Pressure recovers after the disturbance.",
+      "pred_answer_label": "",
+      "reason": ""
+    },
+    {
+      "id": "public_raw_tsqa_v4_00020",
+      "language": "zh",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "B",
+      "pred_answer": "A",
+      "gold_answer_label": "扰动后水压恢复",
+      "pred_answer_label": "",
+      "reason": ""
+    },
+    {
+      "id": "public_raw_tsqa_v4_00022",
+      "language": "en",
+      "domain": "service_telemetry",
+      "task_family": "raw_aiops_symptom_triage",
+      "gold_answer": "D",
+      "pred_answer": "A",
+      "gold_answer_label": "No dominant symptom is present.",
+      "pred_answer_label": "",
+      "reason": ""
+    },
+    {
+      "id": "public_raw_tsqa_v4_00022",
+      "language": "zh",
+      "domain": "service_telemetry",
+      "task_family": "raw_aiops_symptom_triage",
+      "gold_answer": "D",
+      "pred_answer": "A",
+      "gold_answer_label": "没有主导症状",
+      "pred_answer_label": "",
+      "reason": ""
+    }
+  ]
+}

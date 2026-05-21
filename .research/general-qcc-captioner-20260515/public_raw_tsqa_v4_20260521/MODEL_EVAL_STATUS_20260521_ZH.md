@@ -14,6 +14,7 @@
 - `llm_text_view.jsonl`：LLM 评测视图，包含 `prompt_en` 与 `prompt_zh`，时序被序列化为 CSV 文本。
 - `tsllm_array_view.jsonl`：TS-LLM 视图，保留同一自然任务文本、选项和原始数值数组。
 - `scripts/eval/evaluate_public_raw_tsqa_llm.py`：OpenAI-compatible LLM 评测脚本。
+- `scripts/eval/evaluate_public_raw_tsqa_hf.py`：A100/本地 HuggingFace causal LM 评测脚本，输出格式与 OpenAI evaluator 一致。
 - `scripts/eval/compare_public_raw_tsqa_model_evals.py`：扫描所有完整评测 run，生成跨模型 comparison 表。
 - `scripts/eval/import_public_raw_tsqa_qwen_eval.py`：导入 A100 回传的 Qwen run 目录或 `.tar.gz`，生成错误摘要并刷新 comparison 表。
 - `scripts/remote/discover_public_raw_tsqa_qwen_a100.sh`：A100 端 Qwen 发现脚本，搜索 `hulining/swift` 等目录里的部署示例和 Qwen 模型路径。
@@ -163,151 +164,100 @@ python3 scripts/eval/compare_public_raw_tsqa_model_evals.py
 |---|---|---:|---:|---:|---:|---:|
 | `full_gpt55_public_raw_tsqa_v4_39items_bilingual_nojson` | `gpt-5.5` | 78 | 0.9487 | 0.9487 | 0.9487 | 0.6000 |
 | `full_gpt54_public_raw_tsqa_v4_39items_bilingual` | `gpt-5.4` | 78 | 0.7308 | 0.7179 | 0.7436 | 0.6000 |
-
-推荐命令：
-
-```bash
-python3 scripts/eval/evaluate_public_raw_tsqa_llm.py \
-  --provider openai \
-  --model gpt-5.5 \
-  --languages both \
-  --run_name full_gpt55_public_raw_tsqa_v4_39items_bilingual \
-  --concurrency 1 \
-  --timeout 1200 \
-  --max_retries 1 \
-  --progress_every 5 \
-  --max_tokens 160 \
-  --no_response_format \
-  --resume
-```
+| `full_hf_qwen3_4b_inst_public_raw_tsqa_v4_39items_bilingual` | `Qwen3-4B-Instruct-2507` | 78 | 0.4615 | 0.4103 | 0.5128 | 0.2000 |
+| `full_hf_qwen25_3b_public_raw_tsqa_v4_39items_bilingual` | `Qwen2.5-3B-Instruct` | 78 | 0.4359 | 0.3846 | 0.4872 | 0.2000 |
 
 ## A100/Qwen 状态
 
-本机不能直接跑 Qwen，因为 `nvidia-smi` 返回：
+A100 SSH 路线已恢复。当前 branch 已同步到远端工作树：
 
-```text
-Failed to initialize NVML: Driver/library version mismatch
-NVML library version: 535.309
-```
+`/cluster/home/user1/hulining/LTSGEN-emnlp-benchmark-pipeline`
 
-同时，本机 `~/.ssh/` 下没有可用于登录 A100 的 SSH config 或私钥，因此无法从当前工作站直接远程启动 A100 作业。
+已确认的模型路径：
 
-A100 评测脚本已经补齐并通过 `bash -n`：
+- `/cluster/home/user1/fenghaoran/model/Qwen2.5-3B-Instruct`
+- `/cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507`
+- `/cluster/home/user1/fenghaoran/model/Qwen3.5-4B`
+- `/cluster/home/user1/fenghaoran/model/Qwen3-1.7B`
+- `/cluster/home/user1/fenghaoran/model/Qwen3-0.6B`
 
-`scripts/remote/discover_public_raw_tsqa_qwen_a100.sh`
+本轮采用 `chatts` 环境直接 HuggingFace 推理，避免 vLLM 环境问题：
 
-`scripts/remote/preflight_public_raw_tsqa_qwen_a100.sh`
+`/cluster/home/user1/anaconda3/envs/chatts/bin/python3`
 
-`scripts/remote/run_public_raw_tsqa_qwen_eval_a100.sh`
-
-Qwen 系列评测脚本：
-
-`scripts/remote/run_public_raw_tsqa_qwen_suite_a100.sh`
-
-结果打包脚本：
-
-`scripts/remote/package_public_raw_tsqa_qwen_eval_a100.sh`
-
-默认行为：
-
-- 在 A100 上启动 vLLM OpenAI-compatible server。
-- 默认模型路径：`/cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507`。
-- 默认服务端口：`127.0.0.1:9411`。
-- 调用 `evaluate_public_raw_tsqa_llm.py --provider qwenlocal`。
-- 默认开启 `--resume`。
-
-如果不确定 A100 上的 Qwen 模型路径，先运行 discovery。它会搜索 `hulining/swift`、`TSModel/OpenTSLM`、`fenghaoran/model` 和 HuggingFace cache 等目录，输出部署示例片段和可直接复制的 `MODEL_SPECS`：
+Qwen2.5-3B 完整双语评测命令：
 
 ```bash
-ROOT=/cluster/home/user1/hulining/LTSGEN \
-OUT_FILE=/cluster/home/user1/hulining/LTSGEN/.research/general-qcc-captioner-20260515/public_raw_tsqa_v4_20260521/model_eval_20260521/qwen_a100_discovery.md \
-scripts/remote/discover_public_raw_tsqa_qwen_a100.sh
+ssh -o BatchMode=yes -o ClearAllForwardings=yes a100 \
+  'cd /cluster/home/user1/hulining/LTSGEN-emnlp-benchmark-pipeline && \
+  CUDA_VISIBLE_DEVICES=2 TRANSFORMERS_VERBOSITY=error \
+  /cluster/home/user1/anaconda3/envs/chatts/bin/python3 \
+  scripts/eval/evaluate_public_raw_tsqa_hf.py \
+    --model_path /cluster/home/user1/fenghaoran/model/Qwen2.5-3B-Instruct \
+    --model_name Qwen2.5-3B-Instruct \
+    --run_name full_hf_qwen25_3b_public_raw_tsqa_v4_39items_bilingual \
+    --languages both \
+    --max_items 0 \
+    --max_new_tokens 120 \
+    --torch_dtype bfloat16 \
+    --progress_every 5 \
+    --resume'
 ```
 
-随后用 discovery 输出的 `MODEL_SPECS` 做预检：
+Qwen3-4B 完整双语评测命令：
 
 ```bash
-ROOT=/cluster/home/user1/hulining/LTSGEN \
-PY=/cluster/home/user1/anaconda3/envs/opentslm/bin/python3 \
-MODEL_SPECS=$'qwen3_4b|Qwen3-4B-Instruct-2507|/cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507|2|9411|1|32768|bfloat16|0.88' \
-scripts/remote/preflight_public_raw_tsqa_qwen_a100.sh
+ssh -o BatchMode=yes -o ClearAllForwardings=yes a100 \
+  'cd /cluster/home/user1/hulining/LTSGEN-emnlp-benchmark-pipeline && \
+  CUDA_VISIBLE_DEVICES=2 TRANSFORMERS_VERBOSITY=error \
+  /cluster/home/user1/anaconda3/envs/chatts/bin/python3 \
+  scripts/eval/evaluate_public_raw_tsqa_hf.py \
+    --model_path /cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507 \
+    --model_name Qwen3-4B-Instruct-2507 \
+    --run_name full_hf_qwen3_4b_inst_public_raw_tsqa_v4_39items_bilingual \
+    --languages both \
+    --max_items 0 \
+    --max_new_tokens 120 \
+    --torch_dtype bfloat16 \
+    --progress_every 5 \
+    --resume'
 ```
 
-推荐 A100 命令：
+Qwen2.5-3B 结果：
 
-```bash
-ROOT=/cluster/home/user1/hulining/LTSGEN \
-PY=/cluster/home/user1/anaconda3/envs/opentslm/bin/python3 \
-CUDA_VISIBLE_DEVICES=2 \
-MODEL_PATH=/cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507 \
-SERVED_MODEL_NAME=Qwen3-4B-Instruct-2507 \
-RUN_NAME=full_qwen3_4b_public_raw_tsqa_v4_39items_bilingual \
-LANGUAGES=both \
-MAX_ITEMS=0 \
-CONCURRENCY=2 \
-scripts/remote/run_public_raw_tsqa_qwen_eval_a100.sh
-```
+| Model | Rows | Prompts | Overall Acc. | EN Acc. | ZH Acc. | Empty Answer | Error Count |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `Qwen2.5-3B-Instruct` | 39 | 78 | 0.4359 | 0.3846 | 0.4872 | 0.0000 | 0 |
 
-评测完成后，在 A100 上打包结果：
+Qwen3-4B 结果：
 
-```bash
-ROOT=/cluster/home/user1/hulining/LTSGEN \
-RUN_NAME=full_qwen3_4b_public_raw_tsqa_v4_39items_bilingual \
-scripts/remote/package_public_raw_tsqa_qwen_eval_a100.sh
-```
+| Model | Rows | Prompts | Overall Acc. | EN Acc. | ZH Acc. | Empty Answer | Error Count |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `Qwen3-4B-Instruct-2507` | 39 | 78 | 0.4615 | 0.4103 | 0.5128 | 0.0000 | 0 |
 
-打包脚本会检查 `prompt_report.json`、`prompt_preview.jsonl`、`predictions.jsonl`、`metrics.json`，打印模型、样本数、accuracy 和 error count，再生成：
+Qwen3-4B 按 domain：
 
-`$RUN_DIR.tar.gz`
+| Domain | Prompts | Acc. |
+|---|---:|---:|
+| `market` | 20 | 0.9000 |
+| `power_grid` | 14 | 0.7143 |
+| `service_telemetry` | 18 | 0.3333 |
+| `water_service` | 10 | 0.2000 |
+| `building_energy` | 8 | 0.0000 |
+| `traffic` | 8 | 0.0000 |
 
-如果 A100 上已有 vLLM 服务：
+Qwen2.5-3B 按 domain：
 
-```bash
-USE_EXISTING_SERVER=1 \
-HOST=127.0.0.1 \
-PORT=9411 \
-SERVED_MODEL_NAME=Qwen3-4B-Instruct-2507 \
-RUN_NAME=full_qwen3_4b_public_raw_tsqa_v4_39items_bilingual \
-LANGUAGES=both \
-scripts/remote/run_public_raw_tsqa_qwen_eval_a100.sh
-```
+| Domain | Prompts | Acc. |
+|---|---:|---:|
+| `traffic` | 8 | 1.0000 |
+| `power_grid` | 14 | 0.5714 |
+| `market` | 20 | 0.5000 |
+| `service_telemetry` | 18 | 0.3333 |
+| `water_service` | 10 | 0.2000 |
+| `building_energy` | 8 | 0.0000 |
 
-如果要一次跑 Qwen 系列，推荐在 A100 上使用 suite runner。默认只跑 Qwen3-4B；可以用 `MODEL_SPECS` 增加更多模型，每行格式为：
-
-```text
-slug|served_model_name|model_path|cuda_visible_devices|port|tensor_parallel_size|max_model_len|dtype|gpu_memory_utilization
-```
-
-示例：
-
-```bash
-ROOT=/cluster/home/user1/hulining/LTSGEN \
-PY=/cluster/home/user1/anaconda3/envs/opentslm/bin/python3 \
-SUITE_NAME=qwen_suite_public_raw_tsqa_v4_20260521 \
-MODEL_SPECS=$'qwen3_4b|Qwen3-4B-Instruct-2507|/cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507|2|9411|1|32768|bfloat16|0.88\nqwen3_8b|Qwen3-8B|/cluster/home/user1/fenghaoran/model/Qwen3-8B|3|9412|1|32768|bfloat16|0.88' \
-LANGUAGES=both \
-MAX_ITEMS=0 \
-CONCURRENCY=2 \
-scripts/remote/run_public_raw_tsqa_qwen_suite_a100.sh
-```
-
-suite runner 会为每个模型调用单模型 runner，随后生成：
-
-- `<run_dir>/metrics.json`
-- `<run_dir>/predictions.jsonl`
-- `<run_dir>/error_summary.json`
-- `<run_dir>.tar.gz`
-- `<suite_dir>/summary.md`
-- `<suite_dir>/summary.jsonl`
-
-Qwen 结果回传到本地仓库后，运行：
-
-```bash
-python3 scripts/eval/import_public_raw_tsqa_qwen_eval.py \
-  /path/to/full_qwen3_4b_public_raw_tsqa_v4_39items_bilingual.tar.gz
-```
-
-导入脚本会校验 `prompt_report.json`、`prompt_preview.jsonl`、`predictions.jsonl`、`metrics.json`，生成 `error_summary.json`，并自动把完整 78 prompt 的 Qwen run 加入 `MODEL_EVAL_COMPARISON_20260521.{md,jsonl}`。
+vLLM 路线暂未作为正式结果使用。A100 base 环境有 `vLLM 0.10.1.dev`，但启动 Qwen3 server 时触发 `DeepseekVLV2Config` dataclass 错误；`vllm_env` 的 `vLLM 0.4.1` 又不识别 `qwen2` / `qwen3` model type。当前正式 Qwen baseline 采用直接 HF generation，结果文件结构仍与 OpenAI evaluator 对齐。
 
 ## 初步错误观察
 
@@ -318,11 +268,13 @@ GPT-5.4 的 21 个错误集中在：
 - `market`：少量中文样本出现“推理说未触发严重回撤、应判上行，但 answer 写 D”的一致性错误。
 - `water_service`：模型对恢复/持续低压边界有误判，后续扩增时应加入更清晰的恢复阈值和 hard negatives。
 
-这些错误说明当前 benchmark 已能暴露两类能力缺口：原始时序计算错误，以及计算结论到选项字母的指令一致性错误。下一轮数据扩增应优先修复任务歧义，再扩大样本数。
+Qwen3-4B 的错误更集中：`building_energy` 和 `traffic` 全错，`water_service` 只有 0.2000，但 `market` 达到 0.9000、`power_grid` 达到 0.7143。Qwen2.5-3B 与 Qwen3-4B 的 domain profile 明显不同，说明这个 benchmark 已能区分模型在不同时间序列推理原语上的偏差，而不是只给出一个总分。
+
+这些错误说明当前 benchmark 已能暴露三类能力缺口：原始时序计算错误、阈值/边界判断错误，以及计算结论到选项字母的指令一致性错误。下一轮数据扩增应优先修复任务歧义，再扩大样本数。
 
 ## 下一步
 
-1. 在 A100 上运行 Qwen3-4B 完整双语评测，落盘 `metrics.json` 和 `predictions.jsonl`。
-2. 对 `water_service` 做 reviewer 复审：GPT-5.5 的 4 个非正确样本全部集中在该 domain，说明恢复/持续低压边界需要复核。
-3. 对 `building_energy`、`traffic` 做数据说明回查：GPT-5.4 在这些任务失败多，但 GPT-5.5 已能解决，适合作为难度分层而不是直接删除。
-4. 扩增数据时加入“推理正确但答案字母不一致”的一致性检查，作为 reviewer gate。
+1. 对 `water_service` 做 reviewer 复审：GPT-5.5 的 4 个非正确样本全部集中在该 domain，说明恢复/持续低压边界需要复核。
+2. 对 `building_energy`、`traffic` 做数据说明回查：GPT-5.4 与 Qwen 系列在这些任务失败多，但 GPT-5.5 已能解决，适合作为难度分层和 reviewer hard case。
+3. 扩增数据时加入“推理正确但答案字母不一致”的一致性检查，作为 reviewer gate。
+4. 可继续补 `Qwen3-1.7B` / `Qwen3-0.6B`，但当前已有 GPT-5.5、GPT-5.4、Qwen2.5-3B、Qwen3-4B 四个 full bilingual baseline。
