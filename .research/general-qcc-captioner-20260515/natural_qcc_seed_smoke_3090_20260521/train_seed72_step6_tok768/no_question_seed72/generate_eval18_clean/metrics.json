@@ -1,0 +1,22 @@
+{
+  "raw_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_no_question_smoke_eval18.jsonl",
+  "checkpoint_dir": ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/train_seed72_step6_tok768/no_question_seed72/final_model",
+  "load_state": {
+    "missing_keys": 399,
+    "unexpected_keys": 0,
+    "loaded_state_keys": 563
+  },
+  "caption_metrics": {
+    "n": 18,
+    "by_source": {
+      "grid2op": 3,
+      "citylearn": 3,
+      "traffic": 3,
+      "water": 3,
+      "aiopslab": 3,
+      "finrl": 3
+    },
+    "empty_caption_rate": 0.0,
+    "mean_caption_chars": 52.0
+  }
+}

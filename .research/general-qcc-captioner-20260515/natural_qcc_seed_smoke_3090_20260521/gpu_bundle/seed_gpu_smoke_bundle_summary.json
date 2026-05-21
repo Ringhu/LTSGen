@@ -1,0 +1,22 @@
+{
+  "seed_dir": ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_v1_20260521",
+  "out_dir": ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle",
+  "split_policy": "all rows forced to test for overfit-style smoke evaluation",
+  "n": 72,
+  "qcond_n": 72,
+  "no_question_n": 72,
+  "by_domain": {
+    "grid2op": 12,
+    "citylearn": 12,
+    "traffic": 12,
+    "water": 12,
+    "aiopslab": 12,
+    "finrl": 12
+  },
+  "value_dim_counts": {
+    "4": 52,
+    "3": 20
+  },
+  "missing_english_options_filled": 12,
+  "missing_question_filled_from_zh": 12
+}

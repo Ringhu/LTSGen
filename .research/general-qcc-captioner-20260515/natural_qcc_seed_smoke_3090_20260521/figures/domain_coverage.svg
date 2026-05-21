@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="380.0" y="32" text-anchor="middle" font-family="Arial" font-size="20" font-weight="700">Seed Smoke Coverage by Domain</text>
+<line x1="95" y1="340.0" x2="720" y2="340.0" stroke="#e5e7eb"/>
+<text x="83" y="344.0" text-anchor="end" font-family="Arial" font-size="12" fill="#4b5563">0.0</text>
+<line x1="95" y1="286.0" x2="720" y2="286.0" stroke="#e5e7eb"/>
+<text x="83" y="290.0" text-anchor="end" font-family="Arial" font-size="12" fill="#4b5563">2.4</text>
+<line x1="95" y1="232.0" x2="720" y2="232.0" stroke="#e5e7eb"/>
+<text x="83" y="236.0" text-anchor="end" font-family="Arial" font-size="12" fill="#4b5563">4.8</text>
+<line x1="95" y1="178.0" x2="720" y2="178.0" stroke="#e5e7eb"/>
+<text x="83" y="182.0" text-anchor="end" font-family="Arial" font-size="12" fill="#4b5563">7.2</text>
+<line x1="95" y1="124.0" x2="720" y2="124.0" stroke="#e5e7eb"/>
+<text x="83" y="128.0" text-anchor="end" font-family="Arial" font-size="12" fill="#4b5563">9.6</text>
+<line x1="95" y1="70.0" x2="720" y2="70.0" stroke="#e5e7eb"/>
+<text x="83" y="74.0" text-anchor="end" font-family="Arial" font-size="12" fill="#4b5563">12.0</text>
+<rect x="124.3" y="70.0" width="70" height="270.0" rx="4" fill="#2563eb"/>
+<text x="159.3" y="62.0" text-anchor="middle" font-family="Arial" font-size="13" font-weight="700">12.00</text>
+<text x="159.3" y="370" text-anchor="middle" font-family="Arial" font-size="12" fill="#111827">grid2op</text>
+<rect x="223.6" y="70.0" width="70" height="270.0" rx="4" fill="#0f766e"/>
+<text x="258.6" y="62.0" text-anchor="middle" font-family="Arial" font-size="13" font-weight="700">12.00</text>
+<text x="258.6" y="370" text-anchor="middle" font-family="Arial" font-size="12" fill="#111827">citylearn</text>
+<rect x="322.9" y="70.0" width="70" height="270.0" rx="4" fill="#f59e0b"/>
+<text x="357.9" y="62.0" text-anchor="middle" font-family="Arial" font-size="13" font-weight="700">12.00</text>
+<text x="357.9" y="370" text-anchor="middle" font-family="Arial" font-size="12" fill="#111827">traffic</text>
+<rect x="422.1" y="70.0" width="70" height="270.0" rx="4" fill="#7c3aed"/>
+<text x="457.1" y="62.0" text-anchor="middle" font-family="Arial" font-size="13" font-weight="700">12.00</text>
+<text x="457.1" y="370" text-anchor="middle" font-family="Arial" font-size="12" fill="#111827">water</text>
+<rect x="521.4" y="70.0" width="70" height="270.0" rx="4" fill="#dc2626"/>
+<text x="556.4" y="62.0" text-anchor="middle" font-family="Arial" font-size="13" font-weight="700">12.00</text>
+<text x="556.4" y="370" text-anchor="middle" font-family="Arial" font-size="12" fill="#111827">aiopslab</text>
+<rect x="620.7" y="70.0" width="70" height="270.0" rx="4" fill="#0891b2"/>
+<text x="655.7" y="62.0" text-anchor="middle" font-family="Arial" font-size="13" font-weight="700">12.00</text>
+<text x="655.7" y="370" text-anchor="middle" font-family="Arial" font-size="12" fill="#111827">finrl</text>
+</svg>

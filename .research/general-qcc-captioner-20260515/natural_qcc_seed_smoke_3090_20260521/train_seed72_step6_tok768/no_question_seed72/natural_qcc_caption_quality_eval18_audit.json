@@ -1,0 +1,96 @@
+{
+  "predictions_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/train_seed72_step6_tok768/no_question_seed72/generate_eval18_clean/predictions.jsonl",
+  "gold_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_gold_smoke_eval18.jsonl",
+  "caption_field": "pred_caption",
+  "splits": [
+    "test"
+  ],
+  "metrics": {
+    "n": 18,
+    "mean_caption_chars": 52.0,
+    "numeric_evidence_rate": 0.6667,
+    "evidence_shape_rate": 0.3333,
+    "answer_label_only_rate": 0.3333,
+    "option_letter_leak_rate": 0.0,
+    "jsonish_output_rate": 0.0,
+    "too_short_rate": 0.6667,
+    "by_source": {
+      "aiopslab": {
+        "n": 3,
+        "evidence_shape_rate": 0.0,
+        "answer_label_only_rate": 1.0,
+        "numeric_evidence_rate": 0.0
+      },
+      "citylearn": {
+        "n": 3,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0,
+        "numeric_evidence_rate": 1.0
+      },
+      "finrl": {
+        "n": 3,
+        "evidence_shape_rate": 0.0,
+        "answer_label_only_rate": 0.0,
+        "numeric_evidence_rate": 1.0
+      },
+      "grid2op": {
+        "n": 3,
+        "evidence_shape_rate": 0.0,
+        "answer_label_only_rate": 1.0,
+        "numeric_evidence_rate": 0.0
+      },
+      "traffic": {
+        "n": 3,
+        "evidence_shape_rate": 0.0,
+        "answer_label_only_rate": 0.0,
+        "numeric_evidence_rate": 1.0
+      },
+      "water": {
+        "n": 3,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0,
+        "numeric_evidence_rate": 1.0
+      }
+    },
+    "by_task_family": {
+      "self_contained_aiops_symptom_triage": {
+        "n": 3,
+        "evidence_shape_rate": 0.0,
+        "answer_label_only_rate": 1.0
+      },
+      "self_contained_building_net_load_reserve": {
+        "n": 3,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      },
+      "self_contained_finrl_return_drawdown_regime": {
+        "n": 3,
+        "evidence_shape_rate": 0.0,
+        "answer_label_only_rate": 0.0
+      },
+      "self_contained_grid_counterfactual_risk": {
+        "n": 3,
+        "evidence_shape_rate": 0.0,
+        "answer_label_only_rate": 1.0
+      },
+      "self_contained_traffic_recovery_reasoning": {
+        "n": 3,
+        "evidence_shape_rate": 0.0,
+        "answer_label_only_rate": 0.0
+      },
+      "self_contained_water_service_recovery": {
+        "n": 3,
+        "evidence_shape_rate": 1.0,
+        "answer_label_only_rate": 0.0
+      }
+    },
+    "failure_reasons": {
+      "answer_label_only": 6,
+      "no_numeric_evidence": 6,
+      "too_short": 12
+    },
+    "min_evidence_shape_rate": 0.8,
+    "max_answer_label_only_rate": 0.2,
+    "quality_gate_pass": false
+  }
+}

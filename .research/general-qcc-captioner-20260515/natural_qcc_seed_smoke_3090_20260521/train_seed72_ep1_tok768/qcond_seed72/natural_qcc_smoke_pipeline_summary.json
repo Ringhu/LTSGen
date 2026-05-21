@@ -1,0 +1,364 @@
+{
+  "dry_run": false,
+  "run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/train_seed72_ep1_tok768/qcond_seed72",
+  "steps": {
+    "preflight": {
+      "cmd": [
+        "/cluster/home/hulining/anaconda3/envs/opentslm/bin/python3",
+        "scripts/eval/check_natural_qcc_gpu_smoke_preflight.py",
+        "--train_sft",
+        ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_qcond_smoke.jsonl",
+        "--eval_sft",
+        ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_qcond_smoke.jsonl",
+        "--eval_raw",
+        ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_qcond_smoke.jsonl",
+        "--gold_jsonl",
+        ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_gold_smoke.jsonl",
+        "--model_path",
+        "Qwen/Qwen3-4B",
+        "--bridge_type",
+        "prefix",
+        "--min_gpu_mem_gb",
+        "20.0",
+        "--max_text_length",
+        "768",
+        "--max_prompt_length",
+        "640",
+        "--out",
+        ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/train_seed72_ep1_tok768/qcond_seed72/preflight.json"
+      ],
+      "cmd_string": "/cluster/home/hulining/anaconda3/envs/opentslm/bin/python3 scripts/eval/check_natural_qcc_gpu_smoke_preflight.py --train_sft .research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_qcond_smoke.jsonl --eval_sft .research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_qcond_smoke.jsonl --eval_raw .research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_qcond_smoke.jsonl --gold_jsonl .research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_gold_smoke.jsonl --model_path Qwen/Qwen3-4B --bridge_type prefix --min_gpu_mem_gb 20.0 --max_text_length 768 --max_prompt_length 640 --out .research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/train_seed72_ep1_tok768/qcond_seed72/preflight.json",
+      "cwd": "/cluster/home/hulining/LTSGEN_caption_model_longline_seed_smoke_20260521_164648",
+      "dry_run": false,
+      "returncode": 0,
+      "stdout_tail": "|                                         |                        |                  N/A |\\n+-----------------------------------------+------------------------+----------------------+\\n|   1  NVIDIA GeForce RTX 3090        Off |   00000000:1B:00.0 Off |                  N/A |\\n| 33%   25C    P8             19W /  350W |   22638MiB /  24576MiB |      0%      Default |\\n|                                         |                        |                  N/A |\\n+-----------------------------------------+------------------------+----------------------+\\n|   2  NVIDIA GeForce RTX 3090        Off |   00000000:3D:00.0 Off |                  N/A |\\n| 30%   26C    P8             16W /  350W |       4MiB /  24576MiB |      0%      Default |\\n|                                         |                        |                  N/A |\\n+-----------------------------------------+------------------------+----------------------+\\n|   3  NVIDIA GeForce RTX 3090        Off |   00000000:3E:00.0 Off |                  N/A |\\n| 30%   27C    P8             22W /  350W |       4MiB /  24576MiB |      0%      Default |\\n|                                         |                        |                  N/A |\\n+-----------------------------------------+------------------------+----------------------+\\n|   4  NVIDIA GeForce RTX 3090        Off |   00000000:88:00.0 Off |                  N/A |\\n| 33%   24C    P8             26W /  350W |       4MiB /  24576MiB |      0%      Default |\\n|                                         |                        |                  N/A |\\n+-----------------------------------------+------------------------+----------------------+\\n|   5  NVIDIA GeForce RTX 3090        Off |   00000000:89:00.0 Off |                  N/A |\\n| 30%   28C    P8             25W /  350W |       4MiB /  24576MiB |      0%      Default |\\n|                                         |                        |                  N/A |\\n+-----------------------------------------+------------------------+----------------------+\\n|   6  NVIDIA GeForce RTX 3090        Off |   00000000:B1:00.0 Off |                  N/A |\\n| 31%   25C    P8             18W /  350W |       4MiB /  24576MiB |      0%      Default |\\n|                                         |                        |                  N/A |\\n+-----------------------------------------+------------------------+----------------------+\\n|   7  NVIDIA GeForce RTX 3090        Off |   00000000:B2:00.0 Off |                  N/A |\\n| 30%   27C    P8             17W /  350W |       4MiB /  24576MiB |      0%      Default |\\n|                                         |                        |                  N/A |\\n+-----------------------------------------+------------------------+----------------------+\\n                                                                                         \\n+-----------------------------------------------------------------------------------------+\\n| Processes:                                                                              |\\n|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |\\n|        ID   ID                                                               Usage      |\\n|=========================================================================================|\\n|    0   N/A  N/A     92517      C   VLLM::EngineCore_DP0                        22632MiB |\\n|    1   N/A  N/A     92518      C   VLLM::EngineCore_DP1                        22632MiB |\\n+-----------------------------------------------------------------------------------------+\"\n  },\n  \"min_gpu_mem_gb\": 20.0,\n  \"max_gpu_mem_gb\": 23.68,\n  \"has_required_gpu_memory\": true,\n  \"bridge_type\": \"prefix\",\n  \"bridge_supported_by_current_tsrlm\": true,\n  \"tsrlm_config_constructible\": true,\n  \"tsrlm_config_error\": \"\",\n  \"python_modules\": {\n    \"torch\": true,\n    \"transformers\": true,\n    \"peft\": true\n  },\n  \"evaluator_exists\": true,\n  \"preflight_pass\": true\n}\n",
+      "stderr_tail": "",
+      "skipped": false
+    },
+    "train": {
+      "cmd": [
+        "/cluster/home/hulining/anaconda3/envs/opentslm/bin/python3",
+        "tslm/scripts/train_multisim_v5_smoke.py",
+        "--train_jsonl",
+        ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_qcond_smoke.jsonl",
+        "--eval_jsonl",
+        ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_qcond_smoke.jsonl",
+        "--llm_name_or_path",
+        "Qwen/Qwen3-4B",
+        "--output_dir",
+        ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/train_seed72_ep1_tok768/qcond_seed72",
+        "--trust_remote_code",
+        "--bridge_type",
+        "prefix",
+        "--ts_num_vars",
+        "4",
+        "--target_num_vars",
+        "4",
+        "--freeze_llm",
+        "--save_trainable_only",
+        "--bf16",
+        "--num_train_epochs",
+        "1.0",
+        "--per_device_train_batch_size",
+        "1",
+        "--per_device_eval_batch_size",
+        "1",
+        "--gradient_accumulation_steps",
+        "2",
+        "--max_text_length",
+        "768",
+        "--max_prompt_length",
+        "640",
+        "--source_group_key",
+        "merge_source_name",
+        "--max_train_samples",
+        "72",
+        "--max_eval_samples",
+        "72"
+      ],
+      "cmd_string": "/cluster/home/hulining/anaconda3/envs/opentslm/bin/python3 tslm/scripts/train_multisim_v5_smoke.py --train_jsonl .research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_qcond_smoke.jsonl --eval_jsonl .research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_qcond_smoke.jsonl --llm_name_or_path Qwen/Qwen3-4B --output_dir .research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/train_seed72_ep1_tok768/qcond_seed72 --trust_remote_code --bridge_type prefix --ts_num_vars 4 --target_num_vars 4 --freeze_llm --save_trainable_only --bf16 --num_train_epochs 1.0 --per_device_train_batch_size 1 --per_device_eval_batch_size 1 --gradient_accumulation_steps 2 --max_text_length 768 --max_prompt_length 640 --source_group_key merge_source_name --max_train_samples 72 --max_eval_samples 72",
+      "cwd": "/cluster/home/hulining/LTSGEN_caption_model_longline_seed_smoke_20260521_164648",
+      "dry_run": false,
+      "returncode": -11,
+      "stdout_tail": "",
+      "stderr_tail": "`torch_dtype` is deprecated! Use `dtype` instead!\n\nLoading weights:   0%|          | 0/398 [00:00<?, ?it/s]\nLoading weights:   3%|▎         | 10/398 [00:00<00:03, 97.11it/s]\nLoading weights:   5%|▌         | 20/398 [00:00<00:05, 70.04it/s]\nLoading weights:   7%|▋         | 28/398 [00:00<00:05, 67.96it/s]\nLoading weights:   9%|▉         | 37/398 [00:00<00:04, 72.22it/s]\nLoading weights:  13%|█▎        | 51/398 [00:00<00:03, 91.60it/s]\nLoading weights:  16%|█▌        | 62/398 [00:00<00:03, 96.57it/s]\nLoading weights:  18%|█▊        | 72/398 [00:00<00:03, 91.59it/s]\nLoading weights:  21%|██        | 82/398 [00:00<00:03, 88.07it/s]\nLoading weights:  25%|██▍       | 99/398 [00:01<00:02, 108.13it/s]\nLoading weights:  28%|██▊       | 111/398 [00:01<00:02, 98.08it/s]\nLoading weights:  31%|███       | 122/398 [00:01<00:03, 85.00it/s]\nLoading weights:  34%|███▍      | 137/398 [00:01<00:02, 98.39it/s]\nLoading weights:  37%|███▋      | 148/398 [00:01<00:03, 79.65it/s]\nLoading weights:  87%|████████▋ | 348/398 [00:01<00:00, 500.12it/s]\nLoading weights: 100%|██████████| 398/398 [00:01<00:00, 219.22it/s]\n/cluster/home/hulining/anaconda3/envs/opentslm/lib/python3.12/site-packages/torch/nn/modules/transformer.py:379: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True\n  warnings.warn(\nwarmup_ratio is deprecated and will be removed in v5.2. Use `warmup_steps` instead.\n[RANK 0] Detected kernel version 3.10.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.\n",
+      "skipped": false
+    }
+  },
+  "preflight": {
+    "train_sft": ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_qcond_smoke.jsonl",
+    "eval_sft": ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_qcond_smoke.jsonl",
+    "eval_raw": ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_qcond_smoke.jsonl",
+    "gold_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_gold_smoke.jsonl",
+    "model_path": "Qwen/Qwen3-4B",
+    "model_path_exists": false,
+    "model_is_hf_id": true,
+    "model_reference_ok": true,
+    "path_checks": {
+      ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_qcond_smoke.jsonl": true,
+      ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_gold_smoke.jsonl": true
+    },
+    "train_summary": {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_qcond_smoke.jsonl",
+      "exists": true,
+      "n": 72,
+      "missing_required_count": 0,
+      "missing_required_examples": [],
+      "value_dim_counts": {
+        "4": 52,
+        "3": 20
+      },
+      "split_counts": {
+        "test": 72
+      }
+    },
+    "eval_summary": {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_qcond_smoke.jsonl",
+      "exists": true,
+      "n": 72,
+      "missing_required_count": 0,
+      "missing_required_examples": [],
+      "value_dim_counts": {
+        "4": 52,
+        "3": 20
+      },
+      "split_counts": {
+        "test": 72
+      }
+    },
+    "raw_eval_summary": {
+      "path": ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_qcond_smoke.jsonl",
+      "exists": true,
+      "n": 72,
+      "missing_required_count": 0,
+      "missing_required_examples": [],
+      "value_dim_counts": {
+        "4": 52,
+        "3": 20
+      },
+      "split_counts": {
+        "test": 72
+      }
+    },
+    "token_budget": {
+      "max_text_length": 768,
+      "max_prompt_length": 640,
+      "allow_output_truncation": false,
+      "allow_prompt_truncation": false,
+      "tokenizer_loaded": true,
+      "train": {
+        "path": ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_qcond_smoke.jsonl",
+        "checked": true,
+        "n": 72,
+        "max_text_length": 768,
+        "max_prompt_length": 640,
+        "add_eos": true,
+        "zero_output_kept": 0,
+        "zero_output_kept_rate": 0.0,
+        "output_truncated": 0,
+        "output_truncated_rate": 0.0,
+        "prompt_truncated": 0,
+        "prompt_truncated_rate": 0.0,
+        "eos_only_supervision": 0,
+        "mean_prompt_full_tokens": 284.6,
+        "mean_prompt_kept_tokens": 284.6,
+        "mean_output_full_tokens": 70.86,
+        "mean_output_kept_tokens": 70.86,
+        "min_output_kept_tokens": 43,
+        "max_output_kept_tokens": 88,
+        "max_needed_tokens": 408,
+        "examples": [
+          {
+            "id": "self_contained_reasoning_v3::grid2op::scenario_first_pilot::grid2op::line_disconnection::000::grid_line_disconnection_counterfactual_risk::self_contained_grid_counterfactual_risk",
+            "prompt_full_tokens": 321,
+            "prompt_kept_tokens": 321,
+            "prompt_truncated": false,
+            "output_full_tokens": 77,
+            "output_kept_tokens": 77,
+            "output_truncated": false,
+            "labels_non_ignored": 78,
+            "reserve_tokens": 323,
+            "needed_tokens": 400,
+            "supervised_text_preview": "Across the compact blocks, the outage-minus-normal stress difference stays close to zero. Mean x0 is -0.01, with 0.0% of"
+          },
+          {
+            "id": "self_contained_reasoning_v3::grid2op::scenario_first_pilot::grid2op::line_disconnection::006::grid_line_disconnection_counterfactual_risk::self_contained_grid_counterfactual_risk",
+            "prompt_full_tokens": 321,
+            "prompt_kept_tokens": 321,
+            "prompt_truncated": false,
+            "output_full_tokens": 77,
+            "output_kept_tokens": 77,
+            "output_truncated": false,
+            "labels_non_ignored": 78,
+            "reserve_tokens": 323,
+            "needed_tokens": 400,
+            "supervised_text_preview": "Across the compact blocks, the outage-minus-normal stress difference stays close to zero. Mean x0 is 0.00, with 0.0% of "
+          },
+          {
+            "id": "self_contained_reasoning_v3::grid2op::scenario_first_pilot::grid2op::line_disconnection::012::grid_line_disconnection_counterfactual_risk::self_contained_grid_counterfactual_risk",
+            "prompt_full_tokens": 321,
+            "prompt_kept_tokens": 321,
+            "prompt_truncated": false,
+            "output_full_tokens": 79,
+            "output_kept_tokens": 79,
+            "output_truncated": false,
+            "labels_non_ignored": 80,
+            "reserve_tokens": 323,
+            "needed_tokens": 402,
+            "supervised_text_preview": "Across the compact blocks, the outage run is consistently less stressful than the matched normal run. Mean x0 is -0.11, "
+          },
+          {
+            "id": "self_contained_reasoning_v3::grid2op::scenario_first_pilot::grid2op::line_disconnection::030::grid_line_disconnection_counterfactual_risk::self_contained_grid_counterfactual_risk",
+            "prompt_full_tokens": 321,
+            "prompt_kept_tokens": 321,
+            "prompt_truncated": false,
+            "output_full_tokens": 79,
+            "output_kept_tokens": 79,
+            "output_truncated": false,
+            "labels_non_ignored": 80,
+            "reserve_tokens": 323,
+            "needed_tokens": 402,
+            "supervised_text_preview": "Across the compact blocks, the outage run is consistently more stressful than the matched normal run. Mean x0 is 0.15, w"
+          },
+          {
+            "id": "self_contained_reasoning_v3::grid2op::scenario_first_pilot::grid2op::line_disconnection::042::grid_line_disconnection_counterfactual_risk::self_contained_grid_counterfactual_risk",
+            "prompt_full_tokens": 321,
+            "prompt_kept_tokens": 321,
+            "prompt_truncated": false,
+            "output_full_tokens": 79,
+            "output_kept_tokens": 79,
+            "output_truncated": false,
+            "labels_non_ignored": 80,
+            "reserve_tokens": 323,
+            "needed_tokens": 402,
+            "supervised_text_preview": "Across the compact blocks, the outage run is consistently more stressful than the matched normal run. Mean x0 is 0.12, w"
+          }
+        ],
+        "zero_output_examples": [],
+        "output_truncated_examples": [],
+        "prompt_truncated_examples": []
+      },
+      "eval": {
+        "path": ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_qcond_smoke.jsonl",
+        "checked": true,
+        "n": 72,
+        "max_text_length": 768,
+        "max_prompt_length": 640,
+        "add_eos": true,
+        "zero_output_kept": 0,
+        "zero_output_kept_rate": 0.0,
+        "output_truncated": 0,
+        "output_truncated_rate": 0.0,
+        "prompt_truncated": 0,
+        "prompt_truncated_rate": 0.0,
+        "eos_only_supervision": 0,
+        "mean_prompt_full_tokens": 284.6,
+        "mean_prompt_kept_tokens": 284.6,
+        "mean_output_full_tokens": 70.86,
+        "mean_output_kept_tokens": 70.86,
+        "min_output_kept_tokens": 43,
+        "max_output_kept_tokens": 88,
+        "max_needed_tokens": 408,
+        "examples": [
+          {
+            "id": "self_contained_reasoning_v3::grid2op::scenario_first_pilot::grid2op::line_disconnection::000::grid_line_disconnection_counterfactual_risk::self_contained_grid_counterfactual_risk",
+            "prompt_full_tokens": 321,
+            "prompt_kept_tokens": 321,
+            "prompt_truncated": false,
+            "output_full_tokens": 77,
+            "output_kept_tokens": 77,
+            "output_truncated": false,
+            "labels_non_ignored": 78,
+            "reserve_tokens": 323,
+            "needed_tokens": 400,
+            "supervised_text_preview": "Across the compact blocks, the outage-minus-normal stress difference stays close to zero. Mean x0 is -0.01, with 0.0% of"
+          },
+          {
+            "id": "self_contained_reasoning_v3::grid2op::scenario_first_pilot::grid2op::line_disconnection::006::grid_line_disconnection_counterfactual_risk::self_contained_grid_counterfactual_risk",
+            "prompt_full_tokens": 321,
+            "prompt_kept_tokens": 321,
+            "prompt_truncated": false,
+            "output_full_tokens": 77,
+            "output_kept_tokens": 77,
+            "output_truncated": false,
+            "labels_non_ignored": 78,
+            "reserve_tokens": 323,
+            "needed_tokens": 400,
+            "supervised_text_preview": "Across the compact blocks, the outage-minus-normal stress difference stays close to zero. Mean x0 is 0.00, with 0.0% of "
+          },
+          {
+            "id": "self_contained_reasoning_v3::grid2op::scenario_first_pilot::grid2op::line_disconnection::012::grid_line_disconnection_counterfactual_risk::self_contained_grid_counterfactual_risk",
+            "prompt_full_tokens": 321,
+            "prompt_kept_tokens": 321,
+            "prompt_truncated": false,
+            "output_full_tokens": 79,
+            "output_kept_tokens": 79,
+            "output_truncated": false,
+            "labels_non_ignored": 80,
+            "reserve_tokens": 323,
+            "needed_tokens": 402,
+            "supervised_text_preview": "Across the compact blocks, the outage run is consistently less stressful than the matched normal run. Mean x0 is -0.11, "
+          },
+          {
+            "id": "self_contained_reasoning_v3::grid2op::scenario_first_pilot::grid2op::line_disconnection::030::grid_line_disconnection_counterfactual_risk::self_contained_grid_counterfactual_risk",
+            "prompt_full_tokens": 321,
+            "prompt_kept_tokens": 321,
+            "prompt_truncated": false,
+            "output_full_tokens": 79,
+            "output_kept_tokens": 79,
+            "output_truncated": false,
+            "labels_non_ignored": 80,
+            "reserve_tokens": 323,
+            "needed_tokens": 402,
+            "supervised_text_preview": "Across the compact blocks, the outage run is consistently more stressful than the matched normal run. Mean x0 is 0.15, w"
+          },
+          {
+            "id": "self_contained_reasoning_v3::grid2op::scenario_first_pilot::grid2op::line_disconnection::042::grid_line_disconnection_counterfactual_risk::self_contained_grid_counterfactual_risk",
+            "prompt_full_tokens": 321,
+            "prompt_kept_tokens": 321,
+            "prompt_truncated": false,
+            "output_full_tokens": 79,
+            "output_kept_tokens": 79,
+            "output_truncated": false,
+            "labels_non_ignored": 80,
+            "reserve_tokens": 323,
+            "needed_tokens": 402,
+            "supervised_text_preview": "Across the compact blocks, the outage run is consistently more stressful than the matched normal run. Mean x0 is 0.12, w"
+          }
+        ],
+        "zero_output_examples": [],
+        "output_truncated_examples": [],
+        "prompt_truncated_examples": []
+      },
+      "token_budget_pass": true
+    },
+    "cuda": {
+      "torch_import": true,
+      "cuda_available": true,
+      "devices": [
+        {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 3090",
+          "total_memory_gb": 23.68
+        }
+      ],
+      "nvidia_smi_returncode": 0,
+      "nvidia_smi_tail": "         Memory-Usage | GPU-Util  Compute M. |\n|                                         |                        |               MIG M. |\n|=========================================+========================+======================|\n|   0  NVIDIA GeForce RTX 3090        Off |   00000000:1A:00.0 Off |                  N/A |\n| 31%   25C    P8             21W /  350W |   22638MiB /  24576MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n|   1  NVIDIA GeForce RTX 3090        Off |   00000000:1B:00.0 Off |                  N/A |\n| 33%   25C    P8             19W /  350W |   22638MiB /  24576MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n|   2  NVIDIA GeForce RTX 3090        Off |   00000000:3D:00.0 Off |                  N/A |\n| 30%   26C    P8             16W /  350W |       4MiB /  24576MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n|   3  NVIDIA GeForce RTX 3090        Off |   00000000:3E:00.0 Off |                  N/A |\n| 30%   27C    P8             22W /  350W |       4MiB /  24576MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n|   4  NVIDIA GeForce RTX 3090        Off |   00000000:88:00.0 Off |                  N/A |\n| 33%   24C    P8             26W /  350W |       4MiB /  24576MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n|   5  NVIDIA GeForce RTX 3090        Off |   00000000:89:00.0 Off |                  N/A |\n| 30%   28C    P8             25W /  350W |       4MiB /  24576MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n|   6  NVIDIA GeForce RTX 3090        Off |   00000000:B1:00.0 Off |                  N/A |\n| 31%   25C    P8             18W /  350W |       4MiB /  24576MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n|   7  NVIDIA GeForce RTX 3090        Off |   00000000:B2:00.0 Off |                  N/A |\n| 30%   27C    P8             17W /  350W |       4MiB /  24576MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n                                                                                         \n+-----------------------------------------------------------------------------------------+\n| Processes:                                                                              |\n|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |\n|        ID   ID                                                               Usage      |\n|=========================================================================================|\n|    0   N/A  N/A     92517      C   VLLM::EngineCore_DP0                        22632MiB |\n|    1   N/A  N/A     92518      C   VLLM::EngineCore_DP1                        22632MiB |\n+-----------------------------------------------------------------------------------------+"
+    },
+    "min_gpu_mem_gb": 20.0,
+    "max_gpu_mem_gb": 23.68,
+    "has_required_gpu_memory": true,
+    "bridge_type": "prefix",
+    "bridge_supported_by_current_tsrlm": true,
+    "tsrlm_config_constructible": true,
+    "tsrlm_config_error": "",
+    "python_modules": {
+      "torch": true,
+      "transformers": true,
+      "peft": true
+    },
+    "evaluator_exists": true,
+    "preflight_pass": true
+  },
+  "stopped_after": "train"
+}

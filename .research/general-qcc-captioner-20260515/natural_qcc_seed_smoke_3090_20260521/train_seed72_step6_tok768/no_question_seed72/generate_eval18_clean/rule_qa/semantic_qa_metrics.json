@@ -1,0 +1,69 @@
+{
+  "predictions_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/train_seed72_step6_tok768/no_question_seed72/generate_eval18_clean/predictions.jsonl",
+  "gold_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_seed_smoke_3090_20260521/gpu_bundle/seed_gold_smoke_eval18.jsonl",
+  "caption_field": "pred_caption",
+  "splits": [
+    "test"
+  ],
+  "metrics": {
+    "n": 18,
+    "accuracy": 0.0,
+    "empty_answer_rate": 1.0,
+    "by_source": {
+      "aiopslab": {
+        "n": 3,
+        "accuracy": 0.0
+      },
+      "citylearn": {
+        "n": 3,
+        "accuracy": 0.0
+      },
+      "finrl": {
+        "n": 3,
+        "accuracy": 0.0
+      },
+      "grid2op": {
+        "n": 3,
+        "accuracy": 0.0
+      },
+      "traffic": {
+        "n": 3,
+        "accuracy": 0.0
+      },
+      "water": {
+        "n": 3,
+        "accuracy": 0.0
+      }
+    },
+    "by_task_family": {
+      "self_contained_aiops_symptom_triage": {
+        "n": 3,
+        "accuracy": 0.0
+      },
+      "self_contained_building_net_load_reserve": {
+        "n": 3,
+        "accuracy": 0.0
+      },
+      "self_contained_finrl_return_drawdown_regime": {
+        "n": 3,
+        "accuracy": 0.0
+      },
+      "self_contained_grid_counterfactual_risk": {
+        "n": 3,
+        "accuracy": 0.0
+      },
+      "self_contained_traffic_recovery_reasoning": {
+        "n": 3,
+        "accuracy": 0.0
+      },
+      "self_contained_water_service_recovery": {
+        "n": 3,
+        "accuracy": 0.0
+      }
+    },
+    "reason_distribution": {
+      "no_semantic_match": 18
+    }
+  },
+  "claim_scope": "deterministic_semantic_bridge_diagnostic_not_llm_judge"
+}
