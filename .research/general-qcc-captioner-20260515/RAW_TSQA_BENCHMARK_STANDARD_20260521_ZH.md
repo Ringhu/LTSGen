@@ -47,21 +47,39 @@ Oracle evidence 只用于诊断上界或 caption-interface 对照实验。
   "domain": "water_service",
   "time_series": {
     "columns": ["pressure", "flow", "storage"],
-    "values": [[...], [...]]
+    "values": [[...], [...]],
+    "time_axis": "ordered before-during-after disturbance window",
+    "time_axis_zh": "按时间排序的扰动前-扰动中-扰动后窗口"
   },
-  "variable_descriptions": {
+  "variable_descriptions_en": {
     "pressure": "service pressure",
     "flow": "pipe flow",
     "storage": "storage context signal"
   },
-  "question": "Which service state best describes the event window?",
-  "options": {
+  "variable_descriptions_zh": {
+    "pressure": "服务水压",
+    "flow": "管道流量",
+    "storage": "蓄水背景信号"
+  },
+  "context_en": "A water-service operator is reviewing pressure and flow readings around a disturbance event.",
+  "context_zh": "供水运维人员正在查看一次扰动事件前后水压和流量读数。",
+  "question_en": "Which service state best describes this disturbance window?",
+  "question_zh": "这段扰动窗口最符合哪种供水服务状态？",
+  "options_en": {
     "A": "persistent leak pressure risk",
     "B": "pressure recovers after disturbance",
     "C": "stable service",
     "D": "manual review needed"
   },
-  "answer": "B"
+  "options_zh": {
+    "A": "持续漏水压力风险",
+    "B": "扰动后水压恢复",
+    "C": "服务保持稳定",
+    "D": "需要人工复核"
+  },
+  "answer": "B",
+  "answer_label": "pressure recovers after disturbance",
+  "answer_label_zh": "扰动后水压恢复"
 }
 ```
 
@@ -84,13 +102,14 @@ Oracle evidence 只用于诊断上界或 caption-interface 对照实验。
 | `domain` | 公开领域名，如 `power_grid`, `building_energy`, `traffic`, `water_service`, `service_telemetry`, `market` |
 | `time_series.columns` | 原始时序变量名 |
 | `time_series.values` | 原始时序数值数组 |
-| `time_axis` | 时间顺序说明，例如 ordered event window |
-| `variable_descriptions` | 变量自然语言解释 |
-| `context` | 简洁领域背景 |
-| `question` | 自然 QA 问题 |
-| `options` | A-D 四个选项 |
+| `time_series.time_axis` / `time_series.time_axis_zh` | 中英文时间顺序说明 |
+| `variable_descriptions_en` / `variable_descriptions_zh` | 中英文变量自然语言解释 |
+| `context_en` / `context_zh` | 中英文领域背景 |
+| `decision_rule_en` / `decision_rule_zh` | 中英文判定规则 |
+| `question_en` / `question_zh` | 中英文自然 QA 问题 |
+| `options_en` / `options_zh` | 中英文 A-D 四个选项 |
 | `answer` | gold letter |
-| `answer_label` | gold option text |
+| `answer_label` / `answer_label_zh` | 中英文 gold option text |
 | `task_family` | task taxonomy |
 | `reasoning_skill_tags` | trend / extrema / temporal comparison / counterfactual effect 等 |
 

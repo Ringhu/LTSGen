@@ -81,6 +81,26 @@ def main() -> None:
             errors.append({"id": row["id"], "code": "series_too_short", "length": len(values)})
         if not values or any(len(record) != len(columns) for record in values):
             errors.append({"id": row["id"], "code": "bad_series_shape"})
+        for key in (
+            "context_en",
+            "context_zh",
+            "decision_rule_en",
+            "decision_rule_zh",
+            "question_en",
+            "question_zh",
+            "options_en",
+            "options_zh",
+            "answer_label",
+            "answer_label_zh",
+        ):
+            if not row.get(key):
+                errors.append({"id": row["id"], "code": "missing_bilingual_field", "field": key})
+        if not row.get("variable_descriptions_en") or not row.get("variable_descriptions_zh"):
+            errors.append({"id": row["id"], "code": "missing_bilingual_variable_descriptions"})
+        if not row.get("time_series", {}).get("time_axis") or not row.get("time_series", {}).get("time_axis_zh"):
+            errors.append({"id": row["id"], "code": "missing_bilingual_time_axis"})
+        if set(row.get("options_en", {})) != {"A", "B", "C", "D"} or set(row.get("options_zh", {})) != {"A", "B", "C", "D"}:
+            errors.append({"id": row["id"], "code": "bad_bilingual_options"})
         if row["answer"] not in {"A", "B", "C", "D"}:
             errors.append({"id": row["id"], "code": "bad_answer_letter"})
         if row["answer_label"] != row["options_en"][row["answer"]]:

@@ -207,6 +207,7 @@ def grid_record(row: dict[str, Any], raw: list[list[float]]) -> dict[str, Any]:
             "columns": ["stress_delta", "demand_context", "generation_margin_context"],
             "values": raw,
             "time_axis": "ordered post-event operating window",
+            "time_axis_zh": "按时间排序的事件后运行窗口",
         },
         "variable_descriptions_en": {
             "stress_delta": "planned-outage line stress minus normal-operation line stress",
@@ -272,6 +273,7 @@ def city_record(row: dict[str, Any], raw: list[list[float]]) -> dict[str, Any]:
             "columns": ["demand", "weather_context", "solar_support"],
             "values": raw,
             "time_axis": "ordered operating window",
+            "time_axis_zh": "按时间排序的运行窗口",
         },
         "variable_descriptions_en": {
             "demand": "building electricity demand",
@@ -342,6 +344,7 @@ def traffic_record(row: dict[str, Any], raw: list[list[float]]) -> dict[str, Any
             "columns": ["speed", "queue_length", "lane_occupancy"],
             "values": raw,
             "time_axis": "ordered before-during-after event window",
+            "time_axis_zh": "按时间排序的事件前-事件中-事件后窗口",
         },
         "variable_descriptions_en": {
             "speed": "mean speed",
@@ -415,6 +418,7 @@ def water_record(row: dict[str, Any], raw: list[list[float]]) -> dict[str, Any]:
             "columns": ["pressure", "flow", "storage_context"],
             "values": raw,
             "time_axis": "ordered before-during-after disturbance window",
+            "time_axis_zh": "按时间排序的扰动前-扰动中-扰动后窗口",
         },
         "variable_descriptions_en": {
             "pressure": "service pressure",
@@ -490,6 +494,7 @@ def aiops_record(row: dict[str, Any], raw: list[list[float]]) -> dict[str, Any]:
             "columns": ["cpu_load", "memory_working_set", "network_receive_rate", "network_transmit_rate"],
             "values": raw,
             "time_axis": "ordered service telemetry window",
+            "time_axis_zh": "按时间排序的服务遥测窗口",
         },
         "variable_descriptions_en": {
             "cpu_load": "CPU load",
@@ -562,6 +567,7 @@ def finrl_record(row: dict[str, Any], raw: list[list[float]]) -> dict[str, Any]:
             "columns": ["asset_price", "market_context", "trading_volume"],
             "values": raw,
             "time_axis": "ordered market window",
+            "time_axis_zh": "按时间排序的市场窗口",
         },
         "variable_descriptions_en": {
             "asset_price": "asset price",
@@ -695,6 +701,7 @@ def tsllm_view(record: dict[str, Any]) -> dict[str, Any]:
         "timeseries": record["time_series"]["values"],
         "columns": record["time_series"]["columns"],
         "time_axis": record["time_series"]["time_axis"],
+        "time_axis_zh": record["time_series"]["time_axis_zh"],
         "text_en": text_en,
         "text_zh": text_zh,
         "answer": record["answer"],
