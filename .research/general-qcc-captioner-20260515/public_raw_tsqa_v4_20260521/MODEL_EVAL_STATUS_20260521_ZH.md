@@ -91,6 +91,13 @@ python3 scripts/eval/evaluate_public_raw_tsqa_llm.py \
 
 结果：`n=1`，accuracy `1.0000`，mean latency `68.059s`。
 
+随后补充了 no-JSON 小样本 pilot：
+
+| Run | Prompts | Language | Acc. | Mean Latency |
+|---|---:|---|---:|---:|
+| `pilot_gpt55_public_raw_tsqa_v4_2items_en_nojson` | 2 | EN | 1.0000 | 45.575s |
+| `pilot_gpt55_public_raw_tsqa_v4_2items_zh_nojson` | 2 | ZH | 1.0000 | 29.859s |
+
 结论：脚本已支持 `gpt-5.5`，当前代理路径可连通，但正式跑应使用低并发、长 timeout、`--resume`，并暂时关闭 JSON response_format。
 
 推荐命令：
@@ -118,6 +125,8 @@ python3 scripts/eval/evaluate_public_raw_tsqa_llm.py \
 Failed to initialize NVML: Driver/library version mismatch
 NVML library version: 535.309
 ```
+
+同时，本机 `~/.ssh/` 下没有可用于登录 A100 的 SSH config 或私钥，因此无法从当前工作站直接远程启动 A100 作业。
 
 A100 评测脚本已经补齐并通过 `bash -n`：
 

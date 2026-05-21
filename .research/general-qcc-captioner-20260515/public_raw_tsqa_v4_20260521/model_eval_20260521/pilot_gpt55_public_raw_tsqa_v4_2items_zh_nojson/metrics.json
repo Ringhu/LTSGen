@@ -1,0 +1,65 @@
+{
+  "run": {
+    "dataset": ".research/general-qcc-captioner-20260515/public_raw_tsqa_v4_20260521/llm_text_view.jsonl",
+    "provider": "openai",
+    "model": "gpt-5.5",
+    "n_rows": 2,
+    "n_prompts": 2,
+    "languages": {
+      "zh": 2
+    },
+    "prompt_chars": {
+      "min": 7439,
+      "max": 8544,
+      "mean": 7991.5
+    },
+    "by_domain": {
+      "building_energy": 1,
+      "market": 1
+    },
+    "answer_distribution": {
+      "D": 1,
+      "A": 1
+    },
+    "dry_run": false,
+    "elapsed_sec": 59.72,
+    "error_count": 0
+  },
+  "overall": {
+    "n": 2,
+    "accuracy": 1.0,
+    "empty_answer_rate": 0.0,
+    "mean_latency_sec": 29.859
+  },
+  "by_language": {
+    "zh": {
+      "n": 2,
+      "accuracy": 1.0
+    }
+  },
+  "by_domain": {
+    "building_energy": {
+      "n": 1,
+      "accuracy": 1.0
+    },
+    "market": {
+      "n": 1,
+      "accuracy": 1.0
+    }
+  },
+  "by_task_family": {
+    "raw_building_net_load_reserve": {
+      "n": 1,
+      "accuracy": 1.0
+    },
+    "raw_finrl_return_drawdown_regime": {
+      "n": 1,
+      "accuracy": 1.0
+    }
+  },
+  "pred_answer_distribution": {
+    "D": 1,
+    "A": 1
+  },
+  "errors_preview": []
+}

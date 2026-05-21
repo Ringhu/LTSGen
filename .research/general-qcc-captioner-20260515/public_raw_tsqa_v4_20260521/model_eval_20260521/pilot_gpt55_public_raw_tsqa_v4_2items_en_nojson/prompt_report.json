@@ -1,0 +1,24 @@
+{
+  "dataset": ".research/general-qcc-captioner-20260515/public_raw_tsqa_v4_20260521/llm_text_view.jsonl",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "n_rows": 2,
+  "n_prompts": 2,
+  "languages": {
+    "en": 2
+  },
+  "prompt_chars": {
+    "min": 8248,
+    "max": 9112,
+    "mean": 8680
+  },
+  "by_domain": {
+    "building_energy": 1,
+    "market": 1
+  },
+  "answer_distribution": {
+    "D": 1,
+    "A": 1
+  },
+  "dry_run": false
+}
