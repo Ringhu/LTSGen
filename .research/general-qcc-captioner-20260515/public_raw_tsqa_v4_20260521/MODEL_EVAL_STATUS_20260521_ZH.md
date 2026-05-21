@@ -16,6 +16,7 @@
 - `scripts/eval/evaluate_public_raw_tsqa_llm.py`：OpenAI-compatible LLM 评测脚本。
 - `scripts/eval/compare_public_raw_tsqa_model_evals.py`：扫描所有完整评测 run，生成跨模型 comparison 表。
 - `scripts/eval/import_public_raw_tsqa_qwen_eval.py`：导入 A100 回传的 Qwen run 目录或 `.tar.gz`，生成错误摘要并刷新 comparison 表。
+- `scripts/remote/discover_public_raw_tsqa_qwen_a100.sh`：A100 端 Qwen 发现脚本，搜索 `hulining/swift` 等目录里的部署示例和 Qwen 模型路径。
 - `scripts/remote/preflight_public_raw_tsqa_qwen_a100.sh`：A100 端预检脚本，检查分支、数据、Python/vLLM、GPU、模型路径和端口。
 - `scripts/remote/run_public_raw_tsqa_qwen_eval_a100.sh`：A100 上启动 vLLM/Qwen 并调用同一评测脚本的入口。
 - `scripts/remote/run_public_raw_tsqa_qwen_suite_a100.sh`：A100 上按模型清单循环评测 Qwen 系列，并生成 suite summary。
@@ -31,7 +32,7 @@
 ```bash
 python3 scripts/eval/check_public_raw_tsqa_v4.py
 python3 -m py_compile scripts/generate/build_public_raw_tsqa_v4.py scripts/eval/check_public_raw_tsqa_v4.py scripts/eval/evaluate_public_raw_tsqa_llm.py scripts/eval/compare_public_raw_tsqa_model_evals.py scripts/eval/import_public_raw_tsqa_qwen_eval.py
-bash -n scripts/remote/preflight_public_raw_tsqa_qwen_a100.sh scripts/remote/run_public_raw_tsqa_qwen_eval_a100.sh scripts/remote/run_public_raw_tsqa_qwen_suite_a100.sh scripts/remote/package_public_raw_tsqa_qwen_eval_a100.sh
+bash -n scripts/remote/discover_public_raw_tsqa_qwen_a100.sh scripts/remote/preflight_public_raw_tsqa_qwen_a100.sh scripts/remote/run_public_raw_tsqa_qwen_eval_a100.sh scripts/remote/run_public_raw_tsqa_qwen_suite_a100.sh scripts/remote/package_public_raw_tsqa_qwen_eval_a100.sh
 ```
 
 已通过结果：sanity check `pass=true`，`n=39`，6 个 domain，错误数 `0`。
@@ -193,6 +194,8 @@ NVML library version: 535.309
 
 A100 评测脚本已经补齐并通过 `bash -n`：
 
+`scripts/remote/discover_public_raw_tsqa_qwen_a100.sh`
+
 `scripts/remote/preflight_public_raw_tsqa_qwen_a100.sh`
 
 `scripts/remote/run_public_raw_tsqa_qwen_eval_a100.sh`
@@ -213,7 +216,15 @@ Qwen 系列评测脚本：
 - 调用 `evaluate_public_raw_tsqa_llm.py --provider qwenlocal`。
 - 默认开启 `--resume`。
 
-推荐先在 A100 上做预检：
+如果不确定 A100 上的 Qwen 模型路径，先运行 discovery。它会搜索 `hulining/swift`、`TSModel/OpenTSLM`、`fenghaoran/model` 和 HuggingFace cache 等目录，输出部署示例片段和可直接复制的 `MODEL_SPECS`：
+
+```bash
+ROOT=/cluster/home/user1/hulining/LTSGEN \
+OUT_FILE=/cluster/home/user1/hulining/LTSGEN/.research/general-qcc-captioner-20260515/public_raw_tsqa_v4_20260521/model_eval_20260521/qwen_a100_discovery.md \
+scripts/remote/discover_public_raw_tsqa_qwen_a100.sh
+```
+
+随后用 discovery 输出的 `MODEL_SPECS` 做预检：
 
 ```bash
 ROOT=/cluster/home/user1/hulining/LTSGEN \

@@ -58,6 +58,7 @@ check_file "$ROOT/scripts/eval/compare_public_raw_tsqa_model_evals.py"
 check_file "$ROOT/scripts/remote/run_public_raw_tsqa_qwen_eval_a100.sh"
 check_file "$ROOT/scripts/remote/run_public_raw_tsqa_qwen_suite_a100.sh"
 check_file "$ROOT/scripts/remote/package_public_raw_tsqa_qwen_eval_a100.sh"
+check_file "$ROOT/scripts/remote/discover_public_raw_tsqa_qwen_a100.sh"
 
 if command -v git >/dev/null 2>&1 && git -C "$ROOT" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   current_branch="$(git -C "$ROOT" branch --show-current 2>/dev/null || true)"
@@ -77,6 +78,7 @@ check "python can import json/urllib" "$PY" -c "import json, urllib.request"
 check "python can import vllm" "$PY" -c "import vllm"
 check "dataset sanity" "$PY" "$ROOT/scripts/eval/check_public_raw_tsqa_v4.py"
 check "remote scripts bash syntax" bash -n \
+  "$ROOT/scripts/remote/discover_public_raw_tsqa_qwen_a100.sh" \
   "$ROOT/scripts/remote/run_public_raw_tsqa_qwen_eval_a100.sh" \
   "$ROOT/scripts/remote/run_public_raw_tsqa_qwen_suite_a100.sh" \
   "$ROOT/scripts/remote/package_public_raw_tsqa_qwen_eval_a100.sh"
@@ -103,8 +105,20 @@ while IFS= read -r raw_spec; do
   fi
   IFS="|" read -r slug served_name model_path cuda_devices port tensor_parallel_size max_model_len dtype gpu_memory_utilization <<<"$spec"
   echo "[model] slug=$slug served=$served_name path=$model_path cuda=$cuda_devices port=$port tp=${tensor_parallel_size:-1}"
-  check_dir "$model_path"
-  check "model config for $slug" test -f "$model_path/config.json"
+  if [[ -d "$model_path" ]]; then
+    echo "[ok] dir $model_path"
+  else
+    echo "[fail] missing dir $model_path" >&2
+    echo "[hint] run scripts/remote/discover_public_raw_tsqa_qwen_a100.sh on A100 to find Qwen model paths and MODEL_SPECS candidates" >&2
+    failures=$((failures + 1))
+  fi
+  if [[ -f "$model_path/config.json" ]]; then
+    echo "[ok] model config for $slug"
+  else
+    echo "[fail] model config for $slug" >&2
+    echo "[hint] expected $model_path/config.json; use discovery output to update MODEL_SPECS" >&2
+    failures=$((failures + 1))
+  fi
   check "CUDA_VISIBLE_DEVICES parse for $slug" test -n "$cuda_devices"
   check "port parse for $slug" test -n "$port"
   if command -v ss >/dev/null 2>&1; then
