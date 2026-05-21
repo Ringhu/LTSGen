@@ -85,6 +85,25 @@ Natural TS-QA/QCC 样例。
 - 完整目录有 60 张图和多份大 JSONL/SFT，只适合复现实验，不适合放在当前精简分支长期维护。
 - 当前用户已指出这批 case 质量不足，所以它只保留为来源和审计记录。
 
+### 4. Seed quality review v1
+
+路径：
+
+`.research/general-qcc-captioner-20260515/seed_quality_review_v1_20260521/`
+
+保留原因：
+
+- 它是当前 12 条 case-study seed 和 60 条 self-contained seed 的质量审计。
+- 它把 QA seed 是否可用和 caption target 是否可训练分开判断。
+- 当前结论是：72 条里 57 条 QA seed ready，但只有 10 条 caption train ready；
+  self-contained v2 的 60 条都需要先清洗 `target_caption`。
+
+用途：
+
+- 作为下一轮 v3 seed 修复清单。
+- 作为扩增前 reviewer gate 的第一版实现。
+- 防止后续继续把带 `Answer label` 的 caption 当作 evidence-only 训练目标。
+
 ## 当前 caption-model 训练相关文件
 
 这些文件继续保留在当前分支，因为它们解释了为什么 v2.2 qcond 训练会空生成，以及后续修复标准：
@@ -135,3 +154,8 @@ git checkout <commit-or-branch> -- <path>
 2. 以 `natural_qcc_case_quality_v1_20260521` 为反例/样例，重新定义“好 caption”的标准。
 3. 扩增前先做 reviewer gate：变量解释、规则自足、caption 是否围绕答案、英文/中文 caption 是否一致。
 4. 数据过 gate 后再进入 qcond/no-question 训练，而不是先训练再补解释。
+
+当前 reviewer gate 已落地为：
+
+- `scripts/eval/review_natural_qcc_seed_quality.py`
+- `tests/eval/test_review_natural_qcc_seed_quality.py`

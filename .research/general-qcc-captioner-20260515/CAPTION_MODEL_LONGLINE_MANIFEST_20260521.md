@@ -15,6 +15,8 @@ design review:
 - `scenario_first_real_source_smoke_v2_20260521/`: report, audit, and summary
   only. The full 60-row JSONL/SFT/figure dump remains recoverable from history
   but is intentionally not restored here.
+- `seed_quality_review_v1_20260521/`: first scripted review of the current
+  small seed data, separating QA readiness from caption-training readiness.
 
 ## Retained In Git
 
@@ -26,6 +28,7 @@ design review:
 - Token-budget and factuality diagnostics small enough to review in git.
 - Current Natural TS-QA/QCC design-review seed artifacts that are small enough to
   inspect directly in git.
+- The seed-quality reviewer script and regression test used before scaling.
 
 ## Excluded From Git
 
@@ -43,6 +46,7 @@ design review:
 - `scripts/train/run_natural_qcc_gpu_smoke.py`
 - `scripts/remote/run_natural_qcc_*`
 - `scripts/eval/audit_natural_qcc_*`
+- `scripts/eval/review_natural_qcc_seed_quality.py`
 - `scripts/eval/collect_natural_qcc_gpu_result_manifest.py`
 - `scripts/generate/build_natural_qcc_*`
 - `tslm/scripts/generate_multisim_v5_smoke.py`
