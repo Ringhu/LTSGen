@@ -1,0 +1,124 @@
+{
+  "predictions_jsonl": ".research/general-qcc-captioner-20260515/public_raw_tsqa_v4_20260521/model_eval_20260521/full_gpt55_public_raw_tsqa_v4_39items_bilingual_nojson/predictions.jsonl",
+  "n": 78,
+  "accuracy": 0.9487,
+  "wrong_n": 4,
+  "wrong_by_language": {
+    "en": 2,
+    "zh": 2
+  },
+  "wrong_by_domain": {
+    "water_service": 4
+  },
+  "wrong_by_task_family": {
+    "raw_water_service_recovery": 4
+  },
+  "by_language": {
+    "en": {
+      "n": 39,
+      "accuracy": 0.9487
+    },
+    "zh": {
+      "n": 39,
+      "accuracy": 0.9487
+    }
+  },
+  "by_domain": {
+    "building_energy": {
+      "n": 8,
+      "accuracy": 1.0
+    },
+    "market": {
+      "n": 20,
+      "accuracy": 1.0
+    },
+    "power_grid": {
+      "n": 14,
+      "accuracy": 1.0
+    },
+    "service_telemetry": {
+      "n": 18,
+      "accuracy": 1.0
+    },
+    "traffic": {
+      "n": 8,
+      "accuracy": 1.0
+    },
+    "water_service": {
+      "n": 10,
+      "accuracy": 0.6
+    }
+  },
+  "by_task_family": {
+    "raw_aiops_symptom_triage": {
+      "n": 18,
+      "accuracy": 1.0
+    },
+    "raw_building_net_load_reserve": {
+      "n": 8,
+      "accuracy": 1.0
+    },
+    "raw_finrl_return_drawdown_regime": {
+      "n": 20,
+      "accuracy": 1.0
+    },
+    "raw_grid_counterfactual_risk": {
+      "n": 14,
+      "accuracy": 1.0
+    },
+    "raw_traffic_recovery_reasoning": {
+      "n": 8,
+      "accuracy": 1.0
+    },
+    "raw_water_service_recovery": {
+      "n": 10,
+      "accuracy": 0.6
+    }
+  },
+  "wrong_examples": [
+    {
+      "id": "public_raw_tsqa_v4_00019",
+      "language": "en",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "C",
+      "pred_answer": "A",
+      "gold_answer_label": "Service remains stable.",
+      "pred_answer_label": "Persistent leak pressure risk.",
+      "reason": "Pressure drops to low levels near the end of the window while flow is elevated around 13+, and the pressure remains depressed rather than recovering to the earlier 72–77 range."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00019",
+      "language": "zh",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "C",
+      "pred_answer": "B",
+      "gold_answer_label": "服务保持稳定",
+      "pred_answer_label": "扰动后水压恢复",
+      "reason": "扰动期间流量明显升高至约13–14，水压相对事件前高位明显下降到约69–71；但事件后水压回升到约76–78，接近或高于事件前水平，因此更符合扰动后水压恢复。"
+    },
+    {
+      "id": "public_raw_tsqa_v4_00021",
+      "language": "en",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "A",
+      "pred_answer": "B",
+      "gold_answer_label": "Persistent leak pressure risk.",
+      "pred_answer_label": "Pressure recovers after the disturbance.",
+      "reason": "Pressure drops substantially during the disturbance while flow increases, but afterward pressure rebounds to around the pre-event level by the end of the window."
+    },
+    {
+      "id": "public_raw_tsqa_v4_00021",
+      "language": "zh",
+      "domain": "water_service",
+      "task_family": "raw_water_service_recovery",
+      "gold_answer": "A",
+      "pred_answer": "B",
+      "gold_answer_label": "持续漏水压力风险",
+      "pred_answer_label": "扰动后水压恢复",
+      "reason": "扰动期间水压从约70以上明显降至约52左右，同时流量升高到约15-17；但事件后水压逐步恢复到约66-70，接近扰动前水平，因此更符合扰动后水压恢复。"
+    }
+  ]
+}

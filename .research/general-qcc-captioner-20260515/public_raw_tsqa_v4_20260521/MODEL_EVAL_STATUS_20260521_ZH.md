@@ -99,7 +99,45 @@ python3 scripts/eval/evaluate_public_raw_tsqa_llm.py \
 | `pilot_gpt55_public_raw_tsqa_v4_2items_zh_nojson` | 2 | ZH | 1.0000 | 29.859s |
 | `pilot_gpt55_public_raw_tsqa_v4_6items_bilingual_nojson` | 12 | EN+ZH | 1.0000 | 22.782s |
 
-结论：脚本已支持 `gpt-5.5`，当前代理路径可连通，但正式跑应使用低并发、长 timeout、`--resume`，并暂时关闭 JSON response_format。
+正式 full bilingual no-JSON 评测已完成：
+
+```bash
+python3 scripts/eval/evaluate_public_raw_tsqa_llm.py \
+  --provider openai \
+  --model gpt-5.5 \
+  --languages both \
+  --run_name full_gpt55_public_raw_tsqa_v4_39items_bilingual_nojson \
+  --concurrency 1 \
+  --timeout 1200 \
+  --max_retries 1 \
+  --progress_every 1 \
+  --max_tokens 120 \
+  --no_response_format \
+  --resume
+```
+
+结果目录：
+
+`.research/general-qcc-captioner-20260515/public_raw_tsqa_v4_20260521/model_eval_20260521/full_gpt55_public_raw_tsqa_v4_39items_bilingual_nojson/`
+
+核心结果：
+
+| Model | Rows | Prompts | Overall Acc. | EN Acc. | ZH Acc. | Empty Answer | Error Count |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `gpt-5.5` | 39 | 78 | 0.9487 | 0.9487 | 0.9487 | 0.0000 | 0 |
+
+按 domain：
+
+| Domain | Prompts | Acc. |
+|---|---:|---:|
+| `power_grid` | 14 | 1.0000 |
+| `building_energy` | 8 | 1.0000 |
+| `traffic` | 8 | 1.0000 |
+| `service_telemetry` | 18 | 1.0000 |
+| `market` | 20 | 1.0000 |
+| `water_service` | 10 | 0.6000 |
+
+结论：脚本已支持 `gpt-5.5`，当前代理路径可完成 full bilingual 评测，但需要低并发、长 timeout、`--resume`，并暂时关闭 JSON response_format。
 
 推荐命令：
 
@@ -198,6 +236,6 @@ GPT-5.4 的 21 个错误集中在：
 ## 下一步
 
 1. 在 A100 上运行 Qwen3-4B 完整双语评测，落盘 `metrics.json` 和 `predictions.jsonl`。
-2. 在长 timeout 下补跑 `gpt-5.5`，不要把当前 timeout 记录作为正式能力分数。
-3. 对 `building_energy`、`traffic`、`water_service` 做 reviewer 复审：检查规则阈值、窗口切分、gold answer 是否和自然任务完全一致。
+2. 对 `water_service` 做 reviewer 复审：GPT-5.5 的 4 个非正确样本全部集中在该 domain，说明恢复/持续低压边界需要复核。
+3. 对 `building_energy`、`traffic` 做数据说明回查：GPT-5.4 在这些任务失败多，但 GPT-5.5 已能解决，适合作为难度分层而不是直接删除。
 4. 扩增数据时加入“推理正确但答案字母不一致”的一致性检查，作为 reviewer gate。
