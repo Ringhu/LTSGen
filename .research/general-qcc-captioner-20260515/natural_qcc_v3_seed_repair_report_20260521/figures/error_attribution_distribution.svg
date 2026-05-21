@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="258" viewBox="0 0 860 258">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="32" y="30" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">GPT data-only wrong attribution</text>
+<text x="32" y="70" font-family="Arial, sans-serif" font-size="12" fill="#111827">reason correct, answer field wrong</text>
+<rect x="240" y="54" width="550" height="22" fill="#f3f4f6" rx="3"/>
+<rect x="240" y="54" width="550.0" height="22" fill="#2563eb" rx="3"/>
+<text x="798.0" y="70" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#111827">11</text>
+<text x="32" y="112" font-family="Arial, sans-serif" font-size="12" fill="#111827">Water rule application + wording risk</text>
+<rect x="240" y="96" width="550" height="22" fill="#f3f4f6" rx="3"/>
+<rect x="240" y="96" width="150.0" height="22" fill="#f97316" rx="3"/>
+<text x="398.0" y="112" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#111827">3</text>
+<text x="32" y="154" font-family="Arial, sans-serif" font-size="12" fill="#111827">model rule application error</text>
+<rect x="240" y="138" width="550" height="22" fill="#f3f4f6" rx="3"/>
+<rect x="240" y="138" width="50.0" height="22" fill="#7c3aed" rx="3"/>
+<text x="298.0" y="154" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#111827">1</text>
+<text x="32" y="196" font-family="Arial, sans-serif" font-size="12" fill="#111827">data/gold defect</text>
+<rect x="240" y="180" width="550" height="22" fill="#f3f4f6" rx="3"/>
+<rect x="240" y="180" width="0.0" height="22" fill="#dc2626" rx="3"/>
+<text x="248.0" y="196" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#111827">0</text>
+</svg>

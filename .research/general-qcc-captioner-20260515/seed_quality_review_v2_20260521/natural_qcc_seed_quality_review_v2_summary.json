@@ -1,0 +1,97 @@
+{
+  "n": 72,
+  "decision_counts": {
+    "keep": 72
+  },
+  "qa_seed_ready_count": 72,
+  "caption_train_ready_count": 72,
+  "needs_error_attribution_count": 15,
+  "by_seed": {
+    "natural_qcc_case_quality_v2": {
+      "n": 12,
+      "decision_counts": {
+        "keep": 12
+      },
+      "qa_seed_ready_count": 12,
+      "caption_train_ready_count": 12,
+      "needs_error_attribution_count": 0
+    },
+    "self_contained_reasoning_qa_v3": {
+      "n": 60,
+      "decision_counts": {
+        "keep": 60
+      },
+      "qa_seed_ready_count": 60,
+      "caption_train_ready_count": 60,
+      "needs_error_attribution_count": 15
+    }
+  },
+  "by_domain": {
+    "aiopslab": {
+      "n": 12,
+      "decision_counts": {
+        "keep": 12
+      },
+      "qa_seed_ready_count": 12,
+      "caption_train_ready_count": 12,
+      "needs_error_attribution_count": 1
+    },
+    "citylearn": {
+      "n": 12,
+      "decision_counts": {
+        "keep": 12
+      },
+      "qa_seed_ready_count": 12,
+      "caption_train_ready_count": 12,
+      "needs_error_attribution_count": 5
+    },
+    "finrl": {
+      "n": 12,
+      "decision_counts": {
+        "keep": 12
+      },
+      "qa_seed_ready_count": 12,
+      "caption_train_ready_count": 12,
+      "needs_error_attribution_count": 1
+    },
+    "grid2op": {
+      "n": 12,
+      "decision_counts": {
+        "keep": 12
+      },
+      "qa_seed_ready_count": 12,
+      "caption_train_ready_count": 12,
+      "needs_error_attribution_count": 0
+    },
+    "traffic": {
+      "n": 12,
+      "decision_counts": {
+        "keep": 12
+      },
+      "qa_seed_ready_count": 12,
+      "caption_train_ready_count": 12,
+      "needs_error_attribution_count": 2
+    },
+    "water": {
+      "n": 12,
+      "decision_counts": {
+        "keep": 12
+      },
+      "qa_seed_ready_count": 12,
+      "caption_train_ready_count": 12,
+      "needs_error_attribution_count": 6
+    }
+  },
+  "top_issue_codes": {
+    "known_task_weakness": 4,
+    "caption_conclusion_implicit": 1,
+    "domain_known_review_priority": 20,
+    "gpt_data_only_wrong": 15
+  },
+  "review_tag": "v2",
+  "inputs": {
+    "case_rows": ".research/general-qcc-captioner-20260515/natural_qcc_case_quality_v2_20260521/natural_qcc_case_quality_v2.jsonl",
+    "self_rows": ".research/general-qcc-captioner-20260515/self_contained_reasoning_qa_v3_20260521/self_contained_reasoning_tsqa.jsonl",
+    "probe": ".research/general-qcc-captioner-20260515/self_contained_reasoning_qa_v2_20260521/self_contained_reasoning_tsqa_gpt_data_only_probe.json"
+  }
+}

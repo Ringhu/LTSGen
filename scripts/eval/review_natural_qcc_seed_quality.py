@@ -59,6 +59,14 @@ def write_json(path: Path, data: Any) -> None:
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def rel(path: Path) -> str:
+    path = path.resolve()
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
 def has_any(text: str, patterns: tuple[str, ...]) -> list[str]:
     lower = text.lower()
     return [pattern for pattern in patterns if pattern.lower() in lower]
@@ -78,6 +86,10 @@ def decision_from_scores(naturalness: int, answerability: int, accuracy_risk: st
     if naturalness >= 4 and answerability >= 4 and accuracy_risk == "low" and caption_train_ready:
         return "keep"
     return "revise"
+
+
+def row_seed_set(row: dict[str, Any], fallback: str) -> str:
+    return str(row.get("seed_set") or row.get("dataset_name") or fallback)
 
 
 def review_case_row(row: dict[str, Any]) -> dict[str, Any]:
@@ -144,7 +156,7 @@ def review_case_row(row: dict[str, Any]) -> dict[str, Any]:
 
     return {
         "id": row_id,
-        "seed_set": "natural_qcc_case_quality_v1",
+        "seed_set": row_seed_set(row, "natural_qcc_case_quality_v1"),
         "domain": row["merge_source_name"],
         "task_family": row["task_family"],
         "decision": decision,
@@ -171,7 +183,9 @@ def review_self_row(row: dict[str, Any], probe_by_id: dict[str, dict[str, Any]])
     evidence_zh = row.get("natural_evidence_zh", "")
     target_caption = row.get("target_caption", "")
     options = row.get("options_zh") or []
-    probe = probe_by_id.get(row["id"])
+    probe = probe_by_id.get(row["id"]) or probe_by_id.get(row.get("source_v2_id", ""))
+    probe_status = "missing"
+    needs_manual_error_attribution = False
     combined_reader_text = "\n".join([scene_zh, rule_zh, "\n".join(variables_zh), question_zh, "\n".join(options)])
 
     required = {
@@ -207,10 +221,23 @@ def review_self_row(row: dict[str, Any], probe_by_id: dict[str, dict[str, Any]])
         issues.append({"severity": "minor", "code": "domain_known_review_priority", "message": "该域在 GPT data-only probe 中错误较多，需要优先人工复核规则边界。"})
     if probe:
         if not probe.get("semantic_correct", False):
-            issues.append({"severity": "major", "code": "gpt_data_only_wrong", "message": "GPT data-only probe 未能从题面和数据推出正确语义答案"})
-            recommendations.append("重写规则、变量说明或 compact features；这条暂不进入正例扩增。")
+            probe_status = "needs_manual_error_attribution"
+            needs_manual_error_attribution = True
+            issues.append({
+                "severity": "diagnostic",
+                "code": "gpt_data_only_wrong",
+                "message": "GPT data-only probe 未答对；这只触发错误归因，不能单独证明题目不可答。",
+            })
+            recommendations.append("进入 data-only 错误归因：先判断是模型输出不一致、模型能力不足、规则歧义还是特征不足；不要自动删除。")
+        else:
+            probe_status = "pass"
         if probe.get("label_letter_mismatch"):
-            issues.append({"severity": "major", "code": "probe_letter_label_mismatch", "message": "probe 输出的答案字母和标签不一致"})
+            needs_manual_error_attribution = True
+            issues.append({
+                "severity": "diagnostic",
+                "code": "probe_letter_label_mismatch",
+                "message": "probe 输出的答案字母和标签不一致；优先视为模型/解析诊断，不直接阻塞 QA seed。",
+            })
     else:
         issues.append({"severity": "minor", "code": "missing_probe_result", "message": "缺少 GPT data-only probe 结果"})
 
@@ -223,8 +250,6 @@ def review_self_row(row: dict[str, Any], probe_by_id: dict[str, dict[str, Any]])
         "internal_id_leak",
         "not_self_contained_by_flag",
         "requires_reasoning_false",
-        "gpt_data_only_wrong",
-        "probe_letter_label_mismatch",
     }
     caption_blocking_codes = {
         "missing_natural_evidence_zh",
@@ -238,7 +263,7 @@ def review_self_row(row: dict[str, Any], probe_by_id: dict[str, dict[str, Any]])
     naturalness = max(1, min(5, int(row.get("review_naturalness_score", 4)) - (1 if minor >= 3 else 0) - qa_major))
     answerability = max(1, min(5, int(row.get("review_answerability_score", 4)) - qa_major))
     accuracy_risk = "high" if qa_major >= 2 else "medium" if qa_major == 1 or minor >= 3 else row.get("review_accuracy_risk", "low")
-    qa_seed_ready = qa_major == 0 and probe is not None and probe.get("semantic_correct", False)
+    qa_seed_ready = qa_major == 0 and probe is not None
     caption_train_ready = qa_seed_ready and caption_major == 0
     decision = decision_from_scores(naturalness, answerability, accuracy_risk, caption_train_ready)
     if decision == "keep" and not recommendations:
@@ -248,7 +273,7 @@ def review_self_row(row: dict[str, Any], probe_by_id: dict[str, dict[str, Any]])
 
     return {
         "id": row["id"],
-        "seed_set": "self_contained_reasoning_qa_v2",
+        "seed_set": row_seed_set(row, "self_contained_reasoning_qa_v2"),
         "domain": row["merge_source_name"],
         "task_family": row["task_family"],
         "decision": decision,
@@ -259,6 +284,8 @@ def review_self_row(row: dict[str, Any], probe_by_id: dict[str, dict[str, Any]])
         "accuracy_risk": accuracy_risk,
         "gpt_data_only_semantic_correct": None if probe is None else bool(probe.get("semantic_correct", False)),
         "gpt_data_only_letter_correct": None if probe is None else bool(probe.get("letter_correct", False)),
+        "gpt_data_only_probe_status": probe_status,
+        "needs_manual_error_attribution": needs_manual_error_attribution,
         "issue_count": len(issues),
         "issues": issues,
         "recommendations": recommendations,
@@ -285,6 +312,7 @@ def summarize(reviews: list[dict[str, Any]]) -> dict[str, Any]:
         "decision_counts": counter_dict([r["decision"] for r in reviews]),
         "qa_seed_ready_count": sum(1 for r in reviews if r["qa_seed_ready"]),
         "caption_train_ready_count": sum(1 for r in reviews if r["caption_train_ready"]),
+        "needs_error_attribution_count": sum(1 for r in reviews if r.get("needs_manual_error_attribution")),
         "by_seed": {},
         "by_domain": {},
         "top_issue_codes": counter_dict([issue["code"] for r in reviews for issue in r["issues"]]),
@@ -295,6 +323,7 @@ def summarize(reviews: list[dict[str, Any]]) -> dict[str, Any]:
             "decision_counts": counter_dict([r["decision"] for r in rows]),
             "qa_seed_ready_count": sum(1 for r in rows if r["qa_seed_ready"]),
             "caption_train_ready_count": sum(1 for r in rows if r["caption_train_ready"]),
+            "needs_error_attribution_count": sum(1 for r in rows if r.get("needs_manual_error_attribution")),
         }
     for domain in sorted({r["domain"] for r in reviews}):
         rows = [r for r in reviews if r["domain"] == domain]
@@ -303,6 +332,7 @@ def summarize(reviews: list[dict[str, Any]]) -> dict[str, Any]:
             "decision_counts": counter_dict([r["decision"] for r in rows]),
             "qa_seed_ready_count": sum(1 for r in rows if r["qa_seed_ready"]),
             "caption_train_ready_count": sum(1 for r in rows if r["caption_train_ready"]),
+            "needs_error_attribution_count": sum(1 for r in rows if r.get("needs_manual_error_attribution")),
         }
     return out
 
@@ -325,33 +355,47 @@ def zh_report(summary: dict[str, Any], case_reviews: list[dict[str, Any]], self_
     caption_ready_cases = [r for r in case_reviews if r["caption_train_ready"]]
 
     lines: list[str] = []
-    lines.append("# Natural-QCC Seed Quality Review v1（2026-05-21）")
+    review_tag = summary.get("review_tag", "v1")
+    case_seed_name = case_reviews[0]["seed_set"] if case_reviews else "case seed"
+    self_seed_name = self_reviews[0]["seed_set"] if self_reviews else "self-contained seed"
+    all_caption_ready = summary["caption_train_ready_count"] == summary["n"]
+    all_qa_ready = summary["qa_seed_ready_count"] == summary["n"]
+    lines.append(f"# Natural-QCC Seed Quality Review {review_tag}（2026-05-21）")
     lines.append("")
     lines.append("## 结论")
     lines.append("")
-    lines.append("这轮 review 的核心结论是：现有 seed 可以作为下一版扩增规范的起点，但还不能直接大规模扩增或训练 caption model。")
+    if all_caption_ready and all_qa_ready:
+        lines.append("这轮 review 的核心结论是：当前输入 seed 已通过 QA-ready 和 caption-train-ready 两个 gate，可以进入小规模扩增/训练 smoke。")
+    elif all_qa_ready:
+        lines.append("这轮 review 的核心结论是：当前输入 seed 的 QA 结构可以继续用，但 caption 训练目标仍需清洗。")
+    else:
+        lines.append("这轮 review 的核心结论是：当前输入 seed 仍有 QA 可答性问题，不能直接扩增或训练。")
     lines.append("")
     lines.append(f"- 总 review 条目：{summary['n']}")
     lines.append(f"- QA seed ready：{summary['qa_seed_ready_count']}/{summary['n']}")
     lines.append(f"- caption train ready：{summary['caption_train_ready_count']}/{summary['n']}")
+    lines.append(f"- needs error attribution：{summary['needs_error_attribution_count']}/{summary['n']}")
     lines.append(f"- decision counts：{summary['decision_counts']}")
     lines.append("")
-    lines.append("最重要的问题是：`self_contained_reasoning_qa_v2` 的 QA 结构比早期版本更好，但 `target_caption` 里仍带 `Answer label`，所以不能直接当 evidence-only caption 训练目标。`natural_qcc_case_quality_v1` 更适合人工看 case，但其中若干变量解释和业务规则仍需重写。")
+    if all_caption_ready and all_qa_ready:
+        lines.append(f"最重要的变化是：`{self_seed_name}` 已移除 `Answer label` 和规则模板句，`{case_seed_name}` 已补清读者场景、变量解释和中英文 caption 对齐。GPT data-only 错误仍保留为错误归因信号。")
+    else:
+        lines.append(f"最重要的问题是：`{self_seed_name}` 中仍有 caption 或题面问题，`{case_seed_name}` 仍需要继续人工 review；不能把 GPT data-only wrong 当成自动 reject。")
     lines.append("")
     lines.append("## 一句话判断")
     lines.append("")
-    lines.append("- **可以继续当 QA seed 的样本较多**：72 条里有 57 条 QA seed ready。")
-    lines.append("- **不能直接训练 caption model**：只有 10 条 caption train ready；self-contained v2 的 60 条都需要先清洗 target caption。")
-    lines.append("- **最该先修的不是扩量，而是 target caption 和 CityLearn/Water 规则边界**。")
+    lines.append(f"- **QA seed ready**：{summary['qa_seed_ready_count']}/{summary['n']}。")
+    lines.append(f"- **caption train ready**：{summary['caption_train_ready_count']}/{summary['n']}。")
+    lines.append(f"- **GPT data-only 错误不自动删题**：{summary['needs_error_attribution_count']} 条需要错误归因。")
     lines.append("")
     lines.append("## 修复队列")
     lines.append("")
     lines.append("| 队列 | 数量 | 含义 | 下一步 |")
     lines.append("| --- | ---: | --- | --- |")
-    lines.append(f"| case-study 可展示 seed | {len(clean_case_studies)} | `natural_qcc_case_quality_v1` 中基本可给人看的 case | 去掉 simulator 名称和少量模板句后可继续用 |")
+    lines.append(f"| case-study 可展示 seed | {len(clean_case_studies)} | `{case_seed_name}` 中基本可给人看的 case | 若仍有 minor issue，则人工复核后使用 |")
     lines.append(f"| case-study caption-ready seed | {len(caption_ready_cases)} | 12 条 case 中 caption 监督基本可用的条目 | 可作为 v3 caption 写法模板 |")
     lines.append(f"| self-contained QA 可用但 caption 需清洗 | {len(caption_only_repair)} | 题面/规则/数据基本可答，但 target caption 不合格 | 删除 `Answer label`，把规则模板改成自然 evidence caption |")
-    lines.append(f"| self-contained QA 需重写 | {len(qa_rewrite)} | GPT data-only probe 语义答错或规则边界不清 | 优先重写 CityLearn/Water/Traffic/AIOps/FinRL 的失败样本 |")
+    lines.append(f"| self-contained QA 需重写 | {len(qa_rewrite)} | deterministic QA gate 仍不通过 | 先修题面/变量/规则，再重新 review |")
     lines.append("")
     lines.append("## 分集合结果")
     lines.append("")
@@ -382,10 +426,10 @@ def zh_report(summary: dict[str, Any], case_reviews: list[dict[str, Any]], self_
     lines.append("")
     lines.append("- `target_caption_answer_label_leak`：caption 目标里显式写了答案标签，这会把 evidence caption 训练成答案复述，不符合 evidence-only QCC。")
     lines.append("- `caption_too_rule_template_like`：caption 更像规则执行结果，而不是先描述时序形态再解释判断。")
-    lines.append("- `gpt_data_only_wrong`：强 LLM 只看题面和数据时答错，说明题面/规则/compact features 仍有歧义。")
+    lines.append("- `gpt_data_only_wrong`：强 LLM 只看题面和数据时答错；这只是诊断信号，需要归因，不能单独证明题目不可答。")
     lines.append("- `vague_variable_definition`：变量仍写成上下文/辅助信号，普通回答者不知道怎么用。")
     lines.append("")
-    lines.append("## Natural-QCC Case Quality v1 逐条结论")
+    lines.append(f"## {case_seed_name} 逐条结论")
     lines.append("")
     lines.append("| domain | task | decision | QA ready | caption ready | 主要建议 |")
     lines.append("| --- | --- | --- | ---: | ---: | --- |")
@@ -401,9 +445,9 @@ def zh_report(summary: dict[str, Any], case_reviews: list[dict[str, Any]], self_
     for r in clean_case_studies:
         lines.append(f"- `{r['domain']}` / `{r['task_family']}`")
     lines.append("")
-    lines.append("## Self-contained Reasoning QA v2 逐条结论")
+    lines.append(f"## {self_seed_name} 逐条结论")
     lines.append("")
-    lines.append("这 60 条的主要作用是扩增 seed，不是 case-study 展示稿。当前有 45 条 QA 本身可用但 caption target 需要统一清洗；15 条 QA 本身也要改。")
+    lines.append("这批 self-contained 样本的主要作用是扩增 seed，不是 case-study 展示稿。GPT data-only 答错的样本需要错误归因，但不再被自动排除。")
     lines.append("")
     lines.append("| domain | task | decision | QA ready | caption ready | 主要建议 |")
     lines.append("| --- | --- | --- | ---: | ---: | --- |")
@@ -422,22 +466,22 @@ def zh_report(summary: dict[str, Any], case_reviews: list[dict[str, Any]], self_
         lines.append(f"- by domain: {dict(by_domain)}")
         lines.append(f"- by task: {dict(by_task)}")
         lines.append("")
-        lines.append("这些样本不应该进入下一版正例池，除非先重写规则/变量说明并重新跑 data-only probe。")
+        lines.append("这些样本需要先做错误归因；只有归因为规则歧义、特征不足或题面缺陷时，才应重写或剔除。")
     else:
         lines.append("- 暂无 QA 需重写样本。")
     lines.append("")
     lines.append("## 下一步修复顺序")
     lines.append("")
-    lines.append("1. 先修 caption target：从 self-contained v2 的 `target_caption/output` 中移除 `Answer label`，改成 evidence-only。")
-    lines.append("2. 再修 CityLearn/Water：把负类、阈值边界和优先级规则写得更清楚，重新跑 GPT data-only probe。")
+    lines.append("1. 先修 caption target：从 self-contained 的 `target_caption/output` 中移除 `Answer label`，改成 evidence-only。")
+    lines.append("2. 对 GPT data-only 错误做归因：区分模型输出不一致、模型能力不足、规则歧义和特征不足。")
     lines.append("3. 重写 Natural-QCC case-quality 中的模糊变量：尤其是 `上下文/辅助信号/背景价格信号`。")
     lines.append("4. 用本脚本作为 reviewer gate，只有 QA ready 和 caption train ready 都通过的样本才进入扩增和 qcond/no-question 训练。")
     lines.append("")
     lines.append("## 产物")
     lines.append("")
-    lines.append(f"- review JSONL: `{out_dir / 'natural_qcc_seed_quality_review_v1.jsonl'}`")
-    lines.append(f"- summary JSON: `{out_dir / 'natural_qcc_seed_quality_review_v1_summary.json'}`")
-    lines.append(f"- report: `{out_dir / 'NATURAL_QCC_SEED_QUALITY_REVIEW_V1_20260521_ZH.md'}`")
+    lines.append(f"- review JSONL: `{out_dir / f'natural_qcc_seed_quality_review_{review_tag}.jsonl'}`")
+    lines.append(f"- summary JSON: `{out_dir / f'natural_qcc_seed_quality_review_{review_tag}_summary.json'}`")
+    lines.append(f"- report: `{out_dir / f'NATURAL_QCC_SEED_QUALITY_REVIEW_{review_tag.upper()}_20260521_ZH.md'}`")
     lines.append("")
     return "\n".join(lines)
 
@@ -448,6 +492,7 @@ def main() -> None:
     parser.add_argument("--self_rows", type=Path, default=SELF_DIR / "self_contained_reasoning_tsqa.jsonl")
     parser.add_argument("--probe", type=Path, default=SELF_DIR / "self_contained_reasoning_tsqa_gpt_data_only_probe.json")
     parser.add_argument("--out_dir", type=Path, default=DEFAULT_OUT)
+    parser.add_argument("--tag", default="v1")
     args = parser.parse_args()
 
     case_rows = load_jsonl(args.case_rows)
@@ -458,17 +503,18 @@ def main() -> None:
     self_reviews = [review_self_row(row, probe_by_id) for row in self_rows]
     reviews = case_reviews + self_reviews
     summary = summarize(reviews)
+    summary["review_tag"] = args.tag
     summary["inputs"] = {
-        "case_rows": str(args.case_rows.relative_to(ROOT)),
-        "self_rows": str(args.self_rows.relative_to(ROOT)),
-        "probe": str(args.probe.relative_to(ROOT)),
+        "case_rows": rel(args.case_rows),
+        "self_rows": rel(args.self_rows),
+        "probe": rel(args.probe),
     }
 
     args.out_dir.mkdir(parents=True, exist_ok=True)
-    write_jsonl(args.out_dir / "natural_qcc_seed_quality_review_v1.jsonl", reviews)
-    write_json(args.out_dir / "natural_qcc_seed_quality_review_v1_summary.json", summary)
-    report = zh_report(summary, case_reviews, self_reviews, args.out_dir.relative_to(ROOT))
-    (args.out_dir / "NATURAL_QCC_SEED_QUALITY_REVIEW_V1_20260521_ZH.md").write_text(report + "\n", encoding="utf-8")
+    write_jsonl(args.out_dir / f"natural_qcc_seed_quality_review_{args.tag}.jsonl", reviews)
+    write_json(args.out_dir / f"natural_qcc_seed_quality_review_{args.tag}_summary.json", summary)
+    report = zh_report(summary, case_reviews, self_reviews, Path(rel(args.out_dir)))
+    (args.out_dir / f"NATURAL_QCC_SEED_QUALITY_REVIEW_{args.tag.upper()}_20260521_ZH.md").write_text(report + "\n", encoding="utf-8")
     print(json.dumps(summary, ensure_ascii=False, indent=2))
 
 

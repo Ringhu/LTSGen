@@ -50,6 +50,44 @@ def test_review_distinguishes_qa_ready_from_caption_ready():
     assert any(issue["code"] == "target_caption_answer_label_leak" for issue in review["issues"])
 
 
+def test_gpt_data_only_wrong_triggers_attribution_not_qa_reject():
+    module = load_module()
+    row = {
+        "id": "row2",
+        "merge_source_name": "citylearn",
+        "task_family": "self_contained_building_net_load_reserve",
+        "scene_zh": "建筑控制器比较早中晚三段净负荷，x3 是净电网负荷。",
+        "decision_rule_zh": "若最高一段 x3 均值比第二高至少高 0.30，则为该段预留；否则均衡供能。",
+        "variables_zh": ["x0 总用电", "x2 太阳能", "x3 净电网负荷"],
+        "question_zh": "应在哪个时段优先预留供能？",
+        "options_zh": ["A. 早段", "B. 中段", "C. 后段", "D. 均衡供能"],
+        "natural_evidence_caption": "Early, middle, and late net loads are 5.33, 4.75, and 5.26. The top gap is only 0.08, below the 0.30 reserve threshold.",
+        "natural_evidence_zh": "早中晚净负荷均值为 5.33、4.75、5.26，最高和第二高只差 0.08，低于 0.30 的预留阈值。",
+        "target_caption": "Early, middle, and late net loads are 5.33, 4.75, and 5.26. The top gap is only 0.08, below the 0.30 reserve threshold.",
+        "background_self_contained": True,
+        "simulator_prior_required": False,
+        "requires_reasoning": True,
+        "review_naturalness_score": 5,
+        "review_answerability_score": 5,
+        "review_accuracy_risk": "low",
+    }
+    probe = {
+        "row2": {
+            "semantic_correct": False,
+            "letter_correct": False,
+            "label_letter_mismatch": True,
+        }
+    }
+
+    review = module.review_self_row(row, probe)
+
+    assert review["qa_seed_ready"] is True
+    assert review["caption_train_ready"] is True
+    assert review["needs_manual_error_attribution"] is True
+    assert review["gpt_data_only_probe_status"] == "needs_manual_error_attribution"
+    assert any(issue["severity"] == "diagnostic" for issue in review["issues"])
+
+
 def test_case_review_flags_vague_variable_definition():
     module = load_module()
     row = {

@@ -1,0 +1,23 @@
+{
+  "n_probe": 60,
+  "n_wrong": 15,
+  "wrong_by_domain": {
+    "citylearn": 5,
+    "traffic": 2,
+    "water": 6,
+    "aiopslab": 1,
+    "finrl": 1
+  },
+  "attribution_counts": {
+    "model_reason_answer_inconsistency": 11,
+    "model_rule_application_error_with_water_clause_clarity_risk": 3,
+    "model_rule_application_error": 1
+  },
+  "recommended_decision_counts": {
+    "hard_keep_for_seed": 11,
+    "keep_for_seed_but_rewrite_water_rule_wording_before_scaling": 3,
+    "keep_for_seed_after_manual_check": 1
+  },
+  "data_defect_count": 0,
+  "interpretation": "GPT data-only wrong is diagnostic only. In this attribution pass, no row is marked as a deterministic data defect; Water rows should still get clearer rule wording before scaling because many probe errors cluster around recovery/stable/manual-review priority."
+}

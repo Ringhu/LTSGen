@@ -19,6 +19,21 @@ design review:
   small seed data, separating QA readiness from caption-training readiness.
 - `NATURAL_QCC_RESEARCH_ROUTE_AND_REVIEWER_GATE_20260521_ZH.md`: agreed
   scenario-first Natural QCC route and reviewer gate policy.
+- `natural_qcc_case_quality_v2_20260521/`: repaired 12-case Chinese-first
+  case-study set, with simulator names removed from reader-facing scenes,
+  clearer variable definitions, paired SVG figures, and evidence-only target
+  captions.
+- `self_contained_reasoning_qa_v3_20260521/`: repaired 60-row
+  self-contained seed set. It keeps v2 QA/gold/support slots but removes
+  `Answer label` and rule-template phrasing from `target_caption/output`.
+- `self_contained_error_attribution_v1_20260521/`: attribution of the 15 GPT
+  data-only wrong cases. These are diagnostic failures, not automatic data/gold
+  defects.
+- `seed_quality_review_v2_20260521/`: reviewer gate re-run over case-quality v2
+  and self-contained v3; 72/72 QA-ready and 72/72 caption-train-ready.
+- `natural_qcc_v3_seed_repair_report_20260521/`: illustrated Chinese report
+  explaining this repair round, with summary figures and links to case-study
+  time-series plots.
 
 ## Retained In Git
 
@@ -33,6 +48,8 @@ design review:
 - The seed-quality reviewer script and regression test used before scaling.
 - The agreed research-route and reviewer-gate document that governs future data
   repair, scaling, and training decisions.
+- The v3 seed repair generators/reviewer reports needed to reproduce the
+  current small smoke-ready seed set.
 
 ## Excluded From Git
 

@@ -15,8 +15,12 @@ Natural TS-QA/QCC 样例。
 - `scripts/generate/build_natural_qcc_case_quality_v1.py`
 - `scripts/generate/build_scenario_first_real_source_smoke.py`
 - `scripts/generate/build_self_contained_reasoning_tsqa.py`
+- `scripts/generate/build_self_contained_reasoning_tsqa_v3.py`
+- `scripts/generate/build_natural_qcc_case_quality_v2.py`
 - `scripts/eval/audit_scenario_first_real_source_smoke.py`
 - `scripts/eval/probe_self_contained_reasoning_tsqa_llm.py`
+- `scripts/eval/attribute_self_contained_data_only_errors.py`
+- `scripts/report/write_natural_qcc_v3_seed_repair_report.py`
 
 但 consolidation 提交 `dc5e0fc` 曾经为了精简分支删除了一些新近产物。因此这次从
 `codex/natural-tsqa-benchmark-assets-20260520` 恢复了小而关键的报告/样本，避免
@@ -119,6 +123,60 @@ Natural TS-QA/QCC 样例。
 - 作为扩增前 reviewer gate 的第一版实现。
 - 防止后续继续把带 `Answer label` 的 caption 当作 evidence-only 训练目标。
 
+### 5. Natural QCC case quality v2
+
+路径：
+
+`.research/general-qcc-captioner-20260515/natural_qcc_case_quality_v2_20260521/`
+
+保留原因：
+
+- 这是对 v1 case 的读者侧修复版，仍然是 12 条、每域 2 条，并保留配套时序图。
+- 已去掉 reader-facing scene 里的 simulator 名称。
+- 已把“上下文/辅助信号/背景价格信号”等模糊变量改成业务含义。
+- 已删除英文 caption 里的 `supports the answer` 模板句。
+- 生成脚本：`scripts/generate/build_natural_qcc_case_quality_v2.py`。
+
+### 6. Self-contained reasoning TSQA v3
+
+路径：
+
+`.research/general-qcc-captioner-20260515/self_contained_reasoning_qa_v3_20260521/`
+
+保留原因：
+
+- 这是 v2 的 caption target 修复版，仍然 60 条、每域 10 条。
+- QA/gold/support slots 沿用 v2，便于和 GPT data-only probe 对齐。
+- `target_caption/output` 已移除 `Answer label`、`the rule maps this to` 和 answer-support 模板。
+- 这版可以作为下一步小规模 qcond/no-question smoke 的 seed。
+
+### 7. GPT data-only error attribution v1
+
+路径：
+
+`.research/general-qcc-captioner-20260515/self_contained_error_attribution_v1_20260521/`
+
+保留原因：
+
+- 15 条 GPT data-only wrong 已做归因。
+- 结论是：11 条为模型 reason 算对但 answer 字段填错，3 条为 Water 规则应用错误且提示规则措辞需加强，1 条为普通规则应用错误。
+- 没有样本被判为确定性 data/gold defect。
+- 这支持当前 reviewer policy：GPT probe 是诊断，不是答案 oracle。
+
+### 8. Seed quality review v2 and illustrated repair report
+
+路径：
+
+`.research/general-qcc-captioner-20260515/seed_quality_review_v2_20260521/`
+
+`.research/general-qcc-captioner-20260515/natural_qcc_v3_seed_repair_report_20260521/`
+
+保留原因：
+
+- reviewer gate v2 对 `natural_qcc_case_quality_v2` 和 `self_contained_reasoning_qa_v3` 的结果是：
+  QA-ready 72/72，caption-train-ready 72/72。
+- 图文报告解释了这一轮做了什么，并包含 reviewer before/after、错误归因、分域 ready 情况、当前架构图和 12 个 case 的时序图链接。
+
 ## 当前 caption-model 训练相关文件
 
 这些文件继续保留在当前分支，因为它们解释了为什么 v2.2 qcond 训练会空生成，以及后续修复标准：
@@ -165,10 +223,10 @@ git checkout <commit-or-branch> -- <path>
 
 更合理的顺序是：
 
-1. 以 `self_contained_reasoning_qa_v2_20260521` 为 seed，修 CityLearn/Water 的规则和答案一致性问题。
-2. 以 `natural_qcc_case_quality_v1_20260521` 为反例/样例，重新定义“好 caption”的标准。
-3. 扩增前先做 reviewer gate：变量解释、规则自足、caption 是否围绕答案、英文/中文 caption 是否一致。
-4. 数据过 gate 后再进入 qcond/no-question 训练，而不是先训练再补解释。
+1. 以 `self_contained_reasoning_qa_v3_20260521` 和 `natural_qcc_case_quality_v2_20260521` 为 smoke seed，做一个小规模扩增。
+2. 扩增时继续执行 reviewer gate：变量解释、规则自足、caption 是否围绕答案、英文/中文 caption 是否一致。
+3. 对扩增样本先做 qcond/no-question 小 smoke，验证 caption model 是否能生成非空、自然、可验证的 evidence caption。
+4. 只有 smoke 通过后，再扩大到每域更多真实 simulator/exporter adapter 样本。
 
 当前 reviewer gate 已落地为：
 

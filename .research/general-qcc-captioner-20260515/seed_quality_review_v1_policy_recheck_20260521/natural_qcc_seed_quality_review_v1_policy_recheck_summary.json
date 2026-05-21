@@ -1,0 +1,109 @@
+{
+  "n": 72,
+  "decision_counts": {
+    "revise": 63,
+    "keep": 9
+  },
+  "qa_seed_ready_count": 72,
+  "caption_train_ready_count": 10,
+  "needs_error_attribution_count": 15,
+  "by_seed": {
+    "natural_qcc_case_quality_v1": {
+      "n": 12,
+      "decision_counts": {
+        "revise": 3,
+        "keep": 9
+      },
+      "qa_seed_ready_count": 12,
+      "caption_train_ready_count": 10,
+      "needs_error_attribution_count": 0
+    },
+    "self_contained_reasoning_qa_v2": {
+      "n": 60,
+      "decision_counts": {
+        "revise": 60
+      },
+      "qa_seed_ready_count": 60,
+      "caption_train_ready_count": 0,
+      "needs_error_attribution_count": 15
+    }
+  },
+  "by_domain": {
+    "aiopslab": {
+      "n": 12,
+      "decision_counts": {
+        "keep": 2,
+        "revise": 10
+      },
+      "qa_seed_ready_count": 12,
+      "caption_train_ready_count": 2,
+      "needs_error_attribution_count": 1
+    },
+    "citylearn": {
+      "n": 12,
+      "decision_counts": {
+        "revise": 11,
+        "keep": 1
+      },
+      "qa_seed_ready_count": 12,
+      "caption_train_ready_count": 1,
+      "needs_error_attribution_count": 5
+    },
+    "finrl": {
+      "n": 12,
+      "decision_counts": {
+        "keep": 2,
+        "revise": 10
+      },
+      "qa_seed_ready_count": 12,
+      "caption_train_ready_count": 2,
+      "needs_error_attribution_count": 1
+    },
+    "grid2op": {
+      "n": 12,
+      "decision_counts": {
+        "revise": 12
+      },
+      "qa_seed_ready_count": 12,
+      "caption_train_ready_count": 1,
+      "needs_error_attribution_count": 0
+    },
+    "traffic": {
+      "n": 12,
+      "decision_counts": {
+        "keep": 2,
+        "revise": 10
+      },
+      "qa_seed_ready_count": 12,
+      "caption_train_ready_count": 2,
+      "needs_error_attribution_count": 2
+    },
+    "water": {
+      "n": 12,
+      "decision_counts": {
+        "keep": 2,
+        "revise": 10
+      },
+      "qa_seed_ready_count": 12,
+      "caption_train_ready_count": 2,
+      "needs_error_attribution_count": 6
+    }
+  },
+  "top_issue_codes": {
+    "caption_conclusion_implicit": 2,
+    "caption_answer_phrase": 2,
+    "simulator_name_in_scene": 6,
+    "vague_variable_definition": 3,
+    "known_task_weakness": 4,
+    "target_caption_answer_label_leak": 60,
+    "caption_too_rule_template_like": 60,
+    "domain_known_review_priority": 20,
+    "gpt_data_only_wrong": 15
+  },
+  "review_tag": "v1_policy_recheck",
+  "inputs": {
+    "case_rows": ".research/general-qcc-captioner-20260515/natural_qcc_case_quality_v1_20260521/natural_qcc_case_quality_v1.jsonl",
+    "self_rows": ".research/general-qcc-captioner-20260515/self_contained_reasoning_qa_v2_20260521/self_contained_reasoning_tsqa.jsonl",
+    "probe": ".research/general-qcc-captioner-20260515/self_contained_reasoning_qa_v2_20260521/self_contained_reasoning_tsqa_gpt_data_only_probe.json"
+  }
+}

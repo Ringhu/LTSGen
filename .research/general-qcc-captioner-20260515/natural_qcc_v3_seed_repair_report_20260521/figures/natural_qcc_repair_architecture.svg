@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="430" viewBox="0 0 980 430">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#6b7280"/></marker></defs>
+<text x="40" y="34" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#111827">Natural-QCC seed repair architecture</text>
+<line x1="215" y1="111" x2="260" y2="111" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="440" y1="111" x2="485" y2="111" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="670" y1="111" x2="715" y2="111" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="575" y1="152" x2="575" y2="250" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="440" y1="291" x2="485" y2="291" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="670" y1="291" x2="715" y2="291" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="40" y="70" width="175" height="82" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.4" rx="6"/>
+<text x="54" y="94" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#111827">Simulator / trace</text>
+<text x="54" y="116" font-family="Arial, sans-serif" font-size="12" fill="#4b5563">Grid2Op, CityLearn,
+Traffic, Water,
+AIOps, FinRL</text>
+<rect x="260" y="70" width="180" height="82" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.4" rx="6"/>
+<text x="274" y="94" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#111827">Scenario + rule</text>
+<text x="274" y="116" font-family="Arial, sans-serif" font-size="12" fill="#4b5563">scene, variables,
+decision rule,
+question/options</text>
+<rect x="485" y="70" width="185" height="82" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.4" rx="6"/>
+<text x="499" y="94" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#111827">Deterministic verifier</text>
+<text x="499" y="116" font-family="Arial, sans-serif" font-size="12" fill="#4b5563">support slots,
+gold answer,
+caption checks</text>
+<rect x="715" y="70" width="195" height="82" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.4" rx="6"/>
+<text x="729" y="94" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#111827">Natural evidence</text>
+<text x="729" y="116" font-family="Arial, sans-serif" font-size="12" fill="#4b5563">answer-focused
+caption target</text>
+<rect x="260" y="250" width="180" height="82" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.4" rx="6"/>
+<text x="274" y="274" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#111827">GPT data-only probe</text>
+<text x="274" y="296" font-family="Arial, sans-serif" font-size="12" fill="#4b5563">diagnostic only,
+not an answer oracle</text>
+<rect x="485" y="250" width="185" height="82" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.4" rx="6"/>
+<text x="499" y="274" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#111827">Reviewer gate</text>
+<text x="499" y="296" font-family="Arial, sans-serif" font-size="12" fill="#4b5563">QA ready vs
+caption-train ready</text>
+<rect x="715" y="250" width="195" height="82" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.4" rx="6"/>
+<text x="729" y="274" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#111827">Smoke training</text>
+<text x="729" y="296" font-family="Arial, sans-serif" font-size="12" fill="#4b5563">qcond/no-question
+caption model test</text>
+<text x="40" y="394" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">Key policy: LLM review/probe can criticize naturalness and diagnose failures, but deterministic support slots keep the gold answer fixed.</text>
+</svg>
