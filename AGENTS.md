@@ -32,6 +32,28 @@ training and captioner diagnostics. Shared reusable code should land first in
 - Prefer manifest/path references for large generated artifacts.
 - Keep case-study reports Chinese-first by default while preserving method,
   task-family, and path names in English/code form.
+- Local SSD space is limited. Do not copy large datasets, checkpoints, or full
+  GPU result trees from remote machines to local storage; keep large artifacts on
+  A100/3090 storage and reference them by manifest or path.
+
+## Remote Machines
+
+- A100 SSH alias: `a100`. Use it for large models, long runs, and experiments
+  needing more than 24GB VRAM. A100 code root is `/cluster/home/user1/hulining/`.
+  Default GPU preference is `CUDA_VISIBLE_DEVICES=2` unless a run-specific
+  command says otherwise.
+- 3090 SSH alias: `3090`. Use it for small tests, debugging, and experiments
+  that fit in 24GB VRAM. 3090 code root is `/cluster/home/hulining/`.
+- A100 conda environments known from the global machine notes include
+  `opentslm`, `chatts`, `tsgen`, `tsrl`, `tsci`, and `ptst`.
+- 3090 conda environments include `timecraft`, `ts`, `tslib`, and
+  `autotimes`.
+- Prefer remote commands such as `ssh a100 "..."` and `ssh 3090 "..."` for GPU
+  checks, tmux control, and experiment launch. Use SSHFS only for scoped file
+  inspection/editing; broad grep/find over mounted remote trees is slow.
+- A100 model/deployment assets may live outside this repo, especially under
+  `/cluster/home/user1/hulining/TSModel/`, `/cluster/home/user1/hulining/swift`
+  if present, and `/cluster/home/user1/fenghaoran/model/`.
 
 ## Useful Branches
 
