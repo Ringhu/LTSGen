@@ -14,6 +14,8 @@
 - `llm_text_view.jsonl`：LLM 评测视图，包含 `prompt_en` 与 `prompt_zh`，时序被序列化为 CSV 文本。
 - `tsllm_array_view.jsonl`：TS-LLM 视图，保留同一自然任务文本、选项和原始数值数组。
 - `scripts/eval/evaluate_public_raw_tsqa_llm.py`：OpenAI-compatible LLM 评测脚本。
+- `scripts/eval/compare_public_raw_tsqa_model_evals.py`：扫描所有完整评测 run，生成跨模型 comparison 表。
+- `scripts/eval/import_public_raw_tsqa_qwen_eval.py`：导入 A100 回传的 Qwen run 目录或 `.tar.gz`，生成错误摘要并刷新 comparison 表。
 - `scripts/remote/run_public_raw_tsqa_qwen_eval_a100.sh`：A100 上启动 vLLM/Qwen 并调用同一评测脚本的入口。
 - `scripts/remote/run_public_raw_tsqa_qwen_suite_a100.sh`：A100 上按模型清单循环评测 Qwen 系列，并生成 suite summary。
 
@@ -27,7 +29,7 @@
 
 ```bash
 python3 scripts/eval/check_public_raw_tsqa_v4.py
-python3 -m py_compile scripts/generate/build_public_raw_tsqa_v4.py scripts/eval/check_public_raw_tsqa_v4.py scripts/eval/evaluate_public_raw_tsqa_llm.py
+python3 -m py_compile scripts/generate/build_public_raw_tsqa_v4.py scripts/eval/check_public_raw_tsqa_v4.py scripts/eval/evaluate_public_raw_tsqa_llm.py scripts/eval/compare_public_raw_tsqa_model_evals.py scripts/eval/import_public_raw_tsqa_qwen_eval.py
 bash -n scripts/remote/run_public_raw_tsqa_qwen_eval_a100.sh scripts/remote/run_public_raw_tsqa_qwen_suite_a100.sh scripts/remote/package_public_raw_tsqa_qwen_eval_a100.sh
 ```
 
@@ -139,6 +141,26 @@ python3 scripts/eval/evaluate_public_raw_tsqa_llm.py \
 | `water_service` | 10 | 0.6000 |
 
 结论：脚本已支持 `gpt-5.5`，当前代理路径可完成 full bilingual 评测，但需要低并发、长 timeout、`--resume`，并暂时关闭 JSON response_format。
+
+## 当前跨模型比较表
+
+生成命令：
+
+```bash
+python3 scripts/eval/compare_public_raw_tsqa_model_evals.py
+```
+
+输出：
+
+- `.research/general-qcc-captioner-20260515/public_raw_tsqa_v4_20260521/model_eval_20260521/MODEL_EVAL_COMPARISON_20260521.md`
+- `.research/general-qcc-captioner-20260515/public_raw_tsqa_v4_20260521/model_eval_20260521/MODEL_EVAL_COMPARISON_20260521.jsonl`
+
+当前只纳入完整 39 rows / 78 prompts 的正式 run：
+
+| Run | Model | Prompts | Acc. | EN | ZH | Water |
+|---|---|---:|---:|---:|---:|---:|
+| `full_gpt55_public_raw_tsqa_v4_39items_bilingual_nojson` | `gpt-5.5` | 78 | 0.9487 | 0.9487 | 0.9487 | 0.6000 |
+| `full_gpt54_public_raw_tsqa_v4_39items_bilingual` | `gpt-5.4` | 78 | 0.7308 | 0.7179 | 0.7436 | 0.6000 |
 
 推荐命令：
 
@@ -254,6 +276,15 @@ suite runner 会为每个模型调用单模型 runner，随后生成：
 - `<run_dir>.tar.gz`
 - `<suite_dir>/summary.md`
 - `<suite_dir>/summary.jsonl`
+
+Qwen 结果回传到本地仓库后，运行：
+
+```bash
+python3 scripts/eval/import_public_raw_tsqa_qwen_eval.py \
+  /path/to/full_qwen3_4b_public_raw_tsqa_v4_39items_bilingual.tar.gz
+```
+
+导入脚本会校验 `prompt_report.json`、`prompt_preview.jsonl`、`predictions.jsonl`、`metrics.json`，生成 `error_summary.json`，并自动把完整 78 prompt 的 Qwen run 加入 `MODEL_EVAL_COMPARISON_20260521.{md,jsonl}`。
 
 ## 初步错误观察
 

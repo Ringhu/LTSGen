@@ -17,6 +17,13 @@ DEFAULT_PRED = (
 )
 
 
+def rel(path: Path) -> str:
+    try:
+        return str(path.resolve().relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
     with path.open(encoding="utf-8") as f:
         return [json.loads(line) for line in f if line.strip()]
@@ -39,12 +46,13 @@ def main() -> None:
     parser.add_argument("--predictions_jsonl", type=Path, default=DEFAULT_PRED)
     parser.add_argument("--out_json", type=Path, default=None)
     parser.add_argument("--max_wrong_examples", type=int, default=30)
+    parser.add_argument("--quiet", action="store_true")
     args = parser.parse_args()
 
     rows = load_jsonl(args.predictions_jsonl)
     wrong = [row for row in rows if not row.get("correct")]
     summary = {
-        "predictions_jsonl": str(args.predictions_jsonl.resolve().relative_to(ROOT)),
+        "predictions_jsonl": rel(args.predictions_jsonl),
         "n": len(rows),
         "accuracy": acc(rows),
         "wrong_n": len(wrong),
@@ -71,7 +79,10 @@ def main() -> None:
     }
     out = args.out_json or (args.predictions_jsonl.parent / "error_summary.json")
     out.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps(summary, ensure_ascii=False, indent=2))
+    if args.quiet:
+        print(json.dumps({"n": summary["n"], "accuracy": summary["accuracy"], "wrong_n": summary["wrong_n"], "out_json": rel(out)}, ensure_ascii=False))
+    else:
+        print(json.dumps(summary, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
