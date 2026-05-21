@@ -90,11 +90,18 @@ def main() -> None:
             "question_zh",
             "options_en",
             "options_zh",
+            "natural_task_en",
+            "natural_task_zh",
             "answer_label",
             "answer_label_zh",
         ):
             if not row.get(key):
                 errors.append({"id": row["id"], "code": "missing_bilingual_field", "field": key})
+        if row.get("natural_task_en") == row.get("question_en") or row.get("natural_task_zh") == row.get("question_zh"):
+            errors.append({"id": row["id"], "code": "natural_task_not_expanded"})
+        for phrase in ("Context:", "Variables:", "Decision guide:", "Question:", "Options:"):
+            if phrase in row.get("natural_task_en", ""):
+                errors.append({"id": row["id"], "code": "natural_task_uses_section_template", "phrase": phrase})
         if not row.get("variable_descriptions_en") or not row.get("variable_descriptions_zh"):
             errors.append({"id": row["id"], "code": "missing_bilingual_variable_descriptions"})
         if not row.get("time_series", {}).get("time_axis") or not row.get("time_series", {}).get("time_axis_zh"):
@@ -109,6 +116,10 @@ def main() -> None:
             errors.append({"id": row["id"], "code": "view_answer_mismatch"})
         if tsllm_row["timeseries"] != values:
             errors.append({"id": row["id"], "code": "tsllm_timeseries_mismatch"})
+        if llm_row.get("natural_task_en") != row.get("natural_task_en") or llm_row.get("natural_task_zh") != row.get("natural_task_zh"):
+            errors.append({"id": row["id"], "code": "llm_natural_task_mismatch"})
+        if tsllm_row.get("natural_task_en") != row.get("natural_task_en") or tsllm_row.get("natural_task_zh") != row.get("natural_task_zh"):
+            errors.append({"id": row["id"], "code": "tsllm_natural_task_mismatch"})
         prompt_text = "\n".join([llm_row.get("prompt_en", ""), llm_row.get("prompt_zh", ""), tsllm_row.get("text_en", ""), tsllm_row.get("text_zh", "")])
         prompt_hits = [pattern for pattern in FORBIDDEN if re.search(re.escape(pattern), prompt_text, flags=re.I)]
         if prompt_hits:

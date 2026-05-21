@@ -43,9 +43,9 @@
     "max": 256
   },
   "llm_prompt_word_lengths": {
-    "min": 250,
-    "max": 440,
-    "mean": 379.26
+    "min": 258,
+    "max": 448,
+    "mean": 387.67
   },
   "public_forbidden_issues": [],
   "inputs": {

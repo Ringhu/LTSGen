@@ -39,7 +39,7 @@
 
 ## Case Study
 
-下面每个 case 都完整展示英文版本和中文版本。两种语言使用同一个 raw time-series、同一个选项字母、同一个 gold answer；差别只在题面语言。
+下面每个 case 都以自然任务说明为主展示英文版本和中文版本。每条样本仍保留原来的结构化 item 字段，用于审计、转换和自动检查。
 
 ### Case 1: `power_grid`
 
@@ -47,27 +47,9 @@
 
 #### English Version
 
-**Context**
+**Natural Task Description**
 
-A grid operator is assessing how a planned line outage changes line stress compared with normal operation.
-
-**Time Axis**
-
-ordered post-event operating window
-
-**Variables**
-
-- `stress_delta`: planned-outage line stress minus normal-operation line stress
-- `demand_context`: system demand context signal
-- `generation_margin_context`: generation margin context signal
-
-**Decision Guide**
-
-If the average stress difference is clearly positive and most readings are above +0.05, classify the outage as increasing stress. If the average is clearly negative and most readings are below -0.05, classify it as decreasing stress. If the series stays close to zero with only tiny deviations, classify it as broadly unchanged; otherwise request manual review.
-
-**Question**
-
-Based on the full stress-delta series, what should the operator conclude about the planned outage?
+A grid operator is assessing how a planned line outage changes line stress compared with normal operation. The full time series below covers the post-event operating window and is ordered by time. It contains `stress_delta` (planned-outage line stress minus normal-operation line stress), `demand_context` (system demand context signal), and `generation_margin_context` (generation margin context signal). If the average stress difference is clearly positive and most readings are above +0.05, classify the outage as increasing stress. If the average is clearly negative and most readings are below -0.05, classify it as decreasing stress. If the series stays close to zero with only tiny deviations, classify it as broadly unchanged; otherwise request manual review. Based on the full stress-delta series, what should the operator conclude about the planned outage?
 
 **Options**
 
@@ -84,27 +66,9 @@ The mean stress difference is -0.107113; 0.0% of readings are above +0.05 and 10
 
 #### 中文版本
 
-**场景**
+**自然任务说明**
 
-电网调度员正在评估一次计划断线相对正常运行会如何改变线路压力。
-
-**时间轴**
-
-按时间排序的事件后运行窗口
-
-**变量**
-
-- `stress_delta`: 计划断线相对正常运行的线路压力差
-- `demand_context`: 系统负荷背景信号
-- `generation_margin_context`: 发电裕度背景信号
-
-**判定规则**
-
-如果平均压力差明显为正，且大多数读数高于 +0.05，则判为压力上升；如果平均压力差明显为负，且大多数读数低于 -0.05，则判为压力下降；如果整体接近 0 且波动很小，则判为基本不变；否则需要人工复核。
-
-**问题**
-
-根据完整压力差序列，调度员应如何判断这次计划断线的影响？
+电网调度员正在评估一次计划断线相对正常运行会如何改变线路压力。下面的完整时序覆盖事件后运行窗口，并按时间顺序排列，包含`stress_delta`（计划断线相对正常运行的线路压力差）、`demand_context`（系统负荷背景信号）、`generation_margin_context`（发电裕度背景信号）。如果平均压力差明显为正，且大多数读数高于 +0.05，则判为压力上升；如果平均压力差明显为负，且大多数读数低于 -0.05，则判为压力下降；如果整体接近 0 且波动很小，则判为基本不变；否则需要人工复核。根据完整压力差序列，调度员应如何判断这次计划断线的影响？
 
 **选项**
 
@@ -119,6 +83,20 @@ The mean stress difference is -0.107113; 0.0% of readings are above +0.05 and 10
 
 压力差均值为 -0.107113；高于 +0.05 的读数占 0.0%，低于 -0.05 的读数占 100.0%，最大绝对偏差为 0.116853。
 
+#### 保留的结构化 item 摘要
+
+| Field | English | 中文 |
+| --- | --- | --- |
+| Context | A grid operator is assessing how a planned line outage changes line stress compared with normal operation. | 电网调度员正在评估一次计划断线相对正常运行会如何改变线路压力。 |
+| Time Axis | ordered post-event operating window | 按时间排序的事件后运行窗口 |
+| Question | Based on the full stress-delta series, what should the operator conclude about the planned outage? | 根据完整压力差序列，调度员应如何判断这次计划断线的影响？ |
+
+**Variables / 变量**
+
+- `stress_delta`: planned-outage line stress minus normal-operation line stress / 计划断线相对正常运行的线路压力差
+- `demand_context`: system demand context signal / 系统负荷背景信号
+- `generation_margin_context`: generation margin context signal / 发电裕度背景信号
+
 **内部审计证据字段摘要**
 
 `{"stress_delta_mean": -0.10711293475739925, "share_above_pos_threshold": 0.0, "share_below_neg_threshold": 1.0, "max_abs_stress_delta": 0.11685291610575388, "verifier_answer_label": "risk decreases"}`
@@ -126,9 +104,9 @@ The mean stress difference is -0.107113; 0.0% of readings are above +0.05 and 10
 **LLM / TS-LLM view 对齐说明**
 
 ```text
-LLM English prompt = English context + English variables + English decision guide + English question/options + raw series as CSV.
-LLM Chinese prompt = Chinese context + Chinese variables + Chinese decision guide + Chinese question/options + same raw series as CSV.
-TS-LLM view = same raw numeric array + English/Chinese text fields. The answer letter is shared.
+LLM English prompt = natural_task_en + English options + raw series as CSV.
+LLM Chinese prompt = natural_task_zh + Chinese options + same raw series as CSV.
+TS-LLM view = same raw numeric array + natural_task_en/natural_task_zh + options. The answer letter is shared.
 ```
 
 **TS-LLM array shape**
@@ -155,27 +133,9 @@ TS-LLM view = same raw numeric array + English/Chinese text fields. The answer l
 
 #### English Version
 
-**Context**
+**Natural Task Description**
 
-A building energy planner needs to decide whether supply should be reserved for the early, middle, late, or evenly across the operating window.
-
-**Time Axis**
-
-ordered operating window
-
-**Variables**
-
-- `demand`: building electricity demand
-- `weather_context`: weather context signal
-- `solar_support`: local solar support
-
-**Decision Guide**
-
-Compute net grid load as demand minus 0.15 times solar support. Compare the average net load in the early, middle, and late portions of the full sequence. If the highest portion exceeds the second-highest by at least 0.30, reserve more supply for that portion; otherwise use a balanced reserve strategy.
-
-**Question**
-
-From the full demand and solar-support series, which reserve strategy is most appropriate?
+A building energy planner needs to decide whether supply should be reserved for the early, middle, late, or evenly across the operating window. The full time series below covers the operating window and is ordered by time. It contains `demand` (building electricity demand), `weather_context` (weather context signal), and `solar_support` (local solar support). Compute net grid load as demand minus 0.15 times solar support. Compare the average net load in the early, middle, and late portions of the full sequence. If the highest portion exceeds the second-highest by at least 0.30, reserve more supply for that portion; otherwise use a balanced reserve strategy. From the full demand and solar-support series, which reserve strategy is most appropriate?
 
 **Options**
 
@@ -192,27 +152,9 @@ The early, middle, and late net-load means are 5.32557, 4.74602, and 5.25447. Th
 
 #### 中文版本
 
-**场景**
+**自然任务说明**
 
-建筑能源调度员需要决定应为运行窗口的早段、中段、晚段或整体均衡预留供能。
-
-**时间轴**
-
-按时间排序的运行窗口
-
-**变量**
-
-- `demand`: 建筑用电需求
-- `weather_context`: 天气背景信号
-- `solar_support`: 本地太阳能支持
-
-**判定规则**
-
-将净电网负荷定义为需求减去 0.15 倍太阳能支持。比较完整序列早段、中段、晚段的平均净负荷；若最高段比第二高段至少高 0.30，则为该段优先预留供能，否则采用均衡策略。
-
-**问题**
-
-根据完整需求和太阳能支持序列，哪种供能预留策略最合适？
+建筑能源调度员需要决定应为运行窗口的早段、中段、晚段或整体均衡预留供能。下面的完整时序覆盖运行窗口，并按时间顺序排列，包含`demand`（建筑用电需求）、`weather_context`（天气背景信号）、`solar_support`（本地太阳能支持）。将净电网负荷定义为需求减去 0.15 倍太阳能支持。比较完整序列早段、中段、晚段的平均净负荷；若最高段比第二高段至少高 0.30，则为该段优先预留供能，否则采用均衡策略。根据完整需求和太阳能支持序列，哪种供能预留策略最合适？
 
 **选项**
 
@@ -227,6 +169,20 @@ The early, middle, and late net-load means are 5.32557, 4.74602, and 5.25447. Th
 
 早段、中段、晚段净负荷均值分别为 5.32557、4.74602、5.25447；最高与第二高差距为 0.0711006，阈值为 0.30。
 
+#### 保留的结构化 item 摘要
+
+| Field | English | 中文 |
+| --- | --- | --- |
+| Context | A building energy planner needs to decide whether supply should be reserved for the early, middle, late, or evenly across the operating window. | 建筑能源调度员需要决定应为运行窗口的早段、中段、晚段或整体均衡预留供能。 |
+| Time Axis | ordered operating window | 按时间排序的运行窗口 |
+| Question | From the full demand and solar-support series, which reserve strategy is most appropriate? | 根据完整需求和太阳能支持序列，哪种供能预留策略最合适？ |
+
+**Variables / 变量**
+
+- `demand`: building electricity demand / 建筑用电需求
+- `weather_context`: weather context signal / 天气背景信号
+- `solar_support`: local solar support / 本地太阳能支持
+
 **内部审计证据字段摘要**
 
 `{"early_net_load_mean": 5.325574036735931, "middle_net_load_mean": 4.746020988170356, "late_net_load_mean": 5.254473457602158, "top_second_gap": 0.07110057913377332, "verifier_answer_label": "balanced reserve"}`
@@ -234,9 +190,9 @@ The early, middle, and late net-load means are 5.32557, 4.74602, and 5.25447. Th
 **LLM / TS-LLM view 对齐说明**
 
 ```text
-LLM English prompt = English context + English variables + English decision guide + English question/options + raw series as CSV.
-LLM Chinese prompt = Chinese context + Chinese variables + Chinese decision guide + Chinese question/options + same raw series as CSV.
-TS-LLM view = same raw numeric array + English/Chinese text fields. The answer letter is shared.
+LLM English prompt = natural_task_en + English options + raw series as CSV.
+LLM Chinese prompt = natural_task_zh + Chinese options + same raw series as CSV.
+TS-LLM view = same raw numeric array + natural_task_en/natural_task_zh + options. The answer letter is shared.
 ```
 
 **TS-LLM array shape**
@@ -263,27 +219,9 @@ TS-LLM view = same raw numeric array + English/Chinese text fields. The answer l
 
 #### English Version
 
-**Context**
+**Natural Task Description**
 
-A traffic analyst is reviewing road readings before, during, and after an event.
-
-**Time Axis**
-
-ordered before-during-after event window
-
-**Variables**
-
-- `speed`: mean speed
-- `queue_length`: queue length
-- `lane_occupancy`: lane occupancy
-
-**Decision Guide**
-
-Use queue length, lane occupancy, and speed to form a congestion score: queue length plus 8 times occupancy minus 0.05 times speed. First check whether the event portion rises by more than 0.50 over the pre-event portion. If not, there is no clear congestion shock. Only when that shock exists, decide whether congestion recovers, partially recovers, or persists using the post-event portion.
-
-**Question**
-
-What happened to congestion after the event phase?
+A traffic analyst is reviewing road readings before, during, and after an event. The full time series below covers the before-during-after event window and is ordered by time. It contains `speed` (mean speed), `queue_length` (queue length), and `lane_occupancy` (lane occupancy). Use queue length, lane occupancy, and speed to form a congestion score: queue length plus 8 times occupancy minus 0.05 times speed. First check whether the event portion rises by more than 0.50 over the pre-event portion. If not, there is no clear congestion shock. Only when that shock exists, decide whether congestion recovers, partially recovers, or persists using the post-event portion. What happened to congestion after the event phase?
 
 **Options**
 
@@ -300,27 +238,9 @@ The pre-event, event, and post-event congestion-score means are 6.39527, 6.42351
 
 #### 中文版本
 
-**场景**
+**自然任务说明**
 
-交通分析员正在查看事件前、事件中、事件后一段道路的时序读数。
-
-**时间轴**
-
-按时间排序的事件前-事件中-事件后窗口
-
-**变量**
-
-- `speed`: 平均车速
-- `queue_length`: 排队长度
-- `lane_occupancy`: 车道占有率
-
-**判定规则**
-
-用排队长度、车道占有率和车速形成拥堵分数：排队长度加 8 倍占有率再减去 0.05 倍车速。先看事件中分数是否比事件前高出 0.50 以上；若没有，则没有清晰拥堵冲击。只有冲击存在时，才继续判断恢复、部分恢复或持续。
-
-**问题**
-
-事件阶段之后，拥堵状态如何变化？
+交通分析员正在查看事件前、事件中、事件后一段道路的时序读数。下面的完整时序覆盖事件前-事件中-事件后窗口，并按时间顺序排列，包含`speed`（平均车速）、`queue_length`（排队长度）、`lane_occupancy`（车道占有率）。用排队长度、车道占有率和车速形成拥堵分数：排队长度加 8 倍占有率再减去 0.05 倍车速。先看事件中分数是否比事件前高出 0.50 以上；若没有，则没有清晰拥堵冲击。只有冲击存在时，才继续判断恢复、部分恢复或持续。事件阶段之后，拥堵状态如何变化？
 
 **选项**
 
@@ -335,6 +255,20 @@ The pre-event, event, and post-event congestion-score means are 6.39527, 6.42351
 
 事件前、事件中、事件后拥堵分数均值分别为 6.39527、6.42351、6.14901；事件中相对事件前上升 0.0282388。
 
+#### 保留的结构化 item 摘要
+
+| Field | English | 中文 |
+| --- | --- | --- |
+| Context | A traffic analyst is reviewing road readings before, during, and after an event. | 交通分析员正在查看事件前、事件中、事件后一段道路的时序读数。 |
+| Time Axis | ordered before-during-after event window | 按时间排序的事件前-事件中-事件后窗口 |
+| Question | What happened to congestion after the event phase? | 事件阶段之后，拥堵状态如何变化？ |
+
+**Variables / 变量**
+
+- `speed`: mean speed / 平均车速
+- `queue_length`: queue length / 排队长度
+- `lane_occupancy`: lane occupancy / 车道占有率
+
 **内部审计证据字段摘要**
 
 `{"pre_event_score_mean": 6.39526655427803, "event_score_mean": 6.423505394523074, "post_event_score_mean": 6.149007909702109, "event_minus_pre": 0.028238840245044194, "post_minus_pre": -0.24625864457592073, "event_minus_post": 0.2744974848209649, "verifier_answer_label": "no clear congestion shock"}`
@@ -342,9 +276,9 @@ The pre-event, event, and post-event congestion-score means are 6.39527, 6.42351
 **LLM / TS-LLM view 对齐说明**
 
 ```text
-LLM English prompt = English context + English variables + English decision guide + English question/options + raw series as CSV.
-LLM Chinese prompt = Chinese context + Chinese variables + Chinese decision guide + Chinese question/options + same raw series as CSV.
-TS-LLM view = same raw numeric array + English/Chinese text fields. The answer letter is shared.
+LLM English prompt = natural_task_en + English options + raw series as CSV.
+LLM Chinese prompt = natural_task_zh + Chinese options + same raw series as CSV.
+TS-LLM view = same raw numeric array + natural_task_en/natural_task_zh + options. The answer letter is shared.
 ```
 
 **TS-LLM array shape**
@@ -371,27 +305,9 @@ TS-LLM view = same raw numeric array + English/Chinese text fields. The answer l
 
 #### English Version
 
-**Context**
+**Natural Task Description**
 
-A water-service operator is reviewing pressure and flow readings around a disturbance event.
-
-**Time Axis**
-
-ordered before-during-after disturbance window
-
-**Variables**
-
-- `pressure`: service pressure
-- `flow`: pipe flow
-- `storage_context`: storage context signal
-
-**Decision Guide**
-
-If pressure falls very low, flow clearly increases during the event, and pressure remains depressed afterward, classify the window as persistent leak pressure risk. If pressure drops during the event but rebounds close to or above the pre-event level afterward, classify it as recovery after disturbance. If there is no earlier risk pattern and post-event pressure stays close to pre-event pressure, classify service as stable; otherwise request manual review.
-
-**Question**
-
-Which service state best describes this disturbance window?
+A water-service operator is reviewing pressure and flow readings around a disturbance event. The full time series below covers the before-during-after disturbance window and is ordered by time. It contains `pressure` (service pressure), `flow` (pipe flow), and `storage_context` (storage context signal). If pressure falls very low, flow clearly increases during the event, and pressure remains depressed afterward, classify the window as persistent leak pressure risk. If pressure drops during the event but rebounds close to or above the pre-event level afterward, classify it as recovery after disturbance. If there is no earlier risk pattern and post-event pressure stays close to pre-event pressure, classify service as stable; otherwise request manual review. Which service state best describes this disturbance window?
 
 **Options**
 
@@ -408,27 +324,9 @@ Pressure moves from 71.8994 before the event to 64.7325 during the event and 76.
 
 #### 中文版本
 
-**场景**
+**自然任务说明**
 
-供水运维人员正在查看一次扰动事件前后水压和流量读数。
-
-**时间轴**
-
-按时间排序的扰动前-扰动中-扰动后窗口
-
-**变量**
-
-- `pressure`: 服务水压
-- `flow`: 管道流量
-- `storage_context`: 蓄水背景信号
-
-**判定规则**
-
-若水压降得很低、事件中流量明显升高、且事件后水压仍明显低于事件前，则判为持续漏水压力风险。若事件中水压下降但事件后恢复到接近或高于事件前水平，则判为扰动后恢复。若前面风险模式不满足且事件后水压接近事件前，则判为服务稳定；否则需要人工复核。
-
-**问题**
-
-这段扰动窗口最符合哪种供水服务状态？
+供水运维人员正在查看一次扰动事件前后水压和流量读数。下面的完整时序覆盖扰动前-扰动中-扰动后窗口，并按时间顺序排列，包含`pressure`（服务水压）、`flow`（管道流量）、`storage_context`（蓄水背景信号）。若水压降得很低、事件中流量明显升高、且事件后水压仍明显低于事件前，则判为持续漏水压力风险。若事件中水压下降但事件后恢复到接近或高于事件前水平，则判为扰动后恢复。若前面风险模式不满足且事件后水压接近事件前，则判为服务稳定；否则需要人工复核。这段扰动窗口最符合哪种供水服务状态？
 
 **选项**
 
@@ -443,6 +341,20 @@ Pressure moves from 71.8994 before the event to 64.7325 during the event and 76.
 
 水压从事件前 71.8994 变为事件中 64.7325，事件后为 76.6573；最低水压为 56.6995，事件中流量变化为 -0.031266。
 
+#### 保留的结构化 item 摘要
+
+| Field | English | 中文 |
+| --- | --- | --- |
+| Context | A water-service operator is reviewing pressure and flow readings around a disturbance event. | 供水运维人员正在查看一次扰动事件前后水压和流量读数。 |
+| Time Axis | ordered before-during-after disturbance window | 按时间排序的扰动前-扰动中-扰动后窗口 |
+| Question | Which service state best describes this disturbance window? | 这段扰动窗口最符合哪种供水服务状态？ |
+
+**Variables / 变量**
+
+- `pressure`: service pressure / 服务水压
+- `flow`: pipe flow / 管道流量
+- `storage_context`: storage context signal / 蓄水背景信号
+
 **内部审计证据字段摘要**
 
 `{"pre_pressure_mean": 71.89942459366053, "event_pressure_mean": 64.73250268368636, "post_pressure_mean": 76.65727518549527, "min_pressure": 56.699496625046166, "event_flow_change": -0.03126601814196839, "verifier_answer_label": "pressure recovers after disturbance"}`
@@ -450,9 +362,9 @@ Pressure moves from 71.8994 before the event to 64.7325 during the event and 76.
 **LLM / TS-LLM view 对齐说明**
 
 ```text
-LLM English prompt = English context + English variables + English decision guide + English question/options + raw series as CSV.
-LLM Chinese prompt = Chinese context + Chinese variables + Chinese decision guide + Chinese question/options + same raw series as CSV.
-TS-LLM view = same raw numeric array + English/Chinese text fields. The answer letter is shared.
+LLM English prompt = natural_task_en + English options + raw series as CSV.
+LLM Chinese prompt = natural_task_zh + Chinese options + same raw series as CSV.
+TS-LLM view = same raw numeric array + natural_task_en/natural_task_zh + options. The answer letter is shared.
 ```
 
 **TS-LLM array shape**
@@ -479,28 +391,9 @@ TS-LLM view = same raw numeric array + English/Chinese text fields. The answer l
 
 #### English Version
 
-**Context**
+**Natural Task Description**
 
-An SRE is triaging one service telemetry window.
-
-**Time Axis**
-
-ordered service telemetry window
-
-**Variables**
-
-- `cpu_load`: CPU load
-- `memory_working_set`: memory working set
-- `network_receive_rate`: network receive rate
-- `network_transmit_rate`: network transmit rate
-
-**Decision Guide**
-
-Prioritize memory leak only if memory grows by at least 15% from the first half to the second half. If not, prioritize a network burst only when receive or transmit has a peak-to-median ratio of at least 2.5. If neither applies, prioritize CPU saturation only when max CPU is at least 0.85. Otherwise report no dominant symptom.
-
-**Question**
-
-Which symptom should the SRE prioritize?
+An SRE is triaging one service telemetry window. The full time series below covers the service telemetry window and is ordered by time. It contains `cpu_load` (CPU load), `memory_working_set` (memory working set), `network_receive_rate` (network receive rate), and `network_transmit_rate` (network transmit rate). Prioritize memory leak only if memory grows by at least 15% from the first half to the second half. If not, prioritize a network burst only when receive or transmit has a peak-to-median ratio of at least 2.5. If neither applies, prioritize CPU saturation only when max CPU is at least 0.85. Otherwise report no dominant symptom. Which symptom should the SRE prioritize?
 
 **Options**
 
@@ -517,28 +410,9 @@ Memory changes from 9.66323e+06 to 9.55701e+06 (-1.1%). Receive and transmit pea
 
 #### 中文版本
 
-**场景**
+**自然任务说明**
 
-SRE 正在排查一个服务遥测窗口。
-
-**时间轴**
-
-按时间排序的服务遥测窗口
-
-**变量**
-
-- `cpu_load`: CPU 负载
-- `memory_working_set`: 内存工作集
-- `network_receive_rate`: 网络接收速率
-- `network_transmit_rate`: 网络发送速率
-
-**判定规则**
-
-只有内存从前半段到后半段至少增长 15% 时才优先排查内存泄漏。否则，只有接收或发送速率的峰值/中位数比至少为 2.5 时才优先排查网络突发。若都不满足，只有 CPU 最大负载至少为 0.85 时才排查 CPU 饱和；否则报告没有主导症状。
-
-**问题**
-
-SRE 应优先关注哪种症状？
+SRE 正在排查一个服务遥测窗口。下面的完整时序覆盖服务遥测窗口，并按时间顺序排列，包含`cpu_load`（CPU 负载）、`memory_working_set`（内存工作集）、`network_receive_rate`（网络接收速率）、`network_transmit_rate`（网络发送速率）。只有内存从前半段到后半段至少增长 15% 时才优先排查内存泄漏。否则，只有接收或发送速率的峰值/中位数比至少为 2.5 时才优先排查网络突发。若都不满足，只有 CPU 最大负载至少为 0.85 时才排查 CPU 饱和；否则报告没有主导症状。SRE 应优先关注哪种症状？
 
 **选项**
 
@@ -553,6 +427,21 @@ SRE 应优先关注哪种症状？
 
 内存从 9.66323e+06 变为 9.55701e+06，变化 -1.1%；接收和发送峰值/中位数比分别为 1.41425、1.41602，CPU 最大值为 0.426087。
 
+#### 保留的结构化 item 摘要
+
+| Field | English | 中文 |
+| --- | --- | --- |
+| Context | An SRE is triaging one service telemetry window. | SRE 正在排查一个服务遥测窗口。 |
+| Time Axis | ordered service telemetry window | 按时间排序的服务遥测窗口 |
+| Question | Which symptom should the SRE prioritize? | SRE 应优先关注哪种症状？ |
+
+**Variables / 变量**
+
+- `cpu_load`: CPU load / CPU 负载
+- `memory_working_set`: memory working set / 内存工作集
+- `network_receive_rate`: network receive rate / 网络接收速率
+- `network_transmit_rate`: network transmit rate / 网络发送速率
+
 **内部审计证据字段摘要**
 
 `{"memory_first_half_mean": 9663229.94833505, "memory_second_half_mean": 9557010.608610492, "memory_growth_ratio": -0.010992115503042417, "rx_peak_median_ratio": 1.4142464153882728, "tx_peak_median_ratio": 1.4160240046921517, "cpu_max": 0.4260868713772379, "verifier_answer_label": "no dominant symptom"}`
@@ -560,9 +449,9 @@ SRE 应优先关注哪种症状？
 **LLM / TS-LLM view 对齐说明**
 
 ```text
-LLM English prompt = English context + English variables + English decision guide + English question/options + raw series as CSV.
-LLM Chinese prompt = Chinese context + Chinese variables + Chinese decision guide + Chinese question/options + same raw series as CSV.
-TS-LLM view = same raw numeric array + English/Chinese text fields. The answer letter is shared.
+LLM English prompt = natural_task_en + English options + raw series as CSV.
+LLM Chinese prompt = natural_task_zh + Chinese options + same raw series as CSV.
+TS-LLM view = same raw numeric array + natural_task_en/natural_task_zh + options. The answer letter is shared.
 ```
 
 **TS-LLM array shape**
@@ -590,27 +479,9 @@ TS-LLM view = same raw numeric array + English/Chinese text fields. The answer l
 
 #### English Version
 
-**Context**
+**Natural Task Description**
 
-A market analyst is reviewing an asset price window.
-
-**Time Axis**
-
-ordered market window
-
-**Variables**
-
-- `asset_price`: asset price
-- `market_context`: market context signal
-- `trading_volume`: trading volume
-
-**Decision Guide**
-
-Compute total return from the first to the last price and maximum drawdown from the running peak. Severe drawdown has priority if maximum drawdown is at least 20%. If that does not apply, classify the window as bullish when return is at least +8%, bearish when return is at most -8%, and sideways otherwise.
-
-**Question**
-
-How should this price window be classified?
+A market analyst is reviewing an asset price window. The full time series below covers the market window and is ordered by time. It contains `asset_price` (asset price), `market_context` (market context signal), and `trading_volume` (trading volume). Compute total return from the first to the last price and maximum drawdown from the running peak. Severe drawdown has priority if maximum drawdown is at least 20%. If that does not apply, classify the window as bullish when return is at least +8%, bearish when return is at most -8%, and sideways otherwise. How should this price window be classified?
 
 **Options**
 
@@ -627,27 +498,9 @@ Total return is -34.1%, and maximum drawdown from the running peak is -36.1%.
 
 #### 中文版本
 
-**场景**
+**自然任务说明**
 
-市场分析师正在查看一段资产价格窗口。
-
-**时间轴**
-
-按时间排序的市场窗口
-
-**变量**
-
-- `asset_price`: 资产价格
-- `market_context`: 市场背景信号
-- `trading_volume`: 交易量
-
-**判定规则**
-
-计算首尾价格的总收益率，以及相对历史峰值的最大回撤。若最大回撤达到 20% 或以上，优先判为严重回撤风险。若没有触发回撤风险，则总收益率至少 +8% 判为上行，至多 -8% 判为下行，其余判为横盘。
-
-**问题**
-
-这段价格窗口应如何分类？
+市场分析师正在查看一段资产价格窗口。下面的完整时序覆盖市场窗口，并按时间顺序排列，包含`asset_price`（资产价格）、`market_context`（市场背景信号）、`trading_volume`（交易量）。计算首尾价格的总收益率，以及相对历史峰值的最大回撤。若最大回撤达到 20% 或以上，优先判为严重回撤风险。若没有触发回撤风险，则总收益率至少 +8% 判为上行，至多 -8% 判为下行，其余判为横盘。这段价格窗口应如何分类？
 
 **选项**
 
@@ -662,6 +515,20 @@ Total return is -34.1%, and maximum drawdown from the running peak is -36.1%.
 
 总收益率为 -34.1%，相对历史峰值的最大回撤为 -36.1%。
 
+#### 保留的结构化 item 摘要
+
+| Field | English | 中文 |
+| --- | --- | --- |
+| Context | A market analyst is reviewing an asset price window. | 市场分析师正在查看一段资产价格窗口。 |
+| Time Axis | ordered market window | 按时间排序的市场窗口 |
+| Question | How should this price window be classified? | 这段价格窗口应如何分类？ |
+
+**Variables / 变量**
+
+- `asset_price`: asset price / 资产价格
+- `market_context`: market context signal / 市场背景信号
+- `trading_volume`: trading volume / 交易量
+
 **内部审计证据字段摘要**
 
 `{"total_return": -0.34099546875088815, "max_drawdown": -0.3608915249726842, "verifier_answer_label": "severe drawdown risk"}`
@@ -669,9 +536,9 @@ Total return is -34.1%, and maximum drawdown from the running peak is -36.1%.
 **LLM / TS-LLM view 对齐说明**
 
 ```text
-LLM English prompt = English context + English variables + English decision guide + English question/options + raw series as CSV.
-LLM Chinese prompt = Chinese context + Chinese variables + Chinese decision guide + Chinese question/options + same raw series as CSV.
-TS-LLM view = same raw numeric array + English/Chinese text fields. The answer letter is shared.
+LLM English prompt = natural_task_en + English options + raw series as CSV.
+LLM Chinese prompt = natural_task_zh + Chinese options + same raw series as CSV.
+TS-LLM view = same raw numeric array + natural_task_en/natural_task_zh + options. The answer letter is shared.
 ```
 
 **TS-LLM array shape**

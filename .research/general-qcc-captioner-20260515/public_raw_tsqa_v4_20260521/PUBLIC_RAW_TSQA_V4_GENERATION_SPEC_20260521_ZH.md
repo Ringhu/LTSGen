@@ -19,4 +19,4 @@
 - by domain: `{"power_grid": 7, "building_energy": 4, "traffic": 4, "water_service": 5, "service_telemetry": 9, "market": 10}`
 - answer distribution: `{"C": 3, "B": 4, "A": 19, "D": 13}`
 - time-series length: `{'min': 96, 'max': 256}`
-- LLM prompt word length: `{'min': 250, 'max': 440, 'mean': 379.26}`
+- LLM prompt word length: `{'min': 258, 'max': 448, 'mean': 387.67}`

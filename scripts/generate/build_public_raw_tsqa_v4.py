@@ -133,16 +133,56 @@ def letter_for(labels: list[str], semantic_label: str) -> str:
     return LETTERS[labels.index(semantic_label)]
 
 
+def option_text(options: dict[str, str]) -> str:
+    return "\n".join(f"{letter}. {text}" for letter, text in options.items())
+
+
 def public_text(context: str, variables: dict[str, str], rule: str, question: str, options: dict[str, str]) -> str:
     variables_text = "\n".join(f"- {name}: {desc}" for name, desc in variables.items())
-    options_text = "\n".join(f"{letter}. {text}" for letter, text in options.items())
     return (
         f"Context:\n{context}\n\n"
         f"Variables:\n{variables_text}\n\n"
         f"Decision guide:\n{rule}\n\n"
         f"Question:\n{question}\n\n"
-        f"Options:\n{options_text}"
+        f"Options:\n{option_text(options)}"
     )
+
+
+def variable_clause(variables: dict[str, str], *, lang: str) -> str:
+    parts = [f"`{name}`（{desc}）" if lang == "zh" else f"`{name}` ({desc})" for name, desc in variables.items()]
+    if lang == "zh":
+        return "、".join(parts)
+    if len(parts) == 1:
+        return parts[0]
+    return ", ".join(parts[:-1]) + f", and {parts[-1]}"
+
+
+def time_axis_clause(time_axis: str, *, lang: str) -> str:
+    if lang == "zh":
+        clean = time_axis.replace("按时间排序的", "", 1)
+        return f"下面的完整时序覆盖{clean}，并按时间顺序排列"
+    clean = time_axis.replace("ordered ", "", 1)
+    return f"The full time series below covers the {clean} and is ordered by time"
+
+
+def natural_task(record: dict[str, Any], *, lang: str = "en") -> str:
+    if lang == "zh":
+        return (
+            f"{record['context_zh']}{time_axis_clause(record['time_series']['time_axis_zh'], lang='zh')}，"
+            f"包含{variable_clause(record['variable_descriptions_zh'], lang='zh')}。"
+            f"{record['decision_rule_zh']}{record['question_zh']}"
+        )
+    return (
+        f"{record['context_en']} {time_axis_clause(record['time_series']['time_axis'], lang='en')}. "
+        f"It contains {variable_clause(record['variable_descriptions_en'], lang='en')}. "
+        f"{record['decision_rule_en']} {record['question_en']}"
+    )
+
+
+def natural_public_text(record: dict[str, Any], *, lang: str = "en") -> str:
+    suffix = "_zh" if lang == "zh" else "_en"
+    heading = "选项" if lang == "zh" else "Options"
+    return f"{record[f'natural_task{suffix}']}\n\n{heading}:\n{option_text(record[f'options{suffix}'])}"
 
 
 def csv_values(columns: list[str], values: list[list[float]]) -> str:
@@ -153,18 +193,11 @@ def csv_values(columns: list[str], values: list[list[float]]) -> str:
 
 
 def llm_prompt(record: dict[str, Any], *, lang: str = "en") -> str:
-    suffix = "_zh" if lang == "zh" else "_en"
-    base = public_text(
-        record[f"context{suffix}"],
-        record[f"variable_descriptions{suffix}"],
-        record[f"decision_rule{suffix}"],
-        record[f"question{suffix}"],
-        record[f"options{suffix}"],
-    )
+    task = natural_public_text(record, lang=lang)
     return (
         "You are answering a raw time-series multiple-choice question.\n"
-        "Use only the context, variables, decision guide, question, options, and full raw time series shown below.\n\n"
-        f"{base}\n\n"
+        "Use only the natural task description, answer options, and full raw time series shown below.\n\n"
+        f"{task}\n\n"
         "Time series values:\n"
         f"{csv_values(record['time_series']['columns'], record['time_series']['values'])}\n\n"
         "Return JSON only: {\"answer\": \"A|B|C|D\", \"answer_label\": \"option text\", \"reason\": \"brief\"}"
@@ -640,6 +673,8 @@ def public_record(row: dict[str, Any], source_index: int) -> tuple[dict[str, Any
         "semantic_answer_label": built["semantic_answer_label"],
         "reasoning_skill_tags": built["reasoning_skill_tags"],
     }
+    record["natural_task_en"] = natural_task(record, lang="en")
+    record["natural_task_zh"] = natural_task(record, lang="zh")
     audit = {
         "id": record["id"],
         "source_v3_id": row["id"],
@@ -670,6 +705,8 @@ def llm_view(record: dict[str, Any]) -> dict[str, Any]:
         "dataset_name": "public_raw_tsqa_v4_llm_text_view",
         "domain": record["domain"],
         "task_family": record["task_family"],
+        "natural_task_en": record["natural_task_en"],
+        "natural_task_zh": record["natural_task_zh"],
         "prompt_en": llm_prompt(record, lang="en"),
         "prompt_zh": llm_prompt(record, lang="zh"),
         "answer": record["answer"],
@@ -679,20 +716,6 @@ def llm_view(record: dict[str, Any]) -> dict[str, Any]:
 
 
 def tsllm_view(record: dict[str, Any]) -> dict[str, Any]:
-    text_en = public_text(
-        record["context_en"],
-        record["variable_descriptions_en"],
-        record["decision_rule_en"],
-        record["question_en"],
-        record["options_en"],
-    )
-    text_zh = public_text(
-        record["context_zh"],
-        record["variable_descriptions_zh"],
-        record["decision_rule_zh"],
-        record["question_zh"],
-        record["options_zh"],
-    )
     return {
         "id": record["id"],
         "dataset_name": "public_raw_tsqa_v4_tsllm_array_view",
@@ -702,8 +725,10 @@ def tsllm_view(record: dict[str, Any]) -> dict[str, Any]:
         "columns": record["time_series"]["columns"],
         "time_axis": record["time_series"]["time_axis"],
         "time_axis_zh": record["time_series"]["time_axis_zh"],
-        "text_en": text_en,
-        "text_zh": text_zh,
+        "natural_task_en": record["natural_task_en"],
+        "natural_task_zh": record["natural_task_zh"],
+        "text_en": natural_public_text(record, lang="en"),
+        "text_zh": natural_public_text(record, lang="zh"),
         "answer": record["answer"],
         "answer_label": record["answer_label"],
         "source_canonical_id": record["id"],
