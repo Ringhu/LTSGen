@@ -1,17 +1,19 @@
-# LTSGEN Shared QCC Base
+# LTSGEN EMNLP Benchmark Pipeline
 
-This branch is the shared code base for the two active LTSGEN workstreams after
-the 2026-05-21 branch cleanup.
+This branch owns the near-term benchmark/data-generation line for an EMNLP
+submission.
 
-It deliberately does not declare a single active research contract. Research
-contracts, trackers, generated artifacts, and case-study reports live on the
-workstream branches:
+Active goal:
 
-- `emnlp-benchmark-pipeline`
-- `caption-model-longline`
+- create a multi-simulator natural TS-QA benchmark;
+- generate natural-language question-conditioned evidence captions;
+- keep answer grounding verifier-checkable from simulator state, traces, or
+  deterministic support slots;
+- preserve reports, figures, and small reproducibility artifacts needed for the
+  paper.
 
-Use this branch for reusable implementation only: `ts_cap/`, `ts_align/`,
-`ts_align_scripts_v2/`, `tslm/`, `scripts/`, and tests.
+Shared reusable code should be factored through `shared-qcc-base`. Learned
+caption-model training and GPU diagnostics belong on `caption-model-longline`.
 
-Large generated outputs should not be added here. Prefer small fixtures and
-manifests when a shared test needs data.
+Do not revive the old ShapeShift/CPR route as active work unless explicitly
+requested.

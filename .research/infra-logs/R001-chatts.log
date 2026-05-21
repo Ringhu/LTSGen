@@ -1,0 +1,6 @@
+drwxrwxr-x   6 user1 user1   85 Apr 11 21:49 models--bytedance-research--ChatTS-14B
+---HF_HOME A100---
+211G	/cluster/home/user1/.cache/huggingface
+---ANY CHATTS DIR---
+/cluster/home/user1/hulining/TSModel/ChatTS
+/cluster/home/user1/hulining/ChatTS

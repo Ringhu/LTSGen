@@ -1,0 +1,25 @@
+{
+  "train_split": "tiny_overfit",
+  "n_train": 32,
+  "eval_splits": {
+    "tiny_overfit": {
+      "n_items": 32,
+      "planner_operator_accuracy": 1.0,
+      "planner_error_count": 0,
+      "planner_errors": []
+    },
+    "dev": {
+      "n_items": 24,
+      "planner_operator_accuracy": 1.0,
+      "planner_error_count": 0,
+      "planner_errors": []
+    },
+    "train": {
+      "n_items": 100,
+      "planner_operator_accuracy": 1.0,
+      "planner_error_count": 0,
+      "planner_errors": []
+    }
+  },
+  "n_predictions_all_eval_splits": 156
+}

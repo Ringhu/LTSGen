@@ -1,0 +1,12 @@
+{
+  "train_jsonl": ".research/general-qcc-captioner-20260515/multisim_qcc_v5_aiops_v3/balanced_train_per_source24_sft.jsonl",
+  "eval_jsonl": ".research/general-qcc-captioner-20260515/multisim_qcc_v5_aiops_v3/balanced_eval_per_source24_sft.jsonl",
+  "output_dir": ".research/general-qcc-captioner-20260515/multisim_qcc_v5_aiops_v3/tsrlm_multisim_v5_aiops_v3_balanced24_qwen3_4b_20260518",
+  "source_group_key": "merge_source_name",
+  "target_num_vars": 4,
+  "ts_num_vars": 4,
+  "max_steps": -1,
+  "train_rows": 144,
+  "eval_rows": 144,
+  "final_model": ".research/general-qcc-captioner-20260515/multisim_qcc_v5_aiops_v3/tsrlm_multisim_v5_aiops_v3_balanced24_qwen3_4b_20260518/final_model"
+}

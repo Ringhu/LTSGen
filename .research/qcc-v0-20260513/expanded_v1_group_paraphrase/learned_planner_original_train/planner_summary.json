@@ -1,0 +1,365 @@
+{
+  "train_split": "train",
+  "n_train": 470,
+  "eval_splits": {
+    "dev": {
+      "n_items": 264,
+      "planner_operator_accuracy": 0.8788,
+      "planner_error_count": 32,
+      "planner_errors": [
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line1::cf_delta_max_rho_value_slot::expanded_v1::e5b5fe518b::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 295, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line1::cf_delta_max_rho_value_slot::expanded_v1::e5b5fe518b::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 295, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line1::cf_delta_max_rho_value_slot::expanded_v1::e25b7a9aad::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 394, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line1::cf_delta_max_rho_value_slot::expanded_v1::e25b7a9aad::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 394, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line1::cf_delta_max_rho_value_slot::expanded_v1::3a177da236::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 492, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line1::cf_delta_max_rho_value_slot::expanded_v1::3a177da236::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 492, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line1::cf_delta_max_rho_value_slot::expanded_v1::70ef14c681::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 591, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line1::cf_delta_max_rho_value_slot::expanded_v1::70ef14c681::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 591, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line1::cf_delta_max_rho_value_slot::expanded_v1::9cf127906d::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 689, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line1::cf_delta_max_rho_value_slot::expanded_v1::9cf127906d::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 689, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line1::cf_delta_max_rho_value_slot::expanded_v1::aa6bd7aabc::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 788, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line1::cf_delta_max_rho_value_slot::expanded_v1::aa6bd7aabc::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 788, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line1::cf_delta_max_rho_value_slot::expanded_v1::b2d8b75ee3::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 886, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line1::cf_delta_max_rho_value_slot::expanded_v1::b2d8b75ee3::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 886, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line1::cf_delta_max_rho_value_slot::expanded_v1::de6f550ddc::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 985, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line1::cf_delta_max_rho_value_slot::expanded_v1::de6f550ddc::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 985, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line4::cf_delta_max_rho_value_slot::expanded_v1::3bd8774de6::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 295, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line4::cf_delta_max_rho_value_slot::expanded_v1::3bd8774de6::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 295, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line4::cf_delta_max_rho_value_slot::expanded_v1::8e18efe4b0::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 394, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line4::cf_delta_max_rho_value_slot::expanded_v1::8e18efe4b0::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 394, what is the delta between intervention and factual max_rho?"
+        }
+      ]
+    },
+    "test": {
+      "n_items": 90,
+      "planner_operator_accuracy": 0.8222,
+      "planner_error_count": 16,
+      "planner_errors": [
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h512_c-1_t128_line2::cf_delta_max_rho_value_slot::expanded_v1::d8d2648b93::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 148, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h512_c-1_t128_line2::cf_delta_max_rho_value_slot::expanded_v1::d8d2648b93::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 148, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h512_c-1_t128_line2::cf_delta_max_rho_value_slot::expanded_v1::cfb5a2d75b::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 197, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h512_c-1_t128_line2::cf_delta_max_rho_value_slot::expanded_v1::cfb5a2d75b::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 197, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h512_c-1_t128_line2::cf_delta_max_rho_value_slot::expanded_v1::84efe4e635::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 246, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h512_c-1_t128_line2::cf_delta_max_rho_value_slot::expanded_v1::84efe4e635::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 246, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h512_c-1_t128_line2::cf_delta_max_rho_value_slot::expanded_v1::1bece54718::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 295, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h512_c-1_t128_line2::cf_delta_max_rho_value_slot::expanded_v1::1bece54718::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 295, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h512_c-1_t128_line2::cf_delta_max_rho_value_slot::expanded_v1::6abeb777dd::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 345, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h512_c-1_t128_line2::cf_delta_max_rho_value_slot::expanded_v1::6abeb777dd::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 345, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h512_c-1_t128_line2::cf_delta_max_rho_value_slot::expanded_v1::7d29a0f39d::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 394, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h512_c-1_t128_line2::cf_delta_max_rho_value_slot::expanded_v1::7d29a0f39d::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 394, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h512_c-1_t128_line2::cf_delta_max_rho_value_slot::expanded_v1::64ec60bb2a::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 443, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h512_c-1_t128_line2::cf_delta_max_rho_value_slot::expanded_v1::64ec60bb2a::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 443, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h512_c-1_t128_line2::cf_delta_max_rho_value_slot::expanded_v1::d72f27d4a5::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 492, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h512_c-1_t128_line2::cf_delta_max_rho_value_slot::expanded_v1::d72f27d4a5::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 492, what is the delta between intervention and factual max_rho?"
+        }
+      ]
+    },
+    "tiny_overfit": {
+      "n_items": 96,
+      "planner_operator_accuracy": 0.8958,
+      "planner_error_count": 10,
+      "planner_errors": [
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line3::cf_delta_max_rho_value_slot::expanded_v1::1696fd1223::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 295, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line3::cf_delta_max_rho_value_slot::expanded_v1::1696fd1223::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 295, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line3::cf_delta_max_rho_value_slot::expanded_v1::305175633e::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 591, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line3::cf_delta_max_rho_value_slot::expanded_v1::305175633e::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 591, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line3::cf_delta_max_rho_value_slot::expanded_v1::0b0185dbe2::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 689, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line3::cf_delta_max_rho_value_slot::expanded_v1::0b0185dbe2::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 689, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::citylearn_real::citylearn_challenge_2022_phase_1_trace_2048::h1024::s0::quarter_net_electricity_mean_value_slot::expanded_v1::85210c22df::paraphrase_v2",
+          "pred_operator": "read_citylearn_outdoor_temperature",
+          "error": "Could not parse question: What is the quarter-1 mean net electricity without storage?"
+        },
+        {
+          "id": "qcc_v0::simqa::citylearn_real::citylearn_challenge_2022_phase_1_trace_2048::h1024::s0::quarter_net_electricity_mean_value_slot::expanded_v1::2abc99f275::paraphrase_v2",
+          "pred_operator": "read_citylearn_outdoor_temperature",
+          "error": "Could not parse question: What is the quarter-2 mean net electricity without storage?"
+        },
+        {
+          "id": "qcc_v0::simqa::citylearn_real::citylearn_challenge_2022_phase_1_trace_2048::h1024::s0::quarter_net_electricity_mean_value_slot::expanded_v1::8e422a1cfd::paraphrase_v2",
+          "pred_operator": "read_citylearn_outdoor_temperature",
+          "error": "Could not parse question: What is the quarter-3 mean net electricity without storage?"
+        },
+        {
+          "id": "qcc_v0::simqa::citylearn_real::citylearn_challenge_2022_phase_1_trace_2048::h1024::s0::quarter_net_electricity_mean_value_slot::expanded_v1::54b282c8c7::paraphrase_v2",
+          "pred_operator": "read_citylearn_outdoor_temperature",
+          "error": "Could not parse question: What is the quarter-4 mean net electricity without storage?"
+        }
+      ]
+    },
+    "train": {
+      "n_items": 1410,
+      "planner_operator_accuracy": 0.905,
+      "planner_error_count": 134,
+      "planner_errors": [
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line3::cf_delta_max_rho_value_slot::expanded_v1::ffdc1e16d9::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 394, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line3::cf_delta_max_rho_value_slot::expanded_v1::ffdc1e16d9::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 394, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line3::cf_delta_max_rho_value_slot::expanded_v1::6aa298d62f::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 492, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line3::cf_delta_max_rho_value_slot::expanded_v1::6aa298d62f::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 492, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line3::cf_delta_max_rho_value_slot::expanded_v1::cb179af4bf::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 788, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line3::cf_delta_max_rho_value_slot::expanded_v1::cb179af4bf::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 788, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line3::cf_delta_max_rho_value_slot::expanded_v1::51ff4d4c3e::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 886, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line3::cf_delta_max_rho_value_slot::expanded_v1::51ff4d4c3e::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 886, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line3::cf_delta_max_rho_value_slot::expanded_v1::9576779d7b::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 985, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h1024_c-1_t256_line3::cf_delta_max_rho_value_slot::expanded_v1::9576779d7b::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 985, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h2048_c-1_t512_line1::cf_delta_max_rho_value_slot::expanded_v1::4568f78e3b::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 590, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h2048_c-1_t512_line1::cf_delta_max_rho_value_slot::expanded_v1::4568f78e3b::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 590, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h2048_c-1_t512_line1::cf_delta_max_rho_value_slot::expanded_v1::382526d2fb::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 787, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h2048_c-1_t512_line1::cf_delta_max_rho_value_slot::expanded_v1::382526d2fb::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 787, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h2048_c-1_t512_line1::cf_delta_max_rho_value_slot::expanded_v1::364110900d::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 984, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h2048_c-1_t512_line1::cf_delta_max_rho_value_slot::expanded_v1::364110900d::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 984, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h2048_c-1_t512_line1::cf_delta_max_rho_value_slot::expanded_v1::8256ad571e::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 1181, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h2048_c-1_t512_line1::cf_delta_max_rho_value_slot::expanded_v1::8256ad571e::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 1181, what is the delta between intervention and factual max_rho?"
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h2048_c-1_t512_line1::cf_delta_max_rho_value_slot::expanded_v1::567441eb18::paraphrase_v1",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: At local step 1379, compute intervention max_rho minus factual max_rho."
+        },
+        {
+          "id": "qcc_v0::simqa::grid2op_real_cf::h2048_c-1_t512_line1::cf_delta_max_rho_value_slot::expanded_v1::567441eb18::paraphrase_v2",
+          "pred_operator": "read_cf_intervention_max_rho",
+          "error": "Could not parse question: For local_t 1379, what is the delta between intervention and factual max_rho?"
+        }
+      ]
+    }
+  },
+  "n_predictions_all_eval_splits": 1860
+}

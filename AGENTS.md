@@ -1,38 +1,41 @@
-# LTSGEN Shared QCC Base
+# LTSGEN EMNLP Benchmark Pipeline
 
-This branch is the shared engineering base for the post-2026-05-21
-consolidation. It is intentionally not a paper or experiment branch.
+This branch is the short-track benchmark/data-generation workstream for the
+EMNLP submission target.
 
-## Role
+## Active Direction
 
-Use this branch for code that both active workstreams need:
+Build a multi-simulator benchmark around natural TS-QA, question-conditioned
+evidence captions, and verifier-checkable QA generation. This branch owns
+benchmark assets, case studies, reports, and data-pipeline artifacts.
 
-- reusable time-series caption and wrapper code in `ts_cap/`;
-- TS-text alignment infrastructure in `ts_align/` and `ts_align_scripts_v2/`;
-- SFT/model plumbing in `tslm/`;
-- shared generation, evaluation, training, remote, and utility scripts under
-  `scripts/`;
-- shared unit tests.
+The companion longline branch is `caption-model-longline`, which owns model
+training and captioner diagnostics. Shared reusable code should land first in
+`shared-qcc-base` when possible.
 
-The active research artifacts are kept on workstream branches:
+## Primary Scope
 
-- `emnlp-benchmark-pipeline`: short-to-medium horizon benchmark/data pipeline
-  for the EMNLP submission track.
-- `caption-model-longline`: longer-term model-training track for learning a
-  question-conditioned evidence captioner.
+- Multi-simulator QA/caption generation across Grid2Op, CityLearn, FinRL,
+  traffic, water, and AIOpsLab-style sources.
+- Natural TS-QA candidate generation, rewriting, review, quality audit, and
+  case-study assets.
+- EMNLP-facing reports, figures, artifact inventories, schema reports, and
+  small reproducibility datasets.
+- Benchmark diagnostics such as question-only, generic caption, oracle evidence
+  caption, statistical caption, and sampled-number baselines.
 
-## Artifact Policy
+## Boundaries
 
-Do not add large generated datasets, simulator traces, predictions, GPU outputs,
-or paper case-study assets to this branch. Put those on the appropriate
-workstream branch and prefer manifests, reports, and small fixtures over full
-intermediate outputs.
+- Do not treat tool/executor inference as the final QCC method on this branch.
+- Do not use archived ShapeShift/CPR files as active instructions.
+- Do not add checkpoints, large simulator traces, or full GPU output trees.
+- Prefer manifest/path references for large generated artifacts.
+- Keep case-study reports Chinese-first by default while preserving method,
+  task-family, and path names in English/code form.
 
-## Guardrails
+## Useful Branches
 
-- Keep shared code route-neutral where possible.
-- Do not resurrect archived ShapeShift/CPR instructions as active project
-  direction.
-- Use `python3`, not `python`, in local commands.
-- Do not commit local API keys, checkpoints, traces, or large simulator data.
-- Do not revert unrelated dirty work in other worktrees.
+- `shared-qcc-base`: common code and tests.
+- `caption-model-longline`: learned caption model training route.
+- `ext/a-gpt-compare`, `p0-case-study-images-20260511`,
+  `report/20260413-assets`: archived/reference-only branches.

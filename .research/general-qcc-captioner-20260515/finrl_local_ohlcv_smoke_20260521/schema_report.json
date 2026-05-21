@@ -1,0 +1,82 @@
+{
+  "n": 63,
+  "by_split": {
+    "test": 63
+  },
+  "by_task_family": {
+    "fin_trend_price": 7,
+    "fin_extrema_price": 7,
+    "fin_volatility_returns": 7,
+    "fin_drawdown_price": 7,
+    "fin_window_return": 7,
+    "fin_cross_variable_return": 7,
+    "fin_domain_market_regime": 7,
+    "fin_volume_anomaly": 7,
+    "fin_temporal_lead_lag": 7
+  },
+  "by_answer": {
+    "C": 16,
+    "D": 15,
+    "A": 16,
+    "B": 16
+  },
+  "by_answer_label": {
+    "flat": 1,
+    "late": 8,
+    "similar thirds": 1,
+    "mild drawdown": 3,
+    "first half higher": 2,
+    "market co-movement": 7,
+    "volatile sideways regime": 7,
+    "no pronounced spike": 3,
+    "no clear lead": 7,
+    "downward": 2,
+    "middle": 5,
+    "moderate drawdown": 4,
+    "early": 4,
+    "second half higher": 4,
+    "upward": 4,
+    "similar halves": 1
+  },
+  "by_abstract_primitive": {
+    "trend": 7,
+    "extrema": 7,
+    "volatility": 7,
+    "domain_context": 14,
+    "window_comparison": 7,
+    "cross_variable_relation": 7,
+    "anomaly": 7,
+    "lead_lag": 7
+  },
+  "by_abstract_answer_label": {
+    "flat": 1,
+    "late": 8,
+    "similar": 2,
+    "mild": 3,
+    "first_higher": 2,
+    "x0_x1_relation": 7,
+    "stressed": 7,
+    "no_event": 3,
+    "no_clear_lead": 7,
+    "downward": 2,
+    "middle": 5,
+    "moderate": 4,
+    "early": 4,
+    "second_higher": 4,
+    "upward": 4
+  },
+  "by_horizon": {
+    "32": 45,
+    "64": 18
+  },
+  "tickers_by_split": {
+    "test": [
+      "MSFT"
+    ]
+  },
+  "ticker_leakage_count": 0,
+  "missing_required_field_count": 0,
+  "missing_required_fields": [],
+  "schema_gate_pass": true,
+  "note": "FinRL broad semantic QCC data; historical OHLCV, deterministic labels, no causal counterfactual claims."
+}

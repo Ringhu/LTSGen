@@ -1,0 +1,1044 @@
+{
+  "input": ".research/general-qcc-captioner-20260515/natural_qa_balanced8_20260519/natural_multisim_v5_balanced8.jsonl",
+  "model": "gpt-5.5",
+  "n_cases": 48,
+  "n_reviews": 48,
+  "reviews": [
+    {
+      "id": "multisim_qcc_v5_aiops_v3::aiopslab_official_v3::aiopslab_official::port_misconfig_seed0_user-service::case000::aiops_official_app_context",
+      "source": "aiopslab_official_v3",
+      "task_family": "aiops_official_app_context",
+      "review_scope": "excluded_by_rule",
+      "decision": "reject",
+      "naturalness_score": 2,
+      "answerability_score": 2,
+      "accuracy_risk": "high",
+      "problem_tags": [
+        "metadata_only_not_pure_ts"
+      ],
+      "reason_zh": "该行依赖 AIOps 官方 metadata，而不是仅由时间序列窗口和可解释场景回答；不应进入纯 TS-QA 正例池。",
+      "suggested_scene_zh": "一名 SRE 正在查看 AIOpsLab 微服务遥测窗口。x0 是服务 CPU 负载，x1 是内存工作集，x2 是网络接收速率，x3 是网络发送速率。 这一行询问官方 case 元数据；如果不提供 metadata，它不是纯时间序列 QA 样本。",
+      "suggested_question_zh": "如需保留，应显式提供 metadata 表或改成遥测本身可支持的问题。",
+      "suggested_options_zh": [
+        "hotel-reservation 应用",
+        "astronomy-shop 应用",
+        "social-network 应用",
+        "未知应用"
+      ],
+      "large_scale_rule_zh": "metadata/provenance/app/service-role/fault-context 题必须单独建模，不能伪装成纯时间序列推理题。"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::aiopslab_official_v3::aiopslab_official::scale_pod_zero_seed0_user-service::case005::aiops_official_case_provenance_context",
+      "source": "aiopslab_official_v3",
+      "task_family": "aiops_official_case_provenance_context",
+      "review_scope": "excluded_by_rule",
+      "decision": "reject",
+      "naturalness_score": 2,
+      "answerability_score": 2,
+      "accuracy_risk": "high",
+      "problem_tags": [
+        "metadata_only_not_pure_ts"
+      ],
+      "reason_zh": "该行依赖 AIOps 官方 metadata，而不是仅由时间序列窗口和可解释场景回答；不应进入纯 TS-QA 正例池。",
+      "suggested_scene_zh": "一名 SRE 正在查看 AIOpsLab 微服务遥测窗口。x0 是服务 CPU 负载，x1 是内存工作集，x2 是网络接收速率，x3 是网络发送速率。 这一行询问官方 case 元数据；如果不提供 metadata，它不是纯时间序列 QA 样本。",
+      "suggested_question_zh": "如需保留，应显式提供 metadata 表或改成遥测本身可支持的问题。",
+      "suggested_options_zh": [
+        "内置 AIOpsLab 事故",
+        "合成备用事故",
+        "外部日志回放",
+        "未知来源"
+      ],
+      "large_scale_rule_zh": "metadata/provenance/app/service-role/fault-context 题必须单独建模，不能伪装成纯时间序列推理题。"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::aiopslab_official_v3::aiopslab_official::port_misconfig_seed0_user-service::case000::aiops_official_window_memory",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "题目读起来像正常的 SRE 遥测窗口分析问题，而不是明显的校验槽位提示。变量含义清楚，问题明确指定使用 5% 相对差异规则，证据给出了前后半段内存均值，因此可以根据给定规则确定选项。没有需要额外阈值推断的模糊程度标签，也没有未解释的时间轴或变量含义问题。",
+      "suggested_scene_zh": "一名 SRE 正在查看微服务的一段事故遥测窗口。x0 是服务 CPU 负载，x1 是内存工作集，x2 是网络接收速率，x3 是网络发送速率。",
+      "suggested_question_zh": "按 5% 相对差异规则，这段窗口中的服务内存占用是前后两半相近，还是某一半更高？",
+      "suggested_options_zh": [
+        "前后两半相近",
+        "前半段更高",
+        "后半段更高",
+        "无法判断"
+      ],
+      "large_scale_rule_zh": "保留。此类题目只要场景说明变量含义，问题明确比较对象和阈值规则，并在证据中给出前后半段均值，就具有较好的自然性和可答性。",
+      "source": "aiopslab_official_v3",
+      "task_family": "aiops_official_window_memory",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::aiopslab_official_v3::aiopslab_official::scale_pod_zero_seed0_user-service::case005::aiops_official_window_memory",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例读起来像正常的 SRE 遥测分析问题，场景中已解释 x1 是内存工作集，问题明确要求按 5% 相对差异规则比较事故窗口前后两半的内存占用。证据给出了判定规则和前后两半均值，选项也与问题一致，因此可由给定信息确定答案。没有明显隐藏元数据、未解释时间轴或需要额外阈值的问题。",
+      "suggested_scene_zh": "一名 SRE 正在查看某微服务在一次事故窗口内的遥测数据。x0 是服务 CPU 负载，x1 是内存工作集，x2 是网络接收速率，x3 是网络发送速率。",
+      "suggested_question_zh": "按 5% 相对差异规则比较 x1 内存工作集的前后两半均值：这个窗口的内存占用是前后相近，还是某一半更高？",
+      "suggested_options_zh": [
+        "前半段更高",
+        "后半段更高",
+        "前后两半相近",
+        "无法判断"
+      ],
+      "large_scale_rule_zh": "保留此类样例：变量含义已在场景中说明，比较规则和阈值在题面或证据中明确给出，证据提供前后两半的可用统计量，选项为自然语言决策项且不依赖未说明的内部时间轴或隐藏元数据。",
+      "source": "aiopslab_official_v3",
+      "task_family": "aiops_official_window_memory",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::aiopslab_official_v3::aiopslab_official::scale_pod_zero_seed0_user-service::case005::aiops_official_service_role_context",
+      "source": "aiopslab_official_v3",
+      "task_family": "aiops_official_service_role_context",
+      "review_scope": "excluded_by_rule",
+      "decision": "reject",
+      "naturalness_score": 2,
+      "answerability_score": 2,
+      "accuracy_risk": "high",
+      "problem_tags": [
+        "metadata_only_not_pure_ts"
+      ],
+      "reason_zh": "该行依赖 AIOps 官方 metadata，而不是仅由时间序列窗口和可解释场景回答；不应进入纯 TS-QA 正例池。",
+      "suggested_scene_zh": "一名 SRE 正在查看 AIOpsLab 微服务遥测窗口。x0 是服务 CPU 负载，x1 是内存工作集，x2 是网络接收速率，x3 是网络发送速率。 这一行询问官方 case 元数据；如果不提供 metadata，它不是纯时间序列 QA 样本。",
+      "suggested_question_zh": "如需保留，应显式提供 metadata 表或改成遥测本身可支持的问题。",
+      "suggested_options_zh": [
+        "文本/内容服务角色",
+        "存储服务角色",
+        "其他服务角色",
+        "用户/账号服务角色"
+      ],
+      "large_scale_rule_zh": "metadata/provenance/app/service-role/fault-context 题必须单独建模，不能伪装成纯时间序列推理题。"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::aiopslab_official_v3::aiopslab_official::scale_pod_zero_seed0_user-service::case005::aiops_official_fault_family_detail_context",
+      "source": "aiopslab_official_v3",
+      "task_family": "aiops_official_fault_family_detail_context",
+      "review_scope": "excluded_by_rule",
+      "decision": "reject",
+      "naturalness_score": 2,
+      "answerability_score": 2,
+      "accuracy_risk": "high",
+      "problem_tags": [
+        "metadata_only_not_pure_ts"
+      ],
+      "reason_zh": "该行依赖 AIOps 官方 metadata，而不是仅由时间序列窗口和可解释场景回答；不应进入纯 TS-QA 正例池。",
+      "suggested_scene_zh": "一名 SRE 正在查看 AIOpsLab 微服务遥测窗口。x0 是服务 CPU 负载，x1 是内存工作集，x2 是网络接收速率，x3 是网络发送速率。 这一行询问官方 case 元数据；如果不提供 metadata，它不是纯时间序列 QA 样本。",
+      "suggested_question_zh": "如需保留，应显式提供 metadata 表或改成遥测本身可支持的问题。",
+      "suggested_options_zh": [
+        "副本缩为零",
+        "端口配置错误",
+        "认证撤销",
+        "其他事故类型"
+      ],
+      "large_scale_rule_zh": "metadata/provenance/app/service-role/fault-context 题必须单独建模，不能伪装成纯时间序列推理题。"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::aiopslab_official_v3::aiopslab_official::port_misconfig_seed0_user-service::case000::aiops_official_network_volatility",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "题目读起来像正常的运维分析问题，场景中已说明 x2 是网络接收速率，问题要求判断窗口中网络接收速率波动最大的时间段。选项为早期、中期、后期、三段相近，和证据中的“三等分后比较标准差”一致。支持槽给出了各段标准差并确定早期，答案可由确定性支持信息直接得到，没有明显隐藏元数据或未解释阈值问题。",
+      "suggested_scene_zh": "一名 SRE 正在查看微服务的一段遥测窗口。x0 是服务 CPU 负载，x1 是内存工作集，x2 是网络接收速率，x3 是网络发送速率。",
+      "suggested_question_zh": "如果把该时间窗口等分为早期、中期和后期三段，哪一段的网络接收速率波动最大？",
+      "suggested_options_zh": [
+        "中期",
+        "后期",
+        "三段相近",
+        "早期"
+      ],
+      "large_scale_rule_zh": "这类波动性问题应明确变量含义和时间分段方式；若答案依据标准差、方差等统计量，应在证据或支持槽中给出可比较的分段统计结果，避免只使用含糊的“更波动”描述。",
+      "source": "aiopslab_official_v3",
+      "task_family": "aiops_official_network_volatility",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::aiopslab_official_v3::aiopslab_official::port_misconfig_seed0_text-service::case001::aiops_official_fault_context",
+      "source": "aiopslab_official_v3",
+      "task_family": "aiops_official_fault_context",
+      "review_scope": "excluded_by_rule",
+      "decision": "reject",
+      "naturalness_score": 2,
+      "answerability_score": 2,
+      "accuracy_risk": "high",
+      "problem_tags": [
+        "metadata_only_not_pure_ts"
+      ],
+      "reason_zh": "该行依赖 AIOps 官方 metadata，而不是仅由时间序列窗口和可解释场景回答；不应进入纯 TS-QA 正例池。",
+      "suggested_scene_zh": "一名 SRE 正在查看 AIOpsLab 微服务遥测窗口。x0 是服务 CPU 负载，x1 是内存工作集，x2 是网络接收速率，x3 是网络发送速率。 这一行询问官方 case 元数据；如果不提供 metadata，它不是纯时间序列 QA 样本。",
+      "suggested_question_zh": "如需保留，应显式提供 metadata 表或改成遥测本身可支持的问题。",
+      "suggested_options_zh": [
+        "认证故障上下文",
+        "端口配置错误上下文",
+        "副本缩为零上下文",
+        "事故上下文不清楚"
+      ],
+      "large_scale_rule_zh": "metadata/provenance/app/service-role/fault-context 题必须单独建模，不能伪装成纯时间序列推理题。"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::citylearn::citylearn_broad::citylearn_challenge_2022_phase_1_start6144_h2048_b5::w512_768::city_anomaly_total_load",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题表述基本像正常的建筑能耗场景诊断问题，变量 x0 已解释为建筑总用电需求，早期/中期/后期的划分也在场景中说明。证据明确给出尖峰判定阈值、最强候选的 z 分数以及其位于窗口后段，因此可由给定信息确定答案。没有明显依赖隐藏内部 ID 或未解释坐标轴的问题。",
+      "suggested_scene_zh": "建筑能耗控制器正在查看一个 256 步的 CityLearn 时间窗口。x0 表示建筑总用电需求；若需要判断位置，则按时间顺序把窗口平均分为早期、中期和后期三段。",
+      "suggested_question_zh": "这个时间窗口中最明显的建筑总用电需求孤立尖峰出现在早期、中期还是后期？",
+      "suggested_options_zh": [
+        "早期",
+        "中期",
+        "后期",
+        "没有明显尖峰"
+      ],
+      "large_scale_rule_zh": "保留此类样例：只要场景清楚定义变量含义和时间分段方式，证据明确给出尖峰阈值、候选强度及其所在分段，就可以作为自然且可回答的时序异常定位问题。",
+      "source": "citylearn",
+      "task_family": "city_anomaly_total_load",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::citylearn::citylearn_broad::citylearn_challenge_2022_phase_1_start6144_h2048_b5::w1664_1920::city_window_total_load",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题以建筑能耗控制场景提出，变量 x0 的含义清楚，前半段/后半段选项与证据中的均值直接对应，能够从给定信息确定答案。措辞基本自然，不像内部校验槽位提示；唯一轻微不足是选项表述略简短，但不影响理解。",
+      "suggested_scene_zh": "建筑能耗控制器正在查看一个 256 步的 CityLearn 时间窗口。x0 表示建筑总用电需求。",
+      "suggested_question_zh": "从平均用电需求来看，控制器应该更关注窗口的哪一半？",
+      "suggested_options_zh": [
+        "后半段更高",
+        "前半段更高",
+        "前后两半相近",
+        "无法判断"
+      ],
+      "large_scale_rule_zh": "保留这类样本：只要场景清楚定义变量，问题自然地询问前后时段的平均负荷差异，并且证据明确给出两段均值即可。避免在题干中暴露窗口索引、bucket、内部轨迹 ID 等元数据；若使用“相近”等选项，应由确定性支持槽定义清楚判定标准。",
+      "source": "citylearn",
+      "task_family": "city_window_total_load",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::citylearn::citylearn_broad::citylearn_challenge_2022_phase_1_start4096_h2048_b5::w128_384::city_anomaly_total_load",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题表述基本像正常的建筑用电异常检测问题，而不是明显的槽位验证提示。场景说明了窗口长度、变量 x0 的含义，以及早期/中期/后期的划分方式；证据明确给出检测器使用绝对 z 分数 3 作为阈值，最强候选仅为 1.77，因此可由证据和选项确定答案。唯一轻微不足是“明显尖峰”本身依赖阈值，但证据中已解释阈值，风险较低。",
+      "suggested_scene_zh": "建筑能耗控制器正在查看一个 256 步的 CityLearn 时间窗口。x0 表示建筑总用电需求；若需要描述位置，则按时间顺序将窗口分为早期、中期和后期三段。",
+      "suggested_question_zh": "在这个时间窗口内，建筑总用电需求是否出现了明显的孤立尖峰？如果有，它大致出现在窗口的哪一段？",
+      "suggested_options_zh": [
+        "没有明显尖峰",
+        "早期",
+        "中期",
+        "后期"
+      ],
+      "large_scale_rule_zh": "可保留。对于这类异常检测题，应在场景或证据中明确变量含义、时间窗口划分和“明显尖峰”的判定阈值；避免只问“最强尖峰何时出现”而选项又包含“无明显尖峰”，以免问题目标与答案类型不一致。",
+      "source": "citylearn",
+      "task_family": "city_anomaly_total_load",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::citylearn::citylearn_broad::citylearn_challenge_2022_phase_1_start6144_h2048_b5::w320_576::city_volatility_total_load",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题表述像正常的建筑能耗运维决策问题，场景中已说明 x0 是建筑总用电需求，并说明早期/中期/后期按窗口时间三等分。证据明确采用三段标准差比较来判断波动最大部分，选项也清晰可判定，没有依赖隐藏阈值或未解释的时间轴。",
+      "suggested_scene_zh": "建筑能耗控制器正在查看一个 256 步的 CityLearn 时间窗口。x0 表示建筑总用电需求；若选项提到早期、中期、后期，则按时间顺序将窗口三等分。",
+      "suggested_question_zh": "按三段标准差比较，运维人员应该把窗口的哪一段视为建筑用电需求波动最大的部分？",
+      "suggested_options_zh": [
+        "早期",
+        "中期",
+        "后期",
+        "三段相近"
+      ],
+      "large_scale_rule_zh": "此类题目可以保留：变量含义、时间窗口划分和波动度量方式都应在场景或问题中明确；避免只问“哪个桶/区段/ID”或依赖未说明的内部索引。",
+      "source": "citylearn",
+      "task_family": "city_volatility_total_load",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::citylearn::citylearn_broad::citylearn_challenge_2022_phase_1_start2048_h2048_b5::w1792_2048::city_domain_demand_context",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例整体像正常的建筑能耗控制问题：场景说明了 256 步窗口和 x0 的含义，问题要求依据明确给出的需求压力分档规则判断状态，选项也为自然语言类别。证据中给出了判定阈值、平均负载和峰值负载，因此可由场景和证据确定答案。唯一轻微问题是“需求压力分档规则”依赖证据说明，且 x2 的太阳能/上下文均值与本题判断无关，但不影响可答性。",
+      "suggested_scene_zh": "建筑能耗控制器正在查看一个 256 步的 CityLearn 时间窗口。x0 表示建筑总用电需求。",
+      "suggested_question_zh": "根据给定的需求压力分档规则，这个时间窗口应归为哪一种建筑需求压力状态？",
+      "suggested_options_zh": [
+        "高建筑需求压力",
+        "低建筑需求压力",
+        "中等建筑需求压力",
+        "需求压力不清楚"
+      ],
+      "large_scale_rule_zh": "保留此类样例：只要场景清楚定义变量，问题以自然语言询问业务状态，并在证据中明确给出阈值规则与必要统计量，即可判定为可答。可删除与答案无关的辅助变量统计，以减少干扰。",
+      "source": "citylearn",
+      "task_family": "city_domain_demand_context",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::citylearn::citylearn_broad::citylearn_challenge_2022_phase_1_start4096_h2048_b5::w1216_1472::city_window_total_load",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题表达自然，符合建筑能耗控制场景；x0 的含义清楚，选项是人类可读的前后半段比较。证据直接给出前半段和后半段均值，可支持确定答案。场景中关于早期/中期/后期三等分的说明虽与本题选项无关，但不影响理解或作答。",
+      "suggested_scene_zh": "建筑能耗控制器正在查看一个 256 步的 CityLearn 时间窗口。x0 表示建筑总用电需求。",
+      "suggested_question_zh": "控制器应该在哪一半时间段为更高的平均用电需求做准备？",
+      "suggested_options_zh": [
+        "后半段更高",
+        "前后两半相近",
+        "无法判断",
+        "前半段更高"
+      ],
+      "large_scale_rule_zh": "保留这类题：变量含义明确、时间划分清楚、问题是自然的领域决策表达，并且证据直接给出比较所需的统计量。可删除与当前选项无关的模板性时间划分说明以进一步简化场景。",
+      "source": "citylearn",
+      "task_family": "city_window_total_load",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::citylearn::citylearn_broad::citylearn_challenge_2022_phase_1_start6144_h2048_b5::w512_1024::city_volatility_total_load",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例像正常的建筑能耗运维问题，场景说明了 x0 是建筑总用电需求，并明确早期/中期/后期是按时间顺序三等分窗口。问题询问哪一段波动最大，证据说明使用三段标准差比较，支持槽给出三段标准差和确定答案，因此可回答性强。未在题面暴露内部 ID 或难以理解的元数据。",
+      "suggested_scene_zh": "建筑能耗控制器正在查看一个 512 步的 CityLearn 窗口。x0 表示建筑总用电需求；当选项为早期、中期、后期时，表示按时间顺序将窗口平均分成三段。",
+      "suggested_question_zh": "运维人员应该把窗口的哪一段视为建筑用电需求波动最大的部分？",
+      "suggested_options_zh": [
+        "后期",
+        "早期",
+        "中期",
+        "三段相近"
+      ],
+      "large_scale_rule_zh": "这类题可以保留：只要场景明确变量含义和时间分段方式，问题自然询问波动最大的位置，并且证据或支持槽明确使用标准差等确定性指标进行比较。",
+      "source": "citylearn",
+      "task_family": "city_volatility_total_load",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::citylearn::citylearn_broad::citylearn_challenge_2022_phase_1_start0_h2048_b5::w0_512::city_extrema_total_load",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例读起来像正常的建筑能耗时序分析问题，而不是验证器槽位提示。场景明确说明 x0 是建筑总用电需求，并说明早期/中期/后期按 512 步窗口时间顺序三等分；问题询问最高需求点所在位置，选项也与该划分一致。证据和支持槽给出了峰值位置与窗口长度，可确定答案，未依赖隐藏阈值或不清楚的时间轴。",
+      "suggested_scene_zh": "建筑能耗控制器正在查看一个 512 步的 CityLearn 时间窗口。x0 表示建筑总用电需求；若使用早期、中期、后期位置选项，则按时间顺序将整个窗口三等分。",
+      "suggested_question_zh": "将该时间窗口分为早期、中期和后期三段后，建筑总用电需求的最高点出现在什么位置？",
+      "suggested_options_zh": [
+        "中期",
+        "后期",
+        "早期",
+        "没有清晰极值"
+      ],
+      "large_scale_rule_zh": "保留此类样例：变量含义清楚，时间窗口和分段规则明确，问题自然询问极值所在时段，且证据或支持槽能确定唯一答案。",
+      "source": "citylearn",
+      "task_family": "city_extrema_total_load",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::finrl_scaled::finrl_broad::JPM::w0_256::fin_volume_anomaly",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例读起来像正常的金融行情分析问题，场景说明了 JPM、时间窗口、价格和成交量变量，以及早中晚三段的划分方式。问题询问最大成交量尖峰所在位置，选项为早期/中期/后期/无明显尖峰，证据明确说明成交量尖峰检测器将其定位在窗口前段，且稳健 z 分数很高，因此可由给定证据和支持槽确定答案。没有明显的隐藏元数据、内部 ID 依赖或未解释时间轴问题。",
+      "suggested_scene_zh": "市场分析师正在查看 JPM 在 2015-01-02 至 2016-01-07 期间的历史行情窗口。x0 是 JPM 的历史价格序列，x1 是市场背景指标，x2 是交易量。位置类问题按时间顺序把窗口分为早期、中期和后期三段。",
+      "suggested_question_zh": "将这个行情窗口按时间分为早期、中期和后期后，JPM 最大的成交量尖峰出现在哪一段？",
+      "suggested_options_zh": [
+        "中期",
+        "早期",
+        "后期",
+        "没有明显尖峰"
+      ],
+      "large_scale_rule_zh": "保留这类样例：场景应清楚说明资产、时间窗口、变量含义和早/中/晚分段规则；问题应自然询问尖峰所在时段；证据或支持槽需明确给出检测到的尖峰位置，避免只给内部索引而不说明人类可读时间段。",
+      "source": "finrl_scaled",
+      "task_family": "fin_volume_anomaly",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::finrl_scaled::finrl_broad::GS::w1022_1534::fin_extrema_price",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例整体像正常的金融行情分析问题，场景说明了股票、时间窗口、价格序列以及早中后三段的划分方式；问题询问最高价大致出现在窗口哪个位置，选项清晰。证据直接给出最高点位于窗口后段，且支持槽包含极值位置、窗口长度和答案标签，因此可由给定信息确定答案。轻微不足是使用 x0/x1/x2 这类变量名略显数据集化，但已在场景中解释，不影响理解。",
+      "suggested_scene_zh": "市场分析师正在查看 GS 在 2019-01-25 至 2021-02-04 期间的历史价格走势，并按时间顺序将整个窗口大致分为早期、中期和后期三段。",
+      "suggested_question_zh": "在这段时间内，GS 的历史价格最高点大致出现在窗口的哪个阶段？",
+      "suggested_options_zh": [
+        "后期",
+        "早期",
+        "中期",
+        "没有清晰极值"
+      ],
+      "large_scale_rule_zh": "保留此类样例：只要场景明确说明时间窗口和早/中/后分段规则，问题自然地询问极值所在阶段，且证据或支持槽明确给出极值位置与答案标签，就可判为低风险可保留；可在批量清洗时尽量减少 x0 等变量符号，改用“历史价格走势”等自然表述。",
+      "source": "finrl_scaled",
+      "task_family": "fin_extrema_price",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::finrl_scaled::finrl_broad::GOOG::w507_2555::fin_window_return",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题像正常的市场分析提问，询问窗口前半段和后半段哪一段表现更好；场景说明收益率问题基于价格序列计算，证据也直接给出了前后两半的收益率，因此可由给定信息确定答案。轻微可改进处是“表现更好/更高”可明确为“收益率更高”，以减少歧义。",
+      "suggested_scene_zh": "市场分析师正在查看 GOOG 在 2017-01-06 至 2025-02-28 期间的历史行情窗口。价格序列用于计算该窗口内不同时间段的收益率，交易量和市场背景指标可作为辅助背景。",
+      "suggested_question_zh": "从收益率看，这个市场窗口中 GOOG 是前半段表现更好，还是后半段表现更好？",
+      "suggested_options_zh": [
+        "后半段收益率更高",
+        "前后两半收益率相近",
+        "前半段收益率更高",
+        "无法判断"
+      ],
+      "large_scale_rule_zh": "此类窗口收益比较题应明确比较指标是收益率，并在人类可读证据中给出前半段和后半段的收益率；避免只说“更高”而不说明是价格、收益还是其他指标。",
+      "source": "finrl_scaled",
+      "task_family": "fin_window_return",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::finrl_scaled::finrl_broad::MSFT::w1150_1406::fin_extrema_price",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例读起来像正常的金融行情分析问题，场景交代了股票、时间窗口、价格序列以及早中后三段的划分方式。问题询问最高点大致位于窗口哪一段，选项清晰，证据明确说明最高点在后段，且支持槽给出了极值位置和值，答案可由确定性信息支持。没有明显隐藏元数据、未解释变量或不自然的验证式表述。",
+      "suggested_scene_zh": "市场分析师正在查看 MSFT 在 2019-07-30 至 2020-08-03 期间的历史行情。这里关注的是 MSFT 的历史价格序列；若提到位置，则按时间顺序把整个窗口大致分为早期、中期和后期三段。",
+      "suggested_question_zh": "MSFT 的历史价格在这个时间窗口内的最高点大致出现在什么位置？",
+      "suggested_options_zh": [
+        "早期",
+        "中期",
+        "没有清晰极值",
+        "后期"
+      ],
+      "large_scale_rule_zh": "极值位置类问题应避免使用内部变量名或窗口索引作为主要表述；应在场景中说明时间范围和早/中/后三段的含义，并在证据中用自然语言说明最高或最低点落在哪一段。",
+      "source": "finrl_scaled",
+      "task_family": "fin_extrema_price",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::finrl_scaled::finrl_broad::GOOG::w2299_2555::fin_domain_market_regime",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题表述像正常的金融分析问题，场景说明了价格序列、收益率来源和时间范围；证据中明确给出市场状态判定规则、总收益率和波动率，因此无需依赖隐藏阈值或内部编号即可确定答案。x1、x2 虽未用于本题，但不影响理解和作答。",
+      "suggested_scene_zh": "市场分析师正在查看 GOOG 在 2024-02-22 至 2025-02-28 期间的历史行情。收益率由 GOOG 的历史价格序列计算得到。",
+      "suggested_question_zh": "根据总收益率，并在需要时用收益波动率区分横盘类型，GOOG 在这段时间最符合哪种市场状态？",
+      "suggested_options_zh": [
+        "熊市/下行状态",
+        "牛市/上行状态",
+        "高波动横盘状态",
+        "低波动横盘状态"
+      ],
+      "large_scale_rule_zh": "保留此类样本：只要场景说明收益率来源，问题自然地询问市场状态，并且证据明确给出收益率、波动率及判定阈值，就具有良好的可答性。可在大规模生成中删除与当前问题无关的变量说明，以进一步提升简洁性。",
+      "source": "finrl_scaled",
+      "task_family": "fin_domain_market_regime",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::finrl_scaled::finrl_broad::JPM::w2299_2555::fin_volume_anomaly",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [
+        "minor_variable_notation"
+      ],
+      "reason_zh": "问题整体像正常的金融行情分析问题，询问在按时间三等分后的哪个阶段出现最大成交量尖峰，选项也清晰。证据明确说明成交量尖峰检测器将事件定位在窗口后段，并给出较高稳健 z 分数，因此可由给定信息确定答案。轻微问题是场景中保留了 x0、x1、x2 这类变量名，略像数据集说明，但变量含义解释充分，不影响答题。",
+      "suggested_scene_zh": "市场分析师正在查看 JPM 在 2024-02-22 至 2025-02-28 期间的历史行情，包括价格、市场背景指标和成交量。位置类问题按时间顺序把整个窗口分为早期、中期和后期三段。",
+      "suggested_question_zh": "把这段行情窗口按时间分成早期、中期和后期后，JPM 最大的成交量尖峰出现在什么位置？",
+      "suggested_options_zh": [
+        "早期",
+        "后期",
+        "中期",
+        "没有明显尖峰"
+      ],
+      "large_scale_rule_zh": "这类样本可保留：只要场景说明时间窗口和三等分规则，问题自然询问成交量尖峰位置，证据或支持槽明确给出尖峰所在分段即可。建议批量改写时减少 x0/x1/x2 等内部变量符号，改用人类可读的变量名称。",
+      "source": "finrl_scaled",
+      "task_family": "fin_volume_anomaly",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::finrl_scaled::finrl_broad::MRK::w2043_2555::fin_drawdown_price",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例读起来像正常的金融分析问题，场景说明了标的、时间窗口和价格序列含义；问题询问最大价格回撤按给定分档应归类为何种程度，选项也都是自然的回撤等级。证据中明确给出了分档阈值和最大回撤 36.65%，因此可直接从证据和规则判断，未依赖隐藏索引或内部元数据。",
+      "suggested_scene_zh": "市场分析师正在查看 MRK 在 2023-02-14 至 2025-02-28 期间的历史行情。x0 表示 MRK 的历史价格序列，回撤问题基于该价格序列计算。",
+      "suggested_question_zh": "根据给定的回撤分档规则，MRK 在该时间窗口内的最大价格回撤属于哪一类？",
+      "suggested_options_zh": [
+        "中等回撤",
+        "轻微回撤",
+        "严重回撤",
+        "回撤很小"
+      ],
+      "large_scale_rule_zh": "保留此类样例：只要场景清楚定义价格序列和时间窗口，证据明确给出分档阈值及最大回撤数值，问题自然询问回撤等级，且不需要读者理解内部索引或隐藏元数据，即可判为低风险可保留。",
+      "source": "finrl_scaled",
+      "task_family": "fin_drawdown_price",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::finrl_scaled::finrl_broad::JPM::w1150_1406::fin_volatility_returns",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题整体像正常的金融分析问题，询问 JPM 在给定历史窗口中哪一段收益率波动最大。场景说明了价格序列、收益率来源以及早中后三段的划分方式，证据也明确说明按三等分后比较收益率标准差，因此可由给定信息和支持槽确定答案。轻微不足是场景中仍使用 x0、x1、x2 变量名，略有数据集提示感，但变量含义解释清楚，不影响理解。",
+      "suggested_scene_zh": "市场分析师正在查看 JPM 在 2019-07-30 至 2020-08-03 期间的历史价格和成交量数据。收益率由 JPM 的价格序列计算得到；若需要比较位置，则按时间顺序把整个窗口分为早期、中期和后期三段。",
+      "suggested_question_zh": "在这个时间窗口中，JPM 的收益率在哪一段波动最大？",
+      "suggested_options_zh": [
+        "早期",
+        "中期",
+        "后期",
+        "三段相近"
+      ],
+      "large_scale_rule_zh": "保留此类样本：只要场景明确收益率来自价格序列、时间窗口如何分段，并且问题询问的是各段收益率波动大小比较，就属于自然且可回答的金融时间序列问题。可优先将 x0/x1/x2 等内部变量名改写为人类可读的变量描述。",
+      "source": "finrl_scaled",
+      "task_family": "fin_volatility_returns",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::grid2op::grid2op_broad::rte_case14_realistic_chronic2_trace_2048_nooverflow::w128_384::grid_cross_variable_stress",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "题目整体像正常的电网运行复盘问题，变量含义清楚，场景说明了 x0、x1、x2 及过载阈值。问题要求在总需求和发电裕度之间选择与线路负载压力关系更强的信号，证据中直接给出两个相关系数，因此可由确定性支持信息回答。没有明显隐藏元数据或未解释时间轴问题。",
+      "suggested_scene_zh": "一名电网调度员正在查看一段电网运行时序。x0 表示最大线路负载压力，x1 表示总需求，x2 表示发电裕度；当线路负载压力超过 1.0 时，表示存在过载风险。",
+      "suggested_question_zh": "在排查最大线路负载压力变化时，调度员更应该优先关注哪个伴随信号？",
+      "suggested_options_zh": [
+        "总需求",
+        "二者与线路负载压力的关系相近",
+        "发电裕度",
+        "二者与线路负载压力的关系都较弱"
+      ],
+      "large_scale_rule_zh": "保留此类样本：只要场景清楚定义变量，问题以自然业务语言询问哪个变量与目标压力关系更强，并且证据或支持槽明确给出可比较的相关性指标，就可判为低风险可用。",
+      "source": "grid2op",
+      "task_family": "grid_cross_variable_stress",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::grid2op::grid2op_broad_cf::h2048_c-1_t512_line1::post769_1025::grid_counterfactual_peak_stress",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [
+        "选项B中文措辞略有歧义",
+        "反事实差值含义需要保持一致"
+      ],
+      "reason_zh": "整体像正常的电网调度分析问题，不是明显的 verifier-slot 提示。场景明确说明了断线时间、当前窗口范围，以及 x0 在反事实样本中表示“干预后减事实运行”的压力差，因此可直接根据正负和证据范围判断主要影响。证据给出差值始终为正，答案可由支持槽确定。主要小问题是选项 B 的中文“断线前后压力基本相同”容易被理解成同一轨迹的事件前后比较，而本题实际比较的是干预后与事实运行之间的反事实差异；建议改成“与事实运行相比基本没有变化”。",
+      "suggested_scene_zh": "一名 Grid2Op 电网调度员正在查看断线后的电网时序窗口。断线发生在全局第 512 步，本窗口覆盖全局第 769 到 1025 步。这里的 x0 表示“断线干预后的最大线路负载压力减去事实运行中的最大线路负载压力”；x0 为正表示断线使最大线路负载压力升高，x0 为负表示断线使压力降低。x1 是总需求，x2 是发电裕度。压力超过 1.0 通常表示存在过载风险。",
+      "suggested_question_zh": "在这个事件后窗口中，与事实运行相比，断开该线路对最大线路负载压力的主要影响是什么？",
+      "suggested_options_zh": [
+        "断线使最大线路负载压力降低",
+        "与事实运行相比基本没有变化",
+        "断线使最大线路负载压力升高",
+        "无法根据该窗口判断"
+      ],
+      "large_scale_rule_zh": "反事实电网题应明确说明曲线表示的是“干预后减事实运行”还是原始压力值；选项应避免使用“断线前后”这类可能被误解为时间前后比较的说法，优先表述为“与事实运行相比升高/降低/无明显变化”。",
+      "source": "grid2op",
+      "task_family": "grid_counterfactual_peak_stress",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::grid2op::grid2op_broad::rte_case14_realistic_chronic4_trace_2048_nooverflow::w1792_2048::grid_window_total_load",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题表述像正常的电网调度分析问题，询问窗口前后两半哪一段平均总需求更高；变量 x1 的含义已说明为总需求，证据直接给出前半段和后半段均值，因此可由给定信息确定答案。选项清晰且不依赖隐藏阈值或内部元数据。",
+      "suggested_scene_zh": "一名电网调度员正在查看一段电网运行时序窗口，其中最大线路负载压力、总需求和发电裕度被连续记录。压力超过 1.0 表示存在过载风险。",
+      "suggested_question_zh": "在这个电网时序窗口中，哪一半的平均总需求更高？",
+      "suggested_options_zh": [
+        "后半段更高",
+        "前半段更高",
+        "前后两半相近",
+        "无法判断"
+      ],
+      "large_scale_rule_zh": "保留这类样本：场景应解释变量含义，问题应以自然语言询问可由窗口统计量直接判断的业务结论，选项应为人类可读的判断结果，避免暴露内部窗口编号或需要未说明阈值的标签。",
+      "source": "grid2op",
+      "task_family": "grid_window_total_load",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::grid2op::grid2op_broad::rte_case14_realistic_chronic4_trace_2048_nooverflow::w1536_2048::grid_cross_variable_stress",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [
+        "选项含轻微阈值含糊"
+      ],
+      "reason_zh": "题目整体像正常的电网运行复盘问题，变量含义在场景中解释清楚，证据直接给出总需求和发电裕度与线路负载压力的相关系数，因此可以确定哪个伴随信号更强。主要小问题是选项“二者相近”“二者都弱”没有说明相近或弱的判定阈值，但本例两项相关系数差距较明显，且正确选项来自确定性支持槽，风险较低。",
+      "suggested_scene_zh": "一名电网调度员正在查看一个电网运行时序窗口。最大线路负载压力用于衡量线路过载风险，压力超过 1.0 表示存在过载风险；同时记录了总需求和发电裕度两个伴随指标。",
+      "suggested_question_zh": "根据与最大线路负载压力的相关性，调度员在快速过载复盘时更应优先关注哪个伴随指标？",
+      "suggested_options_zh": [
+        "总需求的相关性更强",
+        "二者相关性接近",
+        "发电裕度的相关性更强",
+        "二者相关性都不明显"
+      ],
+      "large_scale_rule_zh": "这类题应在场景或证据中明确比较依据，例如相关系数、同步变化强度或滞后关系；若设置“相近”“较弱”等选项，最好给出阈值或避免依赖这些模糊等级。",
+      "source": "grid2op",
+      "task_family": "grid_cross_variable_stress",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::grid2op::grid2op_broad::rte_case14_realistic_chronic4_trace_2048_nooverflow::w1536_1792::grid_volatility_total_load",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例整体像正常的电网时序分析问题：场景说明了 x1 是总需求，问题询问总需求在窗口哪一段波动最大，选项为早期/中期/后期/三段相近，较自然。证据明确说明将窗口三等分并比较标准差，支持槽也给出三段标准差，因此答案可由确定性信息直接支持。没有明显隐藏 ID、未解释变量或需要额外阈值的问题。",
+      "suggested_scene_zh": "一名 Grid2Op 电网调度员正在查看一个电网运行时序窗口。x0 表示最大线路负载压力，x1 表示总需求，x2 表示发电裕度；其中压力超过 1.0 代表存在过载风险。",
+      "suggested_question_zh": "如果把这个时间窗口按时间平均分成早期、中期和后期三段，哪一段的总需求波动最大？",
+      "suggested_options_zh": [
+        "早期",
+        "中期",
+        "三段波动相近",
+        "后期"
+      ],
+      "large_scale_rule_zh": "保留。此类题应在题干或证据中明确说明比较方法，例如按时间三等分并比较目标变量的标准差；选项应使用人类可理解的时间段名称，避免只依赖内部窗口索引或变量代号。",
+      "source": "grid2op",
+      "task_family": "grid_volatility_total_load",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::grid2op::grid2op_broad::rte_case14_realistic_chronic4_trace_2048_nooverflow::w512_1024::grid_trend_max_rho",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例像正常的电网运行趋势判断问题，场景中已清楚说明 x0、x1、x2 的含义，并明确本题关注线路负载压力。问题询问上升、下降或基本稳定，选项自然且与任务匹配。证据给出了起点、终点、净变化和波动尺度，足以支持由确定性槽位给出的答案；没有明显隐藏元数据、未解释变量或不可用的时间轴问题。",
+      "suggested_scene_zh": "一名 Grid2Op 电网调度员正在查看一段电网运行时序。x0 表示最大线路负载压力，x1 表示总需求，x2 表示发电裕度。压力超过 1.0 表示存在过载风险。",
+      "suggested_question_zh": "在这段电网时序中，最大线路负载压力整体呈现什么趋势？",
+      "suggested_options_zh": [
+        "上升",
+        "下降",
+        "混合变化",
+        "基本平稳"
+      ],
+      "large_scale_rule_zh": "保留此类样例：只要场景清楚定义变量，问题以自然语言询问趋势，选项为人类可理解的趋势类别，并且证据提供起止值、净变化与波动尺度等可支持确定答案的信息，就适合作为趋势判断 QA。",
+      "source": "grid2op",
+      "task_family": "grid_trend_max_rho",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::grid2op::grid2op_broad::rte_case14_realistic_chronic2_trace_2048_nooverflow::w256_768::grid_volatility_total_load",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题表述自然，像电网调度场景中的实际分析问题；变量 x1“总需求”已明确定义，问题询问窗口中总需求波动最大的时间段，选项为早期/中期/后期/三段相近，含义清楚。证据说明将窗口三等分并比较标准差，确定性支持槽也给出了三段标准差，因此可直接支撑答案。没有明显隐藏元数据依赖、内部 ID 依赖或需要额外阈值解释的问题。",
+      "suggested_scene_zh": "一名 Grid2Op 电网调度员正在查看电网时序窗口。x0 是最大线路负载压力，x1 是总需求，x2 是发电裕度。压力超过 1.0 表示过载风险。",
+      "suggested_question_zh": "在这个时间窗口中，总需求在哪一段波动最大？",
+      "suggested_options_zh": [
+        "早期",
+        "中期",
+        "后期",
+        "三段相近"
+      ],
+      "large_scale_rule_zh": "此类题目适合保留：只要场景清楚定义目标变量，并说明按时间三等分后用标准差等明确统计量比较波动大小，问题就自然且可回答。应避免使用未解释的窗口索引、内部样本编号或需要读者猜测阈值的“高/低/显著”等标签。",
+      "source": "grid2op",
+      "task_family": "grid_volatility_total_load",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::grid2op::grid2op_broad::rte_case14_realistic_chronic4_trace_2048_nooverflow::w512_1536::grid_temporal_lead_lag",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [
+        "minor_grammar_issue",
+        "lead_lag_requires_rule"
+      ],
+      "reason_zh": "题目整体像正常的电网时序复盘问题，变量含义、比较对象和滞后 0 的判定规则都已明确说明。证据直接给出最强滞后为 0 且相关性较强，因此可以根据规则选择“同步变化/无稳定领先方”。主要小问题是英文问题中“Does total demand and...”语法略不自然；此外先后关系题通常风险较高，但本例规则和证据足够清楚。",
+      "suggested_scene_zh": "一名 Grid2Op 电网调度员正在复盘一个电网时序窗口。x0 表示最大线路负载压力，x1 表示总需求，x2 表示发电裕度；压力超过 1.0 代表存在过载风险。本题只比较 x1 总需求与 x0 最大线路负载压力。若两者最强相关出现在滞后 0，则视为同步变化或没有稳定领先方，而不是判定其中一个信号领先。",
+      "suggested_question_zh": "在这个时间窗口内，总需求与最大线路负载压力之间是否存在清晰的领先或滞后关系？",
+      "suggested_options_zh": [
+        "最大线路负载压力领先总需求",
+        "总需求领先最大线路负载压力",
+        "同步变化，没有稳定领先方",
+        "相关性太弱，无法判断先后"
+      ],
+      "large_scale_rule_zh": "对于领先-滞后类样本，应在场景中明确比较的两个变量、滞后符号或滞后 0 的含义，并在证据中给出可直接支持选项的最强滞后结果；若最强关系为滞后 0，应选择同步或无稳定领先方。",
+      "source": "grid2op",
+      "task_family": "grid_temporal_lead_lag",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::traffic::traffic_broad::traffic_scenario_011::traffic_speed_periodicity",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [
+        "措辞略偏规则判定",
+        "周期长短依赖已给出的分档阈值"
+      ],
+      "reason_zh": "该样例整体可保留。场景、变量和证据都能支持问题，证据中明确给出了自相关分数阈值和滞后区间分档，因此“短周期/中等周期/长周期/无明显周期”的选项是可判定的。问题中的“按照自相关分档规则”略像规则槽位提示，不完全像自然领域提问，但仍符合交通工程师根据周期性分析判断车速运行模式的语境。没有明显隐藏元数据或不可解释的内部 ID，准确性风险低。",
+      "suggested_scene_zh": "交通工程师正在查看一段交通系统监测窗口，其中 x0 表示平均车速，x1 表示队列长度，x2 表示占有率或控制相关背景。通常队列越短、车速越高，说明交通流越顺畅。",
+      "suggested_question_zh": "根据该窗口中车速自相关峰的位置和强度，平均车速更像呈现哪种运行周期？",
+      "suggested_options_zh": [
+        "中等周期",
+        "长周期",
+        "没有明显周期",
+        "短周期"
+      ],
+      "large_scale_rule_zh": "若使用“短/中/长周期”等程度标签，应在题干或证据中明确给出对应阈值或分档规则；问题应尽量表述为领域决策，而不是直接要求套用内部规则。",
+      "source": "traffic",
+      "task_family": "traffic_speed_periodicity",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::traffic::traffic_broad::traffic_scenario_006::traffic_speed_extrema",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题表述自然，像交通工程师会询问的时间窗口内车速极小值位置判断。变量 x0 的含义已说明，选项为早期/中期/后期/无清晰极值，和问题匹配。证据明确指出最低平均车速约为 0.00 且位于早期，支持槽也给出极小值索引在窗口开头，因此可回答性强。support_slots 中另有 event_index/event_label 为 late，但该字段与本题最低车速位置无关，不影响答案。",
+      "suggested_scene_zh": "交通工程师正在查看一个交通系统时间窗口。x0 表示平均车速，x1 表示队列长度，x2 表示占有率或控制上下文。通常，队列越短、车速越高，交通流越顺畅。",
+      "suggested_question_zh": "把这个时间窗口按时间分成早期、中期和后期三段后，平均车速 x0 的最低点出现在哪一段？",
+      "suggested_options_zh": [
+        "早期",
+        "中期",
+        "后期",
+        "没有清晰极值"
+      ],
+      "large_scale_rule_zh": "保留这类样本：只要场景中清楚定义了目标变量，问题自然地询问极值所在的时间段，选项为人类可理解的时间段，并且证据或支持槽明确给出极值位置，就可判定为低风险可用。",
+      "source": "traffic",
+      "task_family": "traffic_speed_extrema",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::traffic::traffic_broad::traffic_scenario_020::traffic_speed_queue_lead_lag",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例整体像正常的交通时序复盘问题，而不是明显的验证器槽位提示。场景中解释了负/正滞后的含义、相关强度阈值和稳定性余量，问题和选项也能直接对应“车速领先、排队领先、相关太弱、无稳定领先”四类判断。证据明确给出最强滞后、同步相关和提升幅度，并说明低于稳定性余量，因此答案可由给定信息确定。唯一轻微不足是滞后符号约定和相关阈值较技术化，但已在场景中说明，不影响可用性。",
+      "suggested_scene_zh": "交通工程师正在查看一段交通系统时间窗口，其中平均车速、排队长度以及占有率/控制上下文被记录为对齐的时间序列。通常来说，排队越短、车速越高，交通流越顺畅。本次复盘关注车速变化和排队长度变化谁更早出现：负滞后表示车速更早变化，正滞后表示排队长度更早变化。若绝对相关强度低于 0.35，则认为关系太弱；若最强滞后相比同步相关的绝对强度提升小于 0.05，则认为没有稳定的方向性领先。",
+      "suggested_question_zh": "在这个时间窗口中，车速变化和排队长度变化是否表现出清晰的先后关系？",
+      "suggested_options_zh": [
+        "车速变化领先排队长度变化",
+        "排队长度变化领先车速变化",
+        "相关性太弱，不能用于判断",
+        "没有稳定的方向性领先"
+      ],
+      "large_scale_rule_zh": "保留此类样例的条件是：场景必须明确说明滞后符号的含义、可用相关强度阈值以及判断“无稳定领先”的提升幅度阈值；证据必须给出最强滞后相关、同步相关及其差值，使选项能够由这些信息直接确定。",
+      "source": "traffic",
+      "task_family": "traffic_speed_queue_lead_lag",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::traffic::traffic_broad::traffic_scenario_025::traffic_signal_counterfactual_queue",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [
+        "x2含义略泛",
+        "选项B的“实质变化”阈值未明示"
+      ],
+      "reason_zh": "问题整体像正常的交通工程决策问题，场景、变量和比较对象清楚；证据直接给出自适应信号与固定信号基线的平均队列长度，足以支持答案。轻微问题是 x2 的定义“占有率或控制上下文”较泛，但本题不依赖 x2；选项中的“没有实质队列变化”没有说明阈值，不过证据已明确给出两者均值差异，风险较低。",
+      "suggested_scene_zh": "交通工程师正在比较一个路口在自适应信号控制和固定信号控制下的运行情况。x0 表示平均车速，x1 表示队列长度，x2 表示占有率或信号控制上下文。通常队列越短、车速越高，交通流越好。",
+      "suggested_question_zh": "与固定信号基线相比，自适应信号策略下的平均排队长度如何变化？",
+      "suggested_options_zh": [
+        "自适应信号下平均队列更低",
+        "两种策略下平均队列基本相同",
+        "影响不一致或难以判断",
+        "自适应信号下平均队列更高"
+      ],
+      "large_scale_rule_zh": "对于反事实交通控制类样本，应明确比较对象、指标方向和证据数值；避免使用内部窗口编号、事件索引等隐藏元数据作为理解前提。若选项包含“基本相同”“实质变化”等程度判断，应尽量由证据或规则给出明确阈值，否则仅在数值差异明显且答案不依赖阈值时保留。",
+      "source": "traffic",
+      "task_family": "traffic_signal_counterfactual_queue",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::traffic::traffic_broad::traffic_scenario_031::traffic_queue_volatility",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题表述较自然，符合交通工程师查看排队长度波动的场景；变量 x1 的含义明确，选项为早期/中期/后期/三段相近，证据说明按时间三等分并比较标准差，因此可由给定支持信息确定答案。x2“占有率或控制上下文”略泛，但不影响本题作答。",
+      "suggested_scene_zh": "交通工程师正在查看一段交通系统监测窗口。x0 表示平均车速，x1 表示排队长度，x2 表示占有率或控制状态。通常排队越短、车速越高，交通运行越顺畅。",
+      "suggested_question_zh": "如果把这个时间窗口平均分成早期、中期和后期三段，哪一段的排队长度波动最大？",
+      "suggested_options_zh": [
+        "早期",
+        "中期",
+        "三段相近",
+        "后期"
+      ],
+      "large_scale_rule_zh": "保留此类题目时，应确保题干明确说明比较对象是某个变量在时间窗口不同部分的波动程度，并在证据或支持槽中给出可确定的分段规则和波动度量；避免只写“波动最大”但不说明按何种时间段或指标比较。",
+      "source": "traffic",
+      "task_family": "traffic_queue_volatility",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::traffic::traffic_broad::traffic_scenario_010::traffic_queue_volatility",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例读起来像正常的交通运行分析问题：场景说明了 x1 是排队长度，问题询问窗口中哪一段排队长度波动最大，选项为早期/中期/后期/三段相近，表达自然且不依赖内部编号。证据明确说明将窗口按时间三等分并比较标准差，支持槽也给出各段标准差和确定答案，因此可回答性强。未出现需要额外阈值解释的程度标签，也没有明显的隐藏元数据依赖。",
+      "suggested_scene_zh": "交通工程师正在查看一个交通系统时间窗口。x0 表示平均车速，x1 表示排队长度，x2 表示占有率或控制相关背景。通常排队越短、车速越高，交通流越顺畅。",
+      "suggested_question_zh": "在这个时间窗口中，哪一段的排队长度波动最大？",
+      "suggested_options_zh": [
+        "中期",
+        "早期",
+        "后期",
+        "三段相近"
+      ],
+      "large_scale_rule_zh": "保留此类样例：变量含义清楚，时间窗口分段方式明确，问题是自然的领域决策问法，且答案可由人类可读证据和确定性支持槽直接得到。",
+      "source": "traffic",
+      "task_family": "traffic_queue_volatility",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::traffic::traffic_broad::traffic_scenario_026::traffic_speed_trend",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题整体像正常的交通趋势判断题，场景说明了 x0 为平均车速，证据也明确给出起点、终点和整体上升趋势，可由确定性支持槽回答。轻微不足是选项使用“上升/下降”等方向词，而问题表述为“改善/恶化/稳定”，需要读者理解这里判断的是平均车速本身的趋势；但这一点不影响可答性。",
+      "suggested_scene_zh": "交通工程师正在查看一段交通监测窗口。x0 表示平均车速，x1 表示队列长度，x2 表示占有率或控制状态。通常平均车速越高，交通流越顺畅。",
+      "suggested_question_zh": "在这段监测窗口内，平均车速 x0 的整体趋势是什么？",
+      "suggested_options_zh": [
+        "下降",
+        "上升",
+        "基本平稳",
+        "混合变化"
+      ],
+      "large_scale_rule_zh": "趋势类样例应直接说明要判断的变量及其含义，问题应询问该变量在窗口内的整体变化方向；选项应使用与问题一致的人类可读标签，避免依赖未解释的内部字段、事件索引或隐含阈值。",
+      "source": "traffic",
+      "task_family": "traffic_speed_trend",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::traffic::traffic_broad::traffic_scenario_001::traffic_window_speed",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "问题表述自然，符合交通场景中的常见分析需求；变量 x0 已明确为平均车速，问题只询问窗口前后两半哪一半平均车速更高，证据直接给出两半的平均车速，选项也清晰对应可判断结果。无需依赖隐藏阈值或内部元数据。",
+      "suggested_scene_zh": "交通工程师正在查看一个交通监测时间窗口。x0 表示平均车速，x1 表示排队长度，x2 表示占有率或控制状态。通常车速越高、排队越短，说明交通流越顺畅。",
+      "suggested_question_zh": "在这个时间窗口中，哪一半的平均车速更高？",
+      "suggested_options_zh": [
+        "后半段更高",
+        "前后两半相近",
+        "前半段更高",
+        "无法判断"
+      ],
+      "large_scale_rule_zh": "保留此类样例：场景应说明关键变量含义，问题应使用自然领域语言询问前后窗口的均值比较，证据应直接给出两段统计量，选项应为人类可读的比较结果，避免暴露内部索引或未解释的时间轴。",
+      "source": "traffic",
+      "task_family": "traffic_window_speed",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::water::water_broad::water_scenario_025::water_pressure_periodicity",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例整体像正常的供水运维分析问题：场景说明了 x0 为水压，并给出低水压的业务含义；问题询问水压呈现的运行周期模式，选项也符合人类可读的分类。答案可由证据中的自相关分档规则和最强峰值分数直接确定，阈值明确，没有依赖隐藏 ID 或未解释的时间轴。唯一轻微问题是“按照自相关分档规则”略像规则验证题，但在该任务中仍然自然且可答。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务窗口。x0 表示水压，x1 表示管道流量，x2 表示水箱蓄水量。低水压可能提示供水服务风险。",
+      "suggested_question_zh": "根据自相关分档规则，这段时间内水压更符合哪种运行周期模式？",
+      "suggested_options_zh": [
+        "短周期",
+        "中等周期",
+        "长周期",
+        "没有明显周期"
+      ],
+      "large_scale_rule_zh": "保留此类样例时，应在证据中明确给出周期分类阈值和用于判断的自相关峰值及分数；问题应避免只像填写内部规则槽位，可表述为面向运维决策的周期模式判断。",
+      "source": "water",
+      "task_family": "water_pressure_periodicity",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::water::water_broad::water_scenario_005::water_combined_stress_context",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例整体像一个供水运维场景下的状态判断问题，场景、变量、规则、选项和证据都较清楚。问题虽然带有“按照综合压力评分规则”的规则判定色彩，但并未暴露内部 ID 或明显 verifier-slot 格式。证据明确给出阈值、事件时段、严重低压标记和综合压力分数，因此可直接由给定规则确定答案，准确性风险较低。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务窗口。x0 表示水压，x1 表示管道流量，x2 表示水箱蓄水量。低水压可能提示供水风险。",
+      "suggested_question_zh": "根据综合压力评分规则，这个供水服务窗口最可能属于哪种运行状态？",
+      "suggested_options_zh": [
+        "严重综合压力",
+        "稳定综合状态",
+        "中等综合压力",
+        "综合状态不清楚"
+      ],
+      "large_scale_rule_zh": "保留此类样例时，应确保评分阈值、事件时段含义和关键标记的真假都在题面或证据中用自然语言明确说明；避免只依赖隐藏 support slot、内部变量名或未解释的程度标签来决定答案。",
+      "source": "water",
+      "task_family": "water_combined_stress_context",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::water::water_broad::water_scenario_005::water_leak_counterfactual_pressure",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "题目表述像正常的供水运维判断问题，场景中已说明 x0/x1/x2 的含义，问题聚焦于漏水场景相对无漏水基线的平均水压变化。证据直接给出两种情形的平均水压均为 77.51，因此可由证据和选项明确作答。选项整体自然，虽有“实质变化/基本相同”这类表述，但在数值完全相同的情况下不会造成阈值歧义。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务窗口。x0 表示水压，x1 表示管道流量，x2 表示水箱蓄水量。低水压可能意味着供水服务风险。",
+      "suggested_question_zh": "与无漏水基线相比，漏水场景下该窗口的平均水压是更低、更高，还是基本相同？",
+      "suggested_options_zh": [
+        "漏水下平均水压更低",
+        "漏水下平均水压更高",
+        "平均水压基本相同",
+        "窗口内水压变化方向不一致"
+      ],
+      "large_scale_rule_zh": "保留此类样本：只要场景说明变量含义，问题以自然语言询问反事实情境相对基线的平均水平变化，并且证据直接给出两者均值或差值，就可判为低风险可用。若使用“基本相同/无实质变化”，应确保证据显示完全相同或给出清楚阈值。",
+      "source": "water",
+      "task_family": "water_leak_counterfactual_pressure",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::water::water_broad::water_scenario_006::water_flow_volatility",
+      "decision": "keep",
+      "naturalness_score": 5,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "该样例读起来像正常的供水运维场景问题，变量含义清楚，问题聚焦于管道流量在窗口内哪一段波动最大。证据明确说明将窗口按时间三等分并比较标准差，支持槽也给出了三段标准差，因此可由给定信息确定答案。选项简洁且与问题匹配，没有暴露内部计算槽或隐藏元数据。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务窗口。x0 表示水压，x1 表示管道流量，x2 表示水箱蓄水量。低水压可能表示供水风险。",
+      "suggested_question_zh": "运维人员应将窗口中的哪一段视为管道流量波动最大的部分？",
+      "suggested_options_zh": [
+        "早期",
+        "中期",
+        "后期",
+        "三段相近"
+      ],
+      "large_scale_rule_zh": "对于这类时间窗口波动性问题，场景应清楚说明变量含义，问题应自然询问某个可解释指标在哪个时间段最突出；若答案依赖三等分窗口和标准差比较，证据中应明确说明这种划分和比较方法，避免只暴露原始计算槽或内部索引。",
+      "source": "water",
+      "task_family": "water_flow_volatility",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::water::water_broad::water_scenario_015::water_domain_resilience_context",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "题目整体像正常的供水运维判断问题，场景中明确说明了 x0、x1、x2 的含义，证据中也给出了服务状态规则和关键统计量。选项为人类可理解的运行状态，没有依赖隐藏 ID 或未解释的时间轴。问题中的“按照供水服务状态规则”与证据相匹配，答案可由最低水压阈值和无漏水压力证据确定，准确性风险低。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务窗口。x0 表示水压，x1 表示管道流量，x2 表示水箱蓄水量。低水压可能表示供水风险。",
+      "suggested_question_zh": "根据给出的服务状态规则，这个窗口最符合哪种供水网络状态？",
+      "suggested_options_zh": [
+        "漏水压力下的网络",
+        "低水压风险",
+        "水力状态不清楚",
+        "稳定供水服务"
+      ],
+      "large_scale_rule_zh": "保留此类样本时，应确保场景解释变量含义，证据明确给出阈值或判定规则，问题使用自然的运维判断表述，选项为可理解的业务状态；避免只让模型读取内部槽位或依赖未说明的时间索引、事件 ID、隐含阈值。",
+      "source": "water",
+      "task_family": "water_domain_resilience_context",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::water::water_broad::water_scenario_035::water_flow_volatility",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "题目场景、变量含义和选项都清楚，问题是在服务窗口中判断管道流量哪一段波动最大，符合正常领域问法。证据明确说明将窗口按时间三等分并比较标准差，支持槽也给出三段标准差和确定答案，因此可回答性强。没有明显隐藏元数据、未解释时间轴或阈值依赖问题。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一个服务窗口。x0 表示水压，x1 表示管道流量，x2 表示水箱蓄水量。低水压可能提示供水风险。",
+      "suggested_question_zh": "按时间把这个窗口分成早期、中期和后期三段，哪一段的管道流量波动最大？",
+      "suggested_options_zh": [
+        "中期",
+        "早期",
+        "后期",
+        "三段相近"
+      ],
+      "large_scale_rule_zh": "保留此类样例：当变量定义清楚、时间分段方式明确，并且证据说明使用标准差等确定性统计量比较波动大小时，可以作为自然且可回答的时间序列问答。",
+      "source": "water",
+      "task_family": "water_flow_volatility",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::water::water_broad::water_scenario_000::water_event_recovery_context",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [
+        "slightly_rule_based_wording"
+      ],
+      "reason_zh": "该样例整体可保留。场景说明了 x0 为水压，并给出低水压的业务含义；问题询问事件后水压状态，选项也是可理解的运维判断。证据中明确给出了判定规则以及事件前、中、后的均值，因此无需隐藏阈值或外部知识即可回答。唯一轻微问题是“事件前、中、后三阶段均值规则”略像数据集规则提示，不完全像自然业务提问，但仍可接受。",
+      "suggested_scene_zh": "供水网络运维人员正在复盘一次服务窗口。x0 表示水压，x1 表示管道流量，x2 表示水箱蓄水量。低水压可能意味着供水服务风险。",
+      "suggested_question_zh": "根据事件前、事件中和事件后的平均水压，事件后的水压表现最符合哪种情况？",
+      "suggested_options_zh": [
+        "水压恢复",
+        "水压过冲",
+        "水压持续偏低",
+        "未出现恢复迹象"
+      ],
+      "large_scale_rule_zh": "保留这类样例时，应确保场景中明确变量含义，问题用自然业务语言询问状态判断；若使用均值规则，必须在证据中给出清晰、可执行的判定规则和对应数值，避免只引用内部阶段、隐藏阈值或未解释的标签。",
+      "source": "water",
+      "task_family": "water_event_recovery_context",
+      "review_scope": "gpt55_candidate"
+    },
+    {
+      "id": "multisim_qcc_v5_aiops_v3::water::water_broad::water_scenario_015::water_counterfactual_event_gap",
+      "decision": "keep",
+      "naturalness_score": 4,
+      "answerability_score": 5,
+      "accuracy_risk": "low",
+      "problem_tags": [],
+      "reason_zh": "题目整体像正常的供水运维判断问题，变量含义已解释，证据直接给出事件窗口水压均值、基线均值和差值，能够确定与基线相近。虽然“匹配基线”和“明显差异”略带数据分析术语，但在给定差值为 0.00 的情况下不影响可答性。",
+      "suggested_scene_zh": "供水网络运维人员正在查看一次服务窗口。水压用于评估供水风险；其中 x0 表示水压，x1 表示管道流量，x2 表示水箱蓄水量。",
+      "suggested_question_zh": "在该事件窗口内，水压与匹配基线相比如何？",
+      "suggested_options_zh": [
+        "事件窗口水压与基线相近",
+        "事件窗口水压低于基线",
+        "事件窗口水压高于基线",
+        "事件影响表现为混合变化"
+      ],
+      "large_scale_rule_zh": "保留此类样本：只要场景解释了变量含义，问题以自然语言询问事件窗口与基线的比较，并且证据明确给出均值和差值，就可以判为低风险；若使用“明显差异”等措辞但未给阈值，只有在差值为零或方向极清楚时才应保留，否则建议改写为直接比较高低或相近。",
+      "source": "water",
+      "task_family": "water_counterfactual_event_gap",
+      "review_scope": "gpt55_candidate"
+    }
+  ]
+}

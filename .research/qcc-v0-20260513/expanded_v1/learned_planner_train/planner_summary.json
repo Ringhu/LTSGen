@@ -1,0 +1,25 @@
+{
+  "train_split": "train",
+  "n_train": 470,
+  "eval_splits": {
+    "dev": {
+      "n_items": 118,
+      "planner_operator_accuracy": 1.0,
+      "planner_error_count": 0,
+      "planner_errors": []
+    },
+    "tiny_overfit": {
+      "n_items": 32,
+      "planner_operator_accuracy": 1.0,
+      "planner_error_count": 0,
+      "planner_errors": []
+    },
+    "train": {
+      "n_items": 470,
+      "planner_operator_accuracy": 1.0,
+      "planner_error_count": 0,
+      "planner_errors": []
+    }
+  },
+  "n_predictions_all_eval_splits": 620
+}

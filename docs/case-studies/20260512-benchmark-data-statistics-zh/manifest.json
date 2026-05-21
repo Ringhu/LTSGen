@@ -1,0 +1,26 @@
+{
+  "report": "docs/case-studies/20260512-benchmark-data-statistics-zh/benchmark_data_statistics_report_zh.md",
+  "tables": {
+    "sample_statistics": "docs/case-studies/20260512-benchmark-data-statistics-zh/tables/benchmark_sample_statistics.csv",
+    "summary": "docs/case-studies/20260512-benchmark-data-statistics-zh/tables/benchmark_summary.csv",
+    "nvars_distribution": "docs/case-studies/20260512-benchmark-data-statistics-zh/tables/benchmark_nvars_distribution.csv",
+    "length_bins": "docs/case-studies/20260512-benchmark-data-statistics-zh/tables/benchmark_length_bins.csv",
+    "task_distribution": "docs/case-studies/20260512-benchmark-data-statistics-zh/tables/benchmark_task_distribution.csv",
+    "atomic_attribute_distribution": "docs/case-studies/20260512-benchmark-data-statistics-zh/tables/benchmark_atomic_attribute_distribution.csv"
+  },
+  "figures": [
+    "docs/case-studies/20260512-benchmark-data-statistics-zh/figures/benchmark_scale_univar_multivar.png",
+    "docs/case-studies/20260512-benchmark-data-statistics-zh/figures/benchmark_nvars_mean_max.png",
+    "docs/case-studies/20260512-benchmark-data-statistics-zh/figures/benchmark_length_boxplot.png",
+    "docs/case-studies/20260512-benchmark-data-statistics-zh/figures/benchmark_origin_distribution.png"
+  ],
+  "benchmarks": [
+    "TSShapeQA-OOD",
+    "TSAQA",
+    "TimeSeriesExam",
+    "dataset_a",
+    "dataset_a_raw_multivar",
+    "FREDQA"
+  ],
+  "n_rows": 2822
+}

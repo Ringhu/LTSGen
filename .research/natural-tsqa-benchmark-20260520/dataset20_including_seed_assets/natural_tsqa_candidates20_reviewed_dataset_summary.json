@@ -1,0 +1,194 @@
+{
+  "inputs": {
+    "natural_jsonl": ".research/natural-tsqa-benchmark-20260520/rewrites20_including_seed_assets/natural_tsqa_rewrites20_including_seed_assets.jsonl",
+    "review_json": ".research/natural-tsqa-benchmark-20260520/reviews20_including_seed_assets/natural_tsqa_rewrites20_including_seed_assets_review.json",
+    "raw_jsonl": ".research/natural-tsqa-benchmark-20260520/candidates20_including_seed_assets/natural_tsqa_candidates20_including_seed_assets.jsonl"
+  },
+  "outputs": {
+    "positive_jsonl": ".research/natural-tsqa-benchmark-20260520/dataset20_including_seed_assets/natural_tsqa_candidates20_reviewed_positive.jsonl",
+    "excluded_jsonl": ".research/natural-tsqa-benchmark-20260520/dataset20_including_seed_assets/natural_tsqa_candidates20_reviewed_excluded.jsonl",
+    "schema_report": ".research/natural-tsqa-benchmark-20260520/dataset20_including_seed_assets/natural_tsqa_candidates20_reviewed_dataset_summary.json",
+    "report_md": ".research/natural-tsqa-benchmark-20260520/dataset20_including_seed_assets/NATURAL_QCC_EXPANSION_DATASET_20260519_ZH.md"
+  },
+  "review_complete": true,
+  "missing_review_count": 0,
+  "positive": {
+    "n": 75,
+    "by_source": {
+      "aiopslab_official_v3": 20,
+      "citylearn": 16,
+      "grid2op": 16,
+      "traffic": 13,
+      "water": 10
+    },
+    "by_split": {
+      "dev": 11,
+      "test": 26,
+      "train": 38
+    },
+    "by_source_split": {
+      "aiopslab_official_v3": {
+        "dev": 3,
+        "test": 8,
+        "train": 9
+      },
+      "citylearn": {
+        "dev": 4,
+        "test": 5,
+        "train": 7
+      },
+      "grid2op": {
+        "dev": 1,
+        "test": 7,
+        "train": 8
+      },
+      "traffic": {
+        "dev": 1,
+        "test": 4,
+        "train": 8
+      },
+      "water": {
+        "dev": 2,
+        "test": 2,
+        "train": 6
+      }
+    },
+    "by_task_family": {
+      "aiops_official_memory_extrema": 4,
+      "aiops_official_cpu_trend": 4,
+      "aiops_official_network_volatility": 4,
+      "aiops_official_window_memory": 4,
+      "aiops_official_cross_signal_relation": 4,
+      "city_trend_total_load": 3,
+      "city_window_total_load": 2,
+      "city_extrema_total_load": 3,
+      "city_anomaly_total_load": 3,
+      "city_cross_variable_load": 2,
+      "city_volatility_total_load": 3,
+      "grid_trend_max_rho": 2,
+      "grid_counterfactual_overload_exposure": 2,
+      "grid_volatility_total_load": 1,
+      "grid_anomaly_max_rho": 1,
+      "grid_counterfactual_peak_stress": 2,
+      "grid_counterfactual_mean_stress": 1,
+      "grid_temporal_lead_lag": 2,
+      "grid_extrema_max_rho": 2,
+      "grid_window_total_load": 1,
+      "grid_cross_variable_stress": 2,
+      "traffic_combined_stress_context": 1,
+      "traffic_event_impact_relation": 1,
+      "traffic_domain_congestion_context": 1,
+      "traffic_speed_trend": 1,
+      "traffic_counterfactual_event_gap": 1,
+      "traffic_cross_congestion_relation": 1,
+      "traffic_speed_queue_lead_lag": 1,
+      "traffic_queue_volatility": 1,
+      "traffic_speed_periodicity": 1,
+      "traffic_signal_counterfactual_queue": 1,
+      "traffic_window_speed": 1,
+      "traffic_speed_extrema": 1,
+      "traffic_event_recovery_context": 1,
+      "water_leak_anomaly": 1,
+      "water_cross_pressure_relation": 2,
+      "water_pressure_flow_lead_lag": 1,
+      "water_flow_volatility": 1,
+      "water_leak_counterfactual_pressure": 1,
+      "water_min_pressure_extrema": 1,
+      "water_event_impact_relation": 1,
+      "water_pressure_periodicity": 1,
+      "water_counterfactual_event_gap": 1
+    },
+    "by_value_dim": {
+      "4": 20,
+      "3": 55
+    },
+    "answer_distribution": {
+      "D": 22,
+      "C": 20,
+      "A": 13,
+      "B": 20
+    },
+    "max_answer_share": 0.2933,
+    "missing_required_count": 0
+  },
+  "excluded": {
+    "n": 25,
+    "by_source": {
+      "citylearn": 4,
+      "grid2op": 4,
+      "traffic": 7,
+      "water": 10
+    },
+    "by_split": {
+      "dev": 6,
+      "train": 14,
+      "test": 5
+    },
+    "by_source_split": {
+      "citylearn": {
+        "dev": 1,
+        "train": 3
+      },
+      "grid2op": {
+        "dev": 1,
+        "train": 3
+      },
+      "traffic": {
+        "test": 3,
+        "train": 4
+      },
+      "water": {
+        "dev": 4,
+        "test": 2,
+        "train": 4
+      }
+    },
+    "by_task_family": {
+      "city_domain_demand_context": 3,
+      "city_cross_variable_load": 1,
+      "grid_counterfactual_mean_stress": 1,
+      "grid_domain_stress_context": 2,
+      "grid_anomaly_max_rho": 1,
+      "traffic_incident_anomaly": 1,
+      "traffic_event_recovery_context": 1,
+      "traffic_domain_congestion_context": 1,
+      "traffic_event_impact_relation": 1,
+      "traffic_cross_congestion_relation": 1,
+      "traffic_counterfactual_event_gap": 1,
+      "traffic_combined_stress_context": 1,
+      "water_event_recovery_context": 2,
+      "water_domain_resilience_context": 2,
+      "water_combined_stress_context": 2,
+      "water_event_impact_relation": 1,
+      "water_window_pressure": 1,
+      "water_pressure_trend": 1,
+      "water_counterfactual_event_gap": 1
+    },
+    "by_value_dim": {
+      "0": 25
+    },
+    "answer_distribution": {
+      "": 25
+    },
+    "max_answer_share": 1.0,
+    "missing_required_count": 25
+  },
+  "sft_files": {
+    "dev": {
+      "raw": ".research/natural-tsqa-benchmark-20260520/dataset20_including_seed_assets/sft/natural_tsqa_candidates20_reviewed_dev_raw.jsonl",
+      "sft": ".research/natural-tsqa-benchmark-20260520/dataset20_including_seed_assets/sft/natural_tsqa_candidates20_reviewed_dev_sft.jsonl",
+      "n": 11
+    },
+    "test": {
+      "raw": ".research/natural-tsqa-benchmark-20260520/dataset20_including_seed_assets/sft/natural_tsqa_candidates20_reviewed_test_raw.jsonl",
+      "sft": ".research/natural-tsqa-benchmark-20260520/dataset20_including_seed_assets/sft/natural_tsqa_candidates20_reviewed_test_sft.jsonl",
+      "n": 26
+    },
+    "train": {
+      "raw": ".research/natural-tsqa-benchmark-20260520/dataset20_including_seed_assets/sft/natural_tsqa_candidates20_reviewed_train_raw.jsonl",
+      "sft": ".research/natural-tsqa-benchmark-20260520/dataset20_including_seed_assets/sft/natural_tsqa_candidates20_reviewed_train_sft.jsonl",
+      "n": 38
+    }
+  },
+  "schema_gate_pass": true
+}

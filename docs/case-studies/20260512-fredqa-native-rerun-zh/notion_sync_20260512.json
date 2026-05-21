@@ -1,0 +1,11 @@
+{
+  "main_page_id": "35ebf55f0c0681db9059f3b0a954dcef",
+  "main_url": "https://www.notion.so/35ebf55f0c0681db9059f3b0a954dcef",
+  "parent_page_id": "33dbf55f-0c06-81b7-8fe8-fa8aced87e07",
+  "title": "FREDQA 原生多变量 caption 重跑报告 2026-05-12",
+  "github_report": "https://github.com/Ringhu/LTSGen/blob/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-native-rerun-zh/fredqa_native_rerun_report_zh.md",
+  "github_notion_source": "https://github.com/Ringhu/LTSGen/blob/fredqa-rerun-zh-20260512/docs/case-studies/20260512-fredqa-native-rerun-zh/fredqa_native_rerun_report_zh_notion.md",
+  "commit": "96d820e",
+  "last_synced_at": "2026-05-12",
+  "note": "Updated Notion content to the native hard-subset rescue-rate statistics: exclude meta_only-correct cases, report native multivariate caption rescue rates, and include fredqa_native_hard_subset_rescue.png."
+}

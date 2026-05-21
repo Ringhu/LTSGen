@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="360" viewBox="0 0 920 360">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="72" y="28" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">finrl / fin_volatility_returns</text>
+<text x="72" y="49" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">source: local_historical_ohlcv_smoke; per-variable min-max normalized for display</text>
+<line x1="72" y1="60.0" x2="890" y2="60.0" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="72" y1="115.5" x2="890" y2="115.5" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="72" y1="171.0" x2="890" y2="171.0" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="72" y1="226.5" x2="890" y2="226.5" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="72" y1="282.0" x2="890" y2="282.0" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="72" y1="60" x2="72" y2="282" stroke="#374151" stroke-width="1.2"/>
+<line x1="72" y1="282" x2="890" y2="282" stroke="#374151" stroke-width="1.2"/>
+<polyline points="72.0,250.4 98.4,251.4 124.8,213.2 151.2,181.0 177.5,278.5 203.9,193.1 230.3,166.5 256.7,272.5 283.1,141.4 309.5,279.0 335.9,277.5 362.3,188.6 388.6,282.0 415.0,195.1 441.4,140.4 467.8,182.6 494.2,113.2 520.6,224.2 547.0,133.3 573.4,274.0 599.7,214.2 626.1,83.1 652.5,227.8 678.9,255.4 705.3,60.0 731.7,214.7 758.1,195.6 784.5,236.3 810.8,242.3 837.2,246.8 863.6,256.9 890.0,247.8" fill="none" stroke="#2563eb" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<line x1="72" y1="306" x2="96" y2="306" stroke="#2563eb" stroke-width="3"/>
+<text x="103" y="310" font-family="Arial, sans-serif" font-size="12" fill="#111827">x0 目标资产价格</text>
+<polyline points="72.0,250.4 98.4,251.4 124.8,213.2 151.2,181.0 177.5,278.5 203.9,193.1 230.3,166.5 256.7,272.5 283.1,141.4 309.5,279.0 335.9,277.5 362.3,188.6 388.6,282.0 415.0,195.1 441.4,140.4 467.8,182.6 494.2,113.2 520.6,224.2 547.0,133.3 573.4,274.0 599.7,214.2 626.1,83.1 652.5,227.8 678.9,255.4 705.3,60.0 731.7,214.7 758.1,195.6 784.5,236.3 810.8,242.3 837.2,246.8 863.6,256.9 890.0,247.8" fill="none" stroke="#dc2626" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<line x1="464" y1="306" x2="488" y2="306" stroke="#dc2626" stroke-width="3"/>
+<text x="495" y="310" font-family="Arial, sans-serif" font-size="12" fill="#111827">x1 市场背景价格信号</text>
+<polyline points="72.0,231.8 98.4,170.7 124.8,189.3 151.2,191.3 177.5,252.5 203.9,205.9 230.3,247.9 256.7,246.6 283.1,187.9 309.5,241.8 335.9,249.5 362.3,172.2 388.6,282.0 415.0,195.3 441.4,235.8 467.8,207.7 494.2,200.3 520.6,131.0 547.0,216.5 573.4,221.2 599.7,162.5 626.1,149.5 652.5,130.5 678.9,161.7 705.3,65.5 731.7,60.0 758.1,126.5 784.5,184.7 810.8,86.8 837.2,161.1 863.6,212.3 890.0,154.3" fill="none" stroke="#16a34a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<line x1="72" y1="324" x2="96" y2="324" stroke="#16a34a" stroke-width="3"/>
+<text x="103" y="328" font-family="Arial, sans-serif" font-size="12" fill="#111827">x2 交易量</text>
+<text x="72" y="346" font-family="Arial, sans-serif" font-size="11" fill="#6b7280">row id: real_source_smoke::finrl::06::fin_volatility_returns::finrl_broad::MSFT::w0_32::fin_volatility_returns</text>
+</svg>

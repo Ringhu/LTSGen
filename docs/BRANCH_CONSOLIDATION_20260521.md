@@ -3,7 +3,8 @@
 This repository was split into three active local branches:
 
 - `shared-qcc-base`: compact shared engineering base.
-- `emnlp-benchmark-pipeline`: benchmark/data pipeline and EMNLP-facing assets.
+- `emnlp-benchmark-pipeline`: benchmark/data pipeline and EMNLP-facing assets
+  (this branch).
 - `caption-model-longline`: long-running QCC caption model training assets.
 
 Archived or reference-only branches:
@@ -17,3 +18,6 @@ Archived or reference-only branches:
 
 The original dirty worktree at `/home/cris/Research/LTSGEN` was not changed by
 the consolidation work. New branches were built in sibling worktrees.
+
+This branch intentionally restores `.research/`, `docs/case-studies/`, and
+paper figures that were removed from `shared-qcc-base`.

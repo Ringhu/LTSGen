@@ -1,0 +1,115 @@
+{
+  "inputs": {
+    "sft_dir": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft",
+    "run_name": "natural_qcc_crossdomain"
+  },
+  "outputs": {
+    "out_dir": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft_no_question",
+    "out_run_name": "natural_qcc_crossdomain_no_question"
+  },
+  "splits": {
+    "train": {
+      "raw_in": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_train_raw.jsonl",
+      "sft_in": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_train_sft.jsonl",
+      "raw_out": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft_no_question/natural_qcc_crossdomain_no_question_train_raw.jsonl",
+      "sft_out": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft_no_question/natural_qcc_crossdomain_no_question_train_sft.jsonl",
+      "raw_summary": {
+        "n": 31,
+        "question_marker_count": 0,
+        "question_marker_examples": [],
+        "missing_prompt_count": 0,
+        "missing_prompt_examples": [],
+        "by_source": {
+          "aiopslab_official_v3": 5,
+          "citylearn": 5,
+          "grid2op": 6,
+          "traffic": 7,
+          "water": 8
+        }
+      },
+      "sft_summary": {
+        "n": 31,
+        "question_marker_count": 0,
+        "question_marker_examples": [],
+        "missing_prompt_count": 0,
+        "missing_prompt_examples": [],
+        "by_source": {
+          "aiopslab_official_v3": 5,
+          "citylearn": 5,
+          "grid2op": 6,
+          "traffic": 7,
+          "water": 8
+        }
+      }
+    },
+    "dev": {
+      "raw_in": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_dev_raw.jsonl",
+      "sft_in": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_dev_sft.jsonl",
+      "raw_out": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft_no_question/natural_qcc_crossdomain_no_question_dev_raw.jsonl",
+      "sft_out": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft_no_question/natural_qcc_crossdomain_no_question_dev_sft.jsonl",
+      "raw_summary": {
+        "n": 11,
+        "question_marker_count": 0,
+        "question_marker_examples": [],
+        "missing_prompt_count": 0,
+        "missing_prompt_examples": [],
+        "by_source": {
+          "aiopslab_official_v3": 2,
+          "citylearn": 2,
+          "grid2op": 4,
+          "traffic": 1,
+          "water": 2
+        }
+      },
+      "sft_summary": {
+        "n": 11,
+        "question_marker_count": 0,
+        "question_marker_examples": [],
+        "missing_prompt_count": 0,
+        "missing_prompt_examples": [],
+        "by_source": {
+          "aiopslab_official_v3": 2,
+          "citylearn": 2,
+          "grid2op": 4,
+          "traffic": 1,
+          "water": 2
+        }
+      }
+    },
+    "test": {
+      "raw_in": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_test_raw.jsonl",
+      "sft_in": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft/natural_qcc_crossdomain_test_sft.jsonl",
+      "raw_out": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft_no_question/natural_qcc_crossdomain_no_question_test_raw.jsonl",
+      "sft_out": ".research/general-qcc-captioner-20260515/natural_qcc_crossdomain_dataset_20260520/sft_no_question/natural_qcc_crossdomain_no_question_test_sft.jsonl",
+      "raw_summary": {
+        "n": 13,
+        "question_marker_count": 0,
+        "question_marker_examples": [],
+        "missing_prompt_count": 0,
+        "missing_prompt_examples": [],
+        "by_source": {
+          "aiopslab_official_v3": 5,
+          "citylearn": 2,
+          "grid2op": 2,
+          "traffic": 3,
+          "water": 1
+        }
+      },
+      "sft_summary": {
+        "n": 13,
+        "question_marker_count": 0,
+        "question_marker_examples": [],
+        "missing_prompt_count": 0,
+        "missing_prompt_examples": [],
+        "by_source": {
+          "aiopslab_official_v3": 5,
+          "citylearn": 2,
+          "grid2op": 2,
+          "traffic": 3,
+          "water": 1
+        }
+      }
+    }
+  },
+  "gate_pass": true
+}
