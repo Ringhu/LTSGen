@@ -16,6 +16,7 @@
 - `scripts/eval/evaluate_public_raw_tsqa_llm.py`：OpenAI-compatible LLM 评测脚本。
 - `scripts/eval/compare_public_raw_tsqa_model_evals.py`：扫描所有完整评测 run，生成跨模型 comparison 表。
 - `scripts/eval/import_public_raw_tsqa_qwen_eval.py`：导入 A100 回传的 Qwen run 目录或 `.tar.gz`，生成错误摘要并刷新 comparison 表。
+- `scripts/remote/preflight_public_raw_tsqa_qwen_a100.sh`：A100 端预检脚本，检查分支、数据、Python/vLLM、GPU、模型路径和端口。
 - `scripts/remote/run_public_raw_tsqa_qwen_eval_a100.sh`：A100 上启动 vLLM/Qwen 并调用同一评测脚本的入口。
 - `scripts/remote/run_public_raw_tsqa_qwen_suite_a100.sh`：A100 上按模型清单循环评测 Qwen 系列，并生成 suite summary。
 
@@ -30,7 +31,7 @@
 ```bash
 python3 scripts/eval/check_public_raw_tsqa_v4.py
 python3 -m py_compile scripts/generate/build_public_raw_tsqa_v4.py scripts/eval/check_public_raw_tsqa_v4.py scripts/eval/evaluate_public_raw_tsqa_llm.py scripts/eval/compare_public_raw_tsqa_model_evals.py scripts/eval/import_public_raw_tsqa_qwen_eval.py
-bash -n scripts/remote/run_public_raw_tsqa_qwen_eval_a100.sh scripts/remote/run_public_raw_tsqa_qwen_suite_a100.sh scripts/remote/package_public_raw_tsqa_qwen_eval_a100.sh
+bash -n scripts/remote/preflight_public_raw_tsqa_qwen_a100.sh scripts/remote/run_public_raw_tsqa_qwen_eval_a100.sh scripts/remote/run_public_raw_tsqa_qwen_suite_a100.sh scripts/remote/package_public_raw_tsqa_qwen_eval_a100.sh
 ```
 
 已通过结果：sanity check `pass=true`，`n=39`，6 个 domain，错误数 `0`。
@@ -192,6 +193,8 @@ NVML library version: 535.309
 
 A100 评测脚本已经补齐并通过 `bash -n`：
 
+`scripts/remote/preflight_public_raw_tsqa_qwen_a100.sh`
+
 `scripts/remote/run_public_raw_tsqa_qwen_eval_a100.sh`
 
 Qwen 系列评测脚本：
@@ -209,6 +212,15 @@ Qwen 系列评测脚本：
 - 默认服务端口：`127.0.0.1:9411`。
 - 调用 `evaluate_public_raw_tsqa_llm.py --provider qwenlocal`。
 - 默认开启 `--resume`。
+
+推荐先在 A100 上做预检：
+
+```bash
+ROOT=/cluster/home/user1/hulining/LTSGEN \
+PY=/cluster/home/user1/anaconda3/envs/opentslm/bin/python3 \
+MODEL_SPECS=$'qwen3_4b|Qwen3-4B-Instruct-2507|/cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507|2|9411|1|32768|bfloat16|0.88' \
+scripts/remote/preflight_public_raw_tsqa_qwen_a100.sh
+```
 
 推荐 A100 命令：
 
