@@ -1,0 +1,87 @@
+{
+  "diagnosis_name": "natural_qcc_v22_token_budget_diagnosis_20260520",
+  "date": "2026-05-20",
+  "scope": "Natural QCC v2.2 qcond/no-question training failure diagnosis",
+  "environment": {
+    "host_profile": "3090",
+    "remote_root": "/cluster/home/hulining/LTSGEN_v22_numeric_grounding_20260520",
+    "python": "/cluster/home/hulining/anaconda3/envs/opentslm/bin/python3",
+    "tokenizer": "Qwen/Qwen3-4B"
+  },
+  "collator_contract": {
+    "script": "tslm/scripts/train_multisim_v5_smoke.py",
+    "max_text_length": 224,
+    "max_prompt_length": 320,
+    "reserve_formula": "1 + len(prompt_ids[:max_prompt_length]) + 1 EOS",
+    "output_keep_formula": "min(len(output_ids), max(max_text_length - reserve, 0))",
+    "runner_override_present": false
+  },
+  "train_token_budget_stats": {
+    "v21_qcond": {
+      "n": 89,
+      "min_prompt_tokens_kept": 139,
+      "max_prompt_tokens_kept": 232,
+      "mean_prompt_tokens_kept": 157.64,
+      "zero_output_kept": 2,
+      "mean_output_tokens_kept": 52.61,
+      "min_output_tokens_kept": 0,
+      "max_output_tokens_kept": 71
+    },
+    "v22_qcond": {
+      "n": 89,
+      "min_prompt_tokens_kept": 227,
+      "max_prompt_tokens_kept": 320,
+      "mean_prompt_tokens_kept": 247.81,
+      "zero_output_kept": 89,
+      "mean_output_tokens_kept": 0.0,
+      "min_output_tokens_kept": 0,
+      "max_output_tokens_kept": 0
+    },
+    "v22_no_question": {
+      "n": 89,
+      "min_prompt_tokens_kept": 185,
+      "max_prompt_tokens_kept": 264,
+      "mean_prompt_tokens_kept": 198.47,
+      "zero_output_kept": 13,
+      "mean_output_tokens_kept": 27.6,
+      "min_output_tokens_kept": 0,
+      "max_output_tokens_kept": 37
+    }
+  },
+  "observed_generation_failure": {
+    "v22_qcond": {
+      "test_rows": 35,
+      "empty_caption_rate": 1.0,
+      "mean_caption_chars": 0.0,
+      "semantic_qa_accuracy": 0.0,
+      "slot_factuality": 0.0857,
+      "grid2op_slot_factuality": 0.0
+    },
+    "v22_no_question": {
+      "test_rows": 35,
+      "empty_caption_rate": 0.1429,
+      "mean_caption_chars": 86.6,
+      "semantic_qa_accuracy": 0.0,
+      "slot_factuality": 0.0857,
+      "grid2op_slot_factuality": 0.0
+    }
+  },
+  "primary_diagnosis": {
+    "decision": "training_sequence_budget_failure",
+    "confidence": "high",
+    "summary": "The v2.2 qcond prompt became longer than the training collator's total text budget, so every qcond target caption was truncated to zero output tokens. With add_eos=true, the model mostly learned to emit EOS after the prompt, which explains the all-empty qcond generations despite near-zero train/eval loss.",
+    "not_primary_causes": [
+      "target caption dirtiness",
+      "deterministic target answerability",
+      "GPU runtime failure",
+      "semantic evaluator failure"
+    ]
+  },
+  "recommended_next_validation": [
+    "Add a preflight token-budget gate that fails if output_tokens_kept is zero for any substantial fraction of training rows.",
+    "Rerun v2.2 with max_text_length at least 512 and verify output_tokens_kept before training.",
+    "Run train-set generation before test-set generation to confirm the checkpoint can reproduce seen target captions.",
+    "Run raw generation with cleaning disabled or relaxed only after the token budget is fixed.",
+    "Then do a 5-example overfit; if it still fails, inspect save/load and generate-start behavior."
+  ]
+}

@@ -1,7 +1,9 @@
-# LTSGen Shared QCC Base
+# LTSGen Caption Model Longline
 
-This branch is a compact shared engineering base. It keeps reusable code and
-tests while leaving research artifacts to the two active workstream branches.
+This branch contains the learned-caption training line for General QCC. It is
+based on `shared-qcc-base` and selectively imports the useful parts of
+`codex/question-repair-20260519-ready` without turning the branch into a full
+artifact mirror.
 
 ## Active Branches
 
@@ -16,15 +18,18 @@ tests while leaving research artifacts to the two active workstream branches.
 - `ts_cap/`: time-series caption generation utilities and dataset wrappers.
 - `ts_align/`, `ts_align_scripts_v2/`: TS-text alignment infrastructure.
 - `tslm/`: time-series-to-caption SFT/model baseline code.
-- `scripts/`: shared generation, evaluation, training, remote, and utility
-  entry points.
-- `tests/`: lightweight regression tests for shared utilities.
-- `docs/`: engineering notes for the shared code base.
+- `scripts/train/`: local/remote training pipeline entry points.
+- `scripts/eval/`: QCC caption QA, factuality, manifest, and objective audits.
+- `scripts/remote/`: A100/3090 launch wrappers.
+- `scripts/generate/`: small QCC SFT/control builders used by training.
+- `tests/`: regression tests for the imported training/audit path.
+- `.research/`: compact longline reports and manifests only.
+- `docs/`: branch consolidation and engineering notes.
 - `archive/`: legacy code retained for reference only.
 
 ## Artifact Policy
 
-Generated benchmark datasets, simulator traces, prediction dumps, GPU run
-outputs, paper figures, and case studies do not belong on this branch. Keep
-those in the workstream branch that owns them, and prefer manifests or small
-fixtures when shared code needs examples.
+This branch keeps reports, summaries, and manifest/pathspec files needed to
+reproduce or audit training runs. It intentionally excludes checkpoints, full
+prediction dumps, `final_model/`, `checkpoint-*`, `*.safetensors`,
+`pytorch_model.bin`, large simulator traces, and paper case-study figures.

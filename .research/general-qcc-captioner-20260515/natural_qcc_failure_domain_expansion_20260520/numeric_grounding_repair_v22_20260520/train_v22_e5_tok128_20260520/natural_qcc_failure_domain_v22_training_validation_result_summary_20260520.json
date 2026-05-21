@@ -1,0 +1,92 @@
+{
+  "run_name": "natural_qcc_failure_domain_v22_numeric_grounding_e5_tok128_20260520",
+  "status": "not_effective_generation_failure",
+  "claim_scope": "124-row failure-domain smoke only; not a full method claim.",
+  "data": {
+    "positive_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/merged_v2/natural_qcc_crossdomain_failure_expanded_v2_positive.jsonl",
+    "sft_dir": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/numeric_grounding_repair_v22_20260520/sft_evidence_only_v22",
+    "train_rows": 89,
+    "test_rows": 35,
+    "numeric_grounding_repair": true
+  },
+  "config": {
+    "model": "Qwen/Qwen3-4B",
+    "bridge_type": "prefix",
+    "num_train_epochs": 5,
+    "max_new_tokens": 128,
+    "clean_max_sentences": 3,
+    "gradient_accumulation_steps": 2,
+    "qa_evaluator": "semantic",
+    "gpu_profile": "3090",
+    "cuda_visible_devices": "1"
+  },
+  "target_gates": {
+    "target_semantic_qa_accuracy": 1.0,
+    "target_caption_quality_gate_pass": true,
+    "target_evidence_shape_rate": 1.0,
+    "target_answer_label_only_rate": 0.0,
+    "target_overall_slot_factuality_rate": 1.0,
+    "target_grid2op_slot_factuality_rate": 1.0
+  },
+  "v21_generated_baseline": {
+    "qcond_semantic_qa_accuracy": 0.3143,
+    "qcond_caption_quality_gate_pass": true,
+    "qcond_overall_slot_factuality_rate": 0.1143,
+    "qcond_grid2op_slot_factuality_rate": 0.0,
+    "no_question_semantic_qa_accuracy": 0.1143,
+    "no_question_caption_quality_gate_pass": true,
+    "no_question_overall_slot_factuality_rate": 0.1143,
+    "qcond_minus_no_question_semantic_qa": 0.2
+  },
+  "v22_generated": {
+    "qcond": {
+      "run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/numeric_grounding_repair_v22_20260520/train_v22_e5_tok128_20260520/tsrlm_qcond_e5_tok128_qwen3_4b",
+      "pipeline_complete": true,
+      "audit_pass": true,
+      "semantic_qa_accuracy": 0.0,
+      "empty_answer_rate": 1.0,
+      "empty_caption_rate": 1.0,
+      "mean_caption_chars": 0.0,
+      "caption_quality_gate_pass": false,
+      "evidence_shape_rate": 0.0,
+      "numeric_evidence_rate": 0.0,
+      "overall_slot_factuality_rate": 0.0857,
+      "slot_value_pass_rate": 0.0857,
+      "slot_value_recall": 0.0,
+      "direction_pass_rate": 0.2857,
+      "horizon_pass_rate": 0.0,
+      "grid2op_slot_factuality_rate": 0.0
+    },
+    "no_question": {
+      "run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/numeric_grounding_repair_v22_20260520/train_v22_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b",
+      "pipeline_complete": true,
+      "audit_pass": true,
+      "semantic_qa_accuracy": 0.0,
+      "empty_answer_rate": 1.0,
+      "empty_caption_rate": 0.1429,
+      "mean_caption_chars": 86.6,
+      "caption_quality_gate_pass": true,
+      "evidence_shape_rate": 0.8571,
+      "numeric_evidence_rate": 0.8571,
+      "overall_slot_factuality_rate": 0.0857,
+      "slot_value_pass_rate": 0.0857,
+      "slot_value_recall": 0.0135,
+      "direction_pass_rate": 0.2857,
+      "horizon_pass_rate": 1.0,
+      "grid2op_slot_factuality_rate": 0.0
+    }
+  },
+  "comparison": {
+    "qcond_minus_no_question_semantic_qa": 0.0,
+    "qcond_minus_no_question_slot_factuality": 0.0,
+    "decision": "no_qconditioning_gap",
+    "effectiveness_gate": "not_effective"
+  },
+  "main_findings": [
+    "v2.2 target remains clean: quality, semantic QA, and slot factuality are all 1.0.",
+    "The real q-conditioned v2.2 training run completed, but generated captions are empty for all 35 test rows.",
+    "The no-question control generated short repeated evidence-like fragments, but semantic QA is still 0.0 and slot factuality is only 0.0857.",
+    "Grid2Op remains 0.0 slot factuality for both qcond and no-question.",
+    "The repair therefore did not validate as an effective model-training fix; the next blocker is the training/generation interface or target/prompt protocol, not target data cleanliness."
+  ]
+}

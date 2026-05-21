@@ -1,0 +1,71 @@
+{
+  "run_name": "natural_qcc_failure_domain_v21_style_repair_e5_tok128_20260520",
+  "status": "complete_quality_repaired_semantic_flat",
+  "data": {
+    "positive_jsonl": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/merged_v2/natural_qcc_crossdomain_failure_expanded_v2_positive.jsonl",
+    "sft_dir": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/sft_evidence_only_v21",
+    "positive_rows": 124,
+    "train_rows": 89,
+    "test_rows": 35,
+    "style_repair": true
+  },
+  "config": {
+    "model": "Qwen/Qwen3-4B",
+    "bridge_type": "prefix",
+    "num_train_epochs": 5,
+    "max_new_tokens": 128,
+    "clean_max_sentences": 3,
+    "gradient_accumulation_steps": 2,
+    "qa_evaluator": "semantic"
+  },
+  "target_gates": {
+    "target_semantic_qa_accuracy": 1.0,
+    "target_caption_quality_gate_pass": true,
+    "target_evidence_shape_rate": 1.0,
+    "target_answer_label_only_rate": 0.0
+  },
+  "runs": {
+    "qcond": {
+      "run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v21_style_repair_e5_tok128_20260520/tsrlm_qcond_e5_tok128_qwen3_4b",
+      "pipeline_complete": true,
+      "audit_pass": true,
+      "semantic_qa_accuracy": 0.3143,
+      "empty_answer_rate": 0.2857,
+      "caption_quality_gate_pass": true,
+      "evidence_shape_rate": 1.0,
+      "answer_label_only_rate": 0.0
+    },
+    "no_question": {
+      "run_dir": ".research/general-qcc-captioner-20260515/natural_qcc_failure_domain_expansion_20260520/train_v21_style_repair_e5_tok128_20260520/tsrlm_no_question_e5_tok128_qwen3_4b",
+      "pipeline_complete": true,
+      "audit_pass": true,
+      "semantic_qa_accuracy": 0.1143,
+      "empty_answer_rate": 0.6571,
+      "caption_quality_gate_pass": true,
+      "evidence_shape_rate": 1.0,
+      "answer_label_only_rate": 0.0
+    }
+  },
+  "comparison": {
+    "qcond_minus_no_question": 0.2,
+    "decision": "qconditioning_gap_positive",
+    "claim_scope": "Cross-domain smoke only; not a full method claim."
+  },
+  "v2_reference": {
+    "qcond_accuracy": 0.3143,
+    "qcond_empty_answer_rate": 0.4,
+    "qcond_caption_quality_gate_pass": false,
+    "qcond_evidence_shape_rate": 0.6857,
+    "no_question_accuracy": 0.1429,
+    "no_question_empty_answer_rate": 0.7714,
+    "gap": 0.1714
+  },
+  "main_findings": [
+    "Style repair fixed evidence-caption shape: generated qcond/no-question evidence_shape_rate reached 1.0 and answer_label_only_rate reached 0.0.",
+    "Semantic QA did not improve for qcond: v2 and v2.1 are both 0.3143, so output form was not the main accuracy bottleneck.",
+    "qconditioning gap increased to +0.2000 because no-question accuracy dropped to 0.1143 while qcond stayed flat.",
+    "Grid2Op qcond accuracy dropped from 0.3000 to 0.0000 due to wrong numeric grounding in long-window and counterfactual tasks.",
+    "Traffic, Water, and AIOps improved under qcond, suggesting the cleaner template helps shorter/simpler domain templates but hurts Grid2Op memorization/generalization."
+  ],
+  "recommended_next_step": "Do not scale this template blindly. Add numeric-grounding diagnostics and per-domain templates, especially for Grid2Op long-window/counterfactual tasks; consider value-copy/slot-supervision rather than only style repair."
+}

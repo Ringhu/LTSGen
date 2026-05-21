@@ -1,17 +1,22 @@
-# LTSGEN Shared QCC Base
+# LTSGEN Caption Model Longline
 
-This branch is the shared code base for the two active LTSGEN workstreams after
-the 2026-05-21 branch cleanup.
+This branch is the model-training workstream for learned General QCC evidence
+captioners after the 2026-05-21 branch cleanup.
 
-It deliberately does not declare a single active research contract. Research
-contracts, trackers, generated artifacts, and case-study reports live on the
-workstream branches:
+Use it for:
 
-- `emnlp-benchmark-pipeline`
-- `caption-model-longline`
+- QCC SFT and caption-generation scripts in `tslm/` and `scripts/train/`;
+- GPU launch wrappers in `scripts/remote/`;
+- caption QA, factuality, manifest, and objective-completion audits in
+  `scripts/eval/`;
+- small regression tests for the above;
+- compact `.research/` reports and manifests needed to understand the training
+  line.
 
-Use this branch for reusable implementation only: `ts_cap/`, `ts_align/`,
-`ts_align_scripts_v2/`, `tslm/`, `scripts/`, and tests.
+Do not use this branch as the benchmark/paper asset branch. Multi-simulator
+benchmark data generation, case-study figures, and EMNLP-facing reports belong
+on `emnlp-benchmark-pipeline`.
 
-Large generated outputs should not be added here. Prefer small fixtures and
-manifests when a shared test needs data.
+Large generated outputs should not be committed here. Prefer manifest/pathspec
+files, summaries, and small fixtures; leave checkpoints and full prediction
+dumps on GPU/cluster storage.

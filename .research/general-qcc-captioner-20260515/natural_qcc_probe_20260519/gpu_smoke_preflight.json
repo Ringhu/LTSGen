@@ -1,0 +1,75 @@
+{
+  "train_sft": "/tmp/ltsgen-question-repair-20260519/.research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/smoke_sft/natural_qcc_probe_train_dev_sft.jsonl",
+  "eval_sft": "/tmp/ltsgen-question-repair-20260519/.research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/smoke_sft/natural_qcc_probe_eval_test_sft.jsonl",
+  "eval_raw": "/tmp/ltsgen-question-repair-20260519/.research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/smoke_sft/natural_qcc_probe_eval_test_raw.jsonl",
+  "gold_jsonl": "/tmp/ltsgen-question-repair-20260519/.research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/natural_qcc_probe_positive.jsonl",
+  "model_path": "/cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507",
+  "model_path_exists": false,
+  "path_checks": {
+    "/tmp/ltsgen-question-repair-20260519/.research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/smoke_sft/natural_qcc_probe_train_dev_sft.jsonl": true,
+    "/tmp/ltsgen-question-repair-20260519/.research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/smoke_sft/natural_qcc_probe_eval_test_sft.jsonl": true,
+    "/tmp/ltsgen-question-repair-20260519/.research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/smoke_sft/natural_qcc_probe_eval_test_raw.jsonl": true,
+    "/tmp/ltsgen-question-repair-20260519/.research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/natural_qcc_probe_positive.jsonl": true
+  },
+  "train_summary": {
+    "path": ".research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/smoke_sft/natural_qcc_probe_train_dev_sft.jsonl",
+    "exists": true,
+    "n": 19,
+    "missing_required_count": 0,
+    "missing_required_examples": [],
+    "value_dim_counts": {
+      "3": 19
+    },
+    "split_counts": {
+      "": 19
+    }
+  },
+  "eval_summary": {
+    "path": ".research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/smoke_sft/natural_qcc_probe_eval_test_sft.jsonl",
+    "exists": true,
+    "n": 24,
+    "missing_required_count": 0,
+    "missing_required_examples": [],
+    "value_dim_counts": {
+      "4": 3,
+      "3": 21
+    },
+    "split_counts": {
+      "": 24
+    }
+  },
+  "raw_eval_summary": {
+    "path": ".research/general-qcc-captioner-20260515/natural_qcc_probe_20260519/smoke_sft/natural_qcc_probe_eval_test_raw.jsonl",
+    "exists": true,
+    "n": 24,
+    "missing_required_count": 0,
+    "missing_required_examples": [],
+    "value_dim_counts": {
+      "4": 3,
+      "3": 21
+    },
+    "split_counts": {
+      "test": 24
+    }
+  },
+  "cuda": {
+    "torch_import": false,
+    "cuda_available": false,
+    "devices": [],
+    "error": "ModuleNotFoundError(\"No module named 'torch'\")"
+  },
+  "min_gpu_mem_gb": 20.0,
+  "max_gpu_mem_gb": 0.0,
+  "has_required_gpu_memory": false,
+  "bridge_type": "prefix",
+  "bridge_supported_by_current_tsrlm": true,
+  "tsrlm_config_constructible": true,
+  "tsrlm_config_error": "",
+  "python_modules": {
+    "torch": false,
+    "transformers": false,
+    "peft": false
+  },
+  "evaluator_exists": true,
+  "preflight_pass": false
+}

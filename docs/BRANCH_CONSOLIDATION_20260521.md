@@ -6,6 +6,13 @@ This repository was split into three active local branches:
 - `emnlp-benchmark-pipeline`: benchmark/data pipeline and EMNLP-facing assets.
 - `caption-model-longline`: long-running QCC caption model training assets.
 
+This branch is `caption-model-longline`. It selectively imports the useful
+training, audit, and remote-run pieces from
+`codex/question-repair-20260519-ready`, while keeping large generated assets out
+of git. The retained `.research/` files are reports, summaries, manifests, and
+pathspecs; full predictions and checkpoint outputs should remain on GPU/cluster
+storage.
+
 Archived or reference-only branches:
 
 - `ext/a-gpt-compare`: older TSAQA/ChatTS comparison assets.
