@@ -15,6 +15,7 @@
 - `tsllm_array_view.jsonl`：TS-LLM 视图，保留同一自然任务文本、选项和原始数值数组。
 - `scripts/eval/evaluate_public_raw_tsqa_llm.py`：OpenAI-compatible LLM 评测脚本。
 - `scripts/remote/run_public_raw_tsqa_qwen_eval_a100.sh`：A100 上启动 vLLM/Qwen 并调用同一评测脚本的入口。
+- `scripts/remote/run_public_raw_tsqa_qwen_suite_a100.sh`：A100 上按模型清单循环评测 Qwen 系列，并生成 suite summary。
 
 本轮修复：
 
@@ -27,7 +28,7 @@
 ```bash
 python3 scripts/eval/check_public_raw_tsqa_v4.py
 python3 -m py_compile scripts/generate/build_public_raw_tsqa_v4.py scripts/eval/check_public_raw_tsqa_v4.py scripts/eval/evaluate_public_raw_tsqa_llm.py
-bash -n scripts/remote/run_public_raw_tsqa_qwen_eval_a100.sh
+bash -n scripts/remote/run_public_raw_tsqa_qwen_eval_a100.sh scripts/remote/run_public_raw_tsqa_qwen_suite_a100.sh scripts/remote/package_public_raw_tsqa_qwen_eval_a100.sh
 ```
 
 已通过结果：sanity check `pass=true`，`n=39`，6 个 domain，错误数 `0`。
@@ -171,6 +172,10 @@ A100 评测脚本已经补齐并通过 `bash -n`：
 
 `scripts/remote/run_public_raw_tsqa_qwen_eval_a100.sh`
 
+Qwen 系列评测脚本：
+
+`scripts/remote/run_public_raw_tsqa_qwen_suite_a100.sh`
+
 结果打包脚本：
 
 `scripts/remote/package_public_raw_tsqa_qwen_eval_a100.sh`
@@ -221,6 +226,34 @@ RUN_NAME=full_qwen3_4b_public_raw_tsqa_v4_39items_bilingual \
 LANGUAGES=both \
 scripts/remote/run_public_raw_tsqa_qwen_eval_a100.sh
 ```
+
+如果要一次跑 Qwen 系列，推荐在 A100 上使用 suite runner。默认只跑 Qwen3-4B；可以用 `MODEL_SPECS` 增加更多模型，每行格式为：
+
+```text
+slug|served_model_name|model_path|cuda_visible_devices|port|tensor_parallel_size|max_model_len|dtype|gpu_memory_utilization
+```
+
+示例：
+
+```bash
+ROOT=/cluster/home/user1/hulining/LTSGEN \
+PY=/cluster/home/user1/anaconda3/envs/opentslm/bin/python3 \
+SUITE_NAME=qwen_suite_public_raw_tsqa_v4_20260521 \
+MODEL_SPECS=$'qwen3_4b|Qwen3-4B-Instruct-2507|/cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507|2|9411|1|32768|bfloat16|0.88\nqwen3_8b|Qwen3-8B|/cluster/home/user1/fenghaoran/model/Qwen3-8B|3|9412|1|32768|bfloat16|0.88' \
+LANGUAGES=both \
+MAX_ITEMS=0 \
+CONCURRENCY=2 \
+scripts/remote/run_public_raw_tsqa_qwen_suite_a100.sh
+```
+
+suite runner 会为每个模型调用单模型 runner，随后生成：
+
+- `<run_dir>/metrics.json`
+- `<run_dir>/predictions.jsonl`
+- `<run_dir>/error_summary.json`
+- `<run_dir>.tar.gz`
+- `<suite_dir>/summary.md`
+- `<suite_dir>/summary.jsonl`
 
 ## 初步错误观察
 
