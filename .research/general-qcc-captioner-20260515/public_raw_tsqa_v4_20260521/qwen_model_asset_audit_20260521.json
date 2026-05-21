@@ -1,0 +1,53 @@
+{
+  "created_at": "2026-05-21",
+  "remote_host": "a100",
+  "remote_workspace": "/cluster/home/user1/hulining/LTSGEN-emnlp-benchmark-pipeline",
+  "models": [
+    {
+      "target_scale": "3B",
+      "status": "evaluated",
+      "path_or_route": "/cluster/home/user1/fenghaoran/model/Qwen2.5-3B-Instruct",
+      "run_name": "full_hf_qwen25_3b_public_raw_tsqa_v4_39items_bilingual",
+      "note": "本地 HF checkpoint 可加载，已完成 39 rows / 78 prompts 双语评测。"
+    },
+    {
+      "target_scale": "4B",
+      "status": "evaluated",
+      "path_or_route": "/cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507",
+      "run_name": "full_hf_qwen3_4b_inst_public_raw_tsqa_v4_39items_bilingual",
+      "note": "本地 HF checkpoint 可加载，已完成 39 rows / 78 prompts 双语评测。"
+    },
+    {
+      "target_scale": "8B",
+      "status": "not_local_checkpoint",
+      "path_or_route": "Qwen/Qwen3-8B via old vLLM script; result directories under TSModel are evaluation outputs, not checkpoints",
+      "run_name": "",
+      "note": "A100 上发现 run_qwen3-8B.bash 和若干 Qwen3-8B result JSON，但未发现可直接加载的本地 HF checkpoint；不在本轮下载大模型。"
+    },
+    {
+      "target_scale": "32B",
+      "status": "not_local_checkpoint",
+      "path_or_route": "old scripts refer to /cluster/home/user1/zzy/model or external DashScope qwen3-32b route",
+      "run_name": "",
+      "note": "常见本地目录未发现可确认的 Qwen 32B HF checkpoint；存在脚本/API 线索但包含外部服务路线或不明模型目录，不作为正式本地 baseline。"
+    }
+  ],
+  "remote_findings": {
+    "hf_checkpoint_candidates": [
+      "/cluster/home/user1/fenghaoran/model/Qwen2.5-3B-Instruct",
+      "/cluster/home/user1/fenghaoran/model/Qwen3-4B-Instruct-2507",
+      "/cluster/home/user1/fenghaoran/model/Qwen3.5-4B"
+    ],
+    "non_checkpoint_8b_paths": [
+      "/cluster/home/user1/hulining/TSModel/ms-swift/result/Qwen3-8B",
+      "/cluster/home/user1/hulining/TSModel/ChatTS/exp/Qwen3-8B-align_dataset_a",
+      "/cluster/home/user1/hulining/TSModel/ChatTS/exp/Qwen3-8B-align-mix_dataset_a"
+    ],
+    "script_routes": [
+      "/cluster/home/user1/zzy/DiffEval/eval_4/command/run_qwen3-8B.bash",
+      "/cluster/home/user1/zzy/DiffEval/eval_4/command/run_qwen3-32B.bash",
+      "/cluster/home/user1/fenghaoran/workspace/api/qwen3-8b_api.py",
+      "/cluster/home/user1/fenghaoran/workspace/api/qwen3-32b_api.py"
+    ]
+  }
+}

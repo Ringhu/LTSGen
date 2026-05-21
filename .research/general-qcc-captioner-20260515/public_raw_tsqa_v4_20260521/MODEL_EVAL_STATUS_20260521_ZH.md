@@ -270,11 +270,35 @@ GPT-5.4 的 21 个错误集中在：
 
 Qwen3-4B 的错误更集中：`building_energy` 和 `traffic` 全错，`water_service` 只有 0.2000，但 `market` 达到 0.9000、`power_grid` 达到 0.7143。Qwen2.5-3B 与 Qwen3-4B 的 domain profile 明显不同，说明这个 benchmark 已能区分模型在不同时间序列推理原语上的偏差，而不是只给出一个总分。
 
-这些错误说明当前 benchmark 已能暴露三类能力缺口：原始时序计算错误、阈值/边界判断错误，以及计算结论到选项字母的指令一致性错误。下一轮数据扩增应优先修复任务歧义，再扩大样本数。
+这些错误说明当前 benchmark 已能暴露三类能力缺口：原始时序计算错误、阈值/边界判断错误，以及计算结论到选项字母的指令一致性错误。但这还不能直接说明当前 pilot 已经是 hard benchmark。
+
+## Hard-but-Fair 复核
+
+本轮新增 hard-case 审计和 reviewer 复核：
+
+- `PUBLIC_RAW_TSQA_V4_HARD_CASE_AUDIT_20260521_ZH.md`
+- `hard_case_audit_20260521.jsonl`
+- `PUBLIC_RAW_TSQA_V4_HARD_CANDIDATE_REVIEW_20260521_ZH.md`
+- `hard_candidate_reviewer_20260521.jsonl`
+- `PUBLIC_RAW_TSQA_V4_EXPANSION_REVIEW_20260521_ZH.md`
+
+复核结论：
+
+- GPT-5.5 错题为 `4/78`，全部来自 `water_service`。
+- 4 个 GPT-5.5 错题经 reviewer 复审后全部为 `decision=revise`，`hard_subset_eligible=false`。
+- 当前可直接认证的 hard subset 为 `0`。
+- 现有 pilot 更适合作为模型区分度和流程验证证据；如果要证明顶级闭源模型也真实答不上来，必须先修复 water-service 的事件分段和阈值公开问题，再扩增。
+
+Qwen 3B/4B/8B/32B 资产复核记录在：
+
+`qwen_model_asset_audit_20260521.json`
+
+当前 3B/4B 已完成正式本地 HF 评测；8B/32B 只发现旧脚本、外部 API 线索或结果目录，没有确认到可直接加载的本地 checkpoint，也没有活跃 OpenAI-compatible 服务。本轮不使用外部 key、不下载大模型。
 
 ## 下一步
 
-1. 对 `water_service` 做 reviewer 复审：GPT-5.5 的 4 个非正确样本全部集中在该 domain，说明恢复/持续低压边界需要复核。
-2. 对 `building_energy`、`traffic` 做数据说明回查：GPT-5.4 与 Qwen 系列在这些任务失败多，但 GPT-5.5 已能解决，适合作为难度分层和 reviewer hard case。
-3. 扩增数据时加入“推理正确但答案字母不一致”的一致性检查，作为 reviewer gate。
-4. 可继续补 `Qwen3-1.7B` / `Qwen3-0.6B`，但当前已有 GPT-5.5、GPT-5.4、Qwen2.5-3B、Qwen3-4B 四个 full bilingual baseline。
+1. 先重写 `water_service` 模板：公开事件前/中/后分段，量化 `very low`、`clearly increases`、`remains depressed`、`close to pre-event`。
+2. 用修订后的 water 模板生成 20-40 条候选，先过 deterministic verifier，再过 reviewer gate。
+3. 对 reviewer keep 的新样本跑 GPT-5.5，只有 GPT-5.5 失败且 reviewer 再次确认 `hard_subset_eligible=true` 的样本进入 hard subset。
+4. 将 `building_energy` balanced reserve、`service_telemetry` no dominant symptom、`market` drawdown-priority 扩成 scaling-sensitive medium pool。
+5. 8B/32B 只有在提供可加载本地 checkpoint 或已启动 endpoint 后再补正式评测。
