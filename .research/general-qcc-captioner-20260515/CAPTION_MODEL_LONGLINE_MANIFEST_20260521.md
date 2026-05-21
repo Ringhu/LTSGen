@@ -17,6 +17,8 @@ design review:
   but is intentionally not restored here.
 - `seed_quality_review_v1_20260521/`: first scripted review of the current
   small seed data, separating QA readiness from caption-training readiness.
+- `NATURAL_QCC_RESEARCH_ROUTE_AND_REVIEWER_GATE_20260521_ZH.md`: agreed
+  scenario-first Natural QCC route and reviewer gate policy.
 
 ## Retained In Git
 
@@ -29,6 +31,8 @@ design review:
 - Current Natural TS-QA/QCC design-review seed artifacts that are small enough to
   inspect directly in git.
 - The seed-quality reviewer script and regression test used before scaling.
+- The agreed research-route and reviewer-gate document that governs future data
+  repair, scaling, and training decisions.
 
 ## Excluded From Git
 

@@ -24,6 +24,21 @@ Natural TS-QA/QCC 样例。
 
 ## 当前应保留并继续看的文件
 
+### 0. Natural QCC 研究路线与 Reviewer Gate
+
+路径：
+
+`.research/general-qcc-captioner-20260515/NATURAL_QCC_RESEARCH_ROUTE_AND_REVIEWER_GATE_20260521_ZH.md`
+
+保留原因：
+
+- 这是当前和用户对齐后的研究路线说明。
+- 明确了数据生成应该是场景先行，而不是拿 support slots 找问题。
+- 明确了 reviewer gate 是分诊系统，不是让 LLM 决定答案。
+- 明确了 `qa_seed_ready` 和 `caption_train_ready` 必须分开。
+
+这份文档也已经写入 `AGENTS.md`，后续会话应按它执行。
+
 ### 1. Natural QCC case quality v1
 
 路径：
