@@ -1,7 +1,0 @@
-category,n,pct
-multivariate_input,666,0.236
-requires_multivar_reasoning,600,0.213
-domain_knowledge_required,688,0.244
-domain_context_needed,404,0.143
-domain_shell,1467,0.52
-generic_ts,263,0.093

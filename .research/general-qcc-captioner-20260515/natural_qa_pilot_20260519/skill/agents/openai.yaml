@@ -1,4 +1,0 @@
-interface:
-  display_name: "Natural TS-QA Writer"
-  short_description: "Write natural, verifier-grounded time-series QA cases."
-  default_prompt: "Use this skill to rewrite simulator-derived time-series QA into natural domain questions while preserving deterministic answer grounding."

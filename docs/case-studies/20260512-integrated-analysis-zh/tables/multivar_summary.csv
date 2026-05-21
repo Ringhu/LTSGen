@@ -1,3 +1,0 @@
-statistic,n,pct_of_all_questions,meaning
-multivariate_input,666,0.23600283486888732,Question provides more than one time series.
-requires_multivar_reasoning,600,0.21261516654854712,"Question appears to require comparing/relating multiple series, not just ignoring extra inputs."

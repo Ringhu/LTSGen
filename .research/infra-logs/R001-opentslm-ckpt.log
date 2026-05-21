@@ -1,7 +1,0 @@
-loaded in 28.3s
-top-level keys: ['model_state', 'optimizer_state', 'scheduler_state', 'val_loss', 'epoch']
-  model_state: dict 2860 items, total params 17176.7M
-  optimizer_state: dict 2 items, total params 0.0M
-  scheduler_state: dict 7 items, total params 0.0M
-  val_loss: float = 0.20255811982284688
-  epoch: int = 2
