@@ -1,0 +1,62 @@
+{
+  "n": 39,
+  "n_mismatch_excluded": 2,
+  "n_public_forbidden_issues": 0,
+  "by_domain": {
+    "power_grid": 7,
+    "building_energy": 4,
+    "traffic": 4,
+    "water_service": 5,
+    "service_telemetry": 9,
+    "market": 10
+  },
+  "by_source_simulator": {
+    "grid2op": 7,
+    "citylearn": 4,
+    "traffic": 4,
+    "water": 5,
+    "aiopslab": 9,
+    "finrl": 10
+  },
+  "answer_distribution": {
+    "C": 3,
+    "B": 4,
+    "A": 19,
+    "D": 13
+  },
+  "semantic_answer_distribution": {
+    "risk is broadly unchanged": 2,
+    "risk decreases": 1,
+    "risk increases": 4,
+    "balanced reserve": 4,
+    "no clear congestion shock": 4,
+    "pressure recovers after disturbance": 3,
+    "stable service": 1,
+    "persistent leak pressure risk": 1,
+    "no dominant symptom": 6,
+    "memory leak pattern": 3,
+    "bullish regime": 7,
+    "severe drawdown risk": 3
+  },
+  "time_series_lengths": {
+    "min": 96,
+    "max": 256
+  },
+  "llm_prompt_word_lengths": {
+    "min": 250,
+    "max": 440,
+    "mean": 379.26
+  },
+  "public_forbidden_issues": [],
+  "inputs": {
+    "v3_ready": ".research/general-qcc-captioner-20260515/self_contained_reasoning_qa_v3_20260521/self_contained_reasoning_tsqa_v3_ready.jsonl"
+  },
+  "outputs": {
+    "canonical": ".research/general-qcc-captioner-20260515/public_raw_tsqa_v4_20260521/canonical_raw_tsqa_v4.jsonl",
+    "llm_text_view": ".research/general-qcc-captioner-20260515/public_raw_tsqa_v4_20260521/llm_text_view.jsonl",
+    "tsllm_array_view": ".research/general-qcc-captioner-20260515/public_raw_tsqa_v4_20260521/tsllm_array_view.jsonl",
+    "oracle_evidence": ".research/general-qcc-captioner-20260515/public_raw_tsqa_v4_20260521/oracle_evidence.jsonl",
+    "audit_support": ".research/general-qcc-captioner-20260515/public_raw_tsqa_v4_20260521/audit_support.jsonl",
+    "mismatch_audit": ".research/general-qcc-captioner-20260515/public_raw_tsqa_v4_20260521/mismatch_audit.jsonl"
+  }
+}
